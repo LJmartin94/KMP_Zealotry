@@ -1,0 +1,17 @@
+Architecture/beginning:
+https://medium.com/@nitheeshag/building-a-compose-multiplatform-app-with-an-architectural-pattern-e31a85e82927
+
+Example apps:
+https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-samples.html
+
+Custom shared fonts:
+https://stackoverflow.com/questions/76035190/using-fonts-in-a-compose-multiplatform-project
+
+(Current impl) Custom fonts with Opt-in to experimental Jetbrains API:
+https://proandroiddev.com/how-to-use-resources-in-compose-multiplatform-77a6552b505d
+
+Tutorial on getting started with KMM:
+https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-explore-composables.html#implementing-composable-functions
+
+Feature parity with React app:
+https://github.com/LJmartin94/React_Zealotry
