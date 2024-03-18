@@ -27,9 +27,7 @@ fun MainTheme(
 		},
 		typography = Typography(defaultFontFamily =
 			FontFamily(
-					Font(
-						Res.font.quaver
-					)
+				Font(Res.font.quaver)
 			)
 		),
 		shapes = Shapes()

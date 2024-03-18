@@ -1,0 +1,1 @@
+Move Typography to separate file in theme.
