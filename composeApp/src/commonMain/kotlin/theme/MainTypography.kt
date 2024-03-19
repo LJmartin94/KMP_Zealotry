@@ -10,7 +10,7 @@ import zealotry.composeapp.generated.resources.quaver
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun mainTypography() = Typography(defaultFontFamily =
+fun MainTypography() = Typography(defaultFontFamily =
     FontFamily(
         Font(Res.font.quaver)
     )

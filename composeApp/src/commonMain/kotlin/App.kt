@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import theme.mainTheme
+import theme.MainTheme
 
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.compose_multiplatform
@@ -19,7 +19,7 @@ import zealotry.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
-    mainTheme {
+    MainTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {

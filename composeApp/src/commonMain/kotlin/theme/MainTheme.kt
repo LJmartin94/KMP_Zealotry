@@ -8,7 +8,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 @Composable
-fun mainTheme(
+fun MainTheme(
 	content: @Composable () -> Unit
 ) {
 	MaterialTheme (
@@ -17,7 +17,7 @@ fun mainTheme(
 		} else {
 			lightColors()
 		},
-		typography = mainTypography(),
+		typography = MainTypography(),
 		shapes = Shapes()
 	) {
 		content()
