@@ -1,3 +1,5 @@
+package features.Platform
+
 import android.os.Build
 
 class AndroidPlatform : Platform {

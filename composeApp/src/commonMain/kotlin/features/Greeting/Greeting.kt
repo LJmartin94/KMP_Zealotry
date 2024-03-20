@@ -1,6 +1,6 @@
 package features.Greeting
 
-import getPlatform
+import features.Platform.getPlatform
 
 class Greeting {
     private val platform = getPlatform()
