@@ -1,4 +1,10 @@
+3 big topics to get right are:
+* General Architecture/ project layout
+* Navigation between views/ screens
+* State management
 
+Navigation:
+https://developer.android.com/jetpack/compose/navigation
 
 Tutorial on getting started with KMM:
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-explore-composables.html#implementing-composable-functions
