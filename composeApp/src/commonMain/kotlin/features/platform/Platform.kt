@@ -1,4 +1,4 @@
-package features.Platform
+package features.platform
 
 interface Platform {
     val name: String

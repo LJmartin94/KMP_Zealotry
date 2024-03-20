@@ -1,4 +1,4 @@
-package features.TimeUtils
+package features.timeUtils
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DayOfWeek
