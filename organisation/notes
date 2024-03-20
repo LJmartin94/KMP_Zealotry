@@ -1,6 +1,6 @@
 3 big topics to get right are:
 * General Architecture/ project layout
-* Navigation between views/ screens
+* Navigation between ui.views/ screens
 * State management
 
 Navigation:

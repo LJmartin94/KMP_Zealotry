@@ -11,17 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.datetime.Clock
-import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.isoDayNumber
-import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import theme.MainTheme
 
+import features.Greeting.Greeting
+import features.TimeUtils.getModifiedDay
+import ui.style.MainTheme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.compose_multiplatform
 
@@ -52,33 +48,4 @@ fun App() {
             }
         }
     }
-}
-
-/**
- * Gets current day, or previous day if before 4am.
- */
-fun getModifiedDay(): DayOfWeek {
-    val now = Clock.System.now()
-    val zone = TimeZone.currentSystemDefault()
-    val localTime = now.toLocalDateTime(zone)
-    val today = localTime.dayOfWeek.isoDayNumber // Mon: 1 .. Sun: 7
-    val yesterday = sanitiseIsoDay(today - 1)
-    return when {
-        localTime.hour >= 4 -> DayOfWeek(today)
-        else -> DayOfWeek(yesterday)
-    }
-}
-
-/**
- * Map any Int to a value in 1 .. 7, consistent with kotlinx.datetime isoDayNumber.
- * E.g.:
- * -6 == 1 == 8 == Monday
- * -1 == 6 == 13 == Saturday
- *  0 == 7 == 14 == Sunday
- */
-private fun sanitiseIsoDay(rawIso: Int): Int {
-    var sanitisedIso = rawIso
-    if (sanitisedIso > 7) sanitisedIso %= 7
-    while (sanitisedIso < 1) sanitisedIso += 7
-    return sanitisedIso
 }
