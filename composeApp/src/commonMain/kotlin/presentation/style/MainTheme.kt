@@ -1,4 +1,4 @@
-package ui.style
+package presentation.style
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

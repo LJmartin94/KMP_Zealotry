@@ -1,4 +1,4 @@
-package features.platform
+package data.platform
 
 import platform.UIKit.UIDevice
 

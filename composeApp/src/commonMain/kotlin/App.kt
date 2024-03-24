@@ -15,9 +15,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import features.greeting.Greeting
-import features.timeUtils.getModifiedDay
-import ui.style.MainTheme
+import data.greeting.Greeting
+import data.timeUtils.getModifiedDay
+import presentation.style.MainTheme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.compose_multiplatform
 
