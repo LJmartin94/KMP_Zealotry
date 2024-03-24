@@ -1,0 +1,11 @@
+This is just to motivate myself to improve a little bit every day :)
+
+Current Streak: 1
+Best: 1
+
+24-03-2024
+Learned:
+    -Read about MVVM pattern. Goal is to separate Interface and Business Logic.
+        Good pattern to keep in mind, but app is not large enough to implement it yet.
+Did:
+    -Preliminary split (in name only) of data and presentation layers.
