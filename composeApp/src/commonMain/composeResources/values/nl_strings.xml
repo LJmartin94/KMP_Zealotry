@@ -1,0 +1,9 @@
+<resources>
+    <string name="monday">Dag van de Maan</string>
+    <string name="tuesday">Thingsus' Dag</string>
+    <string name="wednesday">Wodan's Dag</string>
+    <string name="thursday">Dag van de Donder</string>
+    <string name="friday">Friia's Dag</string>
+    <string name="saturday">Dag van Saturnus</string>
+    <string name="sunday">Dag van de Zon</string>
+</resources>
