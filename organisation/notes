@@ -3,7 +3,16 @@
 * Navigation between ui.views/ screens
 * State management
 
+Continue with:
+https://medium.com/@dheerubhadoria/jetpack-compose-android-app-with-mvvm-architecture-and-retrofit-api-integration-4eb61ca6fbf2
+Even though it doesn't make sense for something so small, see if you can set up MVVM for a date component
+(with clock that shows seconds that is simply observed by the view?),
+so we can experiment with what MVVM architecture split by components would look like.
+
 Navigation:
+General navigation theory -
+https://developer.android.com/guide/navigation
+Compose specific -
 https://developer.android.com/jetpack/compose/navigation
 
 Tutorial on getting started with KMM:
