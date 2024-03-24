@@ -12,7 +12,9 @@ https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-ex
 Feature parity with React app:
 https://github.com/LJmartin94/React_Zealotry
 
-
+Localisation:
+https://phrase.com/blog/posts/internationalizing-jetpack-compose-android-apps/
+https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html#resource-usage
 
 MVVM:
 https://medium.com/weeronline/our-approach-to-modularization-and-mvvm-44aae0a3ea41

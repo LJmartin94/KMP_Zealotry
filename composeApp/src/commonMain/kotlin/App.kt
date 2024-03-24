@@ -17,6 +17,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import data.greeting.Greeting
 import data.timeUtils.getModifiedDay
+import data.timeUtils.toCustomString
 import presentation.style.MainTheme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.compose_multiplatform
@@ -30,7 +31,7 @@ fun App() {
         val greeting = remember { Greeting().greet() }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Today is ${getModifiedDay()}",
+                text = "Today is ${getModifiedDay().toCustomString()}",
                 modifier = Modifier.padding(20.dp),
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center

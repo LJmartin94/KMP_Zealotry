@@ -9,3 +9,4 @@ Learned:
         Good pattern to keep in mind, but app is not large enough to implement it yet.
 Did:
     -Preliminary split (in name only) of data and presentation layers.
+    -Add string localisation (using Compose Multiplatform out of the box solution).
