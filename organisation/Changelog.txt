@@ -1,7 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Current Streak: 1
-Best: 1
+Current Streak: 2
+Best: 2
+
+25-03-2024
+Learned:
+    -Read a little about dependency injection.
+Did:
+    -Update compose version, add koin and precompose to project.
 
 24-03-2024
 Learned:
