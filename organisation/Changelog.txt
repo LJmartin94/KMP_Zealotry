@@ -1,7 +1,17 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Current Streak: 2
-Best: 2
+Current Streak: 3
+Best: 3
+
+26-03-2024
+Learned:
+Did:
+    -Disable precompose as it stops iOS from building
+    -Start Koin on both iOS and Android (can't be done from shared code)
+    -Remove special character unsupported by custom font
+    -Fix sloppy precompose dependency implementations, re-enable precompose
+    -Wrap the shared app component with PreComposeApp, instead of the individual Android and iOS
+        apps as is done in some tutorials. I think this should work... we'll find out if it doesn't
 
 25-03-2024
 Learned:
