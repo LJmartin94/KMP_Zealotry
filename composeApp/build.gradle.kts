@@ -42,9 +42,9 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.precompose.koin)
-            implementation(libs.precompose.molecule)
-            implementation(libs.precompose.viewmodel)
+//            implementation(libs.precompose.koin)
+//            implementation(libs.precompose.molecule)
+//            implementation(libs.precompose.viewmodel)
         }
     }
 }
