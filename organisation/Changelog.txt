@@ -9,8 +9,7 @@ Did:
     -Messed about with trying to set up an example component that adheres to MVVM pattern, but
         couldn't get the ViewModel class to work - something about kotlin.AutoCloseable not being
         accessible.
-
-
+    -Upgrade kotlin (and its stdlib) from 1.9.22 -> 1.9.23 to fix missing AutoCloseable
 
 26-03-2024
 Learned:
