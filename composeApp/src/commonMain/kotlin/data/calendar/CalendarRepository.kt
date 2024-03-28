@@ -1,12 +1,8 @@
 package data.calendar
 
-import androidx.compose.runtime.Composable
 import data.timeUtils.getModifiedDay
-import data.timeUtils.toCustomString
+import kotlinx.datetime.DayOfWeek
 
-class CalendarRepository {
-    @Composable
-    fun getToday() {
-        getModifiedDay().toCustomString()
-    }
+class CalendarRepository() {
+    fun getToday(): DayOfWeek = getModifiedDay()
 }

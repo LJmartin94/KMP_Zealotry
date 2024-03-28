@@ -19,6 +19,9 @@ import data.greeting.Greeting
 import data.timeUtils.getModifiedDay
 import data.timeUtils.toCustomString
 import moe.tlaster.precompose.PreComposeApp
+import moe.tlaster.precompose.koin.koinViewModel
+import presentation.calendar.CalendarFragment
+import presentation.calendar.CalendarViewModel
 import presentation.style.MainTheme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.compose_multiplatform
@@ -32,12 +35,8 @@ fun App() {
             var showContent by remember { mutableStateOf(false) }
             val greeting = remember { Greeting().greet() }
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "Today is ${getModifiedDay().toCustomString()}",
-                    modifier = Modifier.padding(20.dp),
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center
-                )
+                val vm = koinViewModel(CalendarViewModel::class)
+                CalendarFragment(vm)
                 Button(onClick = { showContent = !showContent }) {
                     Text("Click me!")
                 }

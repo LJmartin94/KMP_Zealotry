@@ -1,7 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Current Streak: 4
-Best: 4
+Current Streak: 5
+Best: 5
+
+28-03-2024
+Learned:
+Did:
+    -Add over-engineered 'Calendar Fragment' for displaying current day, using MVVM pattern
 
 27-03-2024
 Learned:
