@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import data.timeUtils.toCustomString
+import presentation.resourceComposition.toResourceString
 
 @Composable
 fun CalendarFragment(viewModel: CalendarViewModel) {
@@ -21,7 +21,7 @@ fun CalendarFragment(viewModel: CalendarViewModel) {
     }
 
     Text(
-        text = uiState.today.toCustomString(),
+        text = uiState.today.toResourceString(),
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,
         textAlign = TextAlign.Center

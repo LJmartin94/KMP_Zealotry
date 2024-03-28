@@ -7,6 +7,8 @@ Best: 5
 Learned:
 Did:
     -Add over-engineered 'Calendar Fragment' for displaying current day, using MVVM pattern
+    -Change project structure slightly: data layer shouldn't use '@Composable' annotation,
+        presentation layer should only import from data layer in ViewModels.
 
 27-03-2024
 Learned:
