@@ -1,0 +1,4 @@
+Linter rules:
+-No hardcoded strings
+-data layer shouldn't use '@Composable' annotation
+-presentation should never import from data layer unless in ViewModel
