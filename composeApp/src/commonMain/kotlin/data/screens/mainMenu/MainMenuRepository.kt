@@ -1,4 +1,4 @@
 package data.screens.mainMenu
 
-class MainMenuRepository {
+class MainMenuRepository() {
 }

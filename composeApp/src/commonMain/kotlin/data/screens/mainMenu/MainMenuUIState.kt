@@ -1,4 +1,5 @@
 package data.screens.mainMenu
 
-class MainMenuUIState {
-}
+data class MainMenuUIState(
+    val isLoading: Boolean = true
+)

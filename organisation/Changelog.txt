@@ -9,6 +9,7 @@ Did:
     -Start implementing Navigation Host
     -Add scaffolding (just files) for Main Menu screen, and reusable screen for Morning, Midday,
         Evening Menus called DayPart Menu
+    -Set up minimal placeholder for MainMenu screen, mount it to main screen on start up
 
 28-03-2024
 Streak: 5
