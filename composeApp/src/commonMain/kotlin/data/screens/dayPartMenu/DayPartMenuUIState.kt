@@ -1,4 +1,4 @@
-package data.views.dayPartMenu
+package data.screens.dayPartMenu
 
 enum class DayPart {
     MORNING,
