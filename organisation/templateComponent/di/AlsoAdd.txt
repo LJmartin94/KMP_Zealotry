@@ -1,0 +1,6 @@
+```
+single { TemplateComponentRepository() }
+factory { TemplateComponentViewModel() }
+```
+
+to di.DependencyInjection.kt

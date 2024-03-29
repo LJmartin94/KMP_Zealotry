@@ -10,6 +10,8 @@ Did:
     -Add scaffolding (just files) for Main Menu screen, and reusable screen for Morning, Midday,
         Evening Menus called DayPart Menu
     -Set up minimal placeholder for MainMenu screen, mount it to main screen on start up
+    -Add 'templateComponent' to organisation directory as a quick copy-paste blue print
+        for future components
 
 28-03-2024
 Streak: 5
