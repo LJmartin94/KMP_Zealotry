@@ -4,6 +4,12 @@
 * State management
 
 Continue with ->
+Navigation:
+General navigation theory -
+https://developer.android.com/guide/navigation
+Compose specific -
+https://developer.android.com/jetpack/compose/navigation
+
 Architecture example for MVVM & API calls:
 https://medium.com/@nitheeshag/building-a-compose-multiplatform-app-with-an-architectural-pattern-e31a85e82927
 https://github.com/imnithish/earth-stuff/tree/main
@@ -19,12 +25,6 @@ https://github.com/KitsuneFolk/TimeUI
 
 Android only clock tutorial using LiveData:
 https://www.youtube.com/watch?v=CaaSP3ayKWI
-
-Navigation:
-General navigation theory -
-https://developer.android.com/guide/navigation
-Compose specific -
-https://developer.android.com/jetpack/compose/navigation
 
 Tutorial on getting started with KMM:
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-explore-composables.html#implementing-composable-functions

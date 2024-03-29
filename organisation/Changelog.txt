@@ -1,16 +1,24 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Current Streak: 5
-Best: 5
+Best: 6
+
+29-03-2024
+Streak: 6
+Learned:
+Did:
+    -Start implementing Navigation Host
 
 28-03-2024
+Streak: 5
 Learned:
+    -Read about Navigation Host, Graph, Controller
 Did:
     -Add over-engineered 'Calendar Fragment' for displaying current day, using MVVM pattern
     -Change project structure slightly: data layer shouldn't use '@Composable' annotation,
         presentation layer should only import from data layer in ViewModels.
 
 27-03-2024
+Streak: 4
 Learned:
 Did:
     -Messed about with trying to set up an example component that adheres to MVVM pattern, but
@@ -19,6 +27,7 @@ Did:
     -Upgrade kotlin (and its stdlib) from 1.9.22 -> 1.9.23 to fix missing AutoCloseable
 
 26-03-2024
+Streak: 3
 Learned:
 Did:
     -Disable precompose as it stops iOS from building
@@ -29,12 +38,14 @@ Did:
         apps as is done in some tutorials. I think this should work... we'll find out if it doesn't
 
 25-03-2024
+Streak: 2
 Learned:
     -Read a little about dependency injection.
 Did:
     -Update compose version, add koin and precompose to project.
 
 24-03-2024
+Streak: 1
 Learned:
     -Read about MVVM pattern. Goal is to separate Interface and Business Logic.
         Good pattern to keep in mind, but app is not large enough to implement it yet.
