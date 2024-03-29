@@ -7,6 +7,8 @@ Streak: 6
 Learned:
 Did:
     -Start implementing Navigation Host
+    -Add scaffolding (just files) for Main Menu screen, and reusable screen for Morning, Midday,
+        Evening Menus called DayPart Menu
 
 28-03-2024
 Streak: 5
