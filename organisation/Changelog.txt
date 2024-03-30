@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 6
+Best: 7
+
+30-03-2024
+Streak: 7
+Learned:
+Did:
+    -Set up basic navigation from Main Menu to DayPart Menu, three buttons doing the same thing
 
 29-03-2024
 Streak: 6
