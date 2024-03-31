@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 7
+Best: 8
+
+31-03-2024
+Streak: 8
+Learned:
+Did:
+    -Just get rid of some hardcoded strings
 
 30-03-2024
 Streak: 7

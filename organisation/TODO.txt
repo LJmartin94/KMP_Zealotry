@@ -2,3 +2,9 @@ Linter rules:
 -No hardcoded strings
 -data layer shouldn't use '@Composable' annotation
 -presentation should never import from data layer unless in ViewModel
+
+Get rid of hardcoded strings
+Set theme colours
+Figure out how to navigate to different screens based on navigation arguments
+
+Unit tests

@@ -6,4 +6,7 @@
     <string name="friday">Friia's Dag</string>
     <string name="saturday">Dag van Saturnus</string>
     <string name="sunday">Dag van de Zon</string>
+    <string name="morning">Ochtend</string>
+    <string name="day">Dag</string>
+    <string name="evening">Avond</string>
 </resources>

@@ -6,4 +6,7 @@
     <string name="friday">Frigg's Day</string>
     <string name="saturday">Saturn's Day</string>
     <string name="sunday">Day of the Sun</string>
+    <string name="morning">Morning</string>
+    <string name="day">Day</string>
+    <string name="evening">Evening</string>
 </resources>
