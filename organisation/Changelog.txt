@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 8
+Best: 9
+
+01-04-2024
+Streak: 9
+Learned:
+Did:
+    -Change default colours for light mode in theme
 
 31-03-2024
 Streak: 8
