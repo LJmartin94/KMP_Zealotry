@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 9
+Best: 10
+
+02-04-2024
+Streak: 10
+Learned:
+Did:
+    -Import image resources for main menu + buttons
+    -Add background image to Main Menu - static for now
 
 01-04-2024
 Streak: 9
