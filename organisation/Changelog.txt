@@ -10,6 +10,8 @@ Did:
     -Separate Main Menu Buttons into separate file, add background image to them
     -Try to make layout work and respect individual item weights, but it is very obviously
         broken in landscape with the current setup
+    -Fix menu buttons not displaying how I want, though still need to swap between row/column
+        based on device orientation
 
 02-04-2024
 Streak: 10

@@ -27,7 +27,7 @@ fun MainMenuButton(
         modifier = modifier.clickable { navOp() }
             .paint(
                 painterResource(backgroundRes),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.FillBounds
             )
     ) {
         Text(
