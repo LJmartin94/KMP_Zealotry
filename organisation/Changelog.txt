@@ -1,6 +1,15 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 10
+Best: 11
+
+03-04-2024
+Streak: 11
+Learned:
+    -Read about compose modifiers
+Did:
+    -Separate Main Menu Buttons into separate file, add background image to them
+    -Try to make layout work and respect individual item weights, but it is very obviously
+        broken in landscape with the current setup
 
 02-04-2024
 Streak: 10

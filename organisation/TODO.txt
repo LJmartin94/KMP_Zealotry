@@ -4,7 +4,9 @@ Linter rules:
 -presentation should never import from data layer unless in ViewModel
 
 Get rid of hardcoded strings
-Set theme colours
+Set dark theme colours, move theme colours to their own files
 Figure out how to navigate to different screens based on navigation arguments
+Set transition animations
+Standardise padding and font sizes, define them in a global style file that can be referenced by ui
 
 Unit tests
