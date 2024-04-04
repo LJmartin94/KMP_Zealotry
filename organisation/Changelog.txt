@@ -1,6 +1,15 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 11
+Best: 12
+
+04-04-2024
+Streak: 12
+Learned:
+    -Read about adaptive layouts (I really should be storing screen size type,
+        but am starting smaller)
+Did:
+    -Start implementing an 'AdaptiveColumn' which will display as column in Portrait, and as Row in
+        landscape mode -WIP
 
 03-04-2024
 Streak: 11

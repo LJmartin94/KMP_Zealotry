@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.reusableUi.AdaptiveColumn
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.day
@@ -39,7 +40,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
         )
     })
 
-    Column(
+    AdaptiveColumn (
         Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
