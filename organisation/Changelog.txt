@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 12
+Best: 13
+
+05-04-2024
+Streak: 12
+Learned:
+Did:
+    -Failed to make AdaptiveColumn respect Modifier.weight (to be set either within a ColumnScope
+        or RowScope context)
 
 04-04-2024
 Streak: 12
