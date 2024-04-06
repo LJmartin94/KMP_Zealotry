@@ -55,25 +55,25 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            MainMenuButton(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                navOp = { onNavigate("Morning") },
+            ImageButton(
+                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgRes = Res.drawable.morning_button,
+                onClick = { onNavigate("Morning") },
                 textRes = Res.string.morning,
-                backgroundRes = Res.drawable.morning_button
             )
 
-            MainMenuButton(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                navOp = { onNavigate("Day") },
+            ImageButton(
+                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgRes = Res.drawable.day_button,
+                onClick = { onNavigate("Day") },
                 textRes = Res.string.day,
-                backgroundRes = Res.drawable.day_button
             )
 
-            MainMenuButton(
-                modifier = Modifier.fillMaxWidth().weight(1f),
-                navOp = { onNavigate("Evening") },
+            ImageButton(
+                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgRes = Res.drawable.evening_button,
+                onClick = { onNavigate("Evening") },
                 textRes = Res.string.evening,
-                backgroundRes = Res.drawable.evening_button
             )
 
         }

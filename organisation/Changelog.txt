@@ -8,6 +8,7 @@ Learned:
 Did:
     -Update notes on how to improve adaptive ui - for future reference, don't want to work on it
         anymore right now.
+    -Refactor MainMenu Button to a more generic & reusable ImageButton
 
 05-04-2024
 Streak: 13

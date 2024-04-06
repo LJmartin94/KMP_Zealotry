@@ -2,7 +2,6 @@ package presentation.screens.mainMenu
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,21 +16,22 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun MainMenuButton(
-    modifier: Modifier = Modifier,
-    navOp: () -> Unit,
+fun ImageButton(
+    imgModifier: Modifier = Modifier,
+    imgRes: DrawableResource,
+    textModifier: Modifier = Modifier,
     textRes: StringResource,
-    backgroundRes: DrawableResource
+    onClick: () -> Unit,
 ) =
     Box(
-        modifier = modifier.clickable { navOp() }
+        modifier = imgModifier.clickable { onClick() }
             .paint(
-                painterResource(backgroundRes),
+                painterResource(imgRes),
                 contentScale = ContentScale.FillBounds
             )
     ) {
         Text(
             text = stringResource(textRes),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = textModifier.align(Alignment.BottomCenter)
         )
     }
