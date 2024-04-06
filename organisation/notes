@@ -14,6 +14,13 @@ Architecture example for MVVM & API calls:
 https://medium.com/@nitheeshag/building-a-compose-multiplatform-app-with-an-architectural-pattern-e31a85e82927
 https://github.com/imnithish/earth-stuff/tree/main
 
+Adaptive UI notes -
+We still need to fix the switching from portrait to landscape modes. AdaptiveColumn class didn't
+work (couldn't make it respect weights for both column and row). Also the way we currently check
+orientation is a bit of a hack. If there isn't a better way to do that, we should really wrap the
+whole app in a BoxWithConstraints composable, and then save orientation in the global state and
+reference it elsewhere, but my assumption is the whole thing can be done better anyway.
+
 Intro to PreCompose:
 https://tlaster.github.io/PreCompose/sample.html#note-app
 
