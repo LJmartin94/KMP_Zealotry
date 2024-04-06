@@ -1,4 +1,4 @@
-package presentation.screens.mainMenu
+package presentation.reusableUi
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

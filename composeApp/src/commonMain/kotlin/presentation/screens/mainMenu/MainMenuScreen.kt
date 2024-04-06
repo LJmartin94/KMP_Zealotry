@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.reusableUi.ImageButton
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.day
