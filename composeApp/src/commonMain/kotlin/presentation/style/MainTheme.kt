@@ -1,39 +1,31 @@
 package presentation.style
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+
+val ColourCompositionLocal = compositionLocalOf<Colors> {
+    error("No Colour provided")
+}
 
 @Composable
 fun MainTheme(
     content: @Composable () -> Unit
 ) {
+    val colours = MainColours()
+    val typography = MainTypography()
+    val shapes = Shapes()
+
     MaterialTheme(
-        colors = if (isSystemInDarkTheme()) {
-            darkColors()
-        } else {
-            lightColors(
-                primary = Color(0xFFAFADAA),
-                primaryVariant = Color(0xFFCFCECC),
-                secondary = Color(0xFFFF9201),
-                secondaryVariant = Color(0xFFFF9D1A),
-                background = Color(0xFFECEBEA),
-                surface = Color(0xFFECEBEA),
-                error = Color(0xFFFF1201),
-                onPrimary = Color(0xFF262626),
-                onSecondary = Color(0xFFFAFAFA),
-                onBackground = Color(0xFF262626),
-                onSurface = Color(0xFF262626),
-                onError = Color(0xFFFAFAFA)
-            )
-        },
-        typography = MainTypography(),
-        shapes = Shapes()
+        colors = colours,
+        typography = typography,
+        shapes = shapes
     ) {
-        content()
+        CompositionLocalProvider(ColourCompositionLocal provides colours){
+            content()
+        }
     }
 }
