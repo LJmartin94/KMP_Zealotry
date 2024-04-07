@@ -9,4 +9,5 @@
     <string name="morning">Ochtend</string>
     <string name="day">Dag</string>
     <string name="evening">Avond</string>
+    <string name="daily_rituals">Dagelijkse Rituelen</string>
 </resources>

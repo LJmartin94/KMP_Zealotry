@@ -12,10 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.style.ColourCompositionLocal
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainMenuSub(
+    title: StringResource,
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
@@ -36,7 +41,7 @@ fun MainMenuSub(
                 .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "Daily Rituals")
+            Text(text = stringResource(title))
         }
 
         //Container

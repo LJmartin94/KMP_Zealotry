@@ -22,6 +22,7 @@ import presentation.reusableUi.ImageButton
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.day
+import zealotry.composeapp.generated.resources.daily_rituals
 import zealotry.composeapp.generated.resources.day_button
 import zealotry.composeapp.generated.resources.evening
 import zealotry.composeapp.generated.resources.evening_button
@@ -52,6 +53,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
         )
 
         MainMenuSub(
+            title = Res.string.daily_rituals,
             modifier = Modifier.weight(3f)
         ) {
 
