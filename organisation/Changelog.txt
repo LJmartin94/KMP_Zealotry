@@ -8,6 +8,7 @@ Learned:
 Did:
     -Split colours from theme into separate file + function
     -Make colours providable to other composables in the tree using CompositionLocalProvider
+    -Make MainMenuSub component, to hold different sub menus that are displayable on the main menu
 
 06-04-2024
 Streak: 14

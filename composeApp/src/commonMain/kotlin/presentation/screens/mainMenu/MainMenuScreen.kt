@@ -40,7 +40,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
         )
     })
 
-   Column(
+    Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -51,9 +51,8 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
             textAlign = TextAlign.Center
         )
 
-        Column(
-            Modifier.weight(3f).fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        MainMenuSub(
+            modifier = Modifier.weight(3f)
         ) {
 
             ImageButton(
