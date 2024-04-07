@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -19,6 +20,7 @@ import org.jetbrains.compose.resources.stringResource
 fun ImageButton(
     imgModifier: Modifier = Modifier,
     imgRes: DrawableResource,
+    imgAlpha: Float = DefaultAlpha,
     textModifier: Modifier = Modifier,
     textRes: StringResource,
     onClick: () -> Unit,
@@ -27,6 +29,7 @@ fun ImageButton(
         modifier = imgModifier.clickable { onClick() }
             .paint(
                 painterResource(imgRes),
+                alpha = imgAlpha,
                 contentScale = ContentScale.FillBounds
             )
     ) {

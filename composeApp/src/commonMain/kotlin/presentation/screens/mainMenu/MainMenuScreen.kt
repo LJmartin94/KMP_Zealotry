@@ -58,6 +58,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
             ImageButton(
                 imgModifier = Modifier.fillMaxWidth().weight(1f),
                 imgRes = Res.drawable.morning_button,
+                imgAlpha = 0.8f,
                 onClick = { onNavigate("Morning") },
                 textRes = Res.string.morning,
             )
@@ -65,6 +66,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
             ImageButton(
                 imgModifier = Modifier.fillMaxWidth().weight(1f),
                 imgRes = Res.drawable.day_button,
+                imgAlpha = 0.8f,
                 onClick = { onNavigate("Day") },
                 textRes = Res.string.day,
             )
@@ -72,6 +74,7 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
             ImageButton(
                 imgModifier = Modifier.fillMaxWidth().weight(1f),
                 imgRes = Res.drawable.evening_button,
+                imgAlpha = 0.8f,
                 onClick = { onNavigate("Evening") },
                 textRes = Res.string.evening,
             )
