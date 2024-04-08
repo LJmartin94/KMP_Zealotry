@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 15
+Best: 16
+
+08-04-2024
+Streak: 16
+Learned:
+Did:
+    -Add standard padding definitions for different screen sizes
 
 07-04-2024
 Streak: 15
