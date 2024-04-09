@@ -7,6 +7,9 @@ Streak: 17
 Learned:
 Did:
     -Add a reusable 'OutlinedText' component, to display readable text against any background
+    -Revert overzealous auto-refactor ->
+        'kotlin.code.style' setting had been renamed 'kotlin.code.ui.style' when style dir was
+        placed in a directory named ui.
 
 08-04-2024
 Streak: 16
