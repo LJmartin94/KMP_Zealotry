@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 16
+Best: 17
+
+09-04-2024
+Streak: 17
+Learned:
+Did:
+    -Add a reusable 'OutlinedText' component, to display readable text against any background
 
 08-04-2024
 Streak: 16

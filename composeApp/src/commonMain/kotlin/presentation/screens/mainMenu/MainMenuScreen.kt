@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.reusableUi.ImageButton
+import presentation.reusableUi.OutlinedText
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.day
@@ -45,11 +46,13 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
+        OutlinedText(
             text = "Placeholder MainMenu",
-            modifier = Modifier.padding(20.dp).weight(1f),
+            textBorderColour = Color(0xFFFFFFFF),
+            modifier = Modifier.padding(20.dp),
             fontSize = 24.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            containerModifier = Modifier.padding(20.dp).weight(1f)
         )
 
         MainMenuSub(

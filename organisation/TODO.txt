@@ -10,7 +10,6 @@ Figure out how to navigate to different screens based on navigation arguments
 Set transition animations
 Standardise padding and font sizes, define them in a global style file that can be referenced by ui
 Fix row column layouts when switching from landscape to portrait (Proper Adaptive UI impl. see notes)
-Put backlight on title text so it is readable against any background
 Make Splash screen
 
 Unit tests
