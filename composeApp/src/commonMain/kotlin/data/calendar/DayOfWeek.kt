@@ -2,21 +2,22 @@ package data.calendar
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.toLocalDateTime
 
 /**
- * Gets current day, or previous day if before 4am.
+ * Gets 'actual' day of the week for a given instant (default 'now'),
+ * or 'previous' day if before 4am. As if days change at 4am, not midnight.
  */
-fun getTodayWithOffset(): DayOfWeek {
-    val now = Clock.System.now()
+fun getZealsday(moment: Instant = Clock.System.now(), h: Int = 4, m: Int = 0): DayOfWeek {
     val zone = TimeZone.currentSystemDefault()
-    val localTime = now.toLocalDateTime(zone)
+    val localTime = moment.toLocalDateTime(zone)
     val today = localTime.dayOfWeek.isoDayNumber // Mon: 1 .. Sun: 7
     val yesterday = sanitiseIsoDay(today - 1)
     return when {
-        localTime.hour >= 4 -> DayOfWeek(today)
+        (localTime.hour * 60 + localTime.minute) >= (h * 60 + m) -> DayOfWeek(today)
         else -> DayOfWeek(yesterday)
     }
 }
