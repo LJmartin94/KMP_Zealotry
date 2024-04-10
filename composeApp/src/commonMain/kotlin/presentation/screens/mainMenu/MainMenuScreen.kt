@@ -16,10 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.calendar.CalendarFragment
+import presentation.calendar.CalendarViewModel
 import presentation.reusableUi.ImageButton
 import presentation.reusableUi.OutlinedText
+import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.day
@@ -46,14 +50,10 @@ fun MainMenuScreen(viewModel: MainMenuViewModel, onNavigate: (String) -> Unit) {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OutlinedText(
-            text = "Placeholder MainMenu",
-            textBorderColour = Color(0xFFFFFFFF),
-            modifier = Modifier.padding(20.dp),
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center,
-            containerModifier = Modifier.padding(20.dp).weight(1f)
-        )
+        Box(Modifier.padding(20.dp).weight(1f)){
+            val vm = koinViewModel(CalendarViewModel::class)
+            CalendarFragment(vm)
+        }
 
         MainMenuSub(
             title = Res.string.daily_rituals,

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DayOfWeek
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
@@ -13,6 +14,13 @@ class CalendarViewModel(private val calendarRepository: CalendarRepository) : Vi
 
     private val _uiState = MutableStateFlow(CalendarUIState())
     val uiState = _uiState.asStateFlow()
+
+    private val _currentDay = MutableStateFlow((DayOfWeek.MONDAY))
+    private val currentDay = _currentDay.asStateFlow()
+
+    init{
+        calendarRepository.getToday()
+    }
 
     fun tryGetToday() = viewModelScope.launch {
         _uiState.update { state: CalendarUIState -> state.copy(

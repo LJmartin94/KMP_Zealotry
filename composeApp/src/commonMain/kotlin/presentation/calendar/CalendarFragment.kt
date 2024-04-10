@@ -7,10 +7,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import presentation.resourceComposition.toResourceString
+import presentation.reusableUi.OutlinedText
 
 @Composable
 fun CalendarFragment(viewModel: CalendarViewModel) {
@@ -20,8 +22,9 @@ fun CalendarFragment(viewModel: CalendarViewModel) {
         viewModel.tryGetToday()
     }
 
-    Text(
+    OutlinedText(
         text = uiState.today.toResourceString(),
+        textBorderColour = Color(0xFFFFFFFF),
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,
         textAlign = TextAlign.Center

@@ -1,6 +1,15 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 17
+Best: 18
+
+10-04-2024
+Streak: 18
+Learned:
+    - Workshop on coroutines
+Did:
+    - Hacky implementation that temporarily uses CalendarFragment as a UI component
+        (needs to change) as title for main menu
+    - Start implementing a way to observe a change of date whilst app is running, using coroutines
 
 09-04-2024
 Streak: 17

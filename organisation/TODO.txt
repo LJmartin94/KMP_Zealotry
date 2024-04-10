@@ -5,11 +5,19 @@ Linter rules:
 -No unused imports
 
 Get rid of hardcoded strings
-Set dark theme colours, move theme colours to their own files
+Set dark theme colours
 Figure out how to navigate to different screens based on navigation arguments
 Set transition animations
 Standardise padding and font sizes, define them in a global style file that can be referenced by ui
 Fix row column layouts when switching from landscape to portrait (Proper Adaptive UI impl. see notes)
 Make Splash screen
+
+Can do:
+-adaptive layout for portrait/landscape
+-proper title string for main menu (locale string with arguments, day, ordinal number, season etc)
+-navigation
+-Set up 'day' listener/observer that fetches day,
+    and sets up Timer.schedule() job to fetch new day when new day changes.
+    Multiple components should use this output, so flow -> sharedFlow?
 
 Unit tests
