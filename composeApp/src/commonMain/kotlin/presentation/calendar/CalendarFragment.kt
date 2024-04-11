@@ -16,14 +16,14 @@ import presentation.reusableUi.OutlinedText
 
 @Composable
 fun CalendarFragment(viewModel: CalendarViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.currentDay.collectAsState()
 
-    LaunchedEffect(Unit){
-        viewModel.tryGetToday()
-    }
+//    LaunchedEffect(Unit){
+//        viewModel.currentDay
+//    }
 
     OutlinedText(
-        text = uiState.today.toResourceString(),
+        text = uiState.toResourceString(),
         textBorderColour = Color(0xFFFFFFFF),
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,

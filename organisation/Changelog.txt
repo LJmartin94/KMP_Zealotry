@@ -8,6 +8,8 @@ Learned:
 Did:
     - Rework getTodayWithOffset to be more configurable, change name as 'today with offset'
         sounds more confusing than clearly pointing out it is a wacky situational implementation.
+    - Work on CalendarComponent (VM, Repo, Fragment) to implement coroutine that only checks if
+        day has been updated when it needs to. (Messy WIP)
 
 10-04-2024
 Streak: 18
