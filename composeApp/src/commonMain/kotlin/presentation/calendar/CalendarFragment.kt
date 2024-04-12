@@ -18,10 +18,6 @@ import presentation.reusableUi.OutlinedText
 fun CalendarFragment(viewModel: CalendarViewModel) {
     val uiState by viewModel.currentDay.collectAsState()
 
-//    LaunchedEffect(Unit){
-//        viewModel.currentDay
-//    }
-
     OutlinedText(
         text = uiState.toResourceString(),
         textBorderColour = Color(0xFFFFFFFF),

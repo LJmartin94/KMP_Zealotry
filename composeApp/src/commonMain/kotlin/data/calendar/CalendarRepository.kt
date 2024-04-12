@@ -10,7 +10,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.plus
 
 class CalendarRepository() {
-    fun getToday(): Flow<DayOfWeek> = flow { //TODO: Make SharedFlow?
+    val zealotryDayFlow: Flow<DayOfWeek> = flow {
         while (true){
             println("getToday - Emitting day!")
             emit(getZealsday())
