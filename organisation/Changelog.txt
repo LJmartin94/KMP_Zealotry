@@ -9,6 +9,7 @@ Learned:
 Did:
     -Add strings for equinoxes, solstices, and seasonal festivals
     -Rewrite CalendarFragment to use a CalendarState data class, instead of only emitting DayOfWeek
+    -Group SeasonInfo as separate data class within CalendarState data class
 
 12-04-2024
 Streak: 20
