@@ -1,37 +1,39 @@
 package data.calendar
 
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
 
 /**
- * Gets 'actual' day of the week for a given instant (default 'now'),
- * or 'previous' day if before 4am. As if days change at 4am, not midnight.
+ * Returns the instant minus an offset specified in days, hours, minutes, seconds.
+ * Default is minus 4 hours, for my own convenience.
  */
-fun getZealsday(moment: Instant = Clock.System.now(), h: Int = 4, m: Int = 0): DayOfWeek {
-    val zone = TimeZone.currentSystemDefault()
-    val localTime = moment.toLocalDateTime(zone)
-    val today = localTime.dayOfWeek.isoDayNumber // Mon: 1 .. Sun: 7
-    val yesterday = sanitiseIsoDay(today - 1)
-    return when {
-        (localTime.hour * 60 + localTime.minute) >= (h * 60 + m) -> DayOfWeek(today)
-        else -> DayOfWeek(yesterday)
-    }
+fun getInstantMinusOffset(
+    moment: Instant = Clock.System.now(),
+    d: Int = 0,
+    h: Int = 4,
+    m: Int = 0,
+    s: Int = 0
+): Instant {
+    return moment - Duration.parseIsoString("P${d}DT${h}H${m}M${s}S")
 }
 
-/**
- * Map any Int to a value in 1 .. 7, consistent with kotlinx.datetime isoDayNumber.
- * E.g.:
- * -6 == 1 == 8 == Monday
- * -1 == 6 == 13 == Saturday
- *  0 == 7 == 14 == Sunday
- */
-private fun sanitiseIsoDay(rawIso: Int): Int {
-    var sanitisedIso = rawIso
-    if (sanitisedIso > 7) sanitisedIso %= 7
-    while (sanitisedIso < 1) sanitisedIso += 7
-    return sanitisedIso
+fun getDateMinusOffset(
+    moment: Instant = Clock.System.now(),
+    timeZone: TimeZone = TimeZone.currentSystemDefault(),
+    d: Int = 0,
+    h: Int = 4,
+    m: Int = 0,
+    s: Int = 0
+): LocalDateTime {
+    return getInstantMinusOffset(
+        moment = moment,
+        d = d,
+        h = h,
+        m = m,
+        s = s
+    ).toLocalDateTime(timeZone)
 }

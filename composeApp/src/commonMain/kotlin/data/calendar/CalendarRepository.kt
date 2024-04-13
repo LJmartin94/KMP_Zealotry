@@ -6,41 +6,48 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
 
 class CalendarRepository() {
     val updateFlow: Flow<CalendarState> = flow {
         while (true) {
             println("getToday - Emitting day!")
             val now: Instant = Clock.System.now()
+            val modifiedDay: LocalDateTime = getDateMinusOffset(moment = now)
+            val modifiedInstant: Instant = getInstantMinusOffset(moment = now)
             emit(
                 CalendarState(
-                    dayOfWeek = getZealsday(moment = now),
-                    seasonInfo = getSeasonInfo(now),
+                    dayOfWeek = modifiedDay.dayOfWeek,
+                    seasonInfo = getSeasonInfo(modifiedInstant),
                 )
             )
-            val timeToCheck = getZealmorrow(now)
-            val delayBy = timeToCheck.minus(now)
+            val delayBy = getDurationUntilNextDay(moment = modifiedInstant)
             println("getToday - Delaying next check for $delayBy!")
             delay(delayBy.inWholeMilliseconds)
             println("getToday - Coroutine waking up...")
         }
     }
 
-    /**
-     * Increment given time until 'tomorrow' as defined by getZealsday()
-     */
-    private fun getZealmorrow(now: Instant): Instant {
-        var future = now
-        while (getZealsday(now) == getZealsday(future.plus(1, DateTimeUnit.HOUR))) {
-            future = future.plus(1, DateTimeUnit.HOUR)
+    private fun getDurationUntilNextDay(
+        moment: Instant,
+        timeZone: TimeZone = TimeZone.currentSystemDefault()
+    ): Duration {
+        var nextDay = moment
+        val dayOf = { i: Instant -> i.toLocalDateTime(timeZone).dayOfWeek }
+
+        while (dayOf(moment) == dayOf(nextDay.plus(1, DateTimeUnit.HOUR))) {
+            nextDay = nextDay.plus(1, DateTimeUnit.HOUR)
         }
-        while (getZealsday(now) == getZealsday(future.plus(1, DateTimeUnit.MINUTE))) {
-            future = future.plus(1, DateTimeUnit.MINUTE)
+        while (dayOf(moment) == dayOf(nextDay.plus(1, DateTimeUnit.MINUTE))) {
+            nextDay = nextDay.plus(1, DateTimeUnit.MINUTE)
         }
-        while (getZealsday(now) == getZealsday(future)) {
-            future = future.plus(1, DateTimeUnit.SECOND)
+        while (dayOf(moment) == dayOf(nextDay.plus(1, DateTimeUnit.SECOND))) {
+            nextDay = nextDay.plus(1, DateTimeUnit.SECOND)
         }
-        return future
+        return nextDay.minus(moment)
     }
 }

@@ -28,7 +28,7 @@ fun getSeasonInfo(
     moment: Instant,
     timeZone: TimeZone = TimeZone.currentSystemDefault()
 ): SeasonInfo {
-    val localTime = moment.toLocalDateTime(timeZone) //TODO: Make this tick over at 4am
+    val localTime = moment.toLocalDateTime(timeZone)
     val dayOfTheYear = localTime.dayOfYear
     val utcTime = moment.toLocalDateTime(TimeZone.UTC)
 

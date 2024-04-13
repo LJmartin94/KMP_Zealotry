@@ -6,7 +6,9 @@ Best: 22
 Streak: 22
 Learned:
 Did:
-    -Ensure SeasonInfo is populated with correct info, using inaccurate calculation of Solstices & Equinoxes
+    -Ensure SeasonInfo is populated with correct info,
+        using inaccurate calculation of Solstices & Equinoxes
+    -Clean up logic for making days tick over at 4am instead of midnight
 
 13-04-2024
 Streak: 21
