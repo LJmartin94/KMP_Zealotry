@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 21
+Best: 22
+
+14-04-2024
+Streak: 22
+Learned:
+Did:
+    -Ensure SeasonInfo is populated with correct info, using inaccurate calculation of Solstices & Equinoxes
 
 13-04-2024
 Streak: 21

@@ -15,7 +15,8 @@ class CalendarRepository() {
             val now: Instant = Clock.System.now()
             emit(
                 CalendarState(
-                    dayOfWeek = getZealsday(moment = now)
+                    dayOfWeek = getZealsday(moment = now),
+                    seasonInfo = getSeasonInfo(now),
                 )
             )
             val timeToCheck = getZealmorrow(now)
