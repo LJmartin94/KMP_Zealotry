@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 20
+Best: 21
+
+13-04-2024
+Streak: 21
+Learned:
+    - Read about Solar Seasons.
+Did:
+    -Add strings for equinoxes, solstices, and seasonal festivals
 
 12-04-2024
 Streak: 20

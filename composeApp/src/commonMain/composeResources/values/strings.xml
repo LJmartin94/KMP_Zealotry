@@ -10,4 +10,12 @@
     <string name="day">Day</string>
     <string name="evening">Evening</string>
     <string name="daily_rituals">Daily Rituals</string>
+    <string name="spring_start">Imbolg</string>
+    <string name="summer_start">Beltane</string>
+    <string name="autumn_start">Lunasa</string>
+    <string name="winter_start">Samhain</string>
+    <string name="mid_spring">Vernal Equinox</string>
+    <string name="mid_summer">Summer Solstice (Midsummer)</string>
+    <string name="mid_autumn">Autumnal Equinox</string>
+    <string name="mid_winter">Winter Solstice (Midwinter)</string>
 </resources>
