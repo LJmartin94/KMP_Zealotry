@@ -1,22 +1,22 @@
 package presentation.calendar
 
 import data.calendar.CalendarRepository
+import data.calendar.CalendarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DayOfWeek
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class CalendarViewModel(private val calendarRepository: CalendarRepository) : ViewModel() {
-    private val _currentDay = MutableStateFlow((DayOfWeek.MONDAY))
-    val currentDay = _currentDay.asStateFlow()
+    private val _calendarState = MutableStateFlow(CalendarState())
+    val calendarState = _calendarState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            calendarRepository.zealotryDayFlow
-                .collect { day ->
-                    _currentDay.value = day
+            calendarRepository.updateFlow
+                .collect { state: CalendarState ->
+                    _calendarState.value = state
                 }
         }
     }

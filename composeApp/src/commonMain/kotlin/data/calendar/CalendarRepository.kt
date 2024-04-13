@@ -5,16 +5,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.plus
 
 class CalendarRepository() {
-    val zealotryDayFlow: Flow<DayOfWeek> = flow {
-        while (true){
+    val updateFlow: Flow<CalendarState> = flow {
+        while (true) {
             println("getToday - Emitting day!")
-            emit(getZealsday())
             val now: Instant = Clock.System.now()
+            emit(
+                CalendarState(
+                    dayOfWeek = getZealsday(moment = now)
+                )
+            )
             val timeToCheck = getZealmorrow(now)
             val delayBy = timeToCheck.minus(now)
             println("getToday - Delaying next check for $delayBy!")

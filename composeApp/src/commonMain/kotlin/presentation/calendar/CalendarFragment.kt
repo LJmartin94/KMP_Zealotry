@@ -1,9 +1,7 @@
 package presentation.calendar
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,10 +14,10 @@ import presentation.reusableUi.OutlinedText
 
 @Composable
 fun CalendarFragment(viewModel: CalendarViewModel) {
-    val uiState by viewModel.currentDay.collectAsState()
+    val uiState by viewModel.calendarState.collectAsState()
 
     OutlinedText(
-        text = uiState.toResourceString(),
+        text = uiState.dayOfWeek.toResourceString(),
         textBorderColour = Color(0xFFFFFFFF),
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,

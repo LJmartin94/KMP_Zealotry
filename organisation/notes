@@ -60,3 +60,11 @@ https://medium.com/@italord.melo/compose-multiplatform-mvvm-ktor-building-an-app
 
 Example apps:
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-samples.html
+
+Calculate Solstices and Equinoxes:
+https://www.codeguru.com/cplusplus/equinox-and-solstice-calculation/
+https://github.com/4nickel/season/tree/master
+https://github.com/dnafinder/eqnsol
+https://github.com/commenthol/astronomia/tree/master
+Simplified (without Meeus):
+https://www.aa.quae.nl/en/antwoorden/seizoenen.html
