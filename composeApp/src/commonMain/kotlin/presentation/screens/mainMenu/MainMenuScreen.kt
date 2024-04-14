@@ -22,6 +22,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.calendar.CalendarFragment
 import presentation.calendar.CalendarViewModel
+import presentation.resourceComposition.toDrawableResource
 import presentation.resourceComposition.toResourceString
 import presentation.reusableUi.ImageButton
 import presentation.reusableUi.OutlinedText
@@ -49,14 +50,8 @@ fun MainMenuScreen(
     val calendar by calendarViewModel.calendarState.collectAsState()
 
     Box(modifier = with(Modifier) {
-        val background = when (calendar.seasonInfo.currentSeason) {
-            Season.WINTER -> Res.drawable.winter
-            Season.SPRING -> Res.drawable.spring
-            Season.SUMMER -> Res.drawable.summer
-            Season.AUTUMN -> Res.drawable.autumn
-        }
         fillMaxSize().paint(
-            painterResource(background),
+            painterResource(calendar.seasonInfo.currentSeason.toDrawableResource()),
             contentScale = ContentScale.Crop
         )
     })
@@ -68,7 +63,7 @@ fun MainMenuScreen(
         Box(Modifier.padding(20.dp).weight(1f)) {
             OutlinedText(
                 //TODO: tidy up this title
-                text = "${calendar.dayOfWeek.toResourceString()}, ${calendar.seasonInfo.dayOfTheSeason} of ${calendar.seasonInfo.currentSeason.name}",
+                text = "${calendar.dayOfWeek.toResourceString()}, ${calendar.seasonInfo.dayOfTheSeason} of ${calendar.seasonInfo.currentSeason.toResourceString()}",
                 textBorderColour = Color(0xFFFFFFFF),
                 modifier = Modifier.padding(20.dp),
                 fontSize = 24.sp,
