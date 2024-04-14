@@ -9,6 +9,8 @@ Did:
     -Ensure SeasonInfo is populated with correct info,
         using inaccurate calculation of Solstices & Equinoxes
     -Clean up logic for making days tick over at 4am instead of midnight
+    -Make CalendarState directly accessible to main menu, change background and title based on
+        seasonal information.
 
 13-04-2024
 Streak: 21
