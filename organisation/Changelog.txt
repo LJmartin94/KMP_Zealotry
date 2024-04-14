@@ -11,6 +11,7 @@ Did:
     -Clean up logic for making days tick over at 4am instead of midnight
     -Make CalendarState directly accessible to main menu, change background and title based on
         seasonal information.
+    -Fix coroutine wake-up logic
 
 13-04-2024
 Streak: 21

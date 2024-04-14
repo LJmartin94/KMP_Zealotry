@@ -45,7 +45,7 @@ class CalendarRepository() {
         while (dayOf(moment) == dayOf(nextDay.plus(1, DateTimeUnit.MINUTE))) {
             nextDay = nextDay.plus(1, DateTimeUnit.MINUTE)
         }
-        while (dayOf(moment) == dayOf(nextDay.plus(1, DateTimeUnit.SECOND))) {
+        while (dayOf(moment) == dayOf(nextDay)) {
             nextDay = nextDay.plus(1, DateTimeUnit.SECOND)
         }
         return nextDay.minus(moment)
