@@ -10,8 +10,16 @@
     <string name="day">Dag</string>
     <string name="evening">Avond</string>
     <string name="daily_rituals">Dagelijkse Rituelen</string>
+
+
+
+
     <string name="mid_spring">Lente Equinox</string>
     <string name="mid_summer">Zomerwende (Midzomer)</string>
     <string name="mid_autumn">Herfst Equinox</string>
     <string name="mid_winter">Winterwende (Midwinter)</string>
+    <string name="spring">Lente</string>
+    <string name="summer">Zomer</string>
+    <string name="autumn">Herfst</string>
+    <string name="winter">Winter</string>
 </resources>

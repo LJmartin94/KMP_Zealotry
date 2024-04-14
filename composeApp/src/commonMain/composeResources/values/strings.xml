@@ -18,4 +18,8 @@
     <string name="mid_summer">Summer Solstice (Midsummer)</string>
     <string name="mid_autumn">Autumnal Equinox</string>
     <string name="mid_winter">Winter Solstice (Midwinter)</string>
+    <string name="spring">Spring</string>
+    <string name="summer">Summer</string>
+    <string name="autumn">Autumn</string>
+    <string name="winter">Winter</string>
 </resources>

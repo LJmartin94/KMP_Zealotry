@@ -12,6 +12,7 @@ Did:
     -Make CalendarState directly accessible to main menu, change background and title based on
         seasonal information.
     -Fix coroutine wake-up logic
+    -Add strings for seasons
 
 13-04-2024
 Streak: 21
