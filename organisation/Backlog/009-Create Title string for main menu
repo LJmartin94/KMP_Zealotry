@@ -1,1 +1,4 @@
 proper title string for main menu (locale string with arguments, day, ordinal number, season etc)
+
+Check if this resource says anything about handling ordinal numbers:
+https://phrase.com/blog/posts/internationalizing-jetpack-compose-android-apps/

@@ -10,3 +10,6 @@ https://medium.com/@italord.melo/compose-multiplatform-mvvm-ktor-building-an-app
 
 Example clock component using MVVM:
 https://github.com/KitsuneFolk/TimeUI
+
+Android only clock tutorial using LiveData:
+https://www.youtube.com/watch?v=CaaSP3ayKWI

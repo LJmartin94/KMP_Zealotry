@@ -3,31 +3,14 @@
 * Navigation between ui.views/ screens
 * State management
 
-Continue with ->
-Navigation:
-General navigation theory -
-https://developer.android.com/guide/navigation
-Compose specific -
-https://developer.android.com/jetpack/compose/navigation
-
 Intro to PreCompose:
 https://tlaster.github.io/PreCompose/sample.html#note-app
 
 Intro to Koin:
 https://insert-koin.io/docs/quickstart/android-compose/
 
-Android only clock tutorial using LiveData:
-https://www.youtube.com/watch?v=CaaSP3ayKWI
-
-Tutorial on getting started with KMM:
-https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-explore-composables.html#implementing-composable-functions
-
 Feature parity with React app:
 https://github.com/LJmartin94/React_Zealotry
-
-Localisation:
-https://phrase.com/blog/posts/internationalizing-jetpack-compose-android-apps/
-https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html#resource-usage
 
 Example apps:
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-samples.html

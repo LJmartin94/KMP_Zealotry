@@ -1,1 +1,7 @@
 Figure out how to navigate to different screens based on navigation arguments
+
+Navigation:
+General navigation theory -
+https://developer.android.com/guide/navigation
+Compose specific -
+https://developer.android.com/jetpack/compose/navigation
