@@ -14,6 +14,8 @@ Did:
     -Fix coroutine wake-up logic
     -Add strings for seasons
     -Add Composeable resource functions for seasons
+    -Reorganise backlog into directory with separate files
+        (this will also let me save notes I'm done with)
 
 13-04-2024
 Streak: 21

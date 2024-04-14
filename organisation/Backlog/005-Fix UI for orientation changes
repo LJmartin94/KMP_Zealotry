@@ -1,0 +1,18 @@
+Fix row column layouts when switching from landscape to portrait (Proper Adaptive UI impl. see notes)
+
+Adaptive UI notes -
+We still need to fix the switching from portrait to landscape modes. AdaptiveColumn class didn't
+work (couldn't make it respect weights for both column and row). Also the way we currently check
+orientation is a bit of a hack. If there isn't a better way to do that, we should really wrap the
+whole app in a BoxWithConstraints composable, and then save orientation in the global state and
+reference it elsewhere, but my assumption is the whole thing can be done better anyway.
+https://www.netguru.com/blog/multiplatform-adaptive-ui
+
+
+Passing screen size & orientation info (without expect/actual - shared codebase principle):
+https://stackoverflow.com/questions/77341731/how-to-get-screen-width-and-height-in-compose-multiplatform
+contains answer which points to this github discussion as background:
+https://github.com/JetBrains/compose-multiplatform/discussions/3225#discussioncomment-7386013
+which points to this related stackoverflow question:
+https://stackoverflow.com/questions/73354911/how-to-get-exact-size-without-recomposition
+which contains a lot more theory I need to dive into to understand properly :P

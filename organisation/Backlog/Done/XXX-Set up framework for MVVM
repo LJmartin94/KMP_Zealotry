@@ -1,0 +1,12 @@
+Architecture example for MVVM & API calls:
+https://medium.com/@nitheeshag/building-a-compose-multiplatform-app-with-an-architectural-pattern-e31a85e82927
+https://github.com/imnithish/earth-stuff/tree/main
+
+MVVM:
+https://medium.com/weeronline/our-approach-to-modularization-and-mvvm-44aae0a3ea41
+
+MVVM using MokoMVVM: (in case we want to switch)
+https://medium.com/@italord.melo/compose-multiplatform-mvvm-ktor-building-an-app-with-patterns-for-android-ios-and-desktop-4ae01594887c
+
+Example clock component using MVVM:
+https://github.com/KitsuneFolk/TimeUI
