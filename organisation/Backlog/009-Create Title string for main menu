@@ -2,3 +2,26 @@ proper title string for main menu (locale string with arguments, day, ordinal nu
 
 Check if this resource says anything about handling ordinal numbers:
 https://phrase.com/blog/posts/internationalizing-jetpack-compose-android-apps/
+https://phrase.com/blog/posts/number-localization/
+
+
+On localising ordinal numbers:
+Different languages have different grammatical systems (and pref/suffixes) for ordinal numbers.
+As part of the localiser should have some language specific logic to change 1 into 1st, 2 into 2nd etc. for English,
+and other solutions for other languages.
+
+e.g.
+English: firST secoND thiRD fourTH fifTH... twenty-firST (but not elevenST) twenty-second (but not twelfND)
+1st 2nd 3rd 4th 5th .. 11th 12th.. 21st 22nd
+
+See: https://www.beresfordresearch.com/ordinal-numbers-from-around-the-world/
+For an idea of different systems implemented by different languages.
+
+
+https://developer.android.com/guide/topics/resources/string-resource#Plurals
+https://developer.android.com/reference/android/content/res/Resources#getQuantityString(int,%20int)
+
+https://developer.android.com/reference/android/icu/text/MessageFormat
+
+Good numbers to test Dutch and English alongside:
+"1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100"

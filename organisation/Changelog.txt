@@ -1,6 +1,14 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 22
+Best: 23
+
+15-04-2024
+Streak: 23
+Learned:
+    -Read about localising ordinal numbers with plural strings,
+        most likely need to use MessageFormat but need to read more about how it works
+        and whether it is available in compose multiplatform
+Did:
 
 14-04-2024
 Streak: 22

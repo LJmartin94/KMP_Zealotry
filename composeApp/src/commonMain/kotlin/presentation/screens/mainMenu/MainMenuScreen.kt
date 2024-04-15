@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.i18n.MessageFormat
 import data.calendar.Season
 import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -63,7 +64,8 @@ fun MainMenuScreen(
         Box(Modifier.padding(20.dp).weight(1f)) {
             OutlinedText(
                 //TODO: tidy up this title
-                text = "${calendar.dayOfWeek.toResourceString()}, ${calendar.seasonInfo.dayOfTheSeason} of ${calendar.seasonInfo.currentSeason.toResourceString()}",
+                text = "1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100",
+                //text = "${calendar.dayOfWeek.toResourceString()}, ${calendar.seasonInfo.dayOfTheSeason} of ${calendar.seasonInfo.currentSeason.toResourceString()}",
                 textBorderColour = Color(0xFFFFFFFF),
                 modifier = Modifier.padding(20.dp),
                 fontSize = 24.sp,
