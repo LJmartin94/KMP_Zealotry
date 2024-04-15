@@ -1,0 +1,5 @@
+Calendar repository exposes one view model for calendar fragment.
+In reality the calendar fragment is not used, and the data in calendar repo is consumed from this VM
+ in multiple different places instead.
+These should have separate VMs associated with them,
+or have it exposed at a high enough level where all children can access the state.
