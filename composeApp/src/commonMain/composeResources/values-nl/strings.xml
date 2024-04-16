@@ -23,11 +23,11 @@
     <string name="autumn">Herfst</string>
     <string name="winter">Winter</string>
     <string-array name="ordinal">
-        <item quantity="zero">de</item>
-        <item quantity="one">ste</item>
+        <item quantity="zero" />
+        <item quantity="one" />
         <item quantity="two">de</item>
-        <item quantity="few">de</item>
-        <item quantity="many">ste</item>
+        <item quantity="few" />
+        <item quantity="many" />
         <item quantity="other">ste</item>
     </string-array>
 </resources>

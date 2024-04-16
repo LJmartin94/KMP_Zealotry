@@ -1,6 +1,11 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 24
+Best: 25
+17-04-2024
+Streak: 24
+Learned:
+Did:
+    -Update en and nl strings to only populate the plural forms they use, add NL to Locale lib
 
 16-04-2024
 Streak: 24

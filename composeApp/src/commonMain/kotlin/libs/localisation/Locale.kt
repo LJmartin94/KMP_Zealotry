@@ -15,9 +15,14 @@ interface Locale {
     fun getOrdinal(n: Int): PluralForm
 }
 
+/**
+ * Only add actually supported languages to this when statement
+ * (otherwise you will get app-default language with locale's Ordinal system applied)
+*/
 fun getLocale(locale: String): Locale {
     return when (locale){
         "en" -> En()
+        "nl" -> Nl()
         else -> En()
     }
 }
@@ -1295,18 +1300,14 @@ class As: Locale {
 //}
 //
 //
-//class Tmp: Locale {
-//    override fun getOrdinal(n: Int): PluralForm {
-//        return when {
-//            (n == 0) -> PluralForm.ZERO
-//            (n == 1) -> PluralForm.ONE
-//            (n == 2) -> PluralForm.TWO
-//            (n == 3) -> PluralForm.FEW
-//            (n == 4) -> PluralForm.MANY
-//            else -> PluralForm.OTHER
-//        }
-//    }
-//}
+class Nl: Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n % 100 in 2.. 7 || n % 100 in 9..19) -> PluralForm.TWO
+            else -> PluralForm.OTHER
+        }
+    }
+}
 
 
 class En: Locale {
