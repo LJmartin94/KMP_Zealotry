@@ -3,12 +3,7 @@ package libs.localisation
 //REF: https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
 
 enum class PluralForm {
-    ZERO,
-    ONE,
-    TWO,
-    FEW,
-    MANY,
-    OTHER
+    ZERO, ONE, TWO, FEW, MANY, OTHER
 }
 
 interface Locale {
@@ -35,7 +30,6 @@ class Af : Locale {
     }
 }
 
-
 class Sq : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -46,7 +40,6 @@ class Sq : Locale {
     }
 }
 
-
 class Am : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -54,7 +47,6 @@ class Am : Locale {
         }
     }
 }
-
 
 class Ar : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -64,7 +56,6 @@ class Ar : Locale {
     }
 }
 
-
 class An : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -72,7 +63,6 @@ class An : Locale {
         }
     }
 }
-
 
 class Hy : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -82,7 +72,6 @@ class Hy : Locale {
         }
     }
 }
-
 
 class As : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -96,17 +85,13 @@ class As : Locale {
     }
 }
 
-
 class Az : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n % 10 in listOf(1, 2, 5, 7, 8) ||
-                    n % 100 in listOf(20, 50, 70, 80)) -> PluralForm.ONE
+            (n % 10 in listOf(1, 2, 5, 7, 8) || n % 100 in listOf(20, 50, 70, 80)) -> PluralForm.ONE
 
-            (n % 10 in 3..4 ||
-                    n % 1000 in listOf(
-                100, 200, 300, 400, 500,
-                600, 700, 800, 900
+            (n % 10 in 3..4 || n % 1000 in listOf(
+                100, 200, 300, 400, 500, 600, 700, 800, 900
             )) -> PluralForm.FEW
 
             (n == 0 || n % 10 == 6 || n % 100 in listOf(40, 60, 90)) -> PluralForm.MANY
@@ -114,7 +99,6 @@ class Az : Locale {
         }
     }
 }
-
 
 class Bn : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -128,7 +112,6 @@ class Bn : Locale {
     }
 }
 
-
 class Eu : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -136,7 +119,6 @@ class Eu : Locale {
         }
     }
 }
-
 
 class Be : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -147,7 +129,6 @@ class Be : Locale {
     }
 }
 
-
 class Bs : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -155,7 +136,6 @@ class Bs : Locale {
         }
     }
 }
-
 
 class Bg : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -165,7 +145,6 @@ class Bg : Locale {
     }
 }
 
-
 class My : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -174,7 +153,6 @@ class My : Locale {
     }
 }
 
-
 class Yue : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -182,7 +160,6 @@ class Yue : Locale {
         }
     }
 }
-
 
 class Ca : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -195,7 +172,6 @@ class Ca : Locale {
     }
 }
 
-
 class Ce : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -203,7 +179,6 @@ class Ce : Locale {
         }
     }
 }
-
 
 class Zh : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -213,22 +188,18 @@ class Zh : Locale {
     }
 }
 
-
 class Kw : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n % 100 in 1..4 ||
-                    n % 100 in 21..24 ||
-                    n % 100 in 41..44 ||
-                    n % 100 in 61..64 ||
-                    n % 100 in 81..84) -> PluralForm.ONE
+            (n % 100 in 1..4
+                    || n % 100 in 21..24 || n % 100 in 41..44
+                    || n % 100 in 61..64 || n % 100 in 81..84) -> PluralForm.ONE
 
             (n % 100 == 5) -> PluralForm.MANY
             else -> PluralForm.OTHER
         }
     }
 }
-
 
 class Hr : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -238,7 +209,6 @@ class Hr : Locale {
     }
 }
 
-
 class Cs : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -247,7 +217,6 @@ class Cs : Locale {
     }
 }
 
-
 class Da : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
@@ -255,1000 +224,6 @@ class Da : Locale {
         }
     }
 }
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
-
-class Tmp : Locale {
-    override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            (n == 0) -> PluralForm.ZERO
-            (n == 1) -> PluralForm.ONE
-            (n == 2) -> PluralForm.TWO
-            (n == 3) -> PluralForm.FEW
-            (n == 4) -> PluralForm.MANY
-            else -> PluralForm.OTHER
-        }
-    }
-}
-
 
 class Nl : Locale {
     override fun getOrdinal(n: Int): PluralForm {
@@ -1259,6 +234,915 @@ class Nl : Locale {
     }
 }
 
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
+
+class Tmp : Locale {
+    override fun getOrdinal(n: Int): PluralForm {
+        return when {
+            (n == 0) -> PluralForm.ZERO
+            (n == 1) -> PluralForm.ONE
+            (n == 2) -> PluralForm.TWO
+            (n == 3) -> PluralForm.FEW
+            (n == 4) -> PluralForm.MANY
+            else -> PluralForm.OTHER
+        }
+    }
+}
 
 class En : Locale {
     override fun getOrdinal(n: Int): PluralForm {
