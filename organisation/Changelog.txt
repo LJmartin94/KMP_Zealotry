@@ -6,6 +6,7 @@ Streak: 24
 Learned:
 Did:
     -Update en and nl strings to only populate the plural forms they use, add NL to Locale lib
+    -Add Locales from Azerbaijani .. Danish
 
 16-04-2024
 Streak: 24
