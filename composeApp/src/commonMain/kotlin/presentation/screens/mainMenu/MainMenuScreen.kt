@@ -16,11 +16,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.i18n.MessageFormat
 import data.calendar.Season
 import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.getStringArray
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.calendar.CalendarFragment
 import presentation.calendar.CalendarViewModel
 import presentation.resourceComposition.toDrawableResource
@@ -38,6 +40,7 @@ import zealotry.composeapp.generated.resources.evening_button
 import zealotry.composeapp.generated.resources.morning
 import zealotry.composeapp.generated.resources.morning_button
 import zealotry.composeapp.generated.resources.spring
+import zealotry.composeapp.generated.resources.ordinal
 import zealotry.composeapp.generated.resources.summer
 
 @OptIn(ExperimentalResourceApi::class)
@@ -64,7 +67,8 @@ fun MainMenuScreen(
         Box(Modifier.padding(20.dp).weight(1f)) {
             OutlinedText(
                 //TODO: tidy up this title
-                text = "1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100",
+                text= "2"+stringArrayResource(Res.string.ordinal)[2],
+//                text = "1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100",
                 //text = "${calendar.dayOfWeek.toResourceString()}, ${calendar.seasonInfo.dayOfTheSeason} of ${calendar.seasonInfo.currentSeason.toResourceString()}",
                 textBorderColour = Color(0xFFFFFFFF),
                 modifier = Modifier.padding(20.dp),

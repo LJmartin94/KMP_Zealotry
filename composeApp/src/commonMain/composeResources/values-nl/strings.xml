@@ -22,12 +22,12 @@
     <string name="summer">Zomer</string>
     <string name="autumn">Herfst</string>
     <string name="winter">Winter</string>
-    <plurals name="ordinal">
-        <item quantity="zero">"de"</item>
-        <item quantity="one">"ste"</item>
-        <item quantity="two">"de"</item>
-        <item quantity="few">"de"</item>
-        <item quantity="many">"ste"</item>
-        <item quantity="other">"ste"</item>
-    </plurals>
+    <string-array name="ordinal">
+        <item quantity="zero">de</item>
+        <item quantity="one">ste</item>
+        <item quantity="two">de</item>
+        <item quantity="few">de</item>
+        <item quantity="many">ste</item>
+        <item quantity="other">ste</item>
+    </string-array>
 </resources>

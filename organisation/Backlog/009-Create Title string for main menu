@@ -25,3 +25,5 @@ https://developer.android.com/reference/android/icu/text/MessageFormat
 
 Good numbers to test Dutch and English alongside:
 "1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100"
+
+https://stackoverflow.com/questions/65889035/how-to-use-string-resources-in-android-jetpack-compose

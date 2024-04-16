@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 23
+Best: 24
+
+16-04-2024
+Streak: 24
+Learned:
+Did:
+    -Add ordinal strings as string array (try to find what works within compose multiplatform
+        limitations, without relying on expect/actual workarounds)
 
 15-04-2024
 Streak: 23
