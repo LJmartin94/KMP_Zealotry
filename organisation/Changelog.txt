@@ -8,6 +8,8 @@ Learned:
 Did:
     -Add ordinal strings as string array (try to find what works within compose multiplatform
         limitations, without relying on expect/actual workarounds)
+    -Start implementing my own library for fetching Ordinal rules per locale. I'm stubborn so I'd
+        rather do this than rely on Moko for Resource Management, or implement it with expect/actual
 
 15-04-2024
 Streak: 23
