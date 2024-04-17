@@ -24,9 +24,7 @@ fun getLocale(locale: String): Locale {
 
 class Af : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -42,25 +40,19 @@ class Sq : Locale {
 
 class Am : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ar : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class An : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -114,9 +106,7 @@ class Bn : Locale {
 
 class Eu : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -131,33 +121,25 @@ class Be : Locale {
 
 class Bs : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Bg : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class My : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Yue : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -174,17 +156,13 @@ class Ca : Locale {
 
 class Ce : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Zh : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -203,25 +181,19 @@ class Kw : Locale {
 
 class Hr : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Cs : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Da : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -247,9 +219,7 @@ class En : Locale {
 
 class Et : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -264,9 +234,7 @@ class Fil : Locale {
 
 class Fi : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -281,9 +249,7 @@ class Fr : Locale {
 
 class Gl : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -301,17 +267,13 @@ class Ka : Locale {
 
 class De : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class El : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -329,9 +291,7 @@ class Gu : Locale {
 
 class He : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -358,33 +318,25 @@ class Hu : Locale {
 
 class Is : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Id : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class In : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ia : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -408,17 +360,13 @@ class It : Locale {
 
 class Ja : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Kn : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -433,25 +381,19 @@ class Kk : Locale {
 
 class Km : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ko : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ky : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -466,25 +408,19 @@ class Lo : Locale {
 
 class Lv : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Lt : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Dsb : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -510,9 +446,7 @@ class Ms : Locale {
 
 class Ml : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -529,9 +463,7 @@ class Mr : Locale {
 
 class Mn : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -546,9 +478,7 @@ class Ne : Locale {
 
 class Nb : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -566,49 +496,37 @@ class Or : Locale {
 
 class Ps : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Fa : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Pl : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Pt : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Prg : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Pa : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -623,9 +541,7 @@ class Ro : Locale {
 
 class Ru : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -651,9 +567,7 @@ class Gd : Locale {
 
 class Sr : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -668,49 +582,37 @@ class Scn : Locale {
 
 class Sd : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Si : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Sk : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Sl : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Es : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Sw : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -725,41 +627,31 @@ class Sv : Locale {
 
 class Gsw : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ta : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Te : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Th : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Tr : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -783,25 +675,19 @@ class Uk : Locale {
 
 class Hsb : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Ur : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Uz : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
@@ -829,16 +715,12 @@ class Cy : Locale {
 
 class Fy : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }
 
 class Zu : Locale {
     override fun getOrdinal(n: Int): PluralForm {
-        return when {
-            else -> PluralForm.OTHER
-        }
+        return PluralForm.OTHER
     }
 }

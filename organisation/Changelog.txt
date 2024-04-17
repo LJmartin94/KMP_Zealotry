@@ -8,6 +8,7 @@ Learned:
 Did:
     -Add support for all Locales that have their ordinal rules listed at
         https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
+    -Simplify Locales that only return PluralForm.OTHER
 
 17-04-2024
 Streak: 25
