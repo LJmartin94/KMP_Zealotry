@@ -22,7 +22,6 @@ import libs.localisation.getLocale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringArrayResource
-import presentation.calendar.CalendarViewModel
 import presentation.resourceComposition.toDrawableResource
 import presentation.reusableUi.ImageButton
 import presentation.reusableUi.OutlinedText
@@ -41,15 +40,13 @@ import zealotry.composeapp.generated.resources.ordinal
 @Composable
 fun MainMenuScreen(
     viewModel: MainMenuViewModel,
-    calendarViewModel: CalendarViewModel,
     onNavigate: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val calendar by calendarViewModel.calendarState.collectAsState()
 
     Box(modifier = with(Modifier) {
         fillMaxSize().paint(
-            painterResource(calendar.seasonInfo.currentSeason.toDrawableResource()),
+            painterResource(uiState.backgroundSeason.toDrawableResource()),
             contentScale = ContentScale.Crop
         )
     })

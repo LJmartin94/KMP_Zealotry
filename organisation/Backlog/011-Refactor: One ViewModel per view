@@ -3,3 +3,5 @@ In reality the calendar fragment is not used, and the data in calendar repo is c
  in multiple different places instead.
 These should have separate VMs associated with them,
 or have it exposed at a high enough level where all children can access the state.
+
+Need to check lifecycle of calendar repo is correct

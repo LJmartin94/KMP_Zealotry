@@ -14,7 +14,7 @@ fun initKoin() {
         modules(
             module {
                 single { MainMenuRepository() }
-                factory { MainMenuViewModel() }
+                factory { MainMenuViewModel(get()) }
 
                 single { DayPartMenuRepository() }
                 factory { DayPartMenuViewModel() }
