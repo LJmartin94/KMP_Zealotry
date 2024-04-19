@@ -1,6 +1,7 @@
 package data.calendar
 
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.toLocalDateTime
@@ -12,6 +13,7 @@ enum class Season {
 
 data class SeasonInfo(
     val dayOfTheYear: Int = 0,
+    val date: LocalDate = LocalDate(year = 1994, monthNumber = 4, dayOfMonth = 11),
     val vernalEquinox: Int = 0,
     val summerSolstice: Int = 0,
     val autumnalEquinox: Int = 0,
@@ -29,6 +31,7 @@ fun getSeasonInfo(
     timeZone: TimeZone = TimeZone.currentSystemDefault()
 ): SeasonInfo {
     val localTime = moment.toLocalDateTime(timeZone)
+    val date = localTime.date
     val dayOfTheYear = localTime.dayOfYear
     val utcTime = moment.toLocalDateTime(TimeZone.UTC)
 
@@ -106,6 +109,7 @@ fun getSeasonInfo(
 
     return SeasonInfo(
         dayOfTheYear = dayOfTheYear,
+        date = date,
         vernalEquinox = vernalEquinox,
         summerSolstice = summerSolstice,
         autumnalEquinox = autumnalEquinox,

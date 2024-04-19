@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 26
+Best: 27
+
+19-04-2024
+Streak: 27
+Learned:
+Did:
+    -Add 'festive days' to the app, to display instead of dayOfWeek on special days
+    -Make mock-up for MainMenu title -> still needs to be done properly and in its own component
 
 18-04-2024
 Streak: 26

@@ -2,6 +2,7 @@ package presentation.screens.mainMenu
 
 import data.calendar.CalendarRepository
 import data.calendar.CalendarState
+import data.calendar.getFestiveDay
 import data.screens.mainMenu.MainMenuUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,8 +19,10 @@ class MainMenuViewModel(private val calendarRepository: CalendarRepository) : Vi
             calendarRepository.updateFlow
                 .collect { state: CalendarState ->
                     _uiState.value = _uiState.value.copy(
-                        dayName = state.dayOfWeek,
-                        backgroundSeason = state.seasonInfo.currentSeason
+                        festiveDay = state.seasonInfo.getFestiveDay(),
+                        dayOfWeek = state.dayOfWeek,
+                        dayOfSeason = state.seasonInfo.dayOfTheSeason,
+                        currentSeason = state.seasonInfo.currentSeason
                     )
                 }
         }
