@@ -20,7 +20,7 @@ import zealotry.composeapp.generated.resources.winter
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun DayOfWeek.toResourceString(): String{
+fun DayOfWeek.toResourceString(): String {
     return when (this) {
         DayOfWeek.MONDAY -> stringResource(Res.string.monday)
         DayOfWeek.TUESDAY -> stringResource(Res.string.tuesday)
@@ -35,8 +35,8 @@ fun DayOfWeek.toResourceString(): String{
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun Season.toResourceString(): String{
-    return when (this){
+fun Season.toResourceString(): String {
+    return when (this) {
         Season.SPRING -> stringResource(Res.string.spring)
         Season.SUMMER -> stringResource(Res.string.summer)
         Season.AUTUMN -> stringResource(Res.string.autumn)
