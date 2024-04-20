@@ -1,10 +1,13 @@
 package presentation.resourceComposition
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.intl.Locale
 import data.calendar.FestiveDay
 import data.calendar.Season
 import kotlinx.datetime.DayOfWeek
+import libs.localisation.getLocale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
@@ -15,6 +18,8 @@ import zealotry.composeapp.generated.resources.mid_spring
 import zealotry.composeapp.generated.resources.mid_summer
 import zealotry.composeapp.generated.resources.mid_winter
 import zealotry.composeapp.generated.resources.monday
+import zealotry.composeapp.generated.resources.ordinal
+import zealotry.composeapp.generated.resources.ordinal_number
 import zealotry.composeapp.generated.resources.saturday
 import zealotry.composeapp.generated.resources.spring
 import zealotry.composeapp.generated.resources.spring_start
@@ -66,4 +71,12 @@ fun FestiveDay.toResourceString(): String {
         FestiveDay.WINTER_START -> stringResource(Res.string.winter_start)
         FestiveDay.MID_WINTER -> stringResource(Res.string.mid_winter)
     }
+}
+
+@Composable
+@OptIn(ExperimentalResourceApi::class)
+fun Int.toOrdinalNumberString(locale: String = Locale.current.language): String {
+    val pluralForm = getLocale(locale).getOrdinal(this)
+    val ordinalSignifier = stringArrayResource(Res.string.ordinal)[pluralForm.ordinal]
+    return stringResource(Res.string.ordinal_number, this, ordinalSignifier)
 }
