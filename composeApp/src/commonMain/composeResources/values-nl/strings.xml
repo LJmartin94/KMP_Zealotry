@@ -30,4 +30,6 @@
         <item quantity="many" />
         <item quantity="other">ste</item>
     </string-array>
+    <!-- 1=DayName, 2=OrdinalNumber, 3=Season, e.g.: Christmas, 45th day of Winter -->
+    <string name="main_menu_title">%1$s, %2$s dag van de %3$s</string>
 </resources>

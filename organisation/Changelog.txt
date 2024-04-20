@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 27
+Best: 28
+
+20-04-2024
+Streak: 28
+Learned:
+Did:
+    -Add menu title strings for en and nl. Move menu title to its own component,
+        for now passing the whole parent state
 
 19-04-2024
 Streak: 27

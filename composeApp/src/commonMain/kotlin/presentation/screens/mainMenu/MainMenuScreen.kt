@@ -11,20 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import libs.localisation.getLocale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringArrayResource
 import presentation.resourceComposition.toDrawableResource
-import presentation.resourceComposition.toResourceString
 import presentation.reusableUi.ImageButton
-import presentation.reusableUi.OutlinedText
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
 import zealotry.composeapp.generated.resources.day
@@ -33,7 +25,6 @@ import zealotry.composeapp.generated.resources.evening
 import zealotry.composeapp.generated.resources.evening_button
 import zealotry.composeapp.generated.resources.morning
 import zealotry.composeapp.generated.resources.morning_button
-import zealotry.composeapp.generated.resources.ordinal
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -51,25 +42,12 @@ fun MainMenuScreen(
         )
     })
 
-    val dayName = uiState.festiveDay?.toResourceString() ?: uiState.dayOfWeek.toResourceString()
-    val pluralForm = getLocale(Locale.current.language).getOrdinal(uiState.dayOfSeason)
-    val suffix = stringArrayResource(Res.string.ordinal)[pluralForm.ordinal]
-    val ordinalDayOfSeason = "${uiState.dayOfSeason}${suffix}"
-    val tempTitle = "${dayName}, ${ordinalDayOfSeason} day of ${uiState.currentSeason.toResourceString()}"
-
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(Modifier.padding(20.dp).weight(1f)) {
-            OutlinedText(
-                //TODO: tidy up this title
-                text = tempTitle,
-                textBorderColour = Color(0xFFFFFFFF),
-                modifier = Modifier.padding(20.dp),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )
+            MainMenuTitle(uiState)
         }
 
         MainMenuSub(
