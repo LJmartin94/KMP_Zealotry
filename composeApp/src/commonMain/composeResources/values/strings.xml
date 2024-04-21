@@ -32,6 +32,6 @@
     </string-array>
     <!-- 1=Number, 2=Ordinal suffix/prefix, e.g.: {1}{st} -->
     <string name="ordinal_number">%1$d%2$s</string>
-    <!-- 1=DayName, 2=OrdinalNumber, 3=Season, e.g.: {Christmas}, {48th} day of {Winter} -->
-    <string name="main_menu_title">%1$s, %2$s day of %3$s</string>
+    <!-- 1=OrdinalNumber, 2=Season, e.g.: {48th} day of {Winter} -->
+    <string name="day_of_season">%1$s day of %2$s</string>
 </resources>

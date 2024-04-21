@@ -46,10 +46,8 @@ fun MainMenuScreen(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(Modifier.padding(20.dp).weight(1f)) {
-            MainMenuTitle(uiState)
-        }
-
+        MainMenuTitle(uiState = uiState, modifier = Modifier.padding(20.dp).weight(1f))
+        
         MainMenuSub(
             title = Res.string.daily_rituals,
             modifier = Modifier.weight(3f)

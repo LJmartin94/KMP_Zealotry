@@ -1,1 +1,4 @@
 Standardise padding and font sizes, define them in a global style file that can be referenced by ui
+https://www.netguru.com/blog/multiplatform-adaptive-ui
+
+Related to ticket 005 - make standard padding and font sizes adaptive to screen size.
