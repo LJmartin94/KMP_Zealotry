@@ -27,6 +27,9 @@ Good numbers to test Dutch and English alongside:
 "1 2 3 4 8 10 11 12 13 14 20 21 22 23 24 100"
 
 https://stackoverflow.com/questions/65889035/how-to-use-string-resources-in-android-jetpack-compose
+Eventually can consider replacing current implementation with:
+https://developer.android.com/develop/ui/compose/resources#string-plurals
+(currently still experimental/unavailable)
 
 Still need to:
 Set right font size, set right spacing between lines and distribution of text (see also ticket 004)
