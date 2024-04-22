@@ -6,3 +6,6 @@ Linter rules:
 -No lines over 100chars
 -Only one viewmodel per view
 -No .dp or .sp in files that aren't style-files
+
+http://googlesamples.github.io/android-custom-lint-rules/usage/lintxml.md.html
+https://itnext.io/write-custom-android-kotlin-linting-rules-like-a-psi-chic-e081e032da2f

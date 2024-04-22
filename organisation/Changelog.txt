@@ -1,6 +1,12 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 29
+Best: 30
+
+22-04-2024
+Streak: 30
+Learned:
+    -Read about adding linter rules
+Did:
 
 21-04-2024
 Streak: 29
