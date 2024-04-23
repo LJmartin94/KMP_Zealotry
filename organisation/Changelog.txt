@@ -1,6 +1,13 @@
 This is just to motivate myself to improve a little bit every day :)
 
-Best: 30
+Best: 31
+
+23-04-2024
+Streak: 31
+Learned:
+    -Realise linter isn't going to work, need to use ktlint and detekt instead
+Did:
+    -Add detekt as plugin to project (as yet untested)
 
 22-04-2024
 Streak: 30

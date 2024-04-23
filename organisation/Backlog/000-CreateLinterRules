@@ -7,5 +7,10 @@ Linter rules:
 -Only one viewmodel per view
 -No .dp or .sp in files that aren't style-files
 
+https://googlesamples.github.io/android-custom-lint-rules/
 http://googlesamples.github.io/android-custom-lint-rules/usage/lintxml.md.html
 https://itnext.io/write-custom-android-kotlin-linting-rules-like-a-psi-chic-e081e032da2f
+https://developer.android.com/studio/write/lint
+https://medium.com/@kevinnzou/simplify-code-formatting-elevate-your-compose-multiplatform-project-with-ktlint-fc89d4e0b433
+
+Standard linter can't/doesn't work... need to use detekt and ktlint instead I think.

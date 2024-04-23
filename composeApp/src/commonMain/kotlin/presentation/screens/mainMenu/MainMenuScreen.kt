@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,7 +27,9 @@ import zealotry.composeapp.generated.resources.evening_button
 import zealotry.composeapp.generated.resources.morning
 import zealotry.composeapp.generated.resources.morning_button
 
-
+class A {
+    val hard = "coded"
+}
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainMenuScreen(
@@ -34,6 +37,7 @@ fun MainMenuScreen(
     onNavigate: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val shouldError: String = "hardcoded string"
 
     Box(modifier = with(Modifier) {
         fillMaxSize().paint(
@@ -47,7 +51,9 @@ fun MainMenuScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MainMenuTitle(uiState = uiState, modifier = Modifier.padding(20.dp).weight(1f))
-        
+        Text(text = shouldError)
+        Text(text = "shouldError")
+
         MainMenuSub(
             title = Res.string.daily_rituals,
             modifier = Modifier.weight(3f)
