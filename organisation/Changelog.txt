@@ -2,12 +2,17 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+29-04-2024
+Streak: 1
+Learned:
+Did:
+    -Add ktlint plugin to project
+
 24-04-2024
 Streak: 32
 Learned:
 Did:
     -Add linter command script, remove obsolete lint.xml file
-
 
 23-04-2024
 Streak: 31
