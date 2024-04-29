@@ -12,7 +12,7 @@ import zealotry.composeapp.generated.resources.winter
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun Season.toDrawableResource(): DrawableResource  {
+fun Season.toDrawableResource(): DrawableResource {
     return when (this) {
         Season.SPRING -> Res.drawable.spring
         Season.SUMMER -> Res.drawable.summer
