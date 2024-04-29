@@ -24,17 +24,17 @@ fun ImageButton(
     textModifier: Modifier = Modifier,
     textRes: StringResource,
     onClick: () -> Unit,
-) =
-    Box(
-        modifier = imgModifier.clickable { onClick() }
+) = Box(
+    modifier =
+        imgModifier.clickable { onClick() }
             .paint(
                 painterResource(imgRes),
                 alpha = imgAlpha,
-                contentScale = ContentScale.FillBounds
-            )
-    ) {
-        Text(
-            text = stringResource(textRes),
-            modifier = textModifier.align(Alignment.BottomCenter)
-        )
-    }
+                contentScale = ContentScale.FillBounds,
+            ),
+) {
+    Text(
+        text = stringResource(textRes),
+        modifier = textModifier.align(Alignment.BottomCenter),
+    )
+}

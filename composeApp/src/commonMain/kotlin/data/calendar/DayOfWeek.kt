@@ -16,7 +16,7 @@ fun getInstantMinusOffset(
     d: Int = 0,
     h: Int = 4,
     m: Int = 0,
-    s: Int = 0
+    s: Int = 0,
 ): Instant {
     return moment - Duration.parseIsoString("P${d}DT${h}H${m}M${s}S")
 }
@@ -27,13 +27,13 @@ fun getDateMinusOffset(
     d: Int = 0,
     h: Int = 4,
     m: Int = 0,
-    s: Int = 0
+    s: Int = 0,
 ): LocalDateTime {
     return getInstantMinusOffset(
         moment = moment,
         d = d,
         h = h,
         m = m,
-        s = s
+        s = s,
     ).toLocalDateTime(timeZone)
 }

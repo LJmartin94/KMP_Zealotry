@@ -19,9 +19,9 @@ fun initKoin() {
                 single { DayPartMenuRepository() }
                 factory { DayPartMenuViewModel() }
 
-                single { CalendarRepository()}
-                factory { CalendarViewModel(get())}
-            }
+                single { CalendarRepository() }
+                factory { CalendarViewModel(get()) }
+            },
         )
     }
 }

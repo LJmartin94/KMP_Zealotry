@@ -21,6 +21,6 @@ fun CalendarFragment(viewModel: CalendarViewModel) {
         textBorderColour = Color(0xFFFFFFFF),
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }

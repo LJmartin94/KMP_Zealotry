@@ -13,29 +13,30 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration
 
 class CalendarRepository() {
-    val updateFlow: Flow<CalendarState> = flow {
-        while (true) {
-            println("getToday - Emitting day!")
-            val now: Instant = Clock.System.now()
+    val updateFlow: Flow<CalendarState> =
+        flow {
+            while (true) {
+                println("getToday - Emitting day!")
+                val now: Instant = Clock.System.now()
 //            val now: Instant = Instant.parse("2024-04-24T20:53Z")
-            val modifiedDay: LocalDateTime = getDateMinusOffset(moment = now)
-            val modifiedInstant: Instant = getInstantMinusOffset(moment = now)
-            emit(
-                CalendarState(
-                    dayOfWeek = modifiedDay.dayOfWeek,
-                    seasonInfo = getSeasonInfo(modifiedInstant),
+                val modifiedDay: LocalDateTime = getDateMinusOffset(moment = now)
+                val modifiedInstant: Instant = getInstantMinusOffset(moment = now)
+                emit(
+                    CalendarState(
+                        dayOfWeek = modifiedDay.dayOfWeek,
+                        seasonInfo = getSeasonInfo(modifiedInstant),
+                    ),
                 )
-            )
-            val delayBy = getDurationUntilNextDay(moment = modifiedInstant)
-            println("getToday - Delaying next check for $delayBy!")
-            delay(delayBy.inWholeMilliseconds)
-            println("getToday - Coroutine waking up...")
+                val delayBy = getDurationUntilNextDay(moment = modifiedInstant)
+                println("getToday - Delaying next check for $delayBy!")
+                delay(delayBy.inWholeMilliseconds)
+                println("getToday - Coroutine waking up...")
+            }
         }
-    }
 
     private fun getDurationUntilNextDay(
         moment: Instant,
-        timeZone: TimeZone = TimeZone.currentSystemDefault()
+        timeZone: TimeZone = TimeZone.currentSystemDefault(),
     ): Duration {
         var nextDay = moment
         val dayOf = { i: Instant -> i.toLocalDateTime(timeZone).dayOfWeek }

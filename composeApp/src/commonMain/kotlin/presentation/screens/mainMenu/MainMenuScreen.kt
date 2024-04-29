@@ -30,25 +30,29 @@ import zealotry.composeapp.generated.resources.morning_button
 class A {
     val hard = "coded"
 }
+
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainMenuScreen(
     viewModel: MainMenuViewModel,
-    onNavigate: (String) -> Unit
+    onNavigate: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val shouldError: String = "hardcoded string"
 
-    Box(modifier = with(Modifier) {
-        fillMaxSize().paint(
-            painterResource(uiState.currentSeason.toDrawableResource()),
-            contentScale = ContentScale.Crop
-        )
-    })
+    Box(
+        modifier =
+            with(Modifier) {
+                fillMaxSize().paint(
+                    painterResource(uiState.currentSeason.toDrawableResource()),
+                    contentScale = ContentScale.Crop,
+                )
+            },
+    )
 
     Column(
         Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         MainMenuTitle(uiState = uiState, modifier = Modifier.padding(20.dp).weight(1f))
         Text(text = shouldError)
@@ -56,9 +60,8 @@ fun MainMenuScreen(
 
         MainMenuSub(
             title = Res.string.daily_rituals,
-            modifier = Modifier.weight(3f)
+            modifier = Modifier.weight(3f),
         ) {
-
             ImageButton(
                 imgModifier = Modifier.fillMaxWidth().weight(1f),
                 imgRes = Res.drawable.morning_button,
@@ -82,7 +85,6 @@ fun MainMenuScreen(
                 onClick = { onNavigate("Evening") },
                 textRes = Res.string.evening,
             )
-
         }
     }
 }

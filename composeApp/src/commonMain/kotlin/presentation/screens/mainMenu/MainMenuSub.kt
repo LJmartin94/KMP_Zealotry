@@ -24,34 +24,37 @@ fun MainMenuSub(
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
-    content: @Composable() (() -> Unit)
+    content:
+        @Composable()
+        (() -> Unit),
 ) {
-    //Top level for sub menu
+    // Top level for sub menu
     return Column(
         modifier = modifier.fillMaxWidth().padding(24.dp),
         verticalArrangement = verticalArrangement,
-        horizontalAlignment = horizontalAlignment
+        horizontalAlignment = horizontalAlignment,
     ) {
-
-        //Title
+        // Title
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(4f)
-                .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .weight(4f)
+                    .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(title))
         }
 
-        //Container
+        // Container
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(17f)
-                .background(ColourCompositionLocal.current.background.copy(alpha = 0.8f))
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .weight(17f)
+                    .background(ColourCompositionLocal.current.background.copy(alpha = 0.8f))
+                    .padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             content()
         }

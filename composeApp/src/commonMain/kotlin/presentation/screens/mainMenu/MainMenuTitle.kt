@@ -20,13 +20,17 @@ import zealotry.composeapp.generated.resources.day_of_season
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun MainMenuTitle(uiState: MainMenuUIState, modifier: Modifier = Modifier) {
+fun MainMenuTitle(
+    uiState: MainMenuUIState,
+    modifier: Modifier = Modifier,
+) {
     val dayName = uiState.festiveDay?.toResourceString() ?: uiState.dayOfWeek.toResourceString()
-    val dayXOfSeasonY = stringResource(
-        Res.string.day_of_season,
-        uiState.dayOfSeason.toOrdinalNumberString(),
-        uiState.currentSeason.toResourceString()
-    )
+    val dayXOfSeasonY =
+        stringResource(
+            Res.string.day_of_season,
+            uiState.dayOfSeason.toOrdinalNumberString(),
+            uiState.currentSeason.toResourceString(),
+        )
     return Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -39,7 +43,7 @@ fun MainMenuTitle(uiState: MainMenuUIState, modifier: Modifier = Modifier) {
             style = MainTypography().h5,
         )
         OutlinedText(
-            text= dayName,
+            text = dayName,
             textBorderColour = Color(0xFFFFFFFF),
             textAlign = TextAlign.Center,
             style = MainTypography().h4,

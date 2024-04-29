@@ -18,6 +18,6 @@ fun DayPartMenuScreen(viewModel: DayPartMenuViewModel) {
         text = "Placeholder DayPartMenu",
         modifier = Modifier.padding(20.dp),
         fontSize = 24.sp,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }

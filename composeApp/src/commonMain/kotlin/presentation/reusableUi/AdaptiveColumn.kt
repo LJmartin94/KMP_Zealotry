@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-
 /**
  * Doesn't work, am unable to pass the scope of the modifier at runtime
  */
-fun Modifier.adaptiveWeight(float: Float, fill: Boolean = true): Modifier {
+fun Modifier.adaptiveWeight(
+    float: Float,
+    fill: Boolean = true,
+): Modifier {
     println(this)
     return when (this) {
         is ColumnScope -> Modifier.weight(float, fill)
@@ -31,22 +33,26 @@ fun AdaptiveColumn(
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable() (() -> Unit)
+    content:
+        @Composable()
+        (() -> Unit),
 ) {
     return BoxWithConstraints {
         val portrait: Boolean = this.maxHeight >= this.maxWidth
         when (portrait) {
-            true -> Column(
-                modifier,
-                verticalArrangement,
-                horizontalAlignment
-            ) { this.apply { content() } }
+            true ->
+                Column(
+                    modifier,
+                    verticalArrangement,
+                    horizontalAlignment,
+                ) { this.apply { content() } }
 
-            false -> Row(
-                modifier,
-                verticalArrangement.flip(),
-                horizontalAlignment.flip()
-            ) { content() }
+            false ->
+                Row(
+                    modifier,
+                    verticalArrangement.flip(),
+                    horizontalAlignment.flip(),
+                ) { content() }
         }
     }
 }

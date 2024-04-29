@@ -18,12 +18,13 @@ class MainMenuViewModel(private val calendarRepository: CalendarRepository) : Vi
         viewModelScope.launch {
             calendarRepository.updateFlow
                 .collect { state: CalendarState ->
-                    _uiState.value = _uiState.value.copy(
-                        festiveDay = state.seasonInfo.getFestiveDay(),
-                        dayOfWeek = state.dayOfWeek,
-                        dayOfSeason = state.seasonInfo.dayOfTheSeason,
-                        currentSeason = state.seasonInfo.currentSeason
-                    )
+                    _uiState.value =
+                        _uiState.value.copy(
+                            festiveDay = state.seasonInfo.getFestiveDay(),
+                            dayOfWeek = state.dayOfWeek,
+                            dayOfSeason = state.seasonInfo.dayOfTheSeason,
+                            currentSeason = state.seasonInfo.currentSeason,
+                        )
                 }
         }
     }

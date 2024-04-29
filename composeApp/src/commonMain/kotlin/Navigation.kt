@@ -15,11 +15,11 @@ fun Navigation() {
     NavHost(
         navigator = navigator,
         navTransition = NavTransition(),
-        initialRoute = "/mainMenu"
+        initialRoute = "/mainMenu",
     ) {
         scene(route = "/mainMenu", navTransition = NavTransition()) {
             val mainVM = koinViewModel(MainMenuViewModel::class)
-            MainMenuScreen(mainVM) {navigator.navigate("/dayPartMenu/$it")}
+            MainMenuScreen(mainVM) { navigator.navigate("/dayPartMenu/$it") }
         }
 
         scene(route = "/dayPartMenu/{part}", navTransition = NavTransition()) {

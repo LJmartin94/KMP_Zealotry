@@ -47,15 +47,16 @@ fun OutlinedText(
     contentAlignment = containerAlignment,
     propagateMinConstraints = propagateMinConstraints,
 ) {
-    //Border
+    // Border
     Text(
         color = textBorderColour,
-        style = style.merge(
-            TextStyle(
-                drawStyle = Stroke(width = textBorderWidth)
-            )
-        ),
-        //Default Text properties:
+        style =
+            style.merge(
+                TextStyle(
+                    drawStyle = Stroke(width = textBorderWidth),
+                ),
+            ),
+        // Default Text properties:
         text = text,
         modifier = modifier,
         fontSize = fontSize,
@@ -72,10 +73,10 @@ fun OutlinedText(
         minLines = minLines,
         onTextLayout = onTextLayout,
     )
-    //Fill
+    // Fill
     Text(
         color = textFillColour,
-        //Default Text properties:
+        // Default Text properties:
         text = text,
         modifier = modifier,
         fontSize = fontSize,

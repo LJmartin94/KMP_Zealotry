@@ -1,9 +1,14 @@
 package libs.localisation
 
-//REF: https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
+// REF: https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
 
 enum class PluralForm {
-    ZERO, ONE, TWO, FEW, MANY, OTHER
+    ZERO,
+    ONE,
+    TWO,
+    FEW,
+    MANY,
+    OTHER,
 }
 
 interface Locale {
@@ -82,9 +87,12 @@ class Az : Locale {
         return when {
             (n % 10 in listOf(1, 2, 5, 7, 8) || n % 100 in listOf(20, 50, 70, 80)) -> PluralForm.ONE
 
-            (n % 10 in 3..4 || n % 1000 in listOf(
-                100, 200, 300, 400, 500, 600, 700, 800, 900
-            )) -> PluralForm.FEW
+            (
+                n % 10 in 3..4 || n % 1000 in
+                    listOf(
+                        100, 200, 300, 400, 500, 600, 700, 800, 900,
+                    )
+            ) -> PluralForm.FEW
 
             (n == 0 || n % 10 == 6 || n % 100 in listOf(40, 60, 90)) -> PluralForm.MANY
             else -> PluralForm.OTHER
@@ -169,9 +177,11 @@ class Zh : Locale {
 class Kw : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n % 100 in 1..4
-                    || n % 100 in 21..24 || n % 100 in 41..44
-                    || n % 100 in 61..64 || n % 100 in 81..84) -> PluralForm.ONE
+            (
+                n % 100 in 1..4 ||
+                    n % 100 in 21..24 || n % 100 in 41..44 ||
+                    n % 100 in 61..64 || n % 100 in 81..84
+            ) -> PluralForm.ONE
 
             (n % 100 == 5) -> PluralForm.MANY
             else -> PluralForm.OTHER
@@ -257,8 +267,10 @@ class Ka : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
             (n == 1) -> PluralForm.ONE
-            (n == 0 || n % 100 in 2..20
-                    || n % 100 in listOf(40, 60, 80)) -> PluralForm.MANY
+            (
+                n == 0 || n % 100 in 2..20 ||
+                    n % 100 in listOf(40, 60, 80)
+            ) -> PluralForm.MANY
 
             else -> PluralForm.OTHER
         }
@@ -548,7 +560,7 @@ class Ru : Locale {
 class Sc : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n in listOf(8,11,80,800)) -> PluralForm.MANY
+            (n in listOf(8, 11, 80, 800)) -> PluralForm.MANY
             else -> PluralForm.OTHER
         }
     }
@@ -574,7 +586,7 @@ class Sr : Locale {
 class Scn : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n in listOf(8,11,80,800)) -> PluralForm.MANY
+            (n in listOf(8, 11, 80, 800)) -> PluralForm.MANY
             else -> PluralForm.OTHER
         }
     }
@@ -619,7 +631,7 @@ class Sw : Locale {
 class Sv : Locale {
     override fun getOrdinal(n: Int): PluralForm {
         return when {
-            (n % 10 in 1..2 && n % 100 !in 11..12 ) -> PluralForm.ONE
+            (n % 10 in 1..2 && n % 100 !in 11..12) -> PluralForm.ONE
             else -> PluralForm.OTHER
         }
     }
