@@ -1,6 +1,15 @@
+// Turns out, linguistic counting systems often contain Magic Numbers... Who knew?!
+@file:Suppress("MagicNumber")
+
 package libs.localisation
 
-// REF: https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
+/**
+ * This file is a programmatic representation of the information about ordinal counting systems
+ * across many languages.
+ *
+ * For more info, see:
+ * https://www.unicode.org/cldr/cldr-aux/charts/36.1/supplemental/language_plural_rules.html
+ */
 
 enum class PluralForm {
     ZERO,
