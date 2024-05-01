@@ -1,2 +1,8 @@
 [**/generated/**]
 ktlint = disabled
+
+[*]
+
+ktlint_standard_function-naming = disabled
+# Does not work with Composable fun types, and annotation specific exceptions are not possible
+# See: https://github.com/pinterest/ktlint/issues/2139
