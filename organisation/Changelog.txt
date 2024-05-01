@@ -7,6 +7,9 @@ Streak: 1
 Learned:
 Did:
     -Disable ktlint for generated files with .editorconfig
+    -Disable ktlint naming rule that doesn't match Composable naming style
+    -Clear remaining ktlint errors
+    -Generate default detekt config
 
 29-04-2024
 Streak: 1
