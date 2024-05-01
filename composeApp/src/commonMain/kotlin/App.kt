@@ -1,6 +1,6 @@
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import moe.tlaster.precompose.PreComposeApp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
