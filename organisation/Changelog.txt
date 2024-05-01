@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+01-05-2024
+Streak: 1
+Learned:
+Did:
+    -Disable ktlint for generated files with .editorconfig
+
 29-04-2024
 Streak: 1
 Learned:
