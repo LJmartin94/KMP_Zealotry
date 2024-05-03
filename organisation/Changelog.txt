@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+03-05-2024
+Streak: 1
+Learned:
+Did:
+    -Make detekt rules that exclude tests also exclude generated files
+
 01-05-2024
 Streak: 1
 Learned:
