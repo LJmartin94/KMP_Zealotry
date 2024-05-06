@@ -2,6 +2,13 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+06-05-2024
+Streak: 1
+Learned:
+Did:
+    -Refactor SeasonInfo data class to have a sensible constructor,
+        split calculations into separate methods
+
 03-05-2024
 Streak: 1
 Learned:

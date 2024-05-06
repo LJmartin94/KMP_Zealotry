@@ -24,7 +24,7 @@ class CalendarRepository() {
                 emit(
                     CalendarState(
                         dayOfWeek = modifiedDay.dayOfWeek,
-                        seasonInfo = getSeasonInfo(modifiedInstant),
+                        seasonInfo = SeasonInfo(modifiedInstant),
                     ),
                 )
                 val delayBy = getDurationUntilNextDay(moment = modifiedInstant)
