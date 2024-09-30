@@ -17,12 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import presentation.style.ColourCompositionLocal
 
 @Composable
 fun OutlinedText(
     text: String,
     textFillColour: Color = Color.Unspecified,
-    textBorderColour: Color = Color(0xFFFFFFFF),
+    textBorderColour: Color = ColourCompositionLocal.current.onSecondary,
     textBorderWidth: Float = 12f,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = TextUnit.Unspecified,
