@@ -20,7 +20,20 @@ val RED = Color(0xFFFF1201)
 @Composable
 fun MainColours() =
     if (isSystemInDarkTheme()) {
-        darkColors()
+        darkColors(
+        primary = Color(0xFFBB86FC), //Purple
+        primaryVariant = Color(0xFF3700B3), //Dark Purple
+        secondary = Color(0xFF03DAC6), //Cyan
+        secondaryVariant = Color(0xFF03DAC6), //Cyan
+        background = Color(0xFF121212), //Darker Charcoal
+        surface = Color(0xFF121212), //Darker Charcoal
+        error = Color(0xFFCF6679), //MutedRed
+        onPrimary = Color.Black,
+        onSecondary = Color.Black,
+        onBackground = Color.White,
+        onSurface = Color.White,
+        onError = Color.Black
+        )
     } else {
         lightColors(
             primary = DARK_GREY,
