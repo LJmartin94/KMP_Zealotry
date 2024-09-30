@@ -38,13 +38,11 @@ fun MainMenuTitle(
     ) {
         OutlinedText(
             text = dayXOfSeasonY,
-            textBorderColour = Color(0xFFFFFFFF),
             textAlign = TextAlign.Center,
             style = MainTypography().h5,
         )
         OutlinedText(
             text = dayName,
-            textBorderColour = Color(0xFFFFFFFF),
             textAlign = TextAlign.Center,
             style = MainTypography().h4,
         )

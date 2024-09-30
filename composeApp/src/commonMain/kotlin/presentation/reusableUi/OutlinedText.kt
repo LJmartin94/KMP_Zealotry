@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.TextUnit
 fun OutlinedText(
     text: String,
     textFillColour: Color = Color.Unspecified,
-    textBorderColour: Color,
+    textBorderColour: Color = Color(0xFFFFFFFF),
     textBorderWidth: Float = 12f,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = TextUnit.Unspecified,
