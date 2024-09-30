@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -6,6 +7,7 @@ import moe.tlaster.precompose.PreComposeApp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.style.MainTheme
+import presentation.style.setIfDarkMode
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -30,7 +32,7 @@ fun App() {
 //                    }
 //                }
 //            }
-            Surface(modifier = Modifier.fillMaxSize()) {
+            Surface(modifier = Modifier.fillMaxSize().setIfDarkMode()) {
                 Navigation()
             }
         }
