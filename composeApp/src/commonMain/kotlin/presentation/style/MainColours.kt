@@ -6,6 +6,13 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+//Dark Theme:
+val PURPLE = Color(0xFFBB86FC)
+val DARK_PURPLE = Color(0xFF3700B3)
+val CYAN = Color(0xFF03DAC6)
+val DARKEST_CHARCOAL = Color(0xFF121212)
+val MUTED_RED =  Color(0xFFCF6679)
+
 //Light Theme (default):
 val CHARCOAL = Color(0xFF262626)
 val DARK_GREY = Color(0xFFAFADAA)
@@ -21,13 +28,13 @@ val RED = Color(0xFFFF1201)
 fun MainColours() =
     if (isSystemInDarkTheme()) {
         darkColors(
-        primary = Color(0xFFBB86FC), //Purple
-        primaryVariant = Color(0xFF3700B3), //Dark Purple
-        secondary = Color(0xFF03DAC6), //Cyan
-        secondaryVariant = Color(0xFF03DAC6), //Cyan
-        background = Color(0xFF121212), //Darker Charcoal
-        surface = Color(0xFF121212), //Darker Charcoal
-        error = Color(0xFFCF6679), //MutedRed
+        primary = PURPLE,
+        primaryVariant = DARK_PURPLE,
+        secondary = CYAN,
+        secondaryVariant = CYAN,
+        background = DARKEST_CHARCOAL,
+        surface = DARKEST_CHARCOAL,
+        error = MUTED_RED,
         onPrimary = Color.Black,
         onSecondary = Color.Black,
         onBackground = Color.White,
