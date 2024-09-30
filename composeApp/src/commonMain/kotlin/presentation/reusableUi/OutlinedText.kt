@@ -22,8 +22,8 @@ import presentation.style.ColourCompositionLocal
 @Composable
 fun OutlinedText(
     text: String,
-    textFillColour: Color = Color.Unspecified,
-    textBorderColour: Color = ColourCompositionLocal.current.onSecondary,
+    textFillColour: Color = ColourCompositionLocal.current.onBackground,
+    textBorderColour: Color = ColourCompositionLocal.current.background,
     textBorderWidth: Float = 12f,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = TextUnit.Unspecified,

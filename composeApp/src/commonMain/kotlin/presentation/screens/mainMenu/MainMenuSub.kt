@@ -43,7 +43,7 @@ fun MainMenuSub(
                     .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = stringResource(title))
+            Text(text = stringResource(title), color = ColourCompositionLocal.current.onPrimary)
         }
 
         // Container
