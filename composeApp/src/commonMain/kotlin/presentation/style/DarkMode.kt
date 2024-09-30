@@ -7,6 +7,6 @@ import presentation.reusableUi.greyScale
 
 @Composable
 fun Modifier.setIfDarkMode() : Modifier = when(isSystemInDarkTheme()) {
-    true -> greyScale(0.9f)
+    true -> greyScale(0.77f)
     else -> this
 }
