@@ -1,11 +1,4 @@
 Linter rules:
--No hardcoded strings (And get rid of all existing hardcoded strings)
--data layer shouldn't use '@Composable' annotation
--presentation should never import from data layer unless in ViewModel
--No unused imports
--No lines over 100chars
--Only one viewmodel per view
--No .dp or .sp in files that aren't style-files
 
 https://googlesamples.github.io/android-custom-lint-rules/
 http://googlesamples.github.io/android-custom-lint-rules/usage/lintxml.md.html

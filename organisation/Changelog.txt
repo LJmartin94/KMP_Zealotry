@@ -2,6 +2,24 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+03-10-2024
+Streak: 1
+Learned:
+Did:
+    -Organise backlog
+
+30-09-2024
+Streak: 1
+Learned:
+Did:
+    -Implemented a number of changes relating to Theme and Dark Theme
+
+27-08-2024
+Streak: 1
+Learned:
+Did:
+    -Update .editorconfig
+
 06-05-2024
 Streak: 1
 Learned:
