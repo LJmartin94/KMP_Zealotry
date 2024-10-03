@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 val BROWN_ORANGE = Color(0xFFEB9626)
 val DARK_SAND = Color(0xFFF0AD54)
 val DARKEST_CHARCOAL = Color(0xFF121212)
-val MUTED_RED =  Color(0xFFCF6679)
+val MUTED_RED = Color(0xFFCF6679)
 val CHARCOAL = Color(0xFF262626)
 val DARK_GREY = Color(0xFFAFADAA)
 val GREY = Color(0xFFCFCECC)
@@ -19,7 +19,6 @@ val WHITE_ISH = Color(0xFFFAFAFA)
 val DARK_ORANGE = Color(0xFFFF9201)
 val ORANGE = Color(0xFFFF9D1A)
 val RED = Color(0xFFFF1201)
-
 
 @Composable
 fun MainColours() =
@@ -36,7 +35,7 @@ fun MainColours() =
             onSecondary = Color.White,
             onBackground = CHARCOAL,
             onSurface = CHARCOAL,
-            onError = Color.Black
+            onError = Color.Black,
         )
     } else {
         lightColors(
