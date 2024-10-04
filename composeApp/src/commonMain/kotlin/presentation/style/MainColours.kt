@@ -7,49 +7,49 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 // Colour constants:
-val BROWN_ORANGE = Color(0xFFEB9626)
-val DARK_SAND = Color(0xFFF0AD54)
-val DARKEST_CHARCOAL = Color(0xFF121212)
-val MUTED_RED = Color(0xFFCF6679)
-val CHARCOAL = Color(0xFF262626)
-val DARK_GREY = Color(0xFFAFADAA)
-val GREY = Color(0xFFCFCECC)
-val PALE_GREY = Color(0xFFECEBEA)
-val WHITE_ISH = Color(0xFFFAFAFA)
-val DARK_ORANGE = Color(0xFFFF9201)
-val ORANGE = Color(0xFFFF9D1A)
-val RED = Color(0xFFFF1201)
+const val BROWN_ORANGE = 0xFFEB9626
+const val DARK_SAND = 0xFFF0AD54
+const val DARKEST_CHARCOAL = 0xFF121212
+const val MUTED_RED = 0xFFCF6679
+const val CHARCOAL = 0xFF262626
+const val DARK_GREY = 0xFFAFADAA
+const val GREY = 0xFFCFCECC
+const val PALE_GREY = 0xFFECEBEA
+const val WHITE_ISH = 0xFFFAFAFA
+const val DARK_ORANGE = 0xFFFF9201
+const val ORANGE = 0xFFFF9D1A
+const val RED = 0xFFFF1201
 
 @Composable
 fun MainColours() =
     if (isSystemInDarkTheme()) {
         darkColors(
-            primary = CHARCOAL,
-            primaryVariant = DARKEST_CHARCOAL,
-            secondary = BROWN_ORANGE,
-            secondaryVariant = DARK_SAND,
-            background = DARK_GREY,
-            surface = DARK_GREY,
-            error = MUTED_RED,
+            primary = Color(BROWN_ORANGE),
+            primaryVariant = Color(DARKEST_CHARCOAL),
+            secondary = Color(BROWN_ORANGE),
+            secondaryVariant = Color(DARK_SAND),
+            background = Color(DARK_GREY),
+            surface = Color(DARK_GREY),
+            error = Color(MUTED_RED),
             onPrimary = Color.White,
             onSecondary = Color.White,
-            onBackground = CHARCOAL,
-            onSurface = CHARCOAL,
+            onBackground = Color(CHARCOAL),
+            onSurface = Color(CHARCOAL),
             onError = Color.Black,
         )
     } else {
         lightColors(
-            primary = DARK_GREY,
-            primaryVariant = GREY,
-            secondary = DARK_ORANGE,
-            secondaryVariant = ORANGE,
-            background = PALE_GREY,
-            surface = PALE_GREY,
-            error = RED,
-            onPrimary = CHARCOAL,
-            onSecondary = WHITE_ISH,
-            onBackground = CHARCOAL,
-            onSurface = CHARCOAL,
-            onError = WHITE_ISH,
+            primary = Color(DARK_GREY),
+            primaryVariant = Color(GREY),
+            secondary = Color(DARK_ORANGE),
+            secondaryVariant = Color(ORANGE),
+            background = Color(PALE_GREY),
+            surface = Color(PALE_GREY),
+            error = Color(RED),
+            onPrimary = Color(CHARCOAL),
+            onSecondary = Color(WHITE_ISH),
+            onBackground = Color(CHARCOAL),
+            onSurface = Color(CHARCOAL),
+            onError = Color(WHITE_ISH),
         )
     }

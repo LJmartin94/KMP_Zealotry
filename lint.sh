@@ -1,1 +1,1 @@
-./gradlew ktlintCheck && ./gradlew detektMetadataMain
+./gradlew ktlintFormat && ./gradlew detektMetadataMain

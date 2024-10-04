@@ -2,6 +2,13 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+04-10-2024
+Streak: 2
+Learned:
+Did:
+    -Linting: make colour codes const
+
+
 03-10-2024
 Streak: 1
 Learned:
