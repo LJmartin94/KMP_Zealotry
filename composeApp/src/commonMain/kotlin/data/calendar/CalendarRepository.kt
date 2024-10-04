@@ -12,7 +12,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration
 
-class CalendarRepository() {
+class CalendarRepository {
     val updateFlow: Flow<CalendarState> =
         flow {
             while (true) {

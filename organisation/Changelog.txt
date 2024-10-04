@@ -7,6 +7,7 @@ Streak: 2
 Learned:
 Did:
     -Linting: make colour codes const
+    -Fix, Suppress, or Change config for remaining detekt issues
 
 
 03-10-2024

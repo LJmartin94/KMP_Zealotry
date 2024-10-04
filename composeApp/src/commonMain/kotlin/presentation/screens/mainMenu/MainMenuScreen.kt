@@ -17,6 +17,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
 import presentation.reusableUi.ImageButton
+import presentation.style.COMPONENT_EQUAL_WEIGHT
+import presentation.style.EMPTY_SPACE
+import presentation.style.FILLER_SPACE
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
 import zealotry.composeapp.generated.resources.day
@@ -48,13 +51,16 @@ fun MainMenuScreen(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        MainMenuTitle(uiState = uiState, modifier = Modifier.padding(20.dp).weight(1f))
+        MainMenuTitle(
+            uiState = uiState,
+            modifier = Modifier.padding(20.dp).weight(EMPTY_SPACE),
+        )
         MainMenuSub(
             title = Res.string.daily_rituals,
-            modifier = Modifier.weight(3f),
+            modifier = Modifier.weight(FILLER_SPACE),
         ) {
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.morning_button,
                 imgAlpha = 0.8f,
                 onClick = { onNavigate("Morning") },
@@ -62,7 +68,7 @@ fun MainMenuScreen(
             )
 
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.day_button,
                 imgAlpha = 0.8f,
                 onClick = { onNavigate("Day") },
@@ -70,7 +76,7 @@ fun MainMenuScreen(
             )
 
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(1f),
+                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.evening_button,
                 imgAlpha = 0.8f,
                 onClick = { onNavigate("Evening") },

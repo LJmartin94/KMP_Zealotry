@@ -47,9 +47,10 @@ data class SeasonInfo(
  *
  * @return Map of Instants on which spring eqi, summer sol, autumn eqi, winter sol occur
  */
+const val REF_YEAR = 2005
+
 private fun getEquinoxesAndSolstices(year: Int): Map<Season, Instant> {
-    // Reference Equinoxes and Solstices for 2005, UTC
-    var refYear = 2005
+    // Reference Equinoxes and Solstices for 2005 (REF_YEAR), UTC
     var vernalEquinox: Instant = Instant.parse("2005-03-20T11:33:19Z")
     var summerSolstice: Instant = Instant.parse("2005-06-21T06:39:11Z")
     var autumnalEquinox: Instant = Instant.parse("2005-09-22T22:16:34Z")
@@ -62,18 +63,16 @@ private fun getEquinoxesAndSolstices(year: Int): Map<Season, Instant> {
     val winterConstant: Duration = Duration.parseIsoString("P365DT5H49M33S")
 
     // Increment until desired year is reached - accurate enough for getting the right day
-    while (refYear < year) {
-        refYear += 1
-        vernalEquinox += springConstant
-        summerSolstice += summerConstant
-        autumnalEquinox += autumnConstant
-        winterSolstice += winterConstant
+    val increments = year - REF_YEAR
+    vernalEquinox += springConstant * increments
+    summerSolstice += summerConstant * increments
+    autumnalEquinox += autumnConstant * increments
+    winterSolstice += winterConstant * increments
 //        println("Year: $refYear")
 //        println("Vernal Equinox: $vernalEquinox")
 //        println("Summer Solstice: $summerSolstice")
 //        println("Autumn Equinox: $autumnalEquinox")
 //        println("Winter Solstice: $winterSolstice")
-    }
 
     return mapOf(
         Season.SPRING to vernalEquinox,

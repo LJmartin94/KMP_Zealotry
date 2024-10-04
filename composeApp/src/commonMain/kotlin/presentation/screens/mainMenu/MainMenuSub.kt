@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import presentation.style.COMPONENT_BODY_WEIGHT
+import presentation.style.COMPONENT_TITLE_WEIGHT
 import presentation.style.ColourCompositionLocal
 
 @OptIn(ExperimentalResourceApi::class)
@@ -39,7 +41,7 @@ fun MainMenuSub(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .weight(4f)
+                    .weight(COMPONENT_TITLE_WEIGHT)
                     .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center,
         ) {
@@ -51,7 +53,7 @@ fun MainMenuSub(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .weight(17f)
+                    .weight(COMPONENT_BODY_WEIGHT)
                     .background(ColourCompositionLocal.current.background.copy(alpha = 0.8f))
                     .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
