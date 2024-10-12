@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.precompose)
             implementation(libs.precompose.koin)
             implementation(libs.precompose.viewmodel)
+            implementation(libs.jb.androidx.navigation.compose)
         }
     }
 }

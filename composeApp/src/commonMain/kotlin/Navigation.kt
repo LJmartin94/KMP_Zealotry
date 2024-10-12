@@ -1,5 +1,6 @@
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.rememberNavController
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
@@ -8,6 +9,11 @@ import presentation.screens.dayPartMenu.DayPartMenuScreen
 import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuScreen
 import presentation.screens.mainMenu.MainMenuViewModel
+
+@Composable
+fun NavigationNew() {
+    val navController = rememberNavController()
+}
 
 @Composable
 fun Navigation() {

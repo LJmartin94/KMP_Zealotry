@@ -3,14 +3,14 @@ agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.8.2"
-androidx-appcompat = "1.6.1"
+androidx-activityCompose = "1.9.2"
+androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.12.0"
-androidx-espresso-core = "3.5.1"
-androidx-material = "1.11.0"
-androidx-test-junit = "1.1.5"
-compose = "1.6.3"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.6.1"
+androidx-material = "1.12.0"
+androidx-test-junit = "1.2.1"
+compose = "1.7.3"
 compose-plugin = "1.6.1"
 junit = "4.13.2"
 koin-core = "3.5.3"
@@ -20,6 +20,8 @@ kotlinx-datetime = "0.5.0"
 precompose = "1.5.11"
 detekt = "1.23.6"
 ktlint = "12.1.0"
+navigationCompose = "2.8.2"
+jb-androidx-navigation= "2.8.0-alpha10"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -40,6 +42,8 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 precompose-koin = { module = "moe.tlaster:precompose-koin", version.ref = "precompose" }
 precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose" }
+#androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+jb-androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "jb-androidx-navigation" }
 #detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 #detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
 #detekt-test = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }

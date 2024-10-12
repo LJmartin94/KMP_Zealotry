@@ -2,6 +2,13 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+12-10-2024
+Streak: 1
+Learned:
+Did:
+    - Updated packages in libs.versions.toml
+    - Found a working version of Compose Navigation that compiles on iOS, to replace precompose
+
 04-10-2024
 Streak: 2
 Learned:
