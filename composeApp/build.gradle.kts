@@ -42,9 +42,6 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.precompose)
-            implementation(libs.precompose.koin)
-            implementation(libs.precompose.viewmodel)
             implementation(libs.jb.androidx.navigation.compose)
         }
     }

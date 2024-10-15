@@ -1,5 +1,6 @@
 package presentation.screens.mainMenu
 
+import Screen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,7 +64,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.morning_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate("Morning") },
+                onClick = { onNavigate(Screen.Morning.name) },
                 textRes = Res.string.morning,
             )
 
@@ -71,7 +72,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.day_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate("Day") },
+                onClick = { onNavigate(Screen.Day.name) },
                 textRes = Res.string.day,
             )
 
@@ -79,7 +80,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.evening_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate("Evening") },
+                onClick = { onNavigate(Screen.Evening.name) },
                 textRes = Res.string.evening,
             )
         }

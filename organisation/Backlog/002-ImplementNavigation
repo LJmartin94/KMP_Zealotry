@@ -5,3 +5,9 @@ General navigation theory -
 https://developer.android.com/guide/navigation
 Compose specific -
 https://developer.android.com/jetpack/compose/navigation
+
+We're ditching precompose, trying to use androidx navigation (currently relying on jetbrains alpha for multiplatform)
+Example usage:
+https://github.com/JetBrains/compose-multiplatform/blob/master/examples/nav_cupcake/composeApp/src/commonMain/kotlin/org/jetbrains/nav_cupcake/CupcakeScreen.kt
+Guide-ish:
+https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html#sample-project

@@ -1,4 +1,5 @@
 <resources>
+    <string name="empty" />
     <string name="monday">Dag van de Maan</string>
     <string name="tuesday">Thingsus' Dag</string>
     <string name="wednesday">Wodan's Dag</string>
