@@ -8,28 +8,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.style.MainTheme
 import presentation.style.setIfDarkMode
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
     MainTheme {
-//            var showContent by remember { mutableStateOf(false) }
-//            val greeting = remember { Greeting().greet() }
-//            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-//                val vm = koinViewModel(CalendarViewModel::class)
-//                CalendarFragment(vm)
-//                Button(onClick = { showContent = !showContent }) {
-//                    Text("Click me!")
-//                }
-//                AnimatedVisibility(showContent) {
-//                    Column(
-//                        Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-//                    ) {
-//                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-//                        Text("Compose: $greeting")
-//                    }
-//                }
-//            }
         Surface(modifier = Modifier.fillMaxSize().setIfDarkMode()) {
             InitNavStack()
         }

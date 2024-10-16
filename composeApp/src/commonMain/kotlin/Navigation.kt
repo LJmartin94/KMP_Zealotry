@@ -44,23 +44,3 @@ fun InitNavStack() {
         composable(route = Screen.Evening.name) { DayPartMenuScreen(dayPartVM) }
     }
 }
-
-// @Composable
-// fun Navigation() {
-//    val navigator = rememberNavigator()
-//    NavHost(
-//        navigator = navigator,
-//        navTransition = NavTransition(),
-//        initialRoute = "/mainMenu",
-//    ) {
-//        scene(route = "/mainMenu", navTransition = NavTransition()) {
-//            val mainVM = koinViewModel(MainMenuViewModel::class)
-//            MainMenuScreen(mainVM) { navigator.navigate("/dayPartMenu/$it") }
-//        }
-//
-//        scene(route = "/dayPartMenu/{part}", navTransition = NavTransition()) {
-//            val vm = koinViewModel(DayPartMenuViewModel::class)
-//            DayPartMenuScreen(vm)
-//        }
-//    }
-// }
