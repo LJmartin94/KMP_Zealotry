@@ -6,4 +6,6 @@ enum class DayPart {
     EVENING,
 }
 
-data class DayPartMenuUIState(val part: DayPart = DayPart.MORNING)
+data class DayPartMenuUIState(
+    val part: DayPart = DayPart.MORNING,
+)
