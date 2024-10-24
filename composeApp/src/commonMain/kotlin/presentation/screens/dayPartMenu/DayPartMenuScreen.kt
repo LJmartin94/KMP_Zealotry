@@ -13,9 +13,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import presentation.reusableUi.IconTextButton
+import presentation.reusableUi.IconTextTimeButton
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.day
+import zealotry.composeapp.generated.resources.wake_up
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -35,6 +36,10 @@ fun DayPartMenuScreen(
             fontSize = 24.sp,
             textAlign = TextAlign.Center,
         )
-        IconTextButton(textRes = Res.string.day, onClick = onNavigate ?: {})
+        IconTextTimeButton(
+            iconRes = Res.drawable.wake_up,
+            textRes = Res.string.day,
+            timeRes = Res.string.day,
+        ) {onNavigate?.invoke()}
     }
 }
