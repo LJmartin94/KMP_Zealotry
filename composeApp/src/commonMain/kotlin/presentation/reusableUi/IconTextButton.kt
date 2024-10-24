@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,8 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.style.ColourCompositionLocal
+import zealotry.composeapp.generated.resources.Res
+import zealotry.composeapp.generated.resources.empty
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -35,13 +38,44 @@ fun IconTextTimeButton(
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = verticalAlign,
 ) {
-    Image(painterResource(iconRes), null)
+    Image(
+        painter = painterResource(iconRes),
+        contentDescription = null,
+    )
     Text(
         textAlign = textAlign,
         text = stringResource(textRes),
+        fontSize = LocalTextStyle.current.fontSize,
     )
     Text(
         textAlign = textAlign,
         text = stringResource(timeRes),
+    )
+}
+
+@OptIn(ExperimentalResourceApi::class)
+data class IconTextTimeBundle(
+    val iconRes: DrawableResource,
+    val textRes: StringResource = Res.string.empty,
+    val timeRes: StringResource = Res.string.empty,
+    val onClick: () -> Unit = {},
+)
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun IconTextTimeButton(
+    bundle: IconTextTimeBundle,
+    buttonModifier: Modifier = Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
+    verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
+    textAlign: TextAlign = TextAlign.Center,
+) {
+    IconTextTimeButton(
+        iconRes = bundle.iconRes,
+        textRes = bundle.textRes,
+        timeRes = bundle.timeRes,
+        buttonModifier = buttonModifier,
+        verticalAlign = verticalAlign,
+        textAlign = textAlign,
+        onClick = bundle.onClick,
     )
 }
