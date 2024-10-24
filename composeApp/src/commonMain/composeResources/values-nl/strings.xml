@@ -35,4 +35,23 @@
     <string name="ordinal_number">%1$d%2$s</string>
     <!-- 1=OrdinalNumber, 2=Season, e.g.: {48th} day of {Winter} -->
     <string name="day_of_season">%1$s dag van de %2$s</string>
+    <string name="wake_up">WAKKER WORDEN</string>
+    <string name="get_up">OPSTAAN</string>
+    <string name="shower">DOUCHEN</string>
+    <string name="news">NIEUWS</string>
+    <string name="open_curtains">GORDIJNEN OPENEN</string>
+    <string name="coffee">KOFFIE</string>
+    <string name="smoothie">SMOOTHIE</string>
+    <string name="water">WATER</string>
+    <string name="vitamins">VITAMINES</string>
+    <string name="dishes">AFWAS</string>
+    <string name="breakfast">ONTBIJT</string>
+    <string name="water_plants">PLANTEN WATEREN</string>
+    <string name="meditation">MEDITATIE</string>
+    <string name="language">TAAL</string>
+    <string name="brush_teeth">TANDENPOETSEN</string>
+    <string name="cosmeticism">COSMETICA</string>
+    <string name="pack_bag">TAS INPAKKEN</string>
+    <string name="make_bed">BED OPMAKEN</string>
+    <string name="bins">VUILNIS</string>
 </resources>

@@ -8,6 +8,7 @@ Learned:
 Did:
     - Add icons and other assets from Java Zealotry project
     - Change IconTextButton to IconTextTimeButton
+    - Add strings for (main) morning button names
 
 21-10-2024
 Streak: 1
