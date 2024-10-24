@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+24-10-2024
+Streak: 1
+Learned:
+Did:
+    - Add icons and other assets from Java Zealotry project
+
 21-10-2024
 Streak: 1
 Learned:
