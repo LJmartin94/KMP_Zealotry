@@ -10,6 +10,7 @@ Did:
     - Change IconTextButton to IconTextTimeButton
     - Add strings for (main) morning button names
     - Start populating the morning menu with IconTextTimeButtons
+    - Add task for greetings on menus, add strings for greetings
 
 21-10-2024
 Streak: 1

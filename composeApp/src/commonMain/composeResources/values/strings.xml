@@ -35,6 +35,9 @@
     <string name="ordinal_number">%1$d%2$s</string>
     <!-- 1=OrdinalNumber, 2=Season, e.g.: {48th} day of {Winter} -->
     <string name="day_of_season">%1$s day of %2$s</string>
+    <string name="good_morning">GOOD MORNING</string>
+    <string name="good_day">HAVE A GREAT DAY!</string>
+    <string name="good_evening">ENJOY YOUR EVENING :)</string>
     <string name="wake_up">WAKE UP</string>
     <string name="get_up">GET UP</string>
     <string name="shower">SHOWER</string>
