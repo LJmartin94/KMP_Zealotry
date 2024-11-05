@@ -144,7 +144,7 @@ private fun getDayOfSeason(
         Season.SUMMER -> dayOfYear - startOfSummer.toUtcDayOfYear() + 1
         Season.AUTUMN -> dayOfYear - startOfAutumn.toUtcDayOfYear() + 1
         else ->
-            if (dayOfYear > startOfWinter.toUtcDayOfYear()) {
+            if (dayOfYear >= startOfWinter.toUtcDayOfYear()) {
                 dayOfYear - startOfWinter.toUtcDayOfYear() + 1
             } else {
                 winterDuration - (startOfSpring.toUtcDayOfYear() - dayOfYear) + 1

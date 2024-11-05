@@ -7,6 +7,7 @@ Streak: 1
 Learned:
 Did:
     - Add titular greeting to DayPartMenu
+    - Fix first day of Winter (today)
 
 24-10-2024
 Streak: 1
