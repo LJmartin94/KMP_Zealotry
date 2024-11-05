@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+5-11-2024
+Streak: 1
+Learned:
+Did:
+    - Add titular greeting to DayPartMenu
+
 24-10-2024
 Streak: 1
 Learned:

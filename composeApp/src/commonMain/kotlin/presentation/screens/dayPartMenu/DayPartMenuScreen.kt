@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.IconTextTimeButton
 import presentation.screens.dayPartMenu.morningButtons.MorningButtons
 import presentation.screens.dayPartMenu.morningButtons.toBundle
@@ -31,9 +32,9 @@ fun DayPartMenuScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(1) { //TODO: Make this less hacky
+        items(1) { //TODO: Make this less hacky //https://stackoverflow.com/questions/78599110/lazycolumn-and-error-composable-invocations-can-only-happen-from-the-context-of
             Text(
-                text = "Placeholder DayPartMenu ${uiState.part.name}",
+                text = stringResource(uiState.greeting),
                 modifier = Modifier.padding(20.dp),
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
@@ -45,3 +46,5 @@ fun DayPartMenuScreen(
         }
     }
 }
+
+
