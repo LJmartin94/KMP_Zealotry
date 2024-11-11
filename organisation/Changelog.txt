@@ -7,6 +7,7 @@ Streak: 1
 Learned:
 Did:
     - Tweaked/Fixed some colours in theme, dark mode didn't look right
+    - Update backlog
 
 5-11-2024
 Streak: 1
