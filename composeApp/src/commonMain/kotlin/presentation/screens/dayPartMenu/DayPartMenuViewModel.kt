@@ -28,7 +28,7 @@ class DayPartMenuViewModel : ViewModel() {
     }
 
     @OptIn(ExperimentalResourceApi::class)
-    private fun setGreeting(part: DayPart) : StringResource =
+    private fun setGreeting(part: DayPart): StringResource =
         when (part) {
             DayPart.MORNING -> Res.string.good_morning
             DayPart.MIDDAY -> Res.string.good_day

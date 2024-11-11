@@ -32,7 +32,9 @@ fun DayPartMenuScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(1) { //TODO: Make this less hacky //https://stackoverflow.com/questions/78599110/lazycolumn-and-error-composable-invocations-can-only-happen-from-the-context-of
+        items(
+            1,
+        ) { // TODO: Make this less hacky //https://stackoverflow.com/questions/78599110/lazycolumn-and-error-composable-invocations-can-only-happen-from-the-context-of
             Text(
                 text = stringResource(uiState.greeting),
                 modifier = Modifier.padding(20.dp),
@@ -46,5 +48,3 @@ fun DayPartMenuScreen(
         }
     }
 }
-
-
