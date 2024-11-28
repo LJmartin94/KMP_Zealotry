@@ -7,6 +7,7 @@ Streak: 1
 Learned:
 Did:
     - Morning buttons: Put content in individual items & Space between buttons of column & Fix icon/text/button sizes and proportions
+    - Linting & Display morning buttons only if morning state
 
 11-11-2024
 Streak: 1

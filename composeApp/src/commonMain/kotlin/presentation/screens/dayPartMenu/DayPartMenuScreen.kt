@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import data.screens.dayPartMenu.DayPart
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.IconTextTimeButton
@@ -30,8 +31,14 @@ fun DayPartMenuScreen(
     onNavigate: (() -> Unit)? = null,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val visibleButtons =
+        when (uiState.part) {
+            DayPart.MORNING -> MorningButtons.entries
+            DayPart.MIDDAY -> emptyList() // Placeholder
+            DayPart.EVENING -> emptyList()
+        }
 
-    Column(modifier = Modifier.fillMaxSize()){
+    Column(modifier = Modifier.fillMaxSize()) {
         Text(
             text = stringResource(uiState.greeting),
             modifier = Modifier.padding(20.dp).wrapContentSize(),
@@ -39,16 +46,15 @@ fun DayPartMenuScreen(
             textAlign = TextAlign.Center,
         )
 
-
         LazyColumn(
             contentPadding = PaddingValues(vertical = 8.dp, horizontal = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(items = MorningButtons.entries){
-                    button -> IconTextTimeButton(button.toBundle())
+            items(items = visibleButtons) {
+                    button ->
+                IconTextTimeButton(button.toBundle())
             }
         }
     }
-
 }

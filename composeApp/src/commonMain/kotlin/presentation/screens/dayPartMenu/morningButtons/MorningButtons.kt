@@ -144,7 +144,7 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.COSMETICISM ->
             IconTextTimeBundle(
-                iconRes = Res.drawable.perfume_small, //TODO: change
+                iconRes = Res.drawable.perfume_small, // TODO: change
                 textRes = Res.string.cosmeticism,
             )
         MorningButtons.PACK_BAG ->
