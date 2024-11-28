@@ -1,9 +1,13 @@
 package presentation.screens.dayPartMenu
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,24 +31,24 @@ fun DayPartMenuScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LazyColumn(
-        contentPadding = PaddingValues(all = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(
-            1,
-        ) { // TODO: Make this less hacky //https://stackoverflow.com/questions/78599110/lazycolumn-and-error-composable-invocations-can-only-happen-from-the-context-of
-            Text(
-                text = stringResource(uiState.greeting),
-                modifier = Modifier.padding(20.dp),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-            )
+    Column(modifier = Modifier.fillMaxSize()){
+        Text(
+            text = stringResource(uiState.greeting),
+            modifier = Modifier.padding(20.dp).wrapContentSize(),
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center,
+        )
 
-            for (button in MorningButtons.entries) {
-                IconTextTimeButton(button.toBundle())
+
+        LazyColumn(
+            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(items = MorningButtons.entries){
+                    button -> IconTextTimeButton(button.toBundle())
             }
         }
     }
+
 }
