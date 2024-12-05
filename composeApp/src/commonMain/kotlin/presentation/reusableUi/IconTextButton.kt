@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -29,7 +28,7 @@ import zealotry.composeapp.generated.resources.empty
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun IconTextTimeButton(
-    iconRes: DrawableResource,
+    chiaro: ChiaroscuroDrawable,
     textRes: StringResource,
     timeRes: StringResource,
     buttonHeight: Int = 50,
@@ -47,7 +46,7 @@ fun IconTextTimeButton(
 ) {
     Image(
         modifier = Modifier.defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
-        painter = painterResource(iconRes),
+        painter = painterResource(chiaro.getDrawable()),
         contentScale = ContentScale.FillHeight,
         contentDescription = null,
     )
@@ -64,7 +63,7 @@ fun IconTextTimeButton(
 
 @OptIn(ExperimentalResourceApi::class)
 data class IconTextTimeBundle(
-    val iconRes: DrawableResource,
+    val chiaro: ChiaroscuroDrawable,
     val textRes: StringResource = Res.string.empty,
     val timeRes: StringResource = Res.string.empty,
     val onClick: () -> Unit = {},
@@ -79,7 +78,7 @@ fun IconTextTimeButton(
     textAlign: TextAlign = TextAlign.Center,
 ) {
     IconTextTimeButton(
-        iconRes = bundle.iconRes,
+        chiaro = bundle.chiaro,
         textRes = bundle.textRes,
         timeRes = bundle.timeRes,
         buttonModifier = buttonModifier,
