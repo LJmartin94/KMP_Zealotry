@@ -1,6 +1,5 @@
 package presentation.style
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -22,7 +21,7 @@ const val RED = 0xFFFF1201
 
 @Composable
 fun MainColours() =
-    if (isSystemInDarkTheme()) {
+    if (DarkThemeCompositionLocal.current) {
         darkColors(
             primary = Color(DARK_GREY),
             primaryVariant = Color(CHARCOAL),

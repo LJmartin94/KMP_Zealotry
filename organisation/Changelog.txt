@@ -2,6 +2,13 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+5-12-2024
+Streak: 1
+Learned:
+Did:
+    - Add inverted colour icons for all png icons
+    - Globally set DarkTheme for the app through CompositionLocal, instead of in multiple places
+
 28-11-2024
 Streak: 1
 Learned:
