@@ -133,7 +133,11 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.DISHES ->
             IconTextTimeBundle(
-                chiaro = ChiaroscuroDrawable(Res.drawable.posession_stone_small, Res.drawable.posession_stone_small_inv),
+                chiaro =
+                    ChiaroscuroDrawable(
+                        Res.drawable.posession_stone_small,
+                        Res.drawable.posession_stone_small_inv,
+                    ),
                 textRes = Res.string.dishes,
             )
         MorningButtons.BREAKFAST ->
@@ -163,6 +167,7 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.COSMETICISM ->
             IconTextTimeBundle(
+                // TODO: Change this icon
                 chiaro = ChiaroscuroDrawable(Res.drawable.perfume_small, Res.drawable.perfume_small_inv),
                 textRes = Res.string.cosmeticism,
             )

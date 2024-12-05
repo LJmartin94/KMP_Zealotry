@@ -12,7 +12,7 @@ val DarkThemeCompositionLocal =
     }
 
 @Composable
-fun isDark() : Boolean {
+fun isDark(): Boolean {
     return isSystemInDarkTheme()
 }
 

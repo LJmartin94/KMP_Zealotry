@@ -11,7 +11,7 @@ class ChiaroscuroDrawable(
     private val darkRes: DrawableResource,
 ) {
     @Composable
-    fun getDrawable() : DrawableResource {
+    fun getDrawable(): DrawableResource {
         return if (DarkThemeCompositionLocal.current) this.darkRes else this.lightRes
     }
 }
