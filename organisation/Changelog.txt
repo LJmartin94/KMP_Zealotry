@@ -9,6 +9,7 @@ Did:
     - Add inverted colour icons for all png icons
     - Globally set DarkTheme for the app through CompositionLocal, instead of in multiple places
     - Add reusable ChiaroscuroDrawable which returns a drawable resource based on whether dark theme is active
+    - Make morning menu buttons use ChiaroscuroDrawable
 
 28-11-2024
 Streak: 1
