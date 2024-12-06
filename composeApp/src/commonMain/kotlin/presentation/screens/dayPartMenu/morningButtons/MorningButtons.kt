@@ -2,7 +2,7 @@ package presentation.screens.dayPartMenu.morningButtons
 
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.reusableUi.ChiaroscuroDrawable
-import presentation.reusableUi.IconTextTimeBundle
+import presentation.screens.dayPartMenu.checklistButtons.IconTextTimeBundle
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.asclepius_small
 import zealotry.composeapp.generated.resources.asclepius_small_inv

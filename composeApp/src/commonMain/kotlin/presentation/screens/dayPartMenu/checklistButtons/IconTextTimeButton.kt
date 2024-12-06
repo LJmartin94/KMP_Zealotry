@@ -1,4 +1,4 @@
-package presentation.reusableUi
+package presentation.screens.dayPartMenu.checklistButtons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +21,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import presentation.reusableUi.ChiaroscuroDrawable
 import presentation.style.ColourCompositionLocal
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.empty

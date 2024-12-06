@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import data.screens.dayPartMenu.DayPart
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import presentation.reusableUi.IconTextTimeButton
+import presentation.screens.dayPartMenu.checklistButtons.IconTextTimeButton
 import presentation.screens.dayPartMenu.morningButtons.MorningButtons
 import presentation.screens.dayPartMenu.morningButtons.toBundle
 
