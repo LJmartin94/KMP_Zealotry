@@ -38,6 +38,8 @@
     <string name="good_morning">GOOD MORNING</string>
     <string name="good_day">HAVE A GREAT DAY!</string>
     <string name="good_evening">ENJOY YOUR EVENING :)</string>
+    <string name="done">Done</string>
+    <string name="skip">Skip</string>
     <string name="wake_up">WAKE UP</string>
     <string name="get_up">GET UP</string>
     <string name="shower">SHOWER</string>
