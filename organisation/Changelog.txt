@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+6-12-2024
+Streak: 2
+Learned:
+Did:
+    - Fix icon (xml) for Cosmeticism button. Colours are hardcoded, but same is true for pngs. Confirmed working on iOS.
+
 5-12-2024
 Streak: 1
 Learned:

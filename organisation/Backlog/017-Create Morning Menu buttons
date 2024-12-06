@@ -1,4 +1,8 @@
 Make banner for morning menu
-fix icon for cosmeticism
 add time to button
 add basic sub menus
+
+Done:
+fix icon for cosmeticism ->
+https://medium.com/@sergiobelda/transforming-xml-vector-drawables-into-compose-imagevectors-a43985dfc500 (Didn't work)
+https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-resources-usage.html#resource-usage

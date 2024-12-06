@@ -23,6 +23,8 @@ import zealotry.composeapp.generated.resources.grain_jar_small
 import zealotry.composeapp.generated.resources.grain_jar_small_inv
 import zealotry.composeapp.generated.resources.health_rune_small
 import zealotry.composeapp.generated.resources.health_rune_small_inv
+import zealotry.composeapp.generated.resources.ic_baseline_flare_24
+import zealotry.composeapp.generated.resources.ic_baseline_flare_24_inv
 import zealotry.composeapp.generated.resources.imix_small
 import zealotry.composeapp.generated.resources.imix_small_inv
 import zealotry.composeapp.generated.resources.language
@@ -41,8 +43,6 @@ import zealotry.composeapp.generated.resources.open_curtains
 import zealotry.composeapp.generated.resources.pack_bag
 import zealotry.composeapp.generated.resources.pack_small
 import zealotry.composeapp.generated.resources.pack_small_inv
-import zealotry.composeapp.generated.resources.perfume_small
-import zealotry.composeapp.generated.resources.perfume_small_inv
 import zealotry.composeapp.generated.resources.posession_stone_small
 import zealotry.composeapp.generated.resources.posession_stone_small_inv
 import zealotry.composeapp.generated.resources.shower
@@ -167,8 +167,7 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.COSMETICISM ->
             IconTextTimeBundle(
-                // TODO: Change this icon
-                chiaro = ChiaroscuroDrawable(Res.drawable.perfume_small, Res.drawable.perfume_small_inv),
+                chiaro = ChiaroscuroDrawable(Res.drawable.ic_baseline_flare_24, Res.drawable.ic_baseline_flare_24_inv),
                 textRes = Res.string.cosmeticism,
             )
         MorningButtons.PACK_BAG ->
