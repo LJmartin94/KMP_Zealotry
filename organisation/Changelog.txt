@@ -8,6 +8,7 @@ Learned:
 Did:
     - Fix icon (xml) for Cosmeticism button. Colours are hardcoded, but same is true for pngs. Confirmed working on iOS.
     - Start prototyping a ChecklistSubMenu composable for the DayPartMenu buttons.
+    - WIP: Further implement subtask list for DayPartMenuButtons
 
 5-12-2024
 Streak: 1
