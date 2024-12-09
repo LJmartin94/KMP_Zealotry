@@ -18,20 +18,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.ChiaroscuroDrawable
 import presentation.style.ColourCompositionLocal
-import zealotry.composeapp.generated.resources.Res
-import zealotry.composeapp.generated.resources.empty
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainTaskButton(
     chiaro: ChiaroscuroDrawable,
-    textRes: StringResource,
-    timeRes: StringResource,
+    text: String,
+    time: String,
     buttonHeight: Int = 50,
     buttonModifier: Modifier = Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
@@ -53,20 +49,20 @@ fun MainTaskButton(
     )
     Text(
         textAlign = textAlign,
-        text = stringResource(textRes),
+        text = text,
         fontSize = LocalTextStyle.current.fontSize,
     )
     Text(
         textAlign = textAlign,
-        text = stringResource(timeRes),
+        text = time,
     )
 }
 
 @OptIn(ExperimentalResourceApi::class)
 data class IconTextTimeBundle(
     val chiaro: ChiaroscuroDrawable,
-    val textRes: StringResource = Res.string.empty,
-    val timeRes: StringResource = Res.string.empty,
+    val text: String = "",
+    val time: String = "",
     val onClick: () -> Unit = {},
 )
 
@@ -80,8 +76,8 @@ fun MainTaskButton(
 ) {
     MainTaskButton(
         chiaro = bundle.chiaro,
-        textRes = bundle.textRes,
-        timeRes = bundle.timeRes,
+        text = bundle.text,
+        time = bundle.time,
         buttonModifier = buttonModifier,
         verticalAlign = verticalAlign,
         textAlign = textAlign,

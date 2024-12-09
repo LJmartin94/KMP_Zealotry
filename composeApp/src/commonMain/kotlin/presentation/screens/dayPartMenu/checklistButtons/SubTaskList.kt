@@ -2,10 +2,10 @@ package presentation.screens.dayPartMenu.checklistButtons
 
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.ChiaroscuroDrawable
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.done
-import zealotry.composeapp.generated.resources.empty
 import zealotry.composeapp.generated.resources.skip
 
 // Thinking about how to structure this with future customisability in mind:
@@ -16,12 +16,12 @@ import zealotry.composeapp.generated.resources.skip
 @OptIn(ExperimentalResourceApi::class)
 fun SubTaskList(
     defaultIcon: ChiaroscuroDrawable, //Can maybe make an assert that itemIcons contains value for Default
-    itemNames: List<String> = listOf(Res.string.done.toString()),
+    itemNames: List<String> = listOf(stringResource(Res.string.done)),
     itemFunctions: Map<String, () -> Unit> = emptyMap(),
     itemIcons: Map<String, ChiaroscuroDrawable> = emptyMap(),
 ) : List<@Composable ()-> Unit> {
-    val done: String = Res.string.done.toString()
-    val skip: String = Res.string.skip.toString()
+    val done: String = stringResource(Res.string.done)
+    val skip: String = stringResource(Res.string.skip)
     val isMulti = itemNames.size > 1
     val defaultAction: () -> Unit =
         if (isMulti) {
@@ -36,8 +36,8 @@ fun SubTaskList(
     return taskNames.map { name ->
         @Composable {MainTaskButton(
                     chiaro = itemIcons[name] ?: defaultIcon,
-                    textRes = Res.string.done, //name.toString(),
-                    timeRes = Res.string.empty,
+                    text = name,
+                    time = "",
                     onClick = taskFunctions[name] ?: defaultAction,
                 )}
         }

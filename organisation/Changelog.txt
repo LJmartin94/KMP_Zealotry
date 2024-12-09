@@ -7,6 +7,7 @@ Streak: 1
 Learned:
 Did:
     - Rename ChecklistButton, MainTaskButton and SubTaskButton to make their function & relations clearer.
+    - Make MainTaskButton use Strings instead of StringResources (necessary if we want user input customisation).
 
 6-12-2024
 Streak: 2
