@@ -18,14 +18,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import presentation.reusableUi.ChiaroscuroDrawable
+import presentation.reusableUi.Chiaroscuro
 import presentation.style.ColourCompositionLocal
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainTaskButton(
-    chiaro: ChiaroscuroDrawable,
+    chiaro: Chiaroscuro,
     text: String,
     time: String,
     buttonHeight: Int = 50,
@@ -43,7 +42,7 @@ fun MainTaskButton(
 ) {
     Image(
         modifier = Modifier.defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
-        painter = painterResource(chiaro.getDrawable()),
+        painter = chiaro.getPainter(),
         contentScale = ContentScale.FillHeight,
         contentDescription = null,
     )
@@ -58,15 +57,13 @@ fun MainTaskButton(
     )
 }
 
-@OptIn(ExperimentalResourceApi::class)
 data class IconTextTimeBundle(
-    val chiaro: ChiaroscuroDrawable,
+    val chiaro: Chiaroscuro,
     val text: String = "",
     val time: String = "",
     val onClick: () -> Unit = {},
 )
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainTaskButton(
     bundle: IconTextTimeBundle,

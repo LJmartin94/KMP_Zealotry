@@ -44,23 +44,12 @@ fun DayPartMenuScreen(
             textAlign = TextAlign.Center,
         )
 
-//        LazyColumn(
-//            contentPadding = PaddingValues(vertical = 8.dp, horizontal = 4.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.spacedBy(8.dp),
-//        ) {
-//            items(items = visibleButtons) {
-//                    button ->
-//                IconTextTimeButton(button.toBundle())
-//            }
-//        }
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-        ){
-//            visibleButtons.forEach { button -> IconTextTimeButton(button.toBundle()) }
+        ) {
             visibleButtons.forEach { button -> ChecklistButton(button) }
         }
     }
