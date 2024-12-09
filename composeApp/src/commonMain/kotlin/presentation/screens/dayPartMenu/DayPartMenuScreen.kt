@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import data.screens.dayPartMenu.DayPart
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import presentation.screens.dayPartMenu.checklistButtons.DayPartMenuButton
+import presentation.screens.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.screens.dayPartMenu.morningButtons.MorningButtons
 
 @OptIn(ExperimentalResourceApi::class)
@@ -61,7 +61,7 @@ fun DayPartMenuScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ){
 //            visibleButtons.forEach { button -> IconTextTimeButton(button.toBundle()) }
-            visibleButtons.forEach { button -> DayPartMenuButton(button) }
+            visibleButtons.forEach { button -> ChecklistButton(button) }
         }
     }
 }

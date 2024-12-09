@@ -14,7 +14,7 @@ import zealotry.composeapp.generated.resources.skip
 // itemNames is Ordered, Modifiable, State Like (state should be passed from parent)
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun ChecklistSubMenu(
+fun SubTaskList(
     defaultIcon: ChiaroscuroDrawable, //Can maybe make an assert that itemIcons contains value for Default
     itemNames: List<String> = listOf(Res.string.done.toString()),
     itemFunctions: Map<String, () -> Unit> = emptyMap(),
@@ -34,7 +34,7 @@ fun ChecklistSubMenu(
     taskFunctions[done] = { defaultDone() }
     taskFunctions[skip] = { defaultSkip() }
     return taskNames.map { name ->
-        @Composable {IconTextTimeButton(
+        @Composable {MainTaskButton(
                     chiaro = itemIcons[name] ?: defaultIcon,
                     textRes = Res.string.done, //name.toString(),
                     timeRes = Res.string.empty,

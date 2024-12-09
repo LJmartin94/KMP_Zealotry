@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+9-12-2024
+Streak: 1
+Learned:
+Did:
+    - Rename ChecklistButton, MainTaskButton and SubTaskButton to make their function & relations clearer.
+
 6-12-2024
 Streak: 2
 Learned:

@@ -28,7 +28,7 @@ import zealotry.composeapp.generated.resources.empty
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun IconTextTimeButton(
+fun MainTaskButton(
     chiaro: ChiaroscuroDrawable,
     textRes: StringResource,
     timeRes: StringResource,
@@ -72,13 +72,13 @@ data class IconTextTimeBundle(
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun IconTextTimeButton(
+fun MainTaskButton(
     bundle: IconTextTimeBundle,
     buttonModifier: Modifier = Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     textAlign: TextAlign = TextAlign.Center,
 ) {
-    IconTextTimeButton(
+    MainTaskButton(
         chiaro = bundle.chiaro,
         textRes = bundle.textRes,
         timeRes = bundle.timeRes,
