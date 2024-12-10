@@ -8,6 +8,7 @@ Learned:
 Did:
     - Add custom floating action buttons that do allow you to change alignment of content - based on existing compose fabs.
     - Make ChecklistSubMenu use the new fabs
+    - Refactor SubTaskList to not unnecessarily go from immutable to mutable values, add skip icon.
 
 9-12-2024
 Streak: 1

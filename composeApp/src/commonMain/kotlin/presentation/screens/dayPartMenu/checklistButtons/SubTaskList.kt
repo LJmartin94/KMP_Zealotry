@@ -13,6 +13,8 @@ import presentation.reusableUi.CustomExtendedFAB
 import presentation.style.ColourCompositionLocal
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.done
+import zealotry.composeapp.generated.resources.ic_baseline_fast_forward_24
+import zealotry.composeapp.generated.resources.ic_baseline_fast_forward_24_inv
 import zealotry.composeapp.generated.resources.skip
 
 // Thinking about how to structure this with future customisability in mind:
@@ -24,23 +26,31 @@ import zealotry.composeapp.generated.resources.skip
 fun SubTaskList(
     // Can maybe make an assert that itemIcons contains value for Default
     defaultIcon: Chiaroscuro,
-    itemNames: List<String> = listOf(stringResource(Res.string.done)),
-    itemFunctions: Map<String, () -> Unit> = emptyMap(),
-    itemIcons: Map<String, Chiaroscuro> = emptyMap(),
+    taskNames: MutableList<String> = mutableListOf(),
+    taskFunctions: MutableMap<String, () -> Unit> = mutableMapOf(),
+    taskIcons: MutableMap<String, Chiaroscuro> = mutableMapOf(),
 ): List<@Composable () -> Unit> {
     val done: String = stringResource(Res.string.done)
     val skip: String = stringResource(Res.string.skip)
-    val isMulti = itemNames.size > 1
-    val defaultAction: () -> Unit =
-        if (isMulti) {
-            { defaultSubtask() }
-        } else {
-            { defaultDone() }
-        }
-    val taskNames: List<String> = if (isMulti) itemNames + listOf(done, skip) else itemNames + listOf(skip)
-    val taskFunctions: MutableMap<String, () -> Unit> = itemFunctions.toMutableMap()
+    val defaultAction: () -> Unit
+
+    if (taskNames.isEmpty()) taskNames.add(done) // When no subtasks, 'done' is default subtask
+    if (taskNames.size > 1) { // When multiple subtasks, done is specified separately
+        defaultAction = { defaultSubtask() }
+        taskNames.addAll(listOf(done, skip))
+    } else { // When only one subtask, it functions as 'done' subtask
+        defaultAction = { defaultDone() }
+        taskNames.add(skip)
+    }
+
+    // Overwrite behaviour of Done and Skip, if they were specified by input
     taskFunctions[done] = { defaultDone() }
     taskFunctions[skip] = { defaultSkip() }
+    taskIcons[skip] =
+        Chiaroscuro(
+            Res.drawable.ic_baseline_fast_forward_24,
+            Res.drawable.ic_baseline_fast_forward_24_inv,
+        )
     return taskNames.map { name ->
         @Composable {
             CustomExtendedFAB(
@@ -49,7 +59,7 @@ fun SubTaskList(
                 modifier = Modifier.fillMaxWidth(1f),
                 icon = {
                     Icon(
-                        painter = (itemIcons[name] ?: defaultIcon).getPainter(),
+                        painter = (taskIcons[name] ?: defaultIcon).getPainter(),
                         contentDescription = null,
                     )
                 },
