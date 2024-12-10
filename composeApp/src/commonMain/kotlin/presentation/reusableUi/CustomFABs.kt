@@ -44,10 +44,11 @@ fun CustomExtendedFAB(
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
     CustomFAB(
-        modifier = modifier.sizeIn(
-            minWidth = ExtendedFabSize,
-            minHeight = ExtendedFabSize
-        ),
+        modifier =
+            modifier.sizeIn(
+                minWidth = ExtendedFabSize,
+                minHeight = ExtendedFabSize,
+            ),
         onClick = onClick,
         interactionSource = interactionSource,
         shape = shape,
@@ -58,11 +59,12 @@ fun CustomExtendedFAB(
     ) {
         val startPadding = if (icon == null) ExtendedFabTextPadding else ExtendedFabIconPadding
         Row(
-            modifier = Modifier.padding(
-                start = startPadding,
-                end = ExtendedFabTextPadding
-            ),
-            verticalAlignment = verticalAlignment
+            modifier =
+                Modifier.padding(
+                    start = startPadding,
+                    end = ExtendedFabTextPadding,
+                ),
+            verticalAlignment = verticalAlignment,
         ) {
             if (icon != null) {
                 icon()
@@ -84,7 +86,7 @@ fun CustomFAB(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     contentAlignment: Alignment = Alignment.Center,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Surface(
         onClick = onClick,
@@ -98,8 +100,9 @@ fun CustomFAB(
         CompositionLocalProvider(LocalContentAlpha provides contentColor.alpha) {
             ProvideTextStyle(MaterialTheme.typography.button) {
                 Box(
-                    modifier = Modifier
-                        .defaultMinSize(minWidth = FabSize, minHeight = FabSize),
+                    modifier =
+                        Modifier
+                            .defaultMinSize(minWidth = FabSize, minHeight = FabSize),
                     contentAlignment = contentAlignment,
                 ) { content() }
             }
