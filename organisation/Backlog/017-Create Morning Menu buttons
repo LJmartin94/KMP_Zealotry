@@ -1,7 +1,6 @@
 Make banner for morning menu
 add time to button
 add basic sub menus -> In progress
-- Make ChecklistSubMenu use the new fabs instead of abusing IconTextTimeButton
 - Rework IconTextTimeBundle to contain info on main button and subtasks, these need to be grouped to allow user customisation
 - Maybe split into MainTaskBundle and SubTaskBundle, both handled from DayPartMenuButton?
 - Investigate if defaultIcon can be part of itemIcons map by assert, instead of separate param
@@ -19,3 +18,4 @@ https://medium.com/@sergiobelda/transforming-xml-vector-drawables-into-compose-i
 https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-resources-usage.html#resource-usage
 
 - Need to make 'fab' buttons for subtasks (in reusable ui)
+- Make ChecklistSubMenu use the new fabs instead of abusing IconTextTimeButton

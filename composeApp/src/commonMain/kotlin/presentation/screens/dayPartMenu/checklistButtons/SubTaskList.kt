@@ -1,9 +1,16 @@
 package presentation.screens.dayPartMenu.checklistButtons
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import presentation.reusableUi.ChiaroscuroDrawable
+import presentation.reusableUi.Chiaroscuro
+import presentation.reusableUi.CustomExtendedFAB
+import presentation.style.ColourCompositionLocal
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.done
 import zealotry.composeapp.generated.resources.skip
@@ -15,11 +22,12 @@ import zealotry.composeapp.generated.resources.skip
 @Composable
 @OptIn(ExperimentalResourceApi::class)
 fun SubTaskList(
-    defaultIcon: ChiaroscuroDrawable, //Can maybe make an assert that itemIcons contains value for Default
+    // Can maybe make an assert that itemIcons contains value for Default
+    defaultIcon: Chiaroscuro,
     itemNames: List<String> = listOf(stringResource(Res.string.done)),
     itemFunctions: Map<String, () -> Unit> = emptyMap(),
-    itemIcons: Map<String, ChiaroscuroDrawable> = emptyMap(),
-) : List<@Composable ()-> Unit> {
+    itemIcons: Map<String, Chiaroscuro> = emptyMap(),
+): List<@Composable () -> Unit> {
     val done: String = stringResource(Res.string.done)
     val skip: String = stringResource(Res.string.skip)
     val isMulti = itemNames.size > 1
@@ -34,17 +42,26 @@ fun SubTaskList(
     taskFunctions[done] = { defaultDone() }
     taskFunctions[skip] = { defaultSkip() }
     return taskNames.map { name ->
-        @Composable {MainTaskButton(
-                    chiaro = itemIcons[name] ?: defaultIcon,
-                    text = name,
-                    time = "",
-                    onClick = taskFunctions[name] ?: defaultAction,
-                )}
+        @Composable {
+            CustomExtendedFAB(
+                text = { Text(name) },
+                onClick = taskFunctions[name] ?: defaultAction,
+                modifier = Modifier.fillMaxWidth(1f),
+                icon = {
+                    Icon(
+                        painter = (itemIcons[name] ?: defaultIcon).getPainter(),
+                        contentDescription = null,
+                    )
+                },
+                backgroundColor = ColourCompositionLocal.current.background,
+                contentAlignment = Alignment.CenterStart,
+            )
         }
+    }
 }
 
-private fun defaultSubtask()  {}
+private fun defaultSubtask() {}
 
-private fun defaultDone()  {}
+private fun defaultDone() {}
 
-private fun defaultSkip()  {}
+private fun defaultSkip() {}

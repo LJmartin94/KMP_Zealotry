@@ -6,7 +6,8 @@ Best: 32
 Streak: 2
 Learned:
 Did:
-    -Add custom floating action buttons that do allow you to change alignment of content - based on existing compose fabs.
+    - Add custom floating action buttons that do allow you to change alignment of content - based on existing compose fabs.
+    - Make ChecklistSubMenu use the new fabs
 
 9-12-2024
 Streak: 1
