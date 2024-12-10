@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+10-12-2024
+Streak: 2
+Learned:
+Did:
+    -Add custom floating action buttons that do allow you to change alignment of content - based on existing compose fabs.
+
 9-12-2024
 Streak: 1
 Learned:
