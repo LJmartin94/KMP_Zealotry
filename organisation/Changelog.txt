@@ -2,6 +2,12 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+12-12-2024
+Streak: 1
+Learned:
+Did:
+    - Reinvent the wheel and make a custom data class for maps that have a fixed order
+
 10-12-2024
 Streak: 2
 Learned:
