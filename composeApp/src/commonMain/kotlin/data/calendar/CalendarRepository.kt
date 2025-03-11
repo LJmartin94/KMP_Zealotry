@@ -19,8 +19,8 @@ class CalendarRepository {
                 println("getToday - Emitting day!")
                 val now: Instant = Clock.System.now()
 //            val now: Instant = Instant.parse("2024-04-24T20:53Z")
-                val modifiedDay: LocalDateTime = getDateMinusOffset(moment = now)
-                val modifiedInstant: Instant = getInstantMinusOffset(moment = now)
+                val modifiedDay: LocalDateTime = getDateMinusOffset(moment = now, h=4)
+                val modifiedInstant: Instant = getInstantMinusOffset(moment = now, h=4)
                 emit(
                     CalendarState(
                         dayOfWeek = modifiedDay.dayOfWeek,

@@ -14,7 +14,7 @@ import kotlin.time.Duration
 fun getInstantMinusOffset(
     moment: Instant = Clock.System.now(),
     d: Int = 0,
-    h: Int = 4,
+    h: Int = 0,
     m: Int = 0,
     s: Int = 0,
 ): Instant {
@@ -25,7 +25,7 @@ fun getDateMinusOffset(
     moment: Instant = Clock.System.now(),
     timeZone: TimeZone = TimeZone.currentSystemDefault(),
     d: Int = 0,
-    h: Int = 4,
+    h: Int = 0,
     m: Int = 0,
     s: Int = 0,
 ): LocalDateTime {
