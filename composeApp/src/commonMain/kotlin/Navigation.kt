@@ -25,8 +25,7 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
     val mainVM = viewModel { MainMenuViewModel(CalendarRepository()) }
     val dayPartVM = viewModel { DayPartMenuViewModel() }
 
-//    NavHost(navController, startDestination = Screen.MainMenu.name) {
-    NavHost(navController, startDestination = Screen.TutorialHome.name) {
+    NavHost(navController, startDestination = Screen.MainMenu.name) {
         composable(route = Screen.MainMenu.name) {
             MainMenuScreen(viewModel = mainVM) { navController.navigate(it) }
         }

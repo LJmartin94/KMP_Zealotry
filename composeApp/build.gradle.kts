@@ -43,6 +43,11 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.jb.androidx.navigation.compose)
+            //temp voyager navigation:
+            implementation(libs.navigator)
+            implementation(libs.navigator.screen.model)
+            implementation(libs.navigator.transitions)
+            implementation(libs.navigator.koin)
         }
     }
 }

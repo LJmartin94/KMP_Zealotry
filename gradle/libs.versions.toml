@@ -23,6 +23,9 @@ ktlint = "12.1.0"
 navigationCompose = "2.8.2"
 jb-androidx-navigation= "2.8.0-alpha10"
 
+#temp voyager navigation:
+voyager="1.0.0"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -44,6 +47,12 @@ jb-androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:n
 #detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 #detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
 #detekt-test = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }
+
+#temp voyager navigation:
+navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager"}
+navigator-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager"}
+navigator-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager"}
+navigator-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

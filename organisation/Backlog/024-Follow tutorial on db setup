@@ -3,4 +3,6 @@ https://www.youtube.com/watch?v=1TLk36FdmMA
 https://github.com/stevdza-san/ToDo-App-Compose-Multiplatform/tree/main/composeApp/src/commonMain/kotlin
 
 They use this navigation framework - https://voyager.adriel.cafe/
-Let's see if we can avoid that...
+Let's use it to follow along, then remove it and rely on standard androidx.navigation.
+
+-Remove voyager library in favour of regular navigation framework
