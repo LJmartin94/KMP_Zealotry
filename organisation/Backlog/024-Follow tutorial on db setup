@@ -6,3 +6,9 @@ They use this navigation framework - https://voyager.adriel.cafe/
 Let's use it to follow along, then remove it and rely on standard androidx.navigation.
 
 -Remove voyager library in favour of regular navigation framework
+
+Video on Voyager used by tutorial:
+https://www.youtube.com/watch?v=7Xv38k4cCMc
+
+Video on RequestState wrapper class used by tutorial:
+https://www.youtube.com/watch?v=LM6B03sCFxY
