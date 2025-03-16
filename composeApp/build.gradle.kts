@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.realm.plugin)
 }
 
 kotlin {
@@ -43,6 +44,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.jb.androidx.navigation.compose)
+
+            //Realm db from tutorial:
+            implementation(libs.mongodb.realm)
+            implementation(libs.kotlin.coroutines)
+            implementation(libs.stately.common)
+
             //temp voyager navigation:
             implementation(libs.navigator)
             implementation(libs.navigator.screen.model)

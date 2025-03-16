@@ -23,6 +23,11 @@ ktlint = "12.1.0"
 navigationCompose = "2.8.2"
 jb-androidx-navigation= "2.8.0-alpha10"
 
+#Realm db (from tutorial):
+realm = "1.13.0"
+coroutines = "1.8.0"
+stately = "2.0.5"
+
 #temp voyager navigation:
 voyager="1.0.0"
 
@@ -48,6 +53,11 @@ jb-androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:n
 #detekt-api = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
 #detekt-test = { module = "io.gitlab.arturbosch.detekt:detekt-test", version.ref = "detekt" }
 
+#Realm db (from tutorial):
+mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm"}
+kotlin-coroutines = { module =  "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
+stately-common = { module = "co.touchlab:stately-common", version.ref = "stately"}
+
 #temp voyager navigation:
 navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager"}
 navigator-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager"}
@@ -61,3 +71,6 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+
+#Realm db (from tutorial):
+realm-plugin = { id = "io.realm.kotlin", version.ref = "realm"}

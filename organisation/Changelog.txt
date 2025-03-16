@@ -9,6 +9,7 @@ Did:
     - Rename function
     - Lazy refactor into presentation-domain-data structure -> moved everything that wasn't presentation into domain layer, as we have no real data yet.
     - Following Tutorial: Temporarily use voyager nav.
+    - Following Tutorial: Add ToDoTask to data layer.
 
 12-12-2024
 Streak: 1
