@@ -18,7 +18,7 @@ fun isDark(): Boolean {
 
 @Composable
 @Suppress("MagicNumber")
-fun Modifier.setIfDarkMode(): Modifier =
+fun Modifier.dimIfDarkMode(): Modifier =
     when (DarkThemeCompositionLocal.current) {
         true -> greyScale(0.77f)
         else -> this

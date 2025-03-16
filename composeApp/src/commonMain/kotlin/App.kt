@@ -7,15 +7,15 @@ import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.style.DarkThemeCompositionLocal
 import presentation.style.MainTheme
+import presentation.style.dimIfDarkMode
 import presentation.style.isDark
-import presentation.style.setIfDarkMode
 
 @Composable
 @Preview
 fun App() {
     CompositionLocalProvider(DarkThemeCompositionLocal provides isDark()) {
         MainTheme {
-            Surface(modifier = Modifier.fillMaxSize().setIfDarkMode()) {
+            Surface(modifier = Modifier.fillMaxSize().dimIfDarkMode()) {
                 Navigation()
             }
         }

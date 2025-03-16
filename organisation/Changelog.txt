@@ -6,6 +6,7 @@ Best: 32
 Streak: 1
 Did:
     - Store WIP state of menu buttons. Want to figure out proper state management first before implementing.
+    - Rename function
 
 12-12-2024
 Streak: 1
