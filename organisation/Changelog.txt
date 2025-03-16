@@ -2,6 +2,11 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+16-03-2025
+Streak: 1
+Did:
+    - Store WIP state of menu buttons. Want to figure out proper state management first before implementing.
+
 12-12-2024
 Streak: 1
 Learned:
