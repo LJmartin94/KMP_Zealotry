@@ -1,4 +1,4 @@
-package data.calendar
+package domain.calendar
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

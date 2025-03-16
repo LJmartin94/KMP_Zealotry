@@ -1,4 +1,4 @@
-package data.platform
+package domain.platform
 
 interface Platform {
     val name: String

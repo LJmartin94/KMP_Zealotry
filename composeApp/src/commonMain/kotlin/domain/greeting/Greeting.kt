@@ -1,6 +1,6 @@
-package data.greeting
+package domain.greeting
 
-import data.platform.getPlatform
+import domain.platform.getPlatform
 
 class Greeting {
     private val platform = getPlatform()

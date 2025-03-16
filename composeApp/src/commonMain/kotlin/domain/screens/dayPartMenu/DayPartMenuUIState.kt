@@ -1,4 +1,4 @@
-package data.screens.dayPartMenu
+package domain.screens.dayPartMenu
 
 import libs.dataStructures.OrderedMap
 

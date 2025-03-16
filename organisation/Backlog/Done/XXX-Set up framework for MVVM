@@ -16,3 +16,7 @@ https://www.youtube.com/watch?v=CaaSP3ayKWI
 
 Reddit - How to share data between repositories in MVVM:
 https://www.reddit.com/r/androiddev/comments/buc958/how_to_share_data_between_repositories_in_mvvm/
+
+Data-Domain-Presentation
+https://martinfowler.com/bliki/PresentationDomainDataLayering.html
+presentation (UI), domain logic (aka business logic), and data access

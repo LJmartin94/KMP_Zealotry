@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import data.calendar.CalendarRepository
-import data.screens.dayPartMenu.DayPart
+import domain.calendar.CalendarRepository
+import domain.screens.dayPartMenu.DayPart
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import presentation.screens.dayPartMenu.DayPartMenuScreen
@@ -25,7 +25,8 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
     val mainVM = viewModel { MainMenuViewModel(CalendarRepository()) }
     val dayPartVM = viewModel { DayPartMenuViewModel() }
 
-    NavHost(navController, startDestination = Screen.MainMenu.name) {
+//    NavHost(navController, startDestination = Screen.MainMenu.name) {
+    NavHost(navController, startDestination = Screen.TutorialHome.name) {
         composable(route = Screen.MainMenu.name) {
             MainMenuScreen(viewModel = mainVM) { navController.navigate(it) }
         }
@@ -48,6 +49,8 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
 // Screens
 @OptIn(ExperimentalResourceApi::class)
 enum class Screen(val title: StringResource) {
+    TutorialHome(title = Res.string.empty),
+    TutorialTask(title = Res.string.empty),
     MainMenu(title = Res.string.empty),
     Morning(title = Res.string.morning),
     Day(title = Res.string.day),

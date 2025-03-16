@@ -1,4 +1,4 @@
-package data.calendar
+package domain.calendar
 
 enum class FestiveDay {
     SPRING_START,

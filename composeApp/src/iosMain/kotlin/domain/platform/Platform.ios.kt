@@ -1,4 +1,4 @@
-package data.platform
+package domain.platform
 
 import platform.UIKit.UIDevice
 

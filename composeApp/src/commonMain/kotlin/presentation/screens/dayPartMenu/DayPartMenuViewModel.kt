@@ -1,8 +1,8 @@
 package presentation.screens.dayPartMenu
 
 import androidx.lifecycle.ViewModel
-import data.screens.dayPartMenu.DayPart
-import data.screens.dayPartMenu.DayPartMenuUIState
+import domain.screens.dayPartMenu.DayPart
+import domain.screens.dayPartMenu.DayPartMenuUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

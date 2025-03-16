@@ -1,8 +1,8 @@
-package di
+package domain
 
-import data.calendar.CalendarRepository
-import data.screens.dayPartMenu.DayPartMenuRepository
-import data.screens.mainMenu.MainMenuRepository
+import domain.calendar.CalendarRepository
+import domain.screens.dayPartMenu.DayPartMenuRepository
+import domain.screens.mainMenu.MainMenuRepository
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import presentation.calendar.CalendarViewModel

@@ -7,6 +7,7 @@ Streak: 1
 Did:
     - Store WIP state of menu buttons. Want to figure out proper state management first before implementing.
     - Rename function
+    - Lazy refactor into presentation-domain-data structure -> moved everything that wasn't presentation into domain layer, as we have no real data yet.
 
 12-12-2024
 Streak: 1

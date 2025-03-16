@@ -1,7 +1,7 @@
-package data.screens.mainMenu
+package domain.screens.mainMenu
 
-import data.calendar.FestiveDay
-import data.calendar.Season
+import domain.calendar.FestiveDay
+import domain.calendar.Season
 import kotlinx.datetime.DayOfWeek
 
 data class MainMenuUIState(
