@@ -1,4 +1,4 @@
-package presentation.screens.tutorialTaskScreen
+package presentation.screens.tutorial.task
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen

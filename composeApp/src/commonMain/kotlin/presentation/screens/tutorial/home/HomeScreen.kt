@@ -1,4 +1,4 @@
-package presentation.screens.tutorialHomeScreen
+package presentation.screens.tutorial.home
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen

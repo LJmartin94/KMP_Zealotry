@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import presentation.screens.tutorialHomeScreen.HomeScreen
+import presentation.screens.tutorial.home.HomeScreen
 import presentation.style.DarkThemeCompositionLocal
 import presentation.style.MainTheme
 import presentation.style.dimIfDarkMode
