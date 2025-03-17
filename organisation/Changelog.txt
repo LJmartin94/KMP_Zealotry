@@ -5,6 +5,7 @@ Best: 32
 Streak: 2
     - Following Tutorial: Followed tutorial on requests state
     - Following Tutorial: Add basic layout to HomeScreen -> introduce material3 dependency
+    - Following Tutorial: Add empty DisplayTasks fun + alert dialogue for deleting task
 
 16-03-2025
 Streak: 1
