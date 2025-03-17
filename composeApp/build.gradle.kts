@@ -55,6 +55,9 @@ kotlin {
             implementation(libs.navigator.screen.model)
             implementation(libs.navigator.transitions)
             implementation(libs.navigator.koin)
+
+            //material 3 from tutorial
+            implementation(compose.material3)
         }
     }
 }

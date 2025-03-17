@@ -1,6 +1,10 @@
 This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
+17-03-2025
+Streak: 2
+    - Following Tutorial: Followed tutorial on requests state
+    - Following Tutorial: Add basic layout to HomeScreen -> introduce material3 dependency
 
 16-03-2025
 Streak: 1
