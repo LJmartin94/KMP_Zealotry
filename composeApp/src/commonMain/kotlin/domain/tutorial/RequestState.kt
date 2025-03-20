@@ -1,4 +1,4 @@
-package data.tutorial
+package domain.tutorial
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope

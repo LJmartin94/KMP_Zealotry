@@ -1,4 +1,4 @@
-package data.tutorial
+package domain.tutorial
 
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
