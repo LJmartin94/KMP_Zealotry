@@ -24,8 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import data.tutorial.RequestState
-import data.tutorial.ToDoTask
+import domain.tutorial.RequestState
+import domain.tutorial.ToDoTask
 
 
 class HomeScreen : Screen {
@@ -67,8 +67,8 @@ fun DisplayTasks(
     tasks: RequestState<List<ToDoTask>>,
     showActive: Boolean = true,
     onSelect: ((ToDoTask) -> Unit)? = null,
-    onFavourite: ((ToDoTask, Boolean) -> Unit)? = null,
     onComplete: (ToDoTask, Boolean) -> Unit,
+    onFavourite: ((ToDoTask, Boolean) -> Unit)? = null,
     onDelete: ((ToDoTask) -> Unit)? = null,
 ){
     var showDialogue by remember { mutableStateOf(false) }

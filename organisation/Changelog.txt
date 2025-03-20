@@ -7,6 +7,7 @@ Streak: 1
     - Add component directory to presentation - for not-quite-screen level fragments and entities outside the nav graph
     - Reorganise directory structure
     - Following Tutorial: Add drawable resources for tutorial
+    - Following Tutorial: Add task view, error screen, loading screen.
 
 17-03-2025
 Streak: 2
