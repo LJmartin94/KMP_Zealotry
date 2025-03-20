@@ -5,7 +5,7 @@ import domain.screens.dayPartMenu.DayPartMenuRepository
 import domain.screens.mainMenu.MainMenuRepository
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import presentation.calendar.CalendarViewModel
+import presentation.components.calendar.CalendarViewModel
 import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuViewModel
 

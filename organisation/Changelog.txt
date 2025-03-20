@@ -1,6 +1,11 @@
 This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
+
+20-03-2025
+Streak: 1
+    - Add component directory to presentation - for not-quite-screen level fragments and entities outside the nav graph
+
 17-03-2025
 Streak: 2
     - Following Tutorial: Followed tutorial on requests state

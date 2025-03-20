@@ -1,4 +1,4 @@
-package presentation.calendar
+package presentation.components.calendar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
