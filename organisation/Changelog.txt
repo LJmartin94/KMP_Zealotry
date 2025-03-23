@@ -6,6 +6,7 @@ Best: 32
 Streak: 1
     - Following Tutorial: Finish layout of HomeScreen
     - Following Tutorial: Create MongoDB class in data layer
+    - Following Tutorial: Create VM for HomeScreen
 
 20-03-2025
 Streak: 1
