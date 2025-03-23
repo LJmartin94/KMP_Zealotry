@@ -1,8 +1,13 @@
 package presentation.screens.tutorial.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Scaffold
@@ -22,10 +27,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import domain.tutorial.RequestState
 import domain.tutorial.ToDoTask
+import presentation.components.tutorial.ErrorScreen
+import presentation.components.tutorial.LoadingScreen
+import presentation.components.tutorial.TaskView
 
 
 class HomeScreen : Screen {
@@ -56,7 +65,23 @@ class HomeScreen : Screen {
                         top = padding.calculateTopPadding(),
                         bottom = padding.calculateBottomPadding()
                     )
-            ){}
+            ){
+                DisplayTasks(
+                    modifier = Modifier.weight(1f),
+                    tasks = RequestState.Idle,
+                    onSelect = { selectedTask -> },
+                    onFavourite = { task, isFavourite -> },
+                    onComplete = { task, completed -> },
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                DisplayTasks(
+                    modifier = Modifier.weight(1f),
+                    tasks = RequestState.Idle,
+                    showActive = false,
+                    onComplete = { task, completed -> },
+                    onDelete = {task ->},
+                )
+            }
         }
     }
 }
@@ -108,6 +133,44 @@ fun DisplayTasks(
                 taskToDelete = null
                 showDialogue = false
             },
+        )
+    }
+
+    Column(modifier = Modifier.fillMaxWidth()){
+        Text(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            text = if (showActive) "Active Tasks" else "Completed Tasks",
+            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+            fontWeight = FontWeight.Medium
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        tasks.DisplayResult(
+            onLoading = { LoadingScreen() },
+            onError = { ErrorScreen(message = it)},
+            onSuccess = {
+                if (it.isNotEmpty()){
+                    LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)) {
+                        items(
+                            items = it,
+                            key = { task -> task._id}
+                        ) { task ->
+                            TaskView(
+                                showActive = showActive,
+                                task = task,
+                                onSelect = { onSelect?.invoke(it) },
+                                onComplete = { selectedTask, completed -> onComplete(selectedTask, completed)},
+                                onFavourite = { selectedTask, favourite -> onFavourite?.invoke(selectedTask, favourite)},
+                                onDelete = { selectedTask ->
+                                    taskToDelete = selectedTask
+                                    showDialogue = true
+                                },
+                            )
+                        }
+                    }
+                } else {
+                    ErrorScreen(message = "Task list is empty")
+                }
+            }
         )
     }
 }

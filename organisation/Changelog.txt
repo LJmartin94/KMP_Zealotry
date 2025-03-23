@@ -2,6 +2,10 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+23-03-2025
+Streak: 1
+    - Following Tutorial: Finish layout of HomeScreen
+
 20-03-2025
 Streak: 1
     - Add component directory to presentation - for not-quite-screen level fragments and entities outside the nav graph
