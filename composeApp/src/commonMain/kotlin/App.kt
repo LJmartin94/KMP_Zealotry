@@ -33,3 +33,8 @@ fun App() {
         }
     }
 }
+
+val mongoModule = module {
+    single { MongoDB() }
+    factory { HomeViewModel(get()) }
+}

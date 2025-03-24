@@ -1,0 +1,3 @@
+https://medium.com/draftkings-engineering/android-mvvm-and-repositories-in-the-real-world-e54c3582f832
+
+Repositories should only exist in data layer, and purely be an interface to interact with the data there.
