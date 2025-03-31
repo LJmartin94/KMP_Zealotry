@@ -2,6 +2,10 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+31-03-2025
+Streak: 1
+    - Following Tutorial: Design TaskScreen (WIP)
+
 25-03-2025
 Streak: 3
     - Following Tutorial-ish: Put mongoDB module in DependencyInjection.kt
