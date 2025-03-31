@@ -5,6 +5,7 @@ Best: 32
 31-03-2025
 Streak: 1
     - Following Tutorial: Design TaskScreen (WIP)
+    - Add common-language extension functions for tristate (/nullable) Booleans. (The following overengineering was brought to you by a dream I had. Sad, I know.)
 
 25-03-2025
 Streak: 3

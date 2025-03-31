@@ -8,12 +8,13 @@ import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import libs.tristateBool.isTrueOrNull
 
 class MongoDB {
     var realm: Realm? = null
 
     private fun configureTheRealm(){
-        if (realm == null || realm!!.isClosed()){
+        if (realm?.isClosed().isTrueOrNull()){
             // Pass all collection Model classes here.
             val config = RealmConfiguration.Builder(
                 schema = setOf(ToDoTask::class)
