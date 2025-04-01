@@ -5,6 +5,7 @@ Best: 32
 01-04-2025
 Streak: 2
     - Following Tutorial: Finish designing TaskScreen
+    - Following Tutorial: Add TaskAction sealed class
 
 31-03-2025
 Streak: 1
