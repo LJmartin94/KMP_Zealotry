@@ -31,17 +31,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.tutorial.RequestState
 import domain.tutorial.ToDoTask
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
+import presentation.screens.tutorial.task.TaskScreen
 
 
 class HomeScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content(){
+        val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<HomeViewModel>()
         val activeTasks by viewModel.activeTasks
         val completedTasks by viewModel.completedTasks
@@ -52,7 +56,7 @@ class HomeScreen : Screen {
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = { navigator.push(TaskScreen())},
                     shape = RoundedCornerShape( size = 12.dp)
                 ){
                     Icon(
@@ -74,7 +78,9 @@ class HomeScreen : Screen {
                 DisplayTasks(
                     modifier = Modifier.weight(1f),
                     tasks = activeTasks,
-                    onSelect = { selectedTask -> },
+                    onSelect = { selectedTask ->
+                        navigator.push(TaskScreen(selectedTask))
+                    },
                     onFavourite = { task, isFavourite -> },
                     onComplete = { task, completed -> },
                 )

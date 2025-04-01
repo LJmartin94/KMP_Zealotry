@@ -2,6 +2,10 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+01-04-2025
+Streak: 2
+    - Following Tutorial: Finish designing TaskScreen
+
 31-03-2025
 Streak: 1
     - Following Tutorial: Design TaskScreen (WIP)

@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.tutorial.ToDoTask
 
 const val DEFAULT_TITLE = "Enter the Title"
@@ -30,6 +32,7 @@ const val DEFAULT_DESCRIPTION = "Add some description"
 data class TaskScreen(val task: ToDoTask? = null) : Screen {
     @Composable
     override fun Content(){
+        val navigator = LocalNavigator.currentOrThrow
         var currentTitle by remember{
             mutableStateOf(task?.title ?: DEFAULT_TITLE)
         }
@@ -52,7 +55,7 @@ data class TaskScreen(val task: ToDoTask? = null) : Screen {
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = {}){
+                        IconButton(onClick = { navigator.pop() }){
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = "Back Arrow"
@@ -70,6 +73,7 @@ data class TaskScreen(val task: ToDoTask? = null) : Screen {
                             } else {
                                 TODO() //insert new task
                             }
+                            navigator.pop()
                         },
                         shape = RoundedCornerShape(size = 12.dp)
                     ){
