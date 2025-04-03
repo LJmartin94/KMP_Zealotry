@@ -11,7 +11,11 @@ import kotlinx.coroutines.flow.map
 import libs.tristateBool.isTrueOrNull
 
 class MongoDB {
-    var realm: Realm? = null
+    private var realm: Realm? = null
+
+    init {
+        configureTheRealm()
+    }
 
     private fun configureTheRealm(){
         if (realm?.isClosed().isTrueOrNull()){
@@ -46,4 +50,67 @@ class MongoDB {
     suspend fun addTask(task: ToDoTask) {
         realm?.write { copyToRealm(task) }
     }
+
+    suspend fun updateTask(task: ToDoTask){
+        realm?.write {
+            try {
+                val queriedTask = query<ToDoTask>("_id == $0", task._id)
+                    .first()
+                    .find()
+                queriedTask?.let{
+                    findLatest(it)?.let { currentTask ->
+                        currentTask.title = task.title
+                        currentTask.description = task.description
+                    }
+                }
+            } catch (e: Exception) {
+                println(e)
+            }
+        }
+    }
+
+    suspend fun setComplete(task:ToDoTask, taskCompleted: Boolean) {
+        realm?.write{
+            try{
+                val queriedTask = query<ToDoTask>("_id == $0", task._id)
+                    .find()
+                    .first()
+                queriedTask.apply { completed = taskCompleted }
+            } catch (e: Exception){
+                println(e)
+            }
+        }
+    }
+
+    suspend fun setFavourite(task:ToDoTask, isFavourite: Boolean) {
+        realm?.write{
+            try{
+                val queriedTask = query<ToDoTask>("_id == $0", task._id)
+                    .find()
+                    .first()
+                queriedTask.apply { favourite = isFavourite }
+            } catch (e: Exception){
+                println(e)
+            }
+        }
+    }
+
+    //TODO: These functions could also return RequestState instead of just printing error
+    suspend fun deleteTask(task:ToDoTask) {
+        realm?.write{
+            try{
+                val queriedTask = query<ToDoTask>("_id == $0", task._id)
+                    .first()
+                    .find()
+                queriedTask?.let{
+                    findLatest(it)?.let{ foundTask ->
+                        delete(foundTask)
+                    }
+                }
+            } catch (e: Exception){
+                println(e)
+            }
+        }
+    }
+
 }
