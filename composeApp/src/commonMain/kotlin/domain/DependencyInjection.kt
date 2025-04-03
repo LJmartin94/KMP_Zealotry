@@ -10,6 +10,7 @@ import presentation.components.calendar.CalendarViewModel
 import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuViewModel
 import presentation.screens.tutorial.home.HomeViewModel
+import presentation.screens.tutorial.task.TaskViewModel
 
 fun initKoin() {
     startKoin {
@@ -33,4 +34,5 @@ fun initKoin() {
 val mongoModule = module {
     single { MongoDB() }
     factory { HomeViewModel(get()) }
+    factory { TaskViewModel(get()) }
 }

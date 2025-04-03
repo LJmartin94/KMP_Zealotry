@@ -5,6 +5,7 @@ Best: 32
 03-04-2025
 Streak: 1
     - Following Tutorial: Add additional database operations
+    - Following Tutorial: Add TaskViewModel
 
 01-04-2025
 Streak: 2
