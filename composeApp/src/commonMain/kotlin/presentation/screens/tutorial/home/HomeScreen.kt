@@ -147,7 +147,7 @@ fun DisplayTasks(
         )
     }
 
-    Column(modifier = Modifier.fillMaxWidth()){
+    Column(modifier = modifier.fillMaxWidth()){
         Text(
             modifier = Modifier.padding(horizontal = 12.dp),
             text = if (showActive) "Active Tasks" else "Completed Tasks",

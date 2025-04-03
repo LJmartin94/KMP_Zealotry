@@ -25,14 +25,10 @@ fun initKoin() {
                 single { CalendarRepository() }
                 factory { CalendarViewModel(get()) }
 
-                mongoModule //from tutorial
+                single { MongoDB() }
+                factory { HomeViewModel(get()) }
+                factory { TaskViewModel(get()) }
             },
         )
     }
-}
-
-val mongoModule = module {
-    single { MongoDB() }
-    factory { HomeViewModel(get()) }
-    factory { TaskViewModel(get()) }
 }
