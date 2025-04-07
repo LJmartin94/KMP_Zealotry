@@ -69,7 +69,7 @@ class MongoDB {
         }
     }
 
-    suspend fun setComplete(task:ToDoTask, taskCompleted: Boolean) {
+    suspend fun setCompleted(task:ToDoTask, taskCompleted: Boolean) {
         realm?.write{
             try{
                 val queriedTask = query<ToDoTask>("_id == $0", task._id)

@@ -5,6 +5,7 @@ Best: 32
 07-04-2025
 Streak: 1
     - Following Tutorial: Make FAB visible when opening keyboard, prevent crash when adding task
+    - Following Tutorial: Hook up empty Home Screen lambdas to Home View Model to underlying db Actions
 
 03-04-2025
 Streak: 1

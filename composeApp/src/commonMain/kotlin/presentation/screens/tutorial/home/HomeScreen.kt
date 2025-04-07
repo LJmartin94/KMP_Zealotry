@@ -34,6 +34,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.tutorial.RequestState
+import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
@@ -81,16 +82,32 @@ class HomeScreen : Screen {
                     onSelect = { selectedTask ->
                         navigator.push(TaskScreen(selectedTask))
                     },
-                    onFavourite = { task, isFavourite -> },
-                    onComplete = { task, completed -> },
+                    onFavourite = { task, isFavourite ->
+                        viewModel.setAction(
+                            action = TaskAction.SetFavourite(task, isFavourite)
+                        )
+                    },
+                    onComplete = { task, completed ->
+                        viewModel.setAction(
+                            action = TaskAction.SetCompleted(task, completed)
+                        )
+                    },
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 DisplayTasks(
                     modifier = Modifier.weight(1f),
                     tasks = completedTasks,
                     showActive = false,
-                    onComplete = { task, completed -> },
-                    onDelete = {task ->},
+                    onComplete = { task, completed ->
+                        viewModel.setAction(
+                            action = TaskAction.SetCompleted(task, completed)
+                        )
+                    },
+                    onDelete = {task ->
+                        viewModel.setAction(
+                            action = TaskAction.Delete(task)
+                        )
+                    },
                 )
             }
         }
