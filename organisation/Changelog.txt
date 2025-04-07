@@ -6,6 +6,10 @@ Best: 32
 Streak: 1
     - Following Tutorial: Make FAB visible when opening keyboard, prevent crash when adding task
     - Following Tutorial: Hook up empty Home Screen lambdas to Home View Model to underlying db Actions
+    - Move Koin initialisation back out of general App code and into Android MainActivity.kt.
+        Because  if you e.g. change dark mode theme (perhaps other state changes trigger this too)
+        it recreates the App and causes a crash. This happens when koin is initialised in App() as
+        we then already have an instance of Koin running.
 
 03-04-2025
 Streak: 1
