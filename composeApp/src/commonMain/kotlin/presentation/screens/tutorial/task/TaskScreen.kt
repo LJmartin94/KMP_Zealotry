@@ -75,6 +75,7 @@ data class TaskScreen(val task: ToDoTask? = null) : Screen {
                                 viewModel.setAction(
                                     action = TaskAction.Update(
                                         ToDoTask().apply {
+                                            _id = task._id
                                             title = currentTitle
                                             description = currentDescription
                                         }

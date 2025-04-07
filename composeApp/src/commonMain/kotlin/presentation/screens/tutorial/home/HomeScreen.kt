@@ -163,7 +163,7 @@ fun DisplayTasks(
                     LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)) {
                         items(
                             items = it,
-                            key = { task -> task._id}
+                            key = { task -> task._id.toHexString()}
                         ) { task ->
                             TaskView(
                                 showActive = showActive,
