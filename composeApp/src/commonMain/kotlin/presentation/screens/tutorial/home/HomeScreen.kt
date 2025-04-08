@@ -1,5 +1,7 @@
 package presentation.screens.tutorial.home
 
+//import cafe.adriel.voyager.navigator.LocalNavigator
+//import cafe.adriel.voyager.navigator.currentOrThrow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,25 +31,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.tutorial.RequestState
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
+import libs.mvvm.getViewModel
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
-import presentation.screens.tutorial.task.TaskScreen
 
 
-class HomeScreen : Screen {
+class HomeScreen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    override fun Content(){
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getScreenModel<HomeViewModel>()
+    fun Content(){
+//        val navigator = LocalNavigator.currentOrThrow
+        val viewModel = getViewModel<HomeViewModel>()
         val activeTasks by viewModel.activeTasks
         val completedTasks by viewModel.completedTasks
 
@@ -57,7 +55,8 @@ class HomeScreen : Screen {
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { navigator.push(TaskScreen())},
+//                    onClick = { navigator.push(TaskScreen())},
+                    onClick = {},
                     shape = RoundedCornerShape( size = 12.dp)
                 ){
                     Icon(
@@ -80,7 +79,7 @@ class HomeScreen : Screen {
                     modifier = Modifier.weight(1f),
                     tasks = activeTasks,
                     onSelect = { selectedTask ->
-                        navigator.push(TaskScreen(selectedTask))
+//                        navigator.push(TaskScreen(selectedTask))
                     },
                     onFavourite = { task, isFavourite ->
                         viewModel.setAction(
