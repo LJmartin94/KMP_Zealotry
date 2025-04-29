@@ -50,12 +50,6 @@ kotlin {
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
 
-//            //temp voyager navigation:
-//            implementation(libs.navigator)
-//            implementation(libs.navigator.screen.model)
-//            implementation(libs.navigator.transitions)
-//            implementation(libs.navigator.koin)
-
             //material 3 from tutorial
             implementation(compose.material3)
         }

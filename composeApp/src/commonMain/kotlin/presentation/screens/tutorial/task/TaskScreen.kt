@@ -21,10 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-//import cafe.adriel.voyager.core.screen.Screen
-//import cafe.adriel.voyager.koin.getScreenModel
-//import cafe.adriel.voyager.navigator.LocalNavigator
-//import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import libs.mvvm.getViewModel
@@ -34,8 +30,7 @@ const val DEFAULT_DESCRIPTION = "Add some description"
 
 data class TaskScreen(val task: ToDoTask? = null) {
     @Composable
-    fun Content(){
-//        val navigator = LocalNavigator.currentOrThrow
+    fun show(navigateBack: () -> Unit){
         val viewModel = getViewModel<TaskViewModel>()
         var currentTitle by remember{
             mutableStateOf(task?.title ?: DEFAULT_TITLE)
@@ -60,8 +55,7 @@ data class TaskScreen(val task: ToDoTask? = null) {
                     },
                     navigationIcon = {
                         IconButton(
-//                            onClick = { navigator.pop() }
-                            onClick = {}
+                            onClick = { navigateBack() }
                         ){
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
@@ -95,7 +89,7 @@ data class TaskScreen(val task: ToDoTask? = null) {
                                     )
                                 )
                             }
-//                            navigator.pop()
+                            navigateBack()
                         },
                         shape = RoundedCornerShape(size = 12.dp)
                     ){

@@ -2,8 +2,6 @@ package presentation.screens.tutorial.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-//import cafe.adriel.voyager.core.model.ScreenModel
-//import cafe.adriel.voyager.core.model.screenModelScope
 import data.tutorial.MongoDB
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask

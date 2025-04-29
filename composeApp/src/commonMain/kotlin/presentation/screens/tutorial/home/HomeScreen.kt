@@ -1,7 +1,5 @@
 package presentation.screens.tutorial.home
 
-//import cafe.adriel.voyager.navigator.LocalNavigator
-//import cafe.adriel.voyager.navigator.currentOrThrow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,13 +37,14 @@ import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
 
-
-class HomeScreen {
+class HomeScreen { //TODO: These classes can be functions that just do the same as Class.show()
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Content(){
-//        val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getViewModel<HomeViewModel>()
+    fun show(
+        navigateToTask: (task: ToDoTask?) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
+    )
+    {
+        val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
         val activeTasks by viewModel.activeTasks
         val completedTasks by viewModel.completedTasks
 
@@ -55,8 +54,7 @@ class HomeScreen {
             },
             floatingActionButton = {
                 FloatingActionButton(
-//                    onClick = { navigator.push(TaskScreen())},
-                    onClick = {},
+                    onClick = { navigateToTask(null) },
                     shape = RoundedCornerShape( size = 12.dp)
                 ){
                     Icon(
@@ -79,7 +77,7 @@ class HomeScreen {
                     modifier = Modifier.weight(1f),
                     tasks = activeTasks,
                     onSelect = { selectedTask ->
-//                        navigator.push(TaskScreen(selectedTask))
+                        navigateToTask(selectedTask)
                     },
                     onFavourite = { task, isFavourite ->
                         viewModel.setAction(

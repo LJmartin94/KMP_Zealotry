@@ -8,8 +8,13 @@ Let's use it to follow along, then remove it and rely on standard androidx.navig
 -Remove voyager library in favour of regular navigation framework
 See: https://github.com/joelkanyi/FocusBloom/issues/141
 
+Unidirectional data flow (UDF): State flows down (State -> UI), Events flow up (UI -> State)
+
 Video on Voyager used by tutorial:
 https://www.youtube.com/watch?v=7Xv38k4cCMc
 
 Video on RequestState wrapper class used by tutorial:
 https://www.youtube.com/watch?v=LM6B03sCFxY
+
+Need to learn more about correct usage of events:
+https://developer.android.com/courses/jetpack-compose/course

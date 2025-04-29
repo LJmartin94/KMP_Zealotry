@@ -1,6 +1,4 @@
 
-//import cafe.adriel.voyager.navigator.Navigator
-//import cafe.adriel.voyager.transitions.SlideTransition
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable

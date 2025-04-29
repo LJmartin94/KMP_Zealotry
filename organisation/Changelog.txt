@@ -2,6 +2,14 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+29-04-2025
+Streak: 1
+    - Apply intermediate step in removing Voyager Navigation
+        - Screens are still classes, instead of composable functions.
+        - Need to figure out how to specify the task to display (when clicked from HomeScreen)
+        with event/call-back, instead of passing the task to display directly.
+        - But: As intermediate step, get the TaskScreen to display the correct task when clicked by using param.
+
 08-04-2025
 Streak: 2
     - Start refactoring and removing Voyager Navigation dependency
