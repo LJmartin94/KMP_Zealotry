@@ -36,12 +36,13 @@ import libs.mvvm.getViewModel
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
+import tutorial.NavDestination
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToTask: (task: ToDoTask?) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
+    onNavigateTo: (NavDestination) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
 )
 {
     val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
@@ -54,7 +55,10 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navigateToTask(null) },
+                onClick = {
+                    //TODO: Clear loaded task if any
+                    onNavigateTo(NavDestination.Task)
+                },
                 shape = RoundedCornerShape( size = 12.dp)
             ){
                 Icon(
@@ -77,7 +81,8 @@ fun HomeScreen(
                 modifier = Modifier.weight(1f),
                 tasks = activeTasks,
                 onSelect = { selectedTask ->
-                    navigateToTask(selectedTask)
+                    //TODO: Use selectedTask
+                    onNavigateTo(NavDestination.Task)
                 },
                 onFavourite = { task, isFavourite ->
                     viewModel.setAction(

@@ -5,6 +5,7 @@ Best: 32
 12-08-2025
 Streak: 1
     - Commit unfinished work, in process of converting screen classes to functions.
+    - Implement navigation destinations as sealed interface of serialisable objects.
 
 29-04-2025
 Streak: 1

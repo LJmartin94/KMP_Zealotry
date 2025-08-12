@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.realm.plugin)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -52,6 +53,9 @@ kotlin {
 
             //material 3 from tutorial
             implementation(compose.material3)
+
+            //tutorial navigation -replacing voyager:
+            implementation(libs.kotlinx.serializationJson)
         }
     }
 }

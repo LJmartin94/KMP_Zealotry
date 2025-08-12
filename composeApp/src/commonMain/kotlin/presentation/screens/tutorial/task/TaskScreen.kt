@@ -24,12 +24,22 @@ import androidx.compose.ui.unit.dp
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import libs.mvvm.getViewModel
+import tutorial.NavDestination
 
 const val DEFAULT_TITLE = "Enter the Title"
 const val DEFAULT_DESCRIPTION = "Add some description"
 
 @Composable
-fun TaskScreen(task: ToDoTask? = null, navigateBack: () -> Unit){
+fun TaskScreen(
+    onNavigateTo: (NavDestination) -> Unit,
+    onBack: () -> Unit
+//    task: ToDoTask? = null, navigateBack: () -> Unit
+){
+
+
+    val dummyPlaceholder: ToDoTask? = null
+    val task = dummyPlaceholder
+
     val viewModel = getViewModel<TaskViewModel>()
     var currentTitle by remember{
         mutableStateOf(task?.title ?: DEFAULT_TITLE)
@@ -54,7 +64,7 @@ fun TaskScreen(task: ToDoTask? = null, navigateBack: () -> Unit){
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navigateBack() }
+                        onClick = { onBack.invoke() }
                     ){
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
@@ -88,7 +98,7 @@ fun TaskScreen(task: ToDoTask? = null, navigateBack: () -> Unit){
                                 )
                             )
                         }
-                        navigateBack()
+                        onBack.invoke()
                     },
                     shape = RoundedCornerShape(size = 12.dp)
                 ){
