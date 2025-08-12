@@ -37,76 +37,75 @@ import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
 
-class HomeScreen { //TODO: These classes can be functions that just do the same as Class.show()
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun show(
-        navigateToTask: (task: ToDoTask?) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
-    )
-    {
-        val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
-        val activeTasks by viewModel.activeTasks
-        val completedTasks by viewModel.completedTasks
 
-        Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(title = { Text(text = "Home")})
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { navigateToTask(null) },
-                    shape = RoundedCornerShape( size = 12.dp)
-                ){
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit Icon"
-                    )
-                }
-            }
-        ){ padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp)
-                    .padding(
-                        top = padding.calculateTopPadding(),
-                        bottom = padding.calculateBottomPadding()
-                    )
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(
+    navigateToTask: (task: ToDoTask?) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
+)
+{
+    val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
+    val activeTasks by viewModel.activeTasks
+    val completedTasks by viewModel.completedTasks
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(title = { Text(text = "Home")})
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navigateToTask(null) },
+                shape = RoundedCornerShape( size = 12.dp)
             ){
-                DisplayTasks(
-                    modifier = Modifier.weight(1f),
-                    tasks = activeTasks,
-                    onSelect = { selectedTask ->
-                        navigateToTask(selectedTask)
-                    },
-                    onFavourite = { task, isFavourite ->
-                        viewModel.setAction(
-                            action = TaskAction.SetFavourite(task, isFavourite)
-                        )
-                    },
-                    onComplete = { task, completed ->
-                        viewModel.setAction(
-                            action = TaskAction.SetCompleted(task, completed)
-                        )
-                    },
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-                DisplayTasks(
-                    modifier = Modifier.weight(1f),
-                    tasks = completedTasks,
-                    showActive = false,
-                    onComplete = { task, completed ->
-                        viewModel.setAction(
-                            action = TaskAction.SetCompleted(task, completed)
-                        )
-                    },
-                    onDelete = {task ->
-                        viewModel.setAction(
-                            action = TaskAction.Delete(task)
-                        )
-                    },
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Icon"
                 )
             }
+        }
+    ){ padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp)
+                .padding(
+                    top = padding.calculateTopPadding(),
+                    bottom = padding.calculateBottomPadding()
+                )
+        ){
+            DisplayTasks(
+                modifier = Modifier.weight(1f),
+                tasks = activeTasks,
+                onSelect = { selectedTask ->
+                    navigateToTask(selectedTask)
+                },
+                onFavourite = { task, isFavourite ->
+                    viewModel.setAction(
+                        action = TaskAction.SetFavourite(task, isFavourite)
+                    )
+                },
+                onComplete = { task, completed ->
+                    viewModel.setAction(
+                        action = TaskAction.SetCompleted(task, completed)
+                    )
+                },
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            DisplayTasks(
+                modifier = Modifier.weight(1f),
+                tasks = completedTasks,
+                showActive = false,
+                onComplete = { task, completed ->
+                    viewModel.setAction(
+                        action = TaskAction.SetCompleted(task, completed)
+                    )
+                },
+                onDelete = {task ->
+                    viewModel.setAction(
+                        action = TaskAction.Delete(task)
+                    )
+                },
+            )
         }
     }
 }
@@ -120,14 +119,14 @@ fun DisplayTasks(
     onComplete: (ToDoTask, Boolean) -> Unit,
     onFavourite: ((ToDoTask, Boolean) -> Unit)? = null,
     onDelete: ((ToDoTask) -> Unit)? = null,
-){
+) {
     var showDialogue by remember { mutableStateOf(false) }
     var taskToDelete: ToDoTask? by remember { mutableStateOf(null) }
 
     if (showDialogue) {
         AlertDialog(
             title = {
-                Text(text= "Delete", fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                Text(text = "Delete", fontSize = MaterialTheme.typography.titleLarge.fontSize)
             },
             text = {
                 Text(
@@ -150,7 +149,7 @@ fun DisplayTasks(
                         taskToDelete = null
                         showDialogue = false
                     }
-                ){
+                ) {
                     Text(text = "No - Cancel")
                 }
             },
@@ -161,7 +160,7 @@ fun DisplayTasks(
         )
     }
 
-    Column(modifier = modifier.fillMaxWidth()){
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier.padding(horizontal = 12.dp),
             text = if (showActive) "Active Tasks" else "Completed Tasks",
@@ -171,20 +170,30 @@ fun DisplayTasks(
         Spacer(modifier = Modifier.height(12.dp))
         tasks.DisplayResult(
             onLoading = { LoadingScreen() },
-            onError = { ErrorScreen(message = it)},
+            onError = { ErrorScreen(message = it) },
             onSuccess = {
-                if (it.isNotEmpty()){
+                if (it.isNotEmpty()) {
                     LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)) {
                         items(
                             items = it,
-                            key = { task -> task._id.toHexString()}
+                            key = { task -> task._id.toHexString() }
                         ) { task ->
                             TaskView(
                                 showActive = showActive,
                                 task = task,
                                 onSelect = { onSelect?.invoke(it) },
-                                onComplete = { selectedTask, completed -> onComplete(selectedTask, completed)},
-                                onFavourite = { selectedTask, favourite -> onFavourite?.invoke(selectedTask, favourite)},
+                                onComplete = { selectedTask, completed ->
+                                    onComplete(
+                                        selectedTask,
+                                        completed
+                                    )
+                                },
+                                onFavourite = { selectedTask, favourite ->
+                                    onFavourite?.invoke(
+                                        selectedTask,
+                                        favourite
+                                    )
+                                },
                                 onDelete = { selectedTask ->
                                     taskToDelete = selectedTask
                                     showDialogue = true

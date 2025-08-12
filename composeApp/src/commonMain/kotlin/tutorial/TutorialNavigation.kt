@@ -11,16 +11,20 @@ import presentation.screens.tutorial.task.TaskScreen
 
 @Composable
 fun TutorialNavigation(navController: NavHostController = rememberNavController()) {
+//    val navigateTo = remember {destination: NavDestination ->
+//        {navController.navigate(route = destination)}
+//    }
+
 
     NavHost(navController, startDestination = NavDestination.Home.name) {
         composable(route = NavDestination.Home.name) {
-            HomeScreen().show(
+            HomeScreen(
                     navigateToTask = { task -> navController.navigate(NavDestination.Task.name) }
             )
         }
 
         composable(route = NavDestination.Task.name) {
-            TaskScreen().show(
+            TaskScreen(
                     navigateBack = {navController.popBackStack()}
             )
         }
