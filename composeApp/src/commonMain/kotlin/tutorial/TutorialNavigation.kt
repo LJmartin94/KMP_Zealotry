@@ -1,15 +1,18 @@
 package tutorial
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import presentation.screens.tutorial.home.HomeScreen
 import presentation.screens.tutorial.task.TaskScreen
+
+// https://developer.android.com/guide/navigation/design#compose-arguments
+// https://stackoverflow.com/questions/78858250/type-safe-navigation-custom-list-navtype
 
 @Composable
 fun TutorialNavigation(navController: NavHostController = rememberNavController()) {
@@ -18,17 +21,19 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
     }
 
     NavHost(navController = navController, startDestination = NavDestination.Home) {
+        //Destination loaded without payload
         composable<NavDestination.Home> {
             HomeScreen(
-                    onNavigateTo = {navigateTo(it)}
-//                    navigateToTask = { task -> navController.navigate(NavDestination.Task.name) }
+                    onNavigateTo = {route -> navigateTo(route)}
             )
         }
 
-        composable<NavDestination.Task> {
+        //Destination loaded with payload
+        composable<NavDestination.Task> {backstackEntry ->
+            val task: NavDestination.Task = backstackEntry.toRoute()
             TaskScreen(
-                onNavigateTo = {navigateTo(it)},
-                onBack = {navController.popBackStack()}
+                destinationContent = task,
+                onBack = {navController.popBackStack()},
             )
         }
     }
@@ -36,9 +41,12 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
 
 // Screens
 @Serializable
-sealed interface NavDestination {
+sealed class NavDestination {
+    //Without payload
     @Serializable
-    object Home: NavDestination
+    object Home: NavDestination()
+
+    //With payload
     @Serializable
-    object Task: NavDestination
+    data class Task(val dbLoadObject: /*ObjectId?*/ String?): NavDestination()
 }

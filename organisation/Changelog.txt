@@ -2,6 +2,11 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+14-08-2025
+Streak: 3
+    - Still figuring out navigation. Need to serialize the Id object that MongoDB uses as a key,
+    so we can load content when arriving at the target screen. Passing primitives already working.
+
 12-08-2025
 Streak: 1
     - Commit unfinished work, in process of converting screen classes to functions.

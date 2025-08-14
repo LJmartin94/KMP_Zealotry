@@ -42,7 +42,7 @@ import tutorial.NavDestination
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onNavigateTo: (NavDestination) -> Unit //TODO: Passing task feels wrong, should probably be handled with event callback. This is an intermediate solution.
+    onNavigateTo: (NavDestination) -> Unit
 )
 {
     val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
@@ -56,8 +56,7 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    //TODO: Clear loaded task if any
-                    onNavigateTo(NavDestination.Task)
+                    onNavigateTo(NavDestination.Task(null))
                 },
                 shape = RoundedCornerShape( size = 12.dp)
             ){
@@ -81,8 +80,8 @@ fun HomeScreen(
                 modifier = Modifier.weight(1f),
                 tasks = activeTasks,
                 onSelect = { selectedTask ->
-                    //TODO: Use selectedTask
-                    onNavigateTo(NavDestination.Task)
+                    //TODO: Use selectedTask id Object instead of string
+                    onNavigateTo(NavDestination.Task("selectedTask._id"))
                 },
                 onFavourite = { task, isFavourite ->
                     viewModel.setAction(
