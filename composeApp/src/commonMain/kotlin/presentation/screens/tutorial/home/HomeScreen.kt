@@ -33,10 +33,10 @@ import domain.tutorial.RequestState
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import libs.mvvm.getViewModel
+import navigation.tutorial.NavDestination
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
-import tutorial.NavDestination
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,7 +81,7 @@ fun HomeScreen(
                 tasks = activeTasks,
                 onSelect = { selectedTask ->
                     //TODO: Use selectedTask id Object instead of string
-                    onNavigateTo(NavDestination.Task("selectedTask._id"))
+                    onNavigateTo(NavDestination.Task(selectedTask._id))
                 },
                 onFavourite = { task, isFavourite ->
                     viewModel.setAction(

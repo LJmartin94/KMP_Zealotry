@@ -9,7 +9,7 @@ import presentation.style.DarkThemeCompositionLocal
 import presentation.style.MainTheme
 import presentation.style.dimIfDarkMode
 import presentation.style.isDark
-import tutorial.TutorialNavigation
+import navigation.tutorial.TutorialNavigation
 
 @Composable
 @Preview
@@ -17,7 +17,7 @@ fun App() {
     CompositionLocalProvider(DarkThemeCompositionLocal provides isDark()) {
         MainTheme {
             Surface(modifier = Modifier.fillMaxSize().dimIfDarkMode()) {
-                //Navigation() //Non-voyager nav from Navigation.kt
+                //navigation.Navigation() //Non-voyager nav from navigation.Navigation.kt
                 TutorialNavigation() //Temp navigation function to transition from voyager library to androidx.navigation
             }
         }

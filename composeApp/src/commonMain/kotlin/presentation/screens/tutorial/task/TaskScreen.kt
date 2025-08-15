@@ -24,22 +24,22 @@ import androidx.compose.ui.unit.dp
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import libs.mvvm.getViewModel
-import tutorial.NavDestination
+import org.mongodb.kbson.ObjectId
 
 const val DEFAULT_TITLE = "Enter the Title"
 const val DEFAULT_DESCRIPTION = "Add some description"
 
 @Composable
 fun TaskScreen(
-    destinationContent: NavDestination.Task,
+    destinationContent: ObjectId?,
     onBack: () -> Unit,
 ){
     //TODO Make taskId a BsonObjectId instead of a string, figure out how to load the correct task from MongoDB with Id.
-    val taskId = destinationContent.dbLoadObject
+    val taskId: ObjectId? = destinationContent
 
     val dummyPlaceholder: ToDoTask = ToDoTask()
     val task = dummyPlaceholder
-    task.title = taskId ?: DEFAULT_TITLE
+    task.title = DEFAULT_TITLE
 
     val viewModel = getViewModel<TaskViewModel>()
     var currentTitle by remember{

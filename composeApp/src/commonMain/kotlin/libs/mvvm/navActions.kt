@@ -1,6 +1,6 @@
 package libs.mvvm
 
-import tutorial.NavDestination
+import navigation.tutorial.NavDestination
 
 typealias NavigateToAction = (destination: NavDestination) -> Unit
 typealias NavigateBackAction = () -> Unit

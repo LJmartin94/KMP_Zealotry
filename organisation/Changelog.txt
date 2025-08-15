@@ -2,6 +2,11 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+15-08-2025
+Streak: 4
+    - Refactor navigation into its own module. Create helper function to define serialisation &
+    deserialisation of custom nav types.
+
 14-08-2025
 Streak: 3
     - Still figuring out navigation. Need to serialize the Id object that MongoDB uses as a key,

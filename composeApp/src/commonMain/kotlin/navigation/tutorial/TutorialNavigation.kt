@@ -1,4 +1,4 @@
-package tutorial
+package navigation.tutorial
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -8,8 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import navigation.navTypeOf
+import org.mongodb.kbson.ObjectId
 import presentation.screens.tutorial.home.HomeScreen
 import presentation.screens.tutorial.task.TaskScreen
+import kotlin.reflect.typeOf
 
 // https://developer.android.com/guide/navigation/design#compose-arguments
 // https://stackoverflow.com/questions/78858250/type-safe-navigation-custom-list-navtype
@@ -29,10 +32,10 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
         }
 
         //Destination loaded with payload
-        composable<NavDestination.Task> {backstackEntry ->
+        composable<NavDestination.Task>(typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())) { backstackEntry ->
             val task: NavDestination.Task = backstackEntry.toRoute()
             TaskScreen(
-                destinationContent = task,
+                destinationContent = task.dbLoadObject,
                 onBack = {navController.popBackStack()},
             )
         }
@@ -48,5 +51,5 @@ sealed class NavDestination {
 
     //With payload
     @Serializable
-    data class Task(val dbLoadObject: /*ObjectId?*/ String?): NavDestination()
+    data class Task(val dbLoadObject: ObjectId? /*String?*/): NavDestination()
 }
