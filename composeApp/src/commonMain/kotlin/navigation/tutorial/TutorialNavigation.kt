@@ -35,7 +35,7 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
         composable<NavDestination.Task>(typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())) { backstackEntry ->
             val task: NavDestination.Task = backstackEntry.toRoute()
             TaskScreen(
-                destinationContent = task.dbLoadObject,
+                taskId = task.dbLoadObject,
                 onBack = {navController.popBackStack()},
             )
         }

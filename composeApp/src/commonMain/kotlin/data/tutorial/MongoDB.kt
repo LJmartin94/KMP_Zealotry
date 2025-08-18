@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import libs.tristateBool.isTrueOrNull
+import org.mongodb.kbson.ObjectId
 
 class MongoDB {
     private var realm: Realm? = null
@@ -27,6 +28,23 @@ class MongoDB {
                 .build()
             realm = Realm.open(config)
         }
+    }
+
+//    fun <T : TypedRealmObject> findItemById(_id: ObjectId): T? {
+//        try {
+//            return realm?.query<TypedRealmObject>(query = "_id == $0", _id)
+//                ?.find()
+//                ?.first() as T
+//        } catch (e: Exception) {
+//            println("Something went wrong fetching item from database: $e")
+//        }
+//        return null
+//    }
+
+    fun findTaskById(_id: ObjectId): ToDoTask? {
+        return realm?.query<ToDoTask>(query = "_id == $0", _id)
+            ?.find()
+            ?.first()
     }
 
     fun readActiveTasks(): Flow<RequestState<List<ToDoTask>>> {

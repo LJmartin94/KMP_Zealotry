@@ -2,6 +2,10 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+18-08-2025
+Streak: 1
+    - Add basic, blocking, non-type-safe call to database to load task by id when navigating to destination.
+
 15-08-2025
 Streak: 4
     - Refactor navigation into its own module. Create helper function to define serialisation &

@@ -31,17 +31,12 @@ const val DEFAULT_DESCRIPTION = "Add some description"
 
 @Composable
 fun TaskScreen(
-    destinationContent: ObjectId?,
+    taskId: ObjectId?,
     onBack: () -> Unit,
 ){
-    //TODO Make taskId a BsonObjectId instead of a string, figure out how to load the correct task from MongoDB with Id.
-    val taskId: ObjectId? = destinationContent
-
-    val dummyPlaceholder: ToDoTask = ToDoTask()
-    val task = dummyPlaceholder
-    task.title = DEFAULT_TITLE
-
     val viewModel = getViewModel<TaskViewModel>()
+    val task = viewModel.loadTask(taskId)
+
     var currentTitle by remember{
         mutableStateOf(task?.title ?: DEFAULT_TITLE)
     }
