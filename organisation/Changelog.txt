@@ -4,6 +4,7 @@ Best: 32
 
 22-08-2025
     - Cleaned up 'content' object retrieval for screens on the view model and database side, now need to make it typesafe.
+    - Make NavDestination arguments typesafe by making primary constructor private when payload expected.
 
 18-08-2025
 Streak: 1

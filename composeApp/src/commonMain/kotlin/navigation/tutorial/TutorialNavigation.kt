@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import domain.tutorial.ToDoTask
 import kotlinx.serialization.Serializable
 import navigation.navTypeOf
 import org.mongodb.kbson.ObjectId
@@ -19,20 +20,21 @@ import kotlin.reflect.typeOf
 
 @Composable
 fun TutorialNavigation(navController: NavHostController = rememberNavController()) {
-    val navigateTo = remember {
-        {destination: NavDestination -> navController.navigate(route = destination)} //TODO: Basic temp solution
-    }
+    // Define how to navigate to a route, now we can only navigate to NavDestination type
+    val navigateTo = remember {{destination: NavDestination -> navController.navigate(route = destination)}}
+    // Define how to pass keys around for loading items from db: avoid passing the objects themselves
+    val typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())
 
     NavHost(navController = navController, startDestination = NavDestination.Home) {
-        //Destination loaded without payload
+        //Destinations loaded without payload
         composable<NavDestination.Home> {
             HomeScreen(
                     onNavigateTo = {route -> navigateTo(route)}
             )
         }
 
-        //Destination loaded with payload
-        composable<NavDestination.Task>(typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())) { backstackEntry ->
+        //Destinations loaded with payload
+        composable<NavDestination.Task>(typeMap = typeMap) { backstackEntry ->
             val task: NavDestination.Task = backstackEntry.toRoute()
             TaskScreen(
                 content = task,
@@ -47,9 +49,11 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
 sealed class NavDestination {
     //Without payload
     @Serializable
-    object Home: NavDestination()
+    object Home : NavDestination()
 
     //With payload
     @Serializable
-    data class Task(val taskKey: ObjectId?): NavDestination()
+    class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
+        constructor(task: ToDoTask?) : this(task?._id)
+    }
 }

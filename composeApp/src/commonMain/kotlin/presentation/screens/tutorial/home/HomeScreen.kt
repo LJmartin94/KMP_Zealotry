@@ -45,7 +45,7 @@ fun HomeScreen(
     onNavigateTo: (NavDestination) -> Unit
 )
 {
-    val viewModel = getViewModel<HomeViewModel>() //TODO: possibly VM should be passed from Navigation graph, not fetched?
+    val viewModel = getViewModel<HomeViewModel>()
     val activeTasks by viewModel.activeTasks
     val completedTasks by viewModel.completedTasks
 
@@ -56,7 +56,7 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onNavigateTo(NavDestination.Task(null))
+                    onNavigateTo(NavDestination.Task(task = null))
                 },
                 shape = RoundedCornerShape( size = 12.dp)
             ){
@@ -79,9 +79,8 @@ fun HomeScreen(
             DisplayTasks(
                 modifier = Modifier.weight(1f),
                 tasks = activeTasks,
-                onSelect = { selectedTask ->
-                    //TODO: Use selectedTask id Object instead of string
-                    onNavigateTo(NavDestination.Task(selectedTask._id))
+                onSelect = { selectedTask: ToDoTask ->
+                    onNavigateTo(NavDestination.Task(task = selectedTask))
                 },
                 onFavourite = { task, isFavourite ->
                     viewModel.setAction(
