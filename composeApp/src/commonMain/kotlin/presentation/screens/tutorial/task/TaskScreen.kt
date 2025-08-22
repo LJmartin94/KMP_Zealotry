@@ -24,18 +24,18 @@ import androidx.compose.ui.unit.dp
 import domain.tutorial.TaskAction
 import domain.tutorial.ToDoTask
 import libs.mvvm.getViewModel
-import org.mongodb.kbson.ObjectId
+import navigation.tutorial.NavDestination
 
 const val DEFAULT_TITLE = "Enter the Title"
 const val DEFAULT_DESCRIPTION = "Add some description"
 
 @Composable
 fun TaskScreen(
-    taskId: ObjectId?,
+    content: NavDestination.Task,
     onBack: () -> Unit,
 ){
     val viewModel = getViewModel<TaskViewModel>()
-    val task = viewModel.loadTask(taskId)
+    val task: ToDoTask? = viewModel.loadTask(content.taskKey)
 
     var currentTitle by remember{
         mutableStateOf(task?.title ?: DEFAULT_TITLE)

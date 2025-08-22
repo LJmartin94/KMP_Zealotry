@@ -5,11 +5,13 @@ import domain.tutorial.ToDoTask
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.types.TypedRealmObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import libs.tristateBool.isTrueOrNull
 import org.mongodb.kbson.ObjectId
+import kotlin.reflect.KClass
 
 class MongoDB {
     private var realm: Realm? = null
@@ -30,21 +32,21 @@ class MongoDB {
         }
     }
 
-//    fun <T : TypedRealmObject> findItemById(_id: ObjectId): T? {
-//        try {
-//            return realm?.query<TypedRealmObject>(query = "_id == $0", _id)
-//                ?.find()
-//                ?.first() as T
-//        } catch (e: Exception) {
-//            println("Something went wrong fetching item from database: $e")
-//        }
-//        return null
-//    }
+    fun findItemById(key: ObjectId?, objType: KClass<*>): TypedRealmObject? {
+        return when(objType){
+            ToDoTask::class -> doQueryForObject<ToDoTask>(key)
+            else -> null
+        }
+    }
 
-    fun findTaskById(_id: ObjectId): ToDoTask? {
-        return realm?.query<ToDoTask>(query = "_id == $0", _id)
-            ?.find()
-            ?.first()
+    private inline fun <reified T : TypedRealmObject>doQueryForObject(id: ObjectId?): T? {
+        return try {
+            realm?.query<T>(query = "_id == $0", id)
+                ?.find()
+                ?.first()
+        } catch (e: Exception) {
+            null
+        }
     }
 
     fun readActiveTasks(): Flow<RequestState<List<ToDoTask>>> {

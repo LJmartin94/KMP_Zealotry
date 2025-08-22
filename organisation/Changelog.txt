@@ -2,6 +2,9 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+22-08-2025
+    - Cleaned up 'content' object retrieval for screens on the view model and database side, now need to make it typesafe.
+
 18-08-2025
 Streak: 1
     - Add basic, blocking, non-type-safe call to database to load task by id when navigating to destination.

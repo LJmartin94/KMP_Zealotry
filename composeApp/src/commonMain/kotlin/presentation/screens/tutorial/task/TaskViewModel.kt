@@ -14,15 +14,8 @@ class TaskViewModel(
     private val mongoDB: MongoDB
 ): ViewModel() {
 
-    fun loadTask(id: ObjectId?): ToDoTask? {
-        try {
-            if (id != null){
-                return mongoDB.findTaskById(_id = id)
-            }
-        } catch (e: Exception){
-            println("Something went wrong $e")
-        }
-        return null
+    fun loadTask(key: ObjectId?): ToDoTask?{
+        return mongoDB.findItemById(key, ToDoTask::class) as ToDoTask?
     }
 
     fun setAction(action: TaskAction){
