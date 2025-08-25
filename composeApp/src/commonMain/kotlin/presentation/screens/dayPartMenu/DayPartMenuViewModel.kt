@@ -23,7 +23,7 @@ class DayPartMenuViewModel : ViewModel() {
             currentState.copy(
                 part = part,
                 greeting = setGreeting(part),
-                //taskButtons =
+                // taskButtons =
             )
         }
     }

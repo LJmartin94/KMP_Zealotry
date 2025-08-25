@@ -1,6 +1,6 @@
 package presentation.screens.tutorial.home
 
-//import kotlinx.coroutines.delay
+// import kotlinx.coroutines.delay
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 typealias MutableTasks = MutableState<RequestState<List<ToDoTask>>>
 typealias Tasks = MutableState<RequestState<List<ToDoTask>>>
 
-class HomeViewModel(private val mongoDB: MongoDB): ViewModel() {
+class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
     private var _activeTasks: MutableTasks = mutableStateOf(RequestState.Idle)
     val activeTasks: Tasks = _activeTasks
 
@@ -34,7 +34,7 @@ class HomeViewModel(private val mongoDB: MongoDB): ViewModel() {
                 _activeTasks.value = it
             }
         }
-        viewModelScope.launch (Dispatchers.Main){
+        viewModelScope.launch(Dispatchers.Main) {
 //            delay(500) //artificial delay to see Loading screen.
             mongoDB.readCompletedTasks().collectLatest {
                 _completedTasks.value = it
@@ -42,7 +42,7 @@ class HomeViewModel(private val mongoDB: MongoDB): ViewModel() {
         }
     }
 
-    fun setAction(action: TaskAction){
+    fun setAction(action: TaskAction)  {
         when (action) {
             is TaskAction.SetCompleted -> {
                 setCompleted(action.task, action.completed)
@@ -60,13 +60,19 @@ class HomeViewModel(private val mongoDB: MongoDB): ViewModel() {
         }
     }
 
-    private fun setCompleted(task: ToDoTask, completed: Boolean) {
+    private fun setCompleted(
+        task: ToDoTask,
+        completed: Boolean,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             mongoDB.setCompleted(task, completed)
         }
     }
 
-    private fun setFavourite(task: ToDoTask, isFavourite: Boolean) {
+    private fun setFavourite(
+        task: ToDoTask,
+        isFavourite: Boolean,
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             mongoDB.setFavourite(task, isFavourite)
         }

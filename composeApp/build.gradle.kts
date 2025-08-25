@@ -46,15 +46,15 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.jb.androidx.navigation.compose)
 
-            //Realm db from tutorial:
+            // Realm db from tutorial:
             implementation(libs.mongodb.realm)
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
 
-            //material 3 from tutorial
+            // material 3 from tutorial
             implementation(compose.material3)
 
-            //tutorial navigation -replacing voyager:
+            // tutorial navigation -replacing voyager:
             implementation(libs.kotlinx.serializationJson)
         }
     }

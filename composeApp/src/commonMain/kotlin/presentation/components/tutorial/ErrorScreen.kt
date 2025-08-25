@@ -12,11 +12,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ErrorScreen(message: String? = null) {
     Box(
-      modifier = Modifier
-          .fillMaxSize()
-          .padding(all = 24.dp),
-        contentAlignment = Alignment.Center
-    ){
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(all = 24.dp),
+        contentAlignment = Alignment.Center,
+    ) {
         Text(text = message ?: "No data")
     }
 }

@@ -30,17 +30,21 @@ fun TaskView(
     task: ToDoTask,
     showActive: Boolean = true,
     onSelect: (ToDoTask) -> Unit,
-    onComplete:  (ToDoTask, Boolean) -> Unit,
+    onComplete: (ToDoTask, Boolean) -> Unit,
     onFavourite: (ToDoTask, Boolean) -> Unit,
     onDelete: (ToDoTask) -> Unit,
-){
+)  {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                if (showActive) onSelect(task)
-                else onDelete(task)
-            },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable {
+                    if (showActive) {
+                        onSelect(task)
+                    } else {
+                        onDelete(task)
+                    }
+                },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -54,25 +58,41 @@ fun TaskView(
                 modifier = Modifier.alpha(if (showActive) 1f else 0.5f),
                 text = task.title,
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                textDecoration = if (showActive) TextDecoration.None
-                else TextDecoration.LineThrough
+                textDecoration =
+                    if (showActive) {
+                        TextDecoration.None
+                    } else {
+                        TextDecoration.LineThrough
+                    },
             )
         }
         IconButton(
             onClick = {
-                if (showActive) onFavourite(task, !task.favourite)
-                else onDelete(task)
-            }
+                if (showActive) {
+                    onFavourite(task, !task.favourite)
+                } else {
+                    onDelete(task)
+                }
+            },
         ) {
             Icon(
-                painter = painterResource(
-                    if (showActive) Res.drawable.star
-                    else Res.drawable.delete
-                ),
+                painter =
+                    painterResource(
+                        if (showActive) {
+                            Res.drawable.star
+                        } else {
+                            Res.drawable.delete
+                        },
+                    ),
                 contentDescription = "Favorite Icon",
-                tint = if (task.favourite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = 0.38f
-                )
+                tint =
+                    if (task.favourite) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurface.copy(
+                            alpha = 0.38f,
+                        )
+                    },
             )
         }
     }

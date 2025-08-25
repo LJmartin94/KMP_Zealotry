@@ -29,7 +29,7 @@ fun DayPartMenuScreen(
     onNavigate: (() -> Unit)? = null,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val visibleButtons = //uiState.taskButtons.
+    val visibleButtons = // uiState.taskButtons.
         when (uiState.part) {
             DayPart.MORNING -> MorningButtons.entries
             DayPart.MIDDAY -> emptyList() // Placeholder

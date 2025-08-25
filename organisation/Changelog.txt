@@ -2,6 +2,9 @@ This is just to motivate myself to improve a little bit every day :)
 
 Best: 32
 
+25-08-2025
+    - Apply linting
+
 22-08-2025
     - Cleaned up 'content' object retrieval for screens on the view model and database side, now need to make it typesafe.
     - Make NavDestination arguments typesafe by making primary constructor private when payload expected.

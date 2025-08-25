@@ -33,93 +33,99 @@ const val DEFAULT_DESCRIPTION = "Add some description"
 fun TaskScreen(
     content: NavDestination.Task,
     onBack: () -> Unit,
-){
+)  {
     val viewModel = getViewModel<TaskViewModel>()
     val task: ToDoTask? = viewModel.loadTask(content.taskKey)
 
-    var currentTitle by remember{
+    var currentTitle by remember {
         mutableStateOf(task?.title ?: DEFAULT_TITLE)
     }
-    var currentDescription by remember{
+    var currentDescription by remember {
         mutableStateOf(task?.description ?: DEFAULT_DESCRIPTION)
     }
 
     Scaffold(
         topBar = {
-            TopAppBar (
+            TopAppBar(
                 title = {
                     BasicTextField(
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = MaterialTheme.typography.titleLarge.fontSize
-                        ),
+                        textStyle =
+                            TextStyle(
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                            ),
                         singleLine = true,
                         value = currentTitle,
-                        onValueChange = { currentTitle = it}
+                        onValueChange = { currentTitle = it },
                     )
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { onBack.invoke() }
-                    ){
+                        onClick = { onBack.invoke() },
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Back Arrow"
+                            contentDescription = "Back Arrow",
                         )
                     }
-                }
+                },
             )
         },
         floatingActionButton = {
-            if (currentTitle.isNotEmpty() && currentDescription.isNotEmpty()){
-                FloatingActionButton(
-                    onClick = {
-                        if (task != null) {
-                            viewModel.setAction(
-                                action = TaskAction.Update(
-                                    ToDoTask().apply {
-                                        _id = task._id
-                                        title = currentTitle
-                                        description = currentDescription
-                                    }
+            if (currentTitle.isNotEmpty() && currentDescription.isNotEmpty())
+                {
+                    FloatingActionButton(
+                        onClick = {
+                            if (task != null) {
+                                viewModel.setAction(
+                                    action =
+                                        TaskAction.Update(
+                                            ToDoTask().apply {
+                                                _id = task._id
+                                                title = currentTitle
+                                                description = currentDescription
+                                            },
+                                        ),
                                 )
-                            )
-                        } else {
-                            viewModel.setAction(
-                                action = TaskAction.Add(
-                                    ToDoTask().apply {
-                                        title = currentTitle
-                                        description = currentDescription
-                                    }
+                            } else {
+                                viewModel.setAction(
+                                    action =
+                                        TaskAction.Add(
+                                            ToDoTask().apply {
+                                                title = currentTitle
+                                                description = currentDescription
+                                            },
+                                        ),
                                 )
-                            )
-                        }
-                        onBack.invoke()
-                    },
-                    shape = RoundedCornerShape(size = 12.dp)
-                ){
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Checkmark Icon"
-                    )
+                            }
+                            onBack.invoke()
+                        },
+                        shape = RoundedCornerShape(size = 12.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Checkmark Icon",
+                        )
+                    }
                 }
-            }
-        }
+        },
     ) { padding ->
         BasicTextField(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 24.dp)
-                .padding(
-                    top = padding.calculateTopPadding(),
-                    bottom = padding.calculateBottomPadding()
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(all = 24.dp)
+                    .padding(
+                        top = padding.calculateTopPadding(),
+                        bottom = padding.calculateBottomPadding(),
+                    ),
+            textStyle =
+                TextStyle(
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    color = MaterialTheme.colorScheme.onSurface,
                 ),
-            textStyle = TextStyle(
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                color = MaterialTheme.colorScheme.onSurface
-            ),
             value = currentDescription,
-            onValueChange = { description -> currentDescription = description}
+            onValueChange = { description -> currentDescription = description },
         )
     }
 }

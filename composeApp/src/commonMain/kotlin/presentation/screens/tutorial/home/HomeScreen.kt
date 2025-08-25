@@ -38,44 +38,41 @@ import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    onNavigateTo: (NavDestination) -> Unit
-)
-{
+fun HomeScreen(onNavigateTo: (NavDestination) -> Unit) {
     val viewModel = getViewModel<HomeViewModel>()
     val activeTasks by viewModel.activeTasks
     val completedTasks by viewModel.completedTasks
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text(text = "Home")})
+            CenterAlignedTopAppBar(title = { Text(text = "Home") })
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     onNavigateTo(NavDestination.Task(task = null))
                 },
-                shape = RoundedCornerShape( size = 12.dp)
-            ){
+                shape = RoundedCornerShape(size = 12.dp),
+            ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Icon"
+                    contentDescription = "Edit Icon",
                 )
             }
-        }
-    ){ padding ->
+        },
+    ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(
-                    top = padding.calculateTopPadding(),
-                    bottom = padding.calculateBottomPadding()
-                )
-        ){
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 24.dp)
+                    .padding(
+                        top = padding.calculateTopPadding(),
+                        bottom = padding.calculateBottomPadding(),
+                    ),
+        ) {
             DisplayTasks(
                 modifier = Modifier.weight(1f),
                 tasks = activeTasks,
@@ -84,12 +81,12 @@ fun HomeScreen(
                 },
                 onFavourite = { task, isFavourite ->
                     viewModel.setAction(
-                        action = TaskAction.SetFavourite(task, isFavourite)
+                        action = TaskAction.SetFavourite(task, isFavourite),
                     )
                 },
                 onComplete = { task, completed ->
                     viewModel.setAction(
-                        action = TaskAction.SetCompleted(task, completed)
+                        action = TaskAction.SetCompleted(task, completed),
                     )
                 },
             )
@@ -100,12 +97,12 @@ fun HomeScreen(
                 showActive = false,
                 onComplete = { task, completed ->
                     viewModel.setAction(
-                        action = TaskAction.SetCompleted(task, completed)
+                        action = TaskAction.SetCompleted(task, completed),
                     )
                 },
-                onDelete = {task ->
+                onDelete = { task ->
                     viewModel.setAction(
-                        action = TaskAction.Delete(task)
+                        action = TaskAction.Delete(task),
                     )
                 },
             )
@@ -151,7 +148,7 @@ fun DisplayTasks(
                     onClick = {
                         taskToDelete = null
                         showDialogue = false
-                    }
+                    },
                 ) {
                     Text(text = "No - Cancel")
                 }
@@ -168,7 +165,7 @@ fun DisplayTasks(
             modifier = Modifier.padding(horizontal = 12.dp),
             text = if (showActive) "Active Tasks" else "Completed Tasks",
             fontSize = MaterialTheme.typography.titleMedium.fontSize,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
         )
         Spacer(modifier = Modifier.height(12.dp))
         tasks.DisplayResult(
@@ -179,7 +176,7 @@ fun DisplayTasks(
                     LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)) {
                         items(
                             items = it,
-                            key = { task -> task._id.toHexString() }
+                            key = { task -> task._id.toHexString() },
                         ) { task ->
                             TaskView(
                                 showActive = showActive,
@@ -188,13 +185,13 @@ fun DisplayTasks(
                                 onComplete = { selectedTask, completed ->
                                     onComplete(
                                         selectedTask,
-                                        completed
+                                        completed,
                                     )
                                 },
                                 onFavourite = { selectedTask, favourite ->
                                     onFavourite?.invoke(
                                         selectedTask,
-                                        favourite
+                                        favourite,
                                     )
                                 },
                                 onDelete = { selectedTask ->
@@ -207,7 +204,7 @@ fun DisplayTasks(
                 } else {
                     ErrorScreen(message = "Task list is empty")
                 }
-            }
+            },
         )
     }
 }

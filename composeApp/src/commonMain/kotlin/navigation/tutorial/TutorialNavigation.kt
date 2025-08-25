@@ -21,24 +21,24 @@ import kotlin.reflect.typeOf
 @Composable
 fun TutorialNavigation(navController: NavHostController = rememberNavController()) {
     // Define how to navigate to a route, now we can only navigate to NavDestination type
-    val navigateTo = remember {{destination: NavDestination -> navController.navigate(route = destination)}}
+    val navigateTo = remember { { destination: NavDestination -> navController.navigate(route = destination) } }
     // Define how to pass keys around for loading items from db: avoid passing the objects themselves
     val typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())
 
     NavHost(navController = navController, startDestination = NavDestination.Home) {
-        //Destinations loaded without payload
+        // Destinations loaded without payload
         composable<NavDestination.Home> {
             HomeScreen(
-                    onNavigateTo = {route -> navigateTo(route)}
+                onNavigateTo = { route -> navigateTo(route) },
             )
         }
 
-        //Destinations loaded with payload
+        // Destinations loaded with payload
         composable<NavDestination.Task>(typeMap = typeMap) { backstackEntry ->
             val task: NavDestination.Task = backstackEntry.toRoute()
             TaskScreen(
                 content = task,
-                onBack = {navController.popBackStack()},
+                onBack = { navController.popBackStack() },
             )
         }
     }
@@ -47,11 +47,11 @@ fun TutorialNavigation(navController: NavHostController = rememberNavController(
 // Screens
 @Serializable
 sealed class NavDestination {
-    //Without payload
+    // Without payload
     @Serializable
     object Home : NavDestination()
 
-    //With payload
+    // With payload
     @Serializable
     class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
         constructor(task: ToDoTask?) : this(task?._id)

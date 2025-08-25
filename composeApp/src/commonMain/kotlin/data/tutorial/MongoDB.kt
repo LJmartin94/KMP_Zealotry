@@ -20,26 +20,31 @@ class MongoDB {
         configureTheRealm()
     }
 
-    private fun configureTheRealm(){
-        if (realm?.isClosed().isTrueOrNull()){
-            // Pass all collection Model classes here.
-            val config = RealmConfiguration.Builder(
-                schema = setOf(ToDoTask::class)
-            )
-                .compactOnLaunch()
-                .build()
-            realm = Realm.open(config)
-        }
+    private fun configureTheRealm()  {
+        if (realm?.isClosed().isTrueOrNull())
+            {
+                // Pass all collection Model classes here.
+                val config =
+                    RealmConfiguration.Builder(
+                        schema = setOf(ToDoTask::class),
+                    )
+                        .compactOnLaunch()
+                        .build()
+                realm = Realm.open(config)
+            }
     }
 
-    fun findItemById(key: ObjectId?, objType: KClass<*>): TypedRealmObject? {
-        return when(objType){
+    fun findItemById(
+        key: ObjectId?,
+        objType: KClass<*>,
+    ): TypedRealmObject? {
+        return when (objType) {
             ToDoTask::class -> doQueryForObject<ToDoTask>(key)
             else -> null
         }
     }
 
-    private inline fun <reified T : TypedRealmObject>doQueryForObject(id: ObjectId?): T? {
+    private inline fun <reified T : TypedRealmObject> doQueryForObject(id: ObjectId?): T? {
         return try {
             realm?.query<T>(query = "_id == $0", id)
                 ?.find()
@@ -54,9 +59,9 @@ class MongoDB {
             ?.asFlow()
             ?.map { result ->
                 RequestState.Success(
-                    data = result.list.sortedByDescending { task -> task.favourite }
+                    data = result.list.sortedByDescending { task -> task.favourite },
                 )
-            } ?: flow { RequestState.Error(message = "Realm is not available.")}
+            } ?: flow { RequestState.Error(message = "Realm is not available.") }
     }
 
     fun readCompletedTasks(): Flow<RequestState<List<ToDoTask>>> {
@@ -64,20 +69,21 @@ class MongoDB {
             ?.asFlow()
             ?.map { result ->
                 RequestState.Success(data = result.list)
-            } ?: flow { RequestState.Error(message = "Realm is not available.")}
+            } ?: flow { RequestState.Error(message = "Realm is not available.") }
     }
 
     suspend fun addTask(task: ToDoTask) {
         realm?.write { copyToRealm(task) }
     }
 
-    suspend fun updateTask(task: ToDoTask){
+    suspend fun updateTask(task: ToDoTask)  {
         realm?.write {
             try {
-                val queriedTask = query<ToDoTask>("_id == $0", task._id)
-                    .first()
-                    .find()
-                queriedTask?.let{
+                val queriedTask =
+                    query<ToDoTask>("_id == $0", task._id)
+                        .first()
+                        .find()
+                queriedTask?.let {
                     findLatest(it)?.let { currentTask ->
                         currentTask.title = task.title
                         currentTask.description = task.description
@@ -89,48 +95,56 @@ class MongoDB {
         }
     }
 
-    suspend fun setCompleted(task:ToDoTask, taskCompleted: Boolean) {
-        realm?.write{
-            try{
-                val queriedTask = query<ToDoTask>("_id == $0", task._id)
-                    .find()
-                    .first()
+    suspend fun setCompleted(
+        task: ToDoTask,
+        taskCompleted: Boolean,
+    ) {
+        realm?.write {
+            try {
+                val queriedTask =
+                    query<ToDoTask>("_id == $0", task._id)
+                        .find()
+                        .first()
                 queriedTask.apply { completed = taskCompleted }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 println(e)
             }
         }
     }
 
-    suspend fun setFavourite(task:ToDoTask, isFavourite: Boolean) {
-        realm?.write{
-            try{
-                val queriedTask = query<ToDoTask>("_id == $0", task._id)
-                    .find()
-                    .first()
+    suspend fun setFavourite(
+        task: ToDoTask,
+        isFavourite: Boolean,
+    ) {
+        realm?.write {
+            try {
+                val queriedTask =
+                    query<ToDoTask>("_id == $0", task._id)
+                        .find()
+                        .first()
                 queriedTask.apply { favourite = isFavourite }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 println(e)
             }
         }
     }
 
-    //TODO: These functions could also return RequestState instead of just printing error
-    suspend fun deleteTask(task:ToDoTask) {
-        realm?.write{
-            try{
-                val queriedTask = query<ToDoTask>("_id == $0", task._id)
-                    .first()
-                    .find()
-                queriedTask?.let{
-                    findLatest(it)?.let{ foundTask ->
+    // TODO: These functions could also return RequestState instead of just printing error
+    suspend fun deleteTask(task: ToDoTask) {
+        realm?.write {
+            try {
+                val queriedTask =
+                    query<ToDoTask>("_id == $0", task._id)
+                        .first()
+                        .find()
+                queriedTask?.let {
+                    findLatest(it)?.let { foundTask ->
                         delete(foundTask)
                     }
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 println(e)
             }
         }
     }
-
 }
