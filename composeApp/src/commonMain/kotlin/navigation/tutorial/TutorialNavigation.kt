@@ -54,6 +54,6 @@ sealed class NavDestination {
     // With payload
     @Serializable
     class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
-        constructor(task: ToDoTask?) : this(task?._id)
+        constructor(task: ToDoTask?) : this(task?.id)
     }
 }

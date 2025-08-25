@@ -42,7 +42,7 @@ class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
         }
     }
 
-    fun setAction(action: TaskAction)  {
+    fun setAction(action: TaskAction) {
         when (action) {
             is TaskAction.SetCompleted -> {
                 setCompleted(action.task, action.completed)

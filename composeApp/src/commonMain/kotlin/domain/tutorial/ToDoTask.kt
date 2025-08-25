@@ -6,7 +6,7 @@ import org.mongodb.kbson.ObjectId
 
 class ToDoTask : RealmObject {
     @PrimaryKey
-    var _id: ObjectId = ObjectId()
+    var id: ObjectId = ObjectId()
     var title: String = ""
     var description: String = ""
     var favourite: Boolean = false

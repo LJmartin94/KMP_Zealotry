@@ -20,18 +20,17 @@ class MongoDB {
         configureTheRealm()
     }
 
-    private fun configureTheRealm()  {
-        if (realm?.isClosed().isTrueOrNull())
-            {
-                // Pass all collection Model classes here.
-                val config =
-                    RealmConfiguration.Builder(
-                        schema = setOf(ToDoTask::class),
-                    )
-                        .compactOnLaunch()
-                        .build()
-                realm = Realm.open(config)
-            }
+    private fun configureTheRealm() {
+        if (realm?.isClosed().isTrueOrNull()) {
+            // Pass all collection Model classes here.
+            val config =
+                RealmConfiguration.Builder(
+                    schema = setOf(ToDoTask::class),
+                )
+                    .compactOnLaunch()
+                    .build()
+            realm = Realm.open(config)
+        }
     }
 
     fun findItemById(
@@ -46,7 +45,7 @@ class MongoDB {
 
     private inline fun <reified T : TypedRealmObject> doQueryForObject(id: ObjectId?): T? {
         return try {
-            realm?.query<T>(query = "_id == $0", id)
+            realm?.query<T>(query = "id == $0", id)
                 ?.find()
                 ?.first()
         } catch (e: Exception) {
@@ -76,11 +75,11 @@ class MongoDB {
         realm?.write { copyToRealm(task) }
     }
 
-    suspend fun updateTask(task: ToDoTask)  {
+    suspend fun updateTask(task: ToDoTask) {
         realm?.write {
             try {
                 val queriedTask =
-                    query<ToDoTask>("_id == $0", task._id)
+                    query<ToDoTask>("id == $0", task.id)
                         .first()
                         .find()
                 queriedTask?.let {
@@ -102,7 +101,7 @@ class MongoDB {
         realm?.write {
             try {
                 val queriedTask =
-                    query<ToDoTask>("_id == $0", task._id)
+                    query<ToDoTask>("id == $0", task.id)
                         .find()
                         .first()
                 queriedTask.apply { completed = taskCompleted }
@@ -119,7 +118,7 @@ class MongoDB {
         realm?.write {
             try {
                 val queriedTask =
-                    query<ToDoTask>("_id == $0", task._id)
+                    query<ToDoTask>("id == $0", task.id)
                         .find()
                         .first()
                 queriedTask.apply { favourite = isFavourite }
@@ -134,7 +133,7 @@ class MongoDB {
         realm?.write {
             try {
                 val queriedTask =
-                    query<ToDoTask>("_id == $0", task._id)
+                    query<ToDoTask>("id == $0", task.id)
                         .first()
                         .find()
                 queriedTask?.let {

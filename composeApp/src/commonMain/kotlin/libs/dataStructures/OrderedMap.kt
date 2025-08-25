@@ -5,7 +5,8 @@ package libs.dataStructures
  *
  * Behaves like it inherits from MutableMap and MutableList, but these are incompatible in minor ways
  */
-class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()) /* : MutableMap<K,V>, MutableList<K>*/ {
+@Suppress("TooManyFunctions")
+class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()) { // : MutableMap<K,V>, MutableList<K>
     private val orderedEntries: MutableList<K> = mutableMap.keys.toMutableList()
 
     /**

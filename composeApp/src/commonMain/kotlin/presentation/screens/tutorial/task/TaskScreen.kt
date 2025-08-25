@@ -33,7 +33,7 @@ const val DEFAULT_DESCRIPTION = "Add some description"
 fun TaskScreen(
     content: NavDestination.Task,
     onBack: () -> Unit,
-)  {
+) {
     val viewModel = getViewModel<TaskViewModel>()
     val task: ToDoTask? = viewModel.loadTask(content.taskKey)
 
@@ -72,42 +72,41 @@ fun TaskScreen(
             )
         },
         floatingActionButton = {
-            if (currentTitle.isNotEmpty() && currentDescription.isNotEmpty())
-                {
-                    FloatingActionButton(
-                        onClick = {
-                            if (task != null) {
-                                viewModel.setAction(
-                                    action =
-                                        TaskAction.Update(
-                                            ToDoTask().apply {
-                                                _id = task._id
-                                                title = currentTitle
-                                                description = currentDescription
-                                            },
-                                        ),
-                                )
-                            } else {
-                                viewModel.setAction(
-                                    action =
-                                        TaskAction.Add(
-                                            ToDoTask().apply {
-                                                title = currentTitle
-                                                description = currentDescription
-                                            },
-                                        ),
-                                )
-                            }
-                            onBack.invoke()
-                        },
-                        shape = RoundedCornerShape(size = 12.dp),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Checkmark Icon",
-                        )
-                    }
+            if (currentTitle.isNotEmpty() && currentDescription.isNotEmpty()) {
+                FloatingActionButton(
+                    onClick = {
+                        if (task != null) {
+                            viewModel.setAction(
+                                action =
+                                    TaskAction.Update(
+                                        ToDoTask().apply {
+                                            id = task.id
+                                            title = currentTitle
+                                            description = currentDescription
+                                        },
+                                    ),
+                            )
+                        } else {
+                            viewModel.setAction(
+                                action =
+                                    TaskAction.Add(
+                                        ToDoTask().apply {
+                                            title = currentTitle
+                                            description = currentDescription
+                                        },
+                                    ),
+                            )
+                        }
+                        onBack.invoke()
+                    },
+                    shape = RoundedCornerShape(size = 12.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Checkmark Icon",
+                    )
                 }
+            }
         },
     ) { padding ->
         BasicTextField(

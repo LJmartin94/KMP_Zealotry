@@ -13,11 +13,11 @@ import org.mongodb.kbson.ObjectId
 class TaskViewModel(
     private val mongoDB: MongoDB,
 ) : ViewModel() {
-    fun loadTask(key: ObjectId?): ToDoTask?  {
+    fun loadTask(key: ObjectId?): ToDoTask? {
         return mongoDB.findItemById(key, ToDoTask::class) as ToDoTask?
     }
 
-    fun setAction(action: TaskAction)  {
+    fun setAction(action: TaskAction) {
         when (action) {
             is TaskAction.Add -> {
                 addTask(action.task)
@@ -31,13 +31,13 @@ class TaskViewModel(
         }
     }
 
-    private fun addTask(task: ToDoTask)  {
+    private fun addTask(task: ToDoTask) {
         viewModelScope.launch(Dispatchers.IO) {
             mongoDB.addTask(task)
         }
     }
 
-    private fun updateTask(task: ToDoTask)  {
+    private fun updateTask(task: ToDoTask) {
         viewModelScope.launch(Dispatchers.IO) {
             mongoDB.updateTask(task)
         }

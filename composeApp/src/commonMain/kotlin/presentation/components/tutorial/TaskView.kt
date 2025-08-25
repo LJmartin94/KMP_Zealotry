@@ -33,7 +33,7 @@ fun TaskView(
     onComplete: (ToDoTask, Boolean) -> Unit,
     onFavourite: (ToDoTask, Boolean) -> Unit,
     onDelete: (ToDoTask) -> Unit,
-)  {
+) {
     Row(
         modifier =
             Modifier
