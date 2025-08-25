@@ -1,57 +1,57 @@
 package navigation
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import domain.calendar.CalendarRepository
-import domain.screens.dayPartMenu.DayPart
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.StringResource
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+import org.mongodb.kbson.ObjectId
 import presentation.screens.dayPartMenu.DayPartMenuScreen
-import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuScreen
-import presentation.screens.mainMenu.MainMenuViewModel
-import zealotry.composeapp.generated.resources.Res
-import zealotry.composeapp.generated.resources.day
-import zealotry.composeapp.generated.resources.empty
-import zealotry.composeapp.generated.resources.evening
-import zealotry.composeapp.generated.resources.morning
+import kotlin.reflect.typeOf
 
 @Composable
 fun Navigation(navController: NavHostController = rememberNavController()) {
-    // ViewModels
-    val mainVM = viewModel { MainMenuViewModel(CalendarRepository()) }
-    val dayPartVM = viewModel { DayPartMenuViewModel() }
+    // Define how to navigate to a route, now we can only navigate to NavDestination type
+    val navigateTo = remember { { destination: NavDestination -> navController.navigate(route = destination) } }
+    // Define how to pass keys around for loading items from db: avoid passing the objects themselves
+    val typeMap = mapOf(typeOf<ObjectId?>() to navTypeOf<ObjectId?>())
 
-    NavHost(navController, startDestination = Screen.MainMenu.name) {
-        composable(route = Screen.MainMenu.name) {
-            MainMenuScreen(viewModel = mainVM) { navController.navigate(it) }
+    NavHost(navController = navController, startDestination = NavDestination.MainMenu) {
+        composable<NavDestination.MainMenu> {
+            MainMenuScreen(
+                onNavigate = { route -> navigateTo(route) },
+            )
         }
 
-        composable(route = Screen.Morning.name) {
-            dayPartVM.setDayPart(DayPart.MORNING)
-            DayPartMenuScreen(dayPartVM) { navController.navigate(Screen.Day.name) }
-        }
-        composable(route = Screen.Day.name) {
-            dayPartVM.setDayPart(DayPart.MIDDAY)
-            DayPartMenuScreen(dayPartVM) { navController.navigate(Screen.Evening.name) }
-        }
-        composable(route = Screen.Evening.name) {
-            dayPartVM.setDayPart(DayPart.EVENING)
-            DayPartMenuScreen(dayPartVM) { navController.navigate(Screen.Morning.name) }
+        // TODO: Making every daypart a separate instance of the same screen may be a premature abstraction
+        composable<NavDestination.DayPart> /*(typeMap = typeMap)*/ {backstackEntry ->
+            val part: NavDestination.DayPart = backstackEntry.toRoute()
+            DayPartMenuScreen(
+                content = part,
+                onBack = { navController.popBackStack() },
+            )
         }
     }
 }
 
 // Screens
-@OptIn(ExperimentalResourceApi::class)
-enum class Screen(val title: StringResource) {
-    TutorialHome(title = Res.string.empty),
-    TutorialTask(title = Res.string.empty),
-    MainMenu(title = Res.string.empty),
-    Morning(title = Res.string.morning),
-    Day(title = Res.string.day),
-    Evening(title = Res.string.evening),
+@Serializable
+sealed class NavDestination {
+    // Without destination arguments
+    @Serializable
+    object MainMenu : NavDestination()
+
+    // With destination arguments - to display specific content
+    @Serializable
+    class DayPart(val part: domain.screens.dayPartMenu.DayPart) : NavDestination() {
+//        constructor(part: domain.screens.dayPartMenu.DayPart?) : this(part?.name)
+    }
+
+    //@Serializable
+    //class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
+    //    constructor(task: ToDoTask?) : this(task?.id)
+    //}
 }

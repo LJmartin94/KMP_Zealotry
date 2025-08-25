@@ -13,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import navigation.Screen
+import domain.screens.dayPartMenu.DayPart
+import libs.mvvm.getViewModel
+import navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
@@ -33,9 +35,9 @@ import zealotry.composeapp.generated.resources.morning_button
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainMenuScreen(
-    viewModel: MainMenuViewModel,
-    onNavigate: (String) -> Unit,
+    onNavigate: (NavDestination) -> Unit
 ) {
+    val viewModel = getViewModel<MainMenuViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 
     Box(
@@ -64,7 +66,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.morning_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate(Screen.Morning.name) },
+                onClick = { onNavigate(NavDestination.DayPart(DayPart.MORNING)) },
                 textRes = Res.string.morning,
             )
 
@@ -72,7 +74,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.day_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate(Screen.Day.name) },
+                onClick = { onNavigate(NavDestination.DayPart(DayPart.MIDDAY)) },
                 textRes = Res.string.day,
             )
 
@@ -80,7 +82,7 @@ fun MainMenuScreen(
                 imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.evening_button,
                 imgAlpha = 0.8f,
-                onClick = { onNavigate(Screen.Evening.name) },
+                onClick = { onNavigate(NavDestination.DayPart(DayPart.EVENING)) },
                 textRes = Res.string.evening,
             )
         }

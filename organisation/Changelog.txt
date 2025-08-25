@@ -4,6 +4,7 @@ Best: 32
 
 25-08-2025
     - Apply linting
+    - Start adapting old navigation to new navigation model
 
 22-08-2025
     - Cleaned up 'content' object retrieval for screens on the view model and database side, now need to make it typesafe.
