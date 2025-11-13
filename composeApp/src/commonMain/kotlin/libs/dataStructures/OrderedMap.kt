@@ -94,7 +94,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     ): OrderedMap<K, V> {
         val subList = orderedEntries.subList(fromIndex, toIndex)
         val constructorParams: MutableMap<K, V> = mutableMapOf()
-        orderedEntries.forEach { entry -> constructorParams[entry] = mutableMap[entry]!! }
+        subList.forEach { entry -> constructorParams[entry] = mutableMap[entry]!! }
         return OrderedMap(constructorParams)
     }
 
