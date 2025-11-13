@@ -12,7 +12,8 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     /**
      * Commonly Inherited:
      */
-    val size: Int = orderedEntries.size
+    val size: Int
+        get() = orderedEntries.size
 
     fun clear() {
         mutableMap.clear()
@@ -32,7 +33,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     val entries: MutableList<Pair<K, V>>
         get() = orderedEntries.map { entry -> Pair(entry, mutableMap[entry]!!) }.toMutableList()
     val keys: MutableList<K>
-        get() = orderedEntries
+        get() = orderedEntries.toMutableList()
     val values: MutableList<V>
         get() = orderedEntries.map { entry -> mutableMap[entry]!! }.toMutableList()
 
@@ -74,13 +75,9 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
         return mutableMap[orderedEntries[index]]
     }
 
-    fun mapIterator(): MutableMapIterator<K, V> {
-        TODO("Not yet implemented")
-    }
+    fun mapIterator(): MutableMapIterator = MutableMapIterator(0)
 
-    fun mapIterator(index: Int): MutableMapIterator<K, V> {
-        TODO("Not yet implemented")
-    }
+    fun mapIterator(index: Int): MutableMapIterator = MutableMapIterator(index)
 
     fun removeAt(index: Int): K {
         val toRemove = orderedEntries.removeAt(index)
@@ -103,16 +100,39 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
         key: K,
         value: V,
     ): K {
+        // Robust replace: ensure index bounds, keep keys unique and update backing map.
+        if (index !in 0 until size) throw IndexOutOfBoundsException("Index: $index, Size: $size")
+
+        val oldKey = orderedEntries[index]
+        if (oldKey == key) {
+            // same key: update value only
+            mutableMap[key] = value
+            return oldKey
+        }
+
+        // If the new key already exists earlier or later, remove it first to keep keys unique.
+        val existingIndex = orderedEntries.indexOf(key)
+        if (existingIndex != -1) {
+            orderedEntries.removeAt(existingIndex)
+            // If the removed key was before the target index, shifting occurs.
+            val replaceIndex = if (existingIndex < index) index - 1 else index
+            orderedEntries[replaceIndex] = key
+        } else {
+            // Simple replace in-place
+            orderedEntries[index] = key
+        }
+
+        // Update backing map: remove old mapping and set new mapping.
+        mutableMap.remove(oldKey)
         mutableMap[key] = value
-        orderedEntries.remove(key)
-        return orderedEntries.set(index, key)
+        return oldKey
     }
 
     fun swapIndex(
         a: Int,
         b: Int,
     ): Boolean {
-        if (!(a in 0..<size) && (b in 0..<size)) return false
+        if (a !in 0 until size || b !in 0 until size) return false
 
         val tempKey = orderedEntries[a]
         orderedEntries[a] = orderedEntries[b]
@@ -126,6 +146,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     ): Boolean {
         val first = orderedEntries.indexOf(a)
         val second = orderedEntries.indexOf(b)
+        if (first == -1 || second == -1) return false
         return swapIndex(first, second)
     }
 
@@ -170,44 +191,113 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
         orderedEntries.remove(key)
         orderedEntries.add(index, key)
     }
-}
 
-class MutableMapIterator<K, V>(private val iterable: OrderedMap<K, V>, private val index: Int = 0) : MutableListIterator<Pair<K, V>> {
-    private var current: MutableListIterator<Pair<K, V>> = iterable.entries.iterator() as MutableListIterator
+    /**
+     * A ListIterator implementation that manipulates both the ordered key list and the backing map
+     * to preserve the invariant that both structures contain the same keys.
+     */
+    inner class MutableMapIterator(private var cursor: Int = 0) : MutableListIterator<Pair<K, V>> {
+        // index of last element returned by next()/previous(); -1 if none or after add/remove
+        private var lastReturnedIndex: Int = -1
 
-    override fun add(element: Pair<K, V>) {
-        TODO("Not yet implemented")
-    }
+        init {
+            if (cursor < 0 || cursor > orderedEntries.size) throw IndexOutOfBoundsException("Index: $cursor")
+        }
 
-    override fun hasNext(): Boolean {
-        return current.hasNext()
-    }
+        override fun add(element: Pair<K, V>) {
+            val key = element.first
+            val value = element.second
 
-    override fun hasPrevious(): Boolean {
-        return current.hasPrevious()
-    }
+            // If key exists elsewhere, remove it first to keep uniqueness
+            val existing = orderedEntries.indexOf(key)
+            if (existing != -1) {
+                orderedEntries.removeAt(existing)
+                if (existing < cursor) cursor--
+            }
 
-    override fun next(): Pair<K, V> {
-        TODO("Not yet implemented")
-    }
+            orderedEntries.add(cursor, key)
+            mutableMap[key] = value
+            cursor++
+            lastReturnedIndex = -1
+        }
 
-    override fun nextIndex(): Int {
-        TODO("Not yet implemented")
-    }
+        override fun hasNext(): Boolean {
+            return cursor < orderedEntries.size
+        }
 
-    override fun previous(): Pair<K, V> {
-        TODO("Not yet implemented")
-    }
+        override fun hasPrevious(): Boolean {
+            return cursor > 0
+        }
 
-    override fun previousIndex(): Int {
-        TODO("Not yet implemented")
-    }
+        override fun next(): Pair<K, V> {
+            if (!hasNext()) throw NoSuchElementException()
+            val key = orderedEntries[cursor]
+            lastReturnedIndex = cursor
+            cursor++
+            return Pair(key, mutableMap[key]!!)
+        }
 
-    override fun remove() {
-        TODO("Not yet implemented")
-    }
+        override fun nextIndex(): Int {
+            return cursor
+        }
 
-    override fun set(element: Pair<K, V>) {
-        TODO("Not yet implemented")
+        override fun previous(): Pair<K, V> {
+            if (!hasPrevious()) throw NoSuchElementException()
+            cursor--
+            val key = orderedEntries[cursor]
+            lastReturnedIndex = cursor
+            return Pair(key, mutableMap[key]!!)
+        }
+
+        override fun previousIndex(): Int {
+            return cursor - 1
+        }
+
+        override fun remove() {
+            if (lastReturnedIndex == -1) throw IllegalStateException()
+            val key = orderedEntries.removeAt(lastReturnedIndex)
+            mutableMap.remove(key)
+
+            if (lastReturnedIndex < cursor) cursor--
+            lastReturnedIndex = -1
+        }
+
+        override fun set(element: Pair<K, V>) {
+            if (lastReturnedIndex == -1) throw IllegalStateException()
+            val newKey = element.first
+            val newValue = element.second
+
+            val currentIndex = lastReturnedIndex
+            val oldKey = orderedEntries[currentIndex]
+
+            if (oldKey == newKey) {
+                // same key, just update value
+                mutableMap[newKey] = newValue
+                return
+            }
+
+            // If newKey exists elsewhere, remove it first and adjust indices
+            val existing = orderedEntries.indexOf(newKey)
+            if (existing != -1) {
+                orderedEntries.removeAt(existing)
+                if (existing < currentIndex) {
+                    // removal shifted target to left
+                    orderedEntries[currentIndex - 1] = newKey
+                    // remove oldKey from map and add new mapping
+                    mutableMap.remove(oldKey)
+                    mutableMap[newKey] = newValue
+                    // adjust cursor and lastReturnedIndex
+                    if (existing < cursor) cursor--
+                    lastReturnedIndex = currentIndex - 1
+                    return
+                }
+            }
+
+            // Replace in place
+            orderedEntries[currentIndex] = newKey
+            mutableMap.remove(oldKey)
+            mutableMap[newKey] = newValue
+            lastReturnedIndex = currentIndex
+        }
     }
 }
