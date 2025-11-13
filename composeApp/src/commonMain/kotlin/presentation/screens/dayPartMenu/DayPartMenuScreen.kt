@@ -30,6 +30,8 @@ fun DayPartMenuScreen(
     content: NavDestination.DayPart,
     onBack: () -> Unit,
 ) {
+    //TODO: We're trying to figure out how to link screen state to a singleton-like db object
+    // see: https://medium.com/@shahadzawinski.non/using-realm-kotlin-sdk-in-android-97cf9affac8c
     val viewModel = getViewModel<DayPartMenuViewModel>()
     viewModel.setDayPart(content.part)
     val uiState by viewModel.uiState.collectAsState()

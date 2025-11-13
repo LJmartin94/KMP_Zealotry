@@ -14,6 +14,7 @@ import zealotry.composeapp.generated.resources.good_evening
 import zealotry.composeapp.generated.resources.good_morning
 
 class DayPartMenuViewModel : ViewModel() {
+    @OptIn(ExperimentalResourceApi::class)
     private val _uiState = MutableStateFlow(DayPartMenuUIState())
     val uiState = _uiState.asStateFlow()
 
