@@ -1,62 +1,27 @@
-package data.tutorial
+package data.DAOs
 
 import domain.tutorial.RequestState
 import domain.tutorial.ToDoTask
 import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
-import io.realm.kotlin.types.TypedRealmObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import libs.tristateBool.isTrueOrNull
-import org.mongodb.kbson.ObjectId
-import kotlin.reflect.KClass
 
-class MongoDB {
-    private var realm: Realm? = null
+interface TaskDao {
+    fun readActiveTasks(): Flow<RequestState<List<ToDoTask>>>
+    fun readCompletedTasks(): Flow<RequestState<List<ToDoTask>>>
+    suspend fun addTask(task: ToDoTask)
+    suspend fun updateTask(task: ToDoTask)
+    suspend fun setCompleted(task: ToDoTask, taskCompleted: Boolean)
+    suspend fun setFavourite(task: ToDoTask, isFavourite: Boolean)
+    suspend fun deleteTask(task: ToDoTask)
+}
 
-    init {
-        configureTheRealm()
-    }
-
-    private fun configureTheRealm() {
-        if (realm?.isClosed().isTrueOrNull()) {
-            // Pass all collection Model classes here.
-            val config =
-                RealmConfiguration.Builder(
-                    schema = setOf(ToDoTask::class),
-                )
-                    .compactOnLaunch()
-                    .build()
-            realm = Realm.open(config)
-        }
-    }
-
-    /** Expose the configured Realm instance for DAOs / repositories to use. */
-    fun getRealm(): Realm? = realm
-
-    fun findItemById(
-        key: ObjectId?,
-        objType: KClass<*>,
-    ): TypedRealmObject? {
-        return when (objType) {
-            ToDoTask::class -> doQueryForObject<ToDoTask>(key)
-            else -> null
-        }
-    }
-
-    private inline fun <reified T : TypedRealmObject> doQueryForObject(id: ObjectId?): T? {
-        return try {
-            realm?.query<T>(query = "id == $0", id)
-                ?.find()
-                ?.first()
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    fun readActiveTasks(): Flow<RequestState<List<ToDoTask>>> {
+class DefaultTaskDAO constructor(
+    private val realm: Realm
+)  : TaskDao {
+    override fun readActiveTasks(): Flow<RequestState<List<ToDoTask>>> {
         return realm?.query<ToDoTask>(query = "completed == $0", false)
             ?.asFlow()
             ?.map { result ->
@@ -66,7 +31,7 @@ class MongoDB {
             } ?: flow { RequestState.Error(message = "Realm is not available.") }
     }
 
-    fun readCompletedTasks(): Flow<RequestState<List<ToDoTask>>> {
+    override fun readCompletedTasks(): Flow<RequestState<List<ToDoTask>>> {
         return realm?.query<ToDoTask>(query = "completed == $0", true)
             ?.asFlow()
             ?.map { result ->
@@ -74,11 +39,11 @@ class MongoDB {
             } ?: flow { RequestState.Error(message = "Realm is not available.") }
     }
 
-    suspend fun addTask(task: ToDoTask) {
+    override suspend fun addTask(task: ToDoTask) {
         realm?.write { copyToRealm(task) }
     }
 
-    suspend fun updateTask(task: ToDoTask) {
+    override suspend fun updateTask(task: ToDoTask) {
         realm?.write {
             try {
                 val queriedTask =
@@ -97,7 +62,7 @@ class MongoDB {
         }
     }
 
-    suspend fun setCompleted(
+    override suspend fun setCompleted(
         task: ToDoTask,
         taskCompleted: Boolean,
     ) {
@@ -114,7 +79,7 @@ class MongoDB {
         }
     }
 
-    suspend fun setFavourite(
+    override suspend fun setFavourite(
         task: ToDoTask,
         isFavourite: Boolean,
     ) {
@@ -132,7 +97,7 @@ class MongoDB {
     }
 
     // TODO: These functions could also return RequestState instead of just printing error
-    suspend fun deleteTask(task: ToDoTask) {
+    override suspend fun deleteTask(task: ToDoTask) {
         realm?.write {
             try {
                 val queriedTask =

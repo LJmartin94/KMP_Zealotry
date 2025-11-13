@@ -1,0 +1,18 @@
+https://developer.android.com/courses/pathways/android-architecture
+
+There's a whole android course on application architecture,
+but for now I think it's better to just get something down.
+
+Data -> Domain -> UI (in terms of dependencies)
+
+#Data: stores/cahces data
+Database
+DAO
+
+#Domain (optional): contains business logic -
+should not store any data (prefer to have business logic in Data layer than vice versa)
+UseCase
+
+#UI: Only responsible for displaying latest UI state
+should not update the UI state unless it is the only source of truth for the UI
+Viewmodel
