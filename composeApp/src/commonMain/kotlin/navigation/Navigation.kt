@@ -27,6 +27,8 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
         }
 
         // TODO: Making every daypart a separate instance of the same screen may be a premature abstraction
+        // Probably does make sense: Underlying data structure for daypart will be one db entry -
+        // this allows easily moving of tasks between day parts, displaying different routines on workdays/rest days
         composable<NavDestination.DayPart> /*(typeMap = typeMap)*/ {backstackEntry ->
             val part: NavDestination.DayPart = backstackEntry.toRoute()
             DayPartMenuScreen(
@@ -46,8 +48,8 @@ sealed class NavDestination {
 
     // With destination arguments - to display specific content
     @Serializable
-    class DayPart(val part: domain.screens.dayPartMenu.DayPart) : NavDestination() {
-//        constructor(part: domain.screens.dayPartMenu.DayPart?) : this(part?.name)
+    class DayPart private constructor (val part: domain.screens.dayPartMenu.DayPart, val working: Boolean) : NavDestination() {
+        constructor(part: domain.screens.dayPartMenu.DayPart) : this(part, true)
     }
 
     //@Serializable
