@@ -6,8 +6,14 @@ package libs.dataStructures
  * Behaves like it inherits from MutableMap and MutableList, but these are incompatible in minor ways
  */
 @Suppress("TooManyFunctions")
-class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()) { // : MutableMap<K,V>, MutableList<K>
+class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>, MutableList<K>
+    // Make an internal copy of the provided map to avoid external mutation desyncs.
+    private val mutableMap: MutableMap<K, V> = LinkedHashMap(initial)
     private val orderedEntries: MutableList<K> = mutableMap.keys.toMutableList()
+
+    // Helper to provide a clear exception if invariant is violated
+    private fun valueOrThrow(key: K): V = mutableMap[key]
+        ?: throw IllegalStateException("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
 
     /**
      * Commonly Inherited:
@@ -28,20 +34,22 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     }
 
     /**
-     * Inherited from MutableMap:
+     * Inherited from MutableMap (read-only snapshots, not live views):
      */
-    val entries: MutableList<Pair<K, V>>
-        get() = orderedEntries.map { entry -> Pair(entry, mutableMap[entry]!!) }.toMutableList()
-    val keys: MutableList<K>
-        get() = orderedEntries.toMutableList()
-    val values: MutableList<V>
-        get() = orderedEntries.map { entry -> mutableMap[entry]!! }.toMutableList()
+    val entries: List<Pair<K, V>>
+        get() = orderedEntries.map { entry -> Pair(entry, valueOrThrow(entry)) }
+    val keys: List<K>
+        get() = orderedEntries.toList()
+    val values: List<V>
+        get() = orderedEntries.map { entry -> valueOrThrow(entry) }
 
     fun putAll(from: Map<out K, V>) {
-        mutableMap.putAll(from)
-        val keysToAdd: MutableSet<K> = from.keys.toMutableSet()
-        keysToAdd.removeAll(orderedEntries.toSet())
-        orderedEntries.addAll(keysToAdd)
+        // Preserve iteration order of `from` while adding only missing keys at the end.
+        from.forEach { (k, v) ->
+            val existed = mutableMap.containsKey(k)
+            mutableMap[k] = v
+            if (!existed) orderedEntries.add(k)
+        }
     }
 
     fun put(
@@ -91,7 +99,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
     ): OrderedMap<K, V> {
         val subList = orderedEntries.subList(fromIndex, toIndex)
         val constructorParams: MutableMap<K, V> = mutableMapOf()
-        subList.forEach { entry -> constructorParams[entry] = mutableMap[entry]!! }
+        subList.forEach { entry -> constructorParams[entry] = valueOrThrow(entry) }
         return OrderedMap(constructorParams)
     }
 
@@ -152,9 +160,9 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
 
     fun retainAll(keys: Collection<K>): Boolean {
         val ret = orderedEntries.retainAll(keys)
-        val trimmedPairList = orderedEntries.map { entry -> Pair(entry, mutableMap[entry]) }
+        val trimmedPairList = orderedEntries.map { entry -> Pair(entry, valueOrThrow(entry)) }
         mutableMap.clear()
-        trimmedPairList.forEach { kvp -> mutableMap[kvp.first] = kvp.second!! }
+        trimmedPairList.forEach { kvp -> mutableMap[kvp.first] = kvp.second }
         return ret
     }
 
@@ -176,9 +184,14 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
         index: Int,
         from: Map<out K, V>,
     ) {
-        mutableMap.putAll(from)
-        orderedEntries.removeAll(from.keys)
-        orderedEntries.addAll(index, from.keys)
+        // Preserve iteration order of `from` when inserting at index.
+        // Remove any existing keys first so we can insert in-order.
+        from.keys.forEach { orderedEntries.remove(it) }
+        var insertionIndex = index
+        from.forEach { (k, v) ->
+            mutableMap[k] = v
+            orderedEntries.add(insertionIndex++, k)
+        }
     }
 
     // Formerly add
@@ -234,7 +247,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
             val key = orderedEntries[cursor]
             lastReturnedIndex = cursor
             cursor++
-            return Pair(key, mutableMap[key]!!)
+            return Pair(key, valueOrThrow(key))
         }
 
         override fun nextIndex(): Int {
@@ -246,7 +259,7 @@ class OrderedMap<K, V>(private val mutableMap: MutableMap<K, V> = mutableMapOf()
             cursor--
             val key = orderedEntries[cursor]
             lastReturnedIndex = cursor
-            return Pair(key, mutableMap[key]!!)
+            return Pair(key, valueOrThrow(key))
         }
 
         override fun previousIndex(): Int {
