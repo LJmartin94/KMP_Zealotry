@@ -19,7 +19,7 @@ enum class DayPart {
 class TaskButtonState : RealmObject {
     @PrimaryKey
     var id: ObjectId = ObjectId()
-    val state: OrderedMap<String, ChecklistButtonState> = OrderedMap()
+    //var state: OrderedMap<String, ChecklistButtonState> = OrderedMap()
 }
 
 @OptIn(ExperimentalResourceApi::class)

@@ -1,11 +1,14 @@
 https://developer.android.com/courses/pathways/android-architecture
+and
+https://medium.com/@aumaidkh/toad-a-kotlin-first-architecture-pattern-that-finally-made-my-viewmodels-boring-b615a9ab6c30
 
-There's a whole android course on application architecture,
-but for now I think it's better to just get something down.
+Let's make the simplest app (a single toggle button) and ramp up to the required complexity from there.
+Correct state management is the next hurdle to clear for our actual app, lets understand how we want it to work in the simplest case.
 
-Data -> Domain -> UI (in terms of dependencies)
+Data -> Domain -> UI (in terms of dependencies, and state flow)
+UI -> Domain -> Data (in terms of event flow)
 
-#Data: stores/cahces data
+#Data: stores/caches data
 Database
 DAO
 
