@@ -1,4 +1,4 @@
-package domain
+package di
 
 import data.tutorial.MongoDB
 import domain.calendar.CalendarRepository
