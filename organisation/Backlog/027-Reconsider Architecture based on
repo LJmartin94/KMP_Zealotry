@@ -19,3 +19,12 @@ UseCase
 #UI: Only responsible for displaying latest UI state
 should not update the UI state unless it is the only source of truth for the UI
 Viewmodel
+
+Step 1: Build up the data layer
+https://developer.android.com/topic/architecture/data-layer
+https://developer.android.com/training/data-storage/room
+https://github.com/android/architecture-samples/tree/main/app/src/main/java/com/example/android/architecture/blueprints/todoapp/data
+https://developer.android.com/develop/ui/compose/state
+https://developer.android.com/codelabs/jetpack-compose-state?index=..%2F..index#0
+
+Repositories should be created per data type handled in app
