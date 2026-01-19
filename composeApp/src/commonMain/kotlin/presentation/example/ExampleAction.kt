@@ -18,8 +18,7 @@ data object LoadExample: ExampleAction() { // 'object' because it is a singleton
             onSuccess = { result ->
                 scope.setState {
                     copy(id = result.id,
-                        toggle = result.toggle,
-                        isLoading = false)
+                        toggle = result.toggle)
                 }
             },
             onFailure = { result ->
