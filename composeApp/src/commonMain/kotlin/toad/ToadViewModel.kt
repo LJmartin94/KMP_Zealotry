@@ -80,7 +80,7 @@ import kotlinx.coroutines.launch
  * @see com.hopcape.toadexample.toad.ActionDependencies
  * @see com.hopcape.toadexample.toad.ActionScope
  */
-abstract class `ToadViewModel.kt`<S : ViewState, E : ViewEvent>(
+abstract class `ToadViewModel`<S : ViewState, E : ViewEvent>(
     initialState: S
 ) : ViewModel() {
 
