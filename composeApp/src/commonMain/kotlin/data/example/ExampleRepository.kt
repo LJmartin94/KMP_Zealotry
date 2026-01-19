@@ -1,5 +1,6 @@
 package data.example
 
 interface ExampleRepository {
-    suspend fun getTask(taskId: String)
+    suspend fun getExample(taskId: String): Result<Example>
+    suspend fun updateExample(toggle: Boolean): Result<Unit>
 }
