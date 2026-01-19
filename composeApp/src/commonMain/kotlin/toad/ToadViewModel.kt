@@ -2,11 +2,6 @@ package toad
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import toad.ActionDependencies
-import toad.ActionScope
-import toad.ViewAction
-import toad.ViewEvent
-import toad.ViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -31,33 +26,33 @@ import kotlinx.coroutines.launch
  * ## Architecture Overview
  *
  * ```
- * ┌─────────────────────────────────────────────────────────────────────────┐
- * │                              UI LAYER                                   │
+ * ┌────────────────────────────────────────────────────────────────────────┐
+ * │                              UI LAYER                                  │
  * │  ┌─────────────┐         ┌─────────────┐         ┌─────────────┐       │
  * │  │  Composable │ ──────▶ │  ViewModel  │ ◀────── │    State    │       │
  * │  │   Screen    │ intent  │ runAction() │  state  │  StateFlow  │       │
  * │  └─────────────┘         └──────┬──────┘         └─────────────┘       │
- * └─────────────────────────────────┼─────────────────────────────────────┘
+ * └─────────────────────────────────┼──────────────────────────────────────┘
  *                                   │ dispatch
  *                                   ▼
- * ┌─────────────────────────────────────────────────────────────────────────┐
- * │                           ACTION LAYER                                  │
+ * ┌────────────────────────────────────────────────────────────────────────┐
+ * │                           ACTION LAYER                                 │
  * │  ┌─────────────────────────────────────────────────────────────────┐   │
- * │  │                        ViewAction                                │   │
- * │  │  execute(dependencies, scope) {                                  │   │
+ * │  │                        ViewAction                               │   │
+ * │  │  execute(dependencies, scope) {                                 │   │
  * │  │      scope.setState { copy(...) }  // Update state              │   │
  * │  │      scope.sendEvent(...)          // Emit one-time events      │   │
- * │  │  }                                                               │   │
+ * │  │  }                                                              │   │
  * │  └─────────────────────────────────────────────────────────────────┘   │
- * └─────────────────────────────────────────────────────────────────────────┘
+ * └────────────────────────────────────────────────────────────────────────┘
  *                                   │
  *                                   ▼
- * ┌─────────────────────────────────────────────────────────────────────────┐
- * │                         DEPENDENCIES LAYER                              │
+ * ┌────────────────────────────────────────────────────────────────────────┐
+ * │                         DEPENDENCIES LAYER                             │
  * │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                 │
  * │  │ Repository  │    │  Use Case   │    │   Service   │                 │
  * │  └─────────────┘    └─────────────┘    └─────────────┘                 │
- * └─────────────────────────────────────────────────────────────────────────┘
+ * └────────────────────────────────────────────────────────────────────────┘
  * ```
  *
  * ## Key Principles
