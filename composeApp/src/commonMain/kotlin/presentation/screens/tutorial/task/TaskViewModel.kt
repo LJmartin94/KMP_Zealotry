@@ -3,8 +3,8 @@ package presentation.screens.tutorial.task
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.tutorial.MongoDB
-import domain.tutorial.TaskAction
-import domain.tutorial.ToDoTask
+import z.tutorial.TaskAction
+import z.tutorial.ToDoTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch

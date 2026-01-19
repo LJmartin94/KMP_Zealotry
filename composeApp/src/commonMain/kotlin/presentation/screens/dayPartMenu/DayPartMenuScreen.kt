@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import domain.screens.dayPartMenu.DayPart
-import libs.mvvm.getViewModel
-import navigation.NavDestination
+import z.screens.dayPartMenu.DayPart
+import z.libs.mvvm.getViewModel
+import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.screens.dayPartMenu.checklistButtons.ChecklistButton

@@ -2,10 +2,10 @@ package presentation.resourceComposition
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.intl.Locale
-import domain.calendar.FestiveDay
-import domain.calendar.Season
+import z.calendar.FestiveDay
+import z.calendar.Season
 import kotlinx.datetime.DayOfWeek
-import libs.localisation.getLocale
+import z.libs.localisation.getLocale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource

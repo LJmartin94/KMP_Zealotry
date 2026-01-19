@@ -21,10 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import domain.tutorial.TaskAction
-import domain.tutorial.ToDoTask
-import libs.mvvm.getViewModel
-import navigation.tutorial.NavDestination
+import z.tutorial.TaskAction
+import z.tutorial.ToDoTask
+import z.libs.mvvm.getViewModel
+import z.navigation.tutorial.NavDestination
 
 const val DEFAULT_TITLE = "Enter the Title"
 const val DEFAULT_DESCRIPTION = "Add some description"

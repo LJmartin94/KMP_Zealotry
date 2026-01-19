@@ -1,7 +1,7 @@
 package data.DAOs
 
-import domain.tutorial.RequestState
-import domain.tutorial.ToDoTask
+import z.tutorial.RequestState
+import z.tutorial.ToDoTask
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow

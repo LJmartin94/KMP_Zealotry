@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import domain.screens.dayPartMenu.DayPart
-import libs.mvvm.getViewModel
-import navigation.NavDestination
+import z.screens.dayPartMenu.DayPart
+import z.libs.mvvm.getViewModel
+import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource

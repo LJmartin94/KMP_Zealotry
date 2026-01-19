@@ -1,9 +1,9 @@
 package di
 
 import data.tutorial.MongoDB
-import domain.calendar.CalendarRepository
-import domain.screens.dayPartMenu.DayPartMenuRepository
-import domain.screens.mainMenu.MainMenuRepository
+import z.calendar.CalendarRepository
+import z.screens.dayPartMenu.DayPartMenuRepository
+import z.screens.mainMenu.MainMenuRepository
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import presentation.components.calendar.CalendarViewModel

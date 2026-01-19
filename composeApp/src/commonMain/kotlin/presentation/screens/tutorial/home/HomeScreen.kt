@@ -29,11 +29,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.tutorial.RequestState
-import domain.tutorial.TaskAction
-import domain.tutorial.ToDoTask
-import libs.mvvm.getViewModel
-import navigation.tutorial.NavDestination
+import z.tutorial.RequestState
+import z.tutorial.TaskAction
+import z.tutorial.ToDoTask
+import z.libs.mvvm.getViewModel
+import z.navigation.tutorial.NavDestination
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen
 import presentation.components.tutorial.TaskView

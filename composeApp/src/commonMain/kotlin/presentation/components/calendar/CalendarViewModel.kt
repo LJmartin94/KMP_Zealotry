@@ -2,8 +2,8 @@ package presentation.components.calendar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import domain.calendar.CalendarRepository
-import domain.calendar.CalendarState
+import z.calendar.CalendarRepository
+import z.calendar.CalendarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

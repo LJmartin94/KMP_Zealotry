@@ -2,10 +2,10 @@ package presentation.screens.mainMenu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import domain.calendar.CalendarRepository
-import domain.calendar.CalendarState
-import domain.calendar.getFestiveDay
-import domain.screens.mainMenu.MainMenuUIState
+import z.calendar.CalendarRepository
+import z.calendar.CalendarState
+import z.calendar.getFestiveDay
+import z.screens.mainMenu.MainMenuUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
