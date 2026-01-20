@@ -75,7 +75,7 @@ import kotlinx.coroutines.launch
  * @see toad.ActionDependencies
  * @see toad.ActionScope
  */
-abstract class `ToadViewModel`<S : ViewState, E : ViewEvent>(
+abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
     initialState: S
 ) : ViewModel() {
 
