@@ -1,24 +1,26 @@
 package data.example
 
+data object MockDataBase{
+    var id: String = ""
+    var toggleState: Boolean = false
+}
+
 class ExampleRepositoryImpl(
 //    private val networkDataSource: NetworkDataSource,
 //    private val localDataSource: ExampleDao,
 ) : ExampleRepository {
-
     //PLACEHOLDER CODE FOR WHAT A DB MIGHT ACTUALLY RETURN:
     init {
         println("Initialised Example Repository")
     }
 
-    var id: String = ""
-    var toggleState: Boolean = false
-
     override suspend fun getExample(): Result<Example> {
-        return Result.success(Example(id, toggleState))
+        return Result.success(Example(MockDataBase.id, MockDataBase.toggleState))
     }
 
     override suspend fun updateToggle(toggle: Boolean): Result<Unit> {
-        toggleState = toggle
+        MockDataBase.toggleState = toggle
+        println("Toggle state is: ${MockDataBase.toggleState}")
         return Result.success(Unit)
     }
 }
