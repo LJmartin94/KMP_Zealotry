@@ -21,6 +21,7 @@ import z.libs.mvvm.getViewModel
 import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
+import presentation.example.ExampleScreen
 import presentation.screens.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.screens.dayPartMenu.morningButtons.MorningButtons
 
@@ -57,6 +58,10 @@ fun DayPartMenuScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             visibleButtons.forEach { button -> ChecklistButton(button) }
+        }
+
+        if (uiState.part == DayPart.MIDDAY){
+            ExampleScreen()
         }
     }
 }

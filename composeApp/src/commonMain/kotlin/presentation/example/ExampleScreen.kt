@@ -5,13 +5,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import z.libs.mvvm.getViewModel
 
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
 
 @Composable
-fun ExampleScreen(
-    viewModel: ExampleViewModel,
-){
+fun ExampleScreen(){
+    val viewModel = getViewModel<ExampleViewModel>()
     val state by viewModel.state.collectAsState()
     StatelessExampleScreen(
         state = state,
