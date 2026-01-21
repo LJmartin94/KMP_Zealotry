@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import z.screens.dayPartMenu.DayPart
-import z.libs.mvvm.getViewModel
+import toad.getViewModel
 import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource

@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import z.screens.dayPartMenu.DayPart
-import z.libs.mvvm.getViewModel
+import toad.getViewModel
 import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource

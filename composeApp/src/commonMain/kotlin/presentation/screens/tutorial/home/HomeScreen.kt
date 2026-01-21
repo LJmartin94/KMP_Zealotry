@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import z.tutorial.RequestState
 import z.tutorial.TaskAction
 import z.tutorial.ToDoTask
-import z.libs.mvvm.getViewModel
+import toad.getViewModel
 import z.navigation.tutorial.NavDestination
 import presentation.components.tutorial.ErrorScreen
 import presentation.components.tutorial.LoadingScreen

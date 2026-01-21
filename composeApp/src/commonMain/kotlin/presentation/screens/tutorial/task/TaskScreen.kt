@@ -23,7 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import z.tutorial.TaskAction
 import z.tutorial.ToDoTask
-import z.libs.mvvm.getViewModel
+import toad.getViewModel
 import z.navigation.tutorial.NavDestination
 
 const val DEFAULT_TITLE = "Enter the Title"

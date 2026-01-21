@@ -1,4 +1,4 @@
-package z.libs.mvvm
+package toad
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel

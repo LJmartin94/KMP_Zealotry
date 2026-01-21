@@ -5,7 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import z.libs.mvvm.getViewModel
+import toad.getViewModel
 
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
 
