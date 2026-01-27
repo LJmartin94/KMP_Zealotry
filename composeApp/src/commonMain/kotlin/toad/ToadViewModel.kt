@@ -67,13 +67,13 @@ import kotlinx.coroutines.launch
  *
  * See `_UsageExample.kt` in this package for a complete working example.
  *
- * @param S The [toad.ViewState] type for this ViewModel
- * @param E The [toad.ViewEvent] type for this ViewModel
+ * @param S The [ViewState] type for this ViewModel
+ * @param E The [ViewEvent] type for this ViewModel
  * @param initialState The initial state when ViewModel is created
  *
- * @see toad.ViewAction
- * @see toad.ActionDependencies
- * @see toad.ActionScope
+ * @see ViewAction
+ * @see ActionDependencies
+ * @see ActionScope
  */
 abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
     initialState: S
@@ -108,7 +108,7 @@ abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
      * The action runs asynchronously in [viewModelScope] on the specified [dispatcher].
      * Multiple actions can run concurrently.
      *
-     * @param action The [toad.ViewAction] to execute
+     * @param action The [ViewAction] to execute
      * @param dispatcher The [CoroutineDispatcher] to run on (default: [Dispatchers.Default])
      */
     protected fun <D : ActionDependencies> dispatch(

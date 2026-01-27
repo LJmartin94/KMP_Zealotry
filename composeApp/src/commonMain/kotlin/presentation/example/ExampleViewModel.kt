@@ -8,7 +8,6 @@ import toad.ToadViewModel
 
 class ExampleViewModel (
     private val repository: ExampleRepository,
-    initialActions: List<ExampleAction> = emptyList()
 ) : ToadViewModel<ExampleUiState, ExampleEvent>(
     initialState = ExampleUiState(
         id = "example",
@@ -26,4 +25,12 @@ class ExampleViewModel (
     }
 
     fun runAction(action: ExampleAction) = dispatch(action)
+
+    companion object{
+        // Instead of passing the initial actions,
+        // we have a single source of truth for what & how state should be restored
+        val initialActions = listOf<ExampleAction>(
+            LoadExample,
+        )
+    }
 }

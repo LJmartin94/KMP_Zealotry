@@ -3,8 +3,8 @@ package presentation.example
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import toad.getViewModel
 
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
@@ -12,7 +12,7 @@ import toad.getViewModel
 @Composable
 fun ExampleScreen(){
     val viewModel = getViewModel<ExampleViewModel>()
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     StatelessExampleScreen(
         state = state,
         onAction = viewModel::runAction,
