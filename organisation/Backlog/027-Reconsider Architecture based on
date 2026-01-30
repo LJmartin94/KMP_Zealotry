@@ -27,4 +27,14 @@ https://github.com/android/architecture-samples/tree/main/app/src/main/java/com/
 https://developer.android.com/develop/ui/compose/state
 https://developer.android.com/codelabs/jetpack-compose-state?index=..%2F..index#0
 
+
+//TODO: Complete the data layer implementation for example based on
+// https://github.com/android/architecture-samples/tree/main/app/src/main/java/com/example/android/architecture/blueprints/todoapp/data
+
+//TODO: ExampleDao Impl?, ExampleRepo Interface, ExampleRepo Impl, Network impl, Mapping funcs,
+
 Repositories should be created per data type handled in app
+
+https://medium.com/@valokafor/introduction-to-realm-database-with-kotlin-3e3ce1a406d6
+
+Used generic DAO interface detailed here: https://medium.com/@shahadzawinski.non/using-realm-kotlin-sdk-in-android-97cf9affac8c

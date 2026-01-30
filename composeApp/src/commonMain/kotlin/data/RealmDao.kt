@@ -1,0 +1,63 @@
+package data
+
+import io.realm.kotlin.Realm
+import io.realm.kotlin.notifications.ResultsChange
+import io.realm.kotlin.query.RealmResults
+import io.realm.kotlin.types.RealmObject
+import kotlinx.coroutines.flow.Flow
+import org.mongodb.kbson.ObjectId
+import kotlin.reflect.KClass
+
+interface RealmDao<T : RealmObject> {
+    val realm: Realm
+    val clazz: KClass<T>
+
+    suspend fun insert(entity: T) {
+        realm.write {
+            copyToRealm(entity)
+        }
+    }
+
+    suspend fun insertAll(entities: List<T>) {
+        realm.write {
+            for (entity in entities) {
+                copyToRealm(entity)
+            }
+        }
+    }
+
+    // Functionally the same as insert
+    suspend fun update(entity: T) {
+        realm.write {
+            copyToRealm(entity)
+        }
+    }
+
+    suspend fun findAll(): RealmResults<T> {
+        return realm.query(clazz).find()
+    }
+
+    suspend fun findById(id: ObjectId): T? {
+//        //TODO: check this query syntax actually works
+//        return realm.query(clazz, "_id == $0", id).first().find()
+        return realm.queryEqual(clazz, "_id", id).first().find()
+        //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
+    }
+
+    suspend fun delete(entity: T) {
+        realm.write {
+            delete(entity)
+        }
+    }
+
+    suspend fun stream(): Flow<ResultsChange<T>> {
+        return realm.query(clazz).asFlow()
+    }
+
+    suspend fun deleteAll() {
+        realm.write {
+            val all = this.query(clazz).find()
+            delete(all)
+        }
+    }
+}

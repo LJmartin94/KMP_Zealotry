@@ -1,5 +1,7 @@
 package data.example
 
+import data.example.source.local.ExampleDao
+
 data object MockDataBase{
     var id: String = ""
     var toggleState: Boolean = false
@@ -7,7 +9,7 @@ data object MockDataBase{
 
 class ExampleRepositoryImpl(
 //    private val networkDataSource: NetworkDataSource,
-//    private val localDataSource: ExampleDao,
+    private val localDataSource: ExampleDao,
 ) : ExampleRepository {
     //PLACEHOLDER CODE FOR WHAT A DB MIGHT ACTUALLY RETURN:
     init {
@@ -24,6 +26,3 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 }
-
-//TODO: Complete the data layer implementation for example based on
-// https://github.com/android/architecture-samples/tree/main/app/src/main/java/com/example/android/architecture/blueprints/todoapp/data

@@ -1,5 +1,6 @@
 package data.tutorial
 
+import data.example.source.local.ExampleEntityLocal
 import z.tutorial.RequestState
 import z.tutorial.ToDoTask
 import io.realm.kotlin.Realm
@@ -25,7 +26,10 @@ class MongoDB {
             // Pass all collection Model classes here.
             val config =
                 RealmConfiguration.Builder(
-                    schema = setOf(ToDoTask::class),
+                    schema = setOf(
+                        ToDoTask::class,
+                        ExampleEntityLocal::class,
+                        ),
                 )
                     .compactOnLaunch()
                     .build()
