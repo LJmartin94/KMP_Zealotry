@@ -1,9 +1,10 @@
 package data.example.source.local
 
+import data.RealmDao
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
 
-interface ExampleDao {
+interface ExampleDao : RealmDao<ExampleEntityLocal> {
     /**
      * Observes list of example entities.
      *
@@ -66,7 +67,7 @@ interface ExampleDao {
     /**
      * Delete all example entities.
      */
-    suspend fun deleteAll()
+    //suspend fun deleteAll()
 
 
     /**

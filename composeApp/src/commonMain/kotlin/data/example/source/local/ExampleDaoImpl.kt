@@ -1,5 +1,6 @@
 package data.example.source.local
 
+import data.RealmDaoImpl
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
@@ -10,10 +11,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import org.mongodb.kbson.ObjectId
+import kotlin.reflect.KClass
 
 class ExampleDaoImpl constructor(
-    private val realm: Realm
-) : ExampleDao {
+    private val realm: Realm,
+) : ExampleDao,
+    RealmDaoImpl<ExampleEntityLocal>(realm, ExampleEntityLocal::class) {
     /**
      * Observes list of example entities.
      *
