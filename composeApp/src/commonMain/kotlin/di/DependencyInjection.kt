@@ -2,6 +2,8 @@ package di
 
 import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
+import data.example.source.local.ExampleDao
+import data.example.source.local.ExampleDaoImpl
 import data.tutorial.MongoDB
 import z.calendar.CalendarRepository
 import z.screens.dayPartMenu.DayPartMenuRepository
@@ -34,6 +36,7 @@ fun initKoin() {
                 factory { HomeViewModel(get()) }
                 factory { TaskViewModel(get()) }
 
+                singleOf(::ExampleDaoImpl) { bind<ExampleDao>() }
                 singleOf(::ExampleRepositoryImpl) { bind<ExampleRepository>() }
                 factory { ExampleViewModel(get()) }
             },

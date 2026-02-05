@@ -1,5 +1,6 @@
 package data
 
+import data.tutorial.MongoDB
 import io.realm.kotlin.Realm
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.RealmResults
@@ -22,9 +23,13 @@ interface RealmDao<T : RealmObject> {
 
 // Base DAO class each specific DAO can inherit from to satisfy basic CRUD requirements
 open class RealmDaoImpl<T : RealmObject>(
-    private val realm: Realm,
-    val clazz: KClass<T>,
+    val clazz: KClass<T>
 ) : RealmDao<T> {
+    protected val realm: Realm
+        get() {
+            return MongoDB.getRealm()
+        }
+
     override suspend fun insert(entity: T) {
         realm.write {
             copyToRealm(entity)

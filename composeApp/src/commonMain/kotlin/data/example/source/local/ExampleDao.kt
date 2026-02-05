@@ -2,8 +2,6 @@ package data.example.source.local
 
 import data.RealmDao
 import data.RealmDaoImpl
-import data.example.source.local.ExampleEntityLocal
-import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.RealmQuery
@@ -88,10 +86,9 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
     suspend fun deleteToggleTrue(toggleStatus: Boolean): Int
 }
 
-class ExampleDaoImpl constructor(
-    private val realm: Realm,
-) : ExampleDao,
-    RealmDaoImpl<ExampleEntityLocal>(realm, ExampleEntityLocal::class) {
+class ExampleDaoImpl() :
+    ExampleDao,
+    RealmDaoImpl<ExampleEntityLocal>(ExampleEntityLocal::class) {
     /**
      * Observes list of example entities.
      *

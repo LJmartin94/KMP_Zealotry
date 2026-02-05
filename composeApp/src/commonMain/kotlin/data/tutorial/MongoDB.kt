@@ -15,8 +15,6 @@ import org.mongodb.kbson.ObjectId
 import kotlin.reflect.KClass
 
 class MongoDB {
-    private var realm: Realm? = null
-
     init {
         configureTheRealm()
     }
@@ -36,9 +34,6 @@ class MongoDB {
             realm = Realm.open(config)
         }
     }
-
-    /** Expose the configured Realm instance for DAOs / repositories to use. */
-    fun getRealm(): Realm? = realm
 
     fun findItemById(
         key: ObjectId?,
@@ -150,6 +145,20 @@ class MongoDB {
                 }
             } catch (e: Exception) {
                 println(e)
+            }
+        }
+    }
+
+    companion object{
+        private var realm: Realm? = null
+
+        /** Expose the configured Realm instance for DAOs / repositories to use. */
+        fun getRealm(): Realm{
+            try {
+                return realm!!
+            } catch (e: Exception) {
+                println("Error fetching the Realm: $e")
+                throw e
             }
         }
     }
