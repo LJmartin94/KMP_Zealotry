@@ -10,28 +10,42 @@ import io.realm.kotlin.types.TypedRealmObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.internal.synchronized
 import z.libs.tristateBool.isTrueOrNull
 import org.mongodb.kbson.ObjectId
 import kotlin.reflect.KClass
 
 class Database {
+    private var realm: Realm? = null
+
     init {
         configureTheRealm()
     }
 
-    private fun configureTheRealm() {
-        if (realm?.isClosed().isTrueOrNull()) {
-            // Pass all collection Model classes here.
-            val config =
-                RealmConfiguration.Builder(
-                    schema = setOf(
-                        ToDoTask::class,
-                        ExampleEntityLocal::class,
-                        ),
-                )
-                    .compactOnLaunch()
-                    .build()
-            realm = Realm.open(config)
+    /** Expose the configured Realm instance for DAOs / repositories to use. */
+    fun getRealm(): Realm {
+        return realm ?: configureTheRealm().also { realm = it }
+    }
+
+    private fun configureTheRealm() : Realm {
+        try {
+            if (realm?.isClosed().isTrueOrNull()) {
+                // Pass all collection Model classes here.
+                val config =
+                    RealmConfiguration.Builder(
+                        schema = setOf(
+                            ToDoTask::class,
+                            ExampleEntityLocal::class,
+                            ),
+                    )
+                        .compactOnLaunch()
+                        .build()
+                realm = Realm.open(config)
+            }
+            return realm!!
+        } catch (e: Exception) {
+            println("Error configuring the realm - instance still null: $e")
+            throw e
         }
     }
 
@@ -145,20 +159,6 @@ class Database {
                 }
             } catch (e: Exception) {
                 println(e)
-            }
-        }
-    }
-
-    companion object{
-        private var realm: Realm? = null
-
-        /** Expose the configured Realm instance for DAOs / repositories to use. */
-        fun getRealm(): Realm{
-            try {
-                return realm!!
-            } catch (e: Exception) {
-                println("Error fetching the Realm: $e")
-                throw e
             }
         }
     }
