@@ -23,11 +23,12 @@ interface RealmDao<T : RealmObject> {
 
 // Base DAO class each specific DAO can inherit from to satisfy basic CRUD requirements
 open class RealmDaoImpl<T : RealmObject>(
+    val db: Database,
     val clazz: KClass<T>
 ) : RealmDao<T> {
     protected val realm: Realm
         get() {
-            return Database.getRealm()
+            return db.getRealm()
         }
 
     override suspend fun insert(entity: T) {
