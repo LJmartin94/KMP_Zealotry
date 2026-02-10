@@ -14,7 +14,7 @@ import z.libs.tristateBool.isTrueOrNull
 import org.mongodb.kbson.ObjectId
 import kotlin.reflect.KClass
 
-class MongoDB {
+class Database {
     init {
         configureTheRealm()
     }

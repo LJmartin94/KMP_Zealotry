@@ -4,7 +4,7 @@ import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
 import data.example.source.local.ExampleDao
 import data.example.source.local.ExampleDaoImpl
-import data.tutorial.MongoDB
+import data.tutorial.Database
 import z.calendar.CalendarRepository
 import z.screens.dayPartMenu.DayPartMenuRepository
 import z.screens.mainMenu.MainMenuRepository
@@ -32,7 +32,7 @@ fun initKoin() {
                 single { CalendarRepository() }
                 factory { CalendarViewModel(get()) }
 
-                single { MongoDB() }
+                single { Database() }
                 factory { HomeViewModel(get()) }
                 factory { TaskViewModel(get()) }
 

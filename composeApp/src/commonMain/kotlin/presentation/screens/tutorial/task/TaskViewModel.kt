@@ -2,7 +2,7 @@ package presentation.screens.tutorial.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.tutorial.MongoDB
+import data.tutorial.Database
 import z.tutorial.TaskAction
 import z.tutorial.ToDoTask
 import kotlinx.coroutines.Dispatchers
@@ -11,10 +11,10 @@ import kotlinx.coroutines.launch
 import org.mongodb.kbson.ObjectId
 
 class TaskViewModel(
-    private val mongoDB: MongoDB,
+    private val database: Database,
 ) : ViewModel() {
     fun loadTask(key: ObjectId?): ToDoTask? {
-        return mongoDB.findItemById(key, ToDoTask::class) as ToDoTask?
+        return database.findItemById(key, ToDoTask::class) as ToDoTask?
     }
 
     fun setAction(action: TaskAction) {
@@ -33,13 +33,13 @@ class TaskViewModel(
 
     private fun addTask(task: ToDoTask) {
         viewModelScope.launch(Dispatchers.IO) {
-            mongoDB.addTask(task)
+            database.addTask(task)
         }
     }
 
     private fun updateTask(task: ToDoTask) {
         viewModelScope.launch(Dispatchers.IO) {
-            mongoDB.updateTask(task)
+            database.updateTask(task)
         }
     }
 }

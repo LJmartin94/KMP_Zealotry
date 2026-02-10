@@ -1,6 +1,6 @@
 package data
 
-import data.tutorial.MongoDB
+import data.tutorial.Database
 import io.realm.kotlin.Realm
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.RealmResults
@@ -27,7 +27,7 @@ open class RealmDaoImpl<T : RealmObject>(
 ) : RealmDao<T> {
     protected val realm: Realm
         get() {
-            return MongoDB.getRealm()
+            return Database.getRealm()
         }
 
     override suspend fun insert(entity: T) {

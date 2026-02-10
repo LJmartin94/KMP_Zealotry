@@ -5,7 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.tutorial.MongoDB
+import data.tutorial.Database
 import z.tutorial.RequestState
 import z.tutorial.TaskAction
 import z.tutorial.ToDoTask
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 typealias MutableTasks = MutableState<RequestState<List<ToDoTask>>>
 typealias Tasks = MutableState<RequestState<List<ToDoTask>>>
 
-class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
+class HomeViewModel(private val database: Database) : ViewModel() {
     private var _activeTasks: MutableTasks = mutableStateOf(RequestState.Idle)
     val activeTasks: Tasks = _activeTasks
 
@@ -30,13 +30,13 @@ class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
         _completedTasks.value = RequestState.Loading
         viewModelScope.launch(Dispatchers.Main) {
 //            delay(500) //artificial delay to see Loading screen.
-            mongoDB.readActiveTasks().collectLatest {
+            database.readActiveTasks().collectLatest {
                 _activeTasks.value = it
             }
         }
         viewModelScope.launch(Dispatchers.Main) {
 //            delay(500) //artificial delay to see Loading screen.
-            mongoDB.readCompletedTasks().collectLatest {
+            database.readCompletedTasks().collectLatest {
                 _completedTasks.value = it
             }
         }
@@ -65,7 +65,7 @@ class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
         completed: Boolean,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            mongoDB.setCompleted(task, completed)
+            database.setCompleted(task, completed)
         }
     }
 
@@ -74,13 +74,13 @@ class HomeViewModel(private val mongoDB: MongoDB) : ViewModel() {
         isFavourite: Boolean,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            mongoDB.setFavourite(task, isFavourite)
+            database.setFavourite(task, isFavourite)
         }
     }
 
     private fun deleteTask(task: ToDoTask) {
         viewModelScope.launch(Dispatchers.IO) {
-            mongoDB.deleteTask(task)
+            database.deleteTask(task)
         }
     }
 }
