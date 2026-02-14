@@ -13,12 +13,6 @@ import kotlinx.coroutines.flow.map
 import org.mongodb.kbson.ObjectId
 
 interface ExampleDao : RealmDao<ExampleEntityLocal> {
-    /**
-     * Observes list of example entities.
-     *
-     * @return all example entities.
-     */
-    fun observeAll(): Flow<List<ExampleEntityLocal>>
 
     /**
      * Observes a single entity.
@@ -90,19 +84,6 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
 class ExampleDaoImpl(db: Database) :
     ExampleDao,
     RealmDaoImpl<ExampleEntityLocal> (db, ExampleEntityLocal::class) {
-    /**
-     * Observes list of example entities.
-     *
-     * @return all example entities.
-     */
-    override fun observeAll(): Flow<List<ExampleEntityLocal>> {
-        val query : RealmQuery<ExampleEntityLocal> = realm.query<ExampleEntityLocal>(TRUE_PREDICATE)
-        val changeFlow : Flow<ResultsChange<ExampleEntityLocal>> =  query.asFlow()
-        val listOfResults : Flow<RealmResults<ExampleEntityLocal>> = changeFlow.map {
-                change : ResultsChange<ExampleEntityLocal> -> change.list
-        }
-        return listOfResults
-    }
 
     /**
      * Observes a single entity.

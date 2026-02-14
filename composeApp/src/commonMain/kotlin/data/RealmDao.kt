@@ -16,6 +16,14 @@ interface RealmDao<T : RealmObject> {
     suspend fun update(entity: T)
     suspend fun findAll(): RealmResults<T>
     suspend fun findById(id: ObjectId): T?
+
+    /**
+     * Observes change flow of T entities.
+     *
+     * TIP: Can get a list of results by taking ret.map { change -> change.list }
+     *
+     * @return all T entities.
+     */
     suspend fun stream(): Flow<ResultsChange<T>>
     suspend fun delete(entity: T)
     suspend fun deleteAll()
@@ -69,6 +77,13 @@ open class RealmDaoImpl<T : RealmObject>(
         }
     }
 
+    /**
+     * Observes change flow of example entities.
+     *
+     * TIP: Can get a list of results by taking ret.map { change -> change.list }
+     *
+     * @return all example entities.
+     */
     override suspend fun stream(): Flow<ResultsChange<T>> {
         return realm.query(clazz).asFlow()
     }
