@@ -88,6 +88,9 @@ open class RealmDaoImpl<T : RealmObject>(
         return realm.query(clazz).asFlow()
     }
 
+    /**
+     * Delete all entities.
+     */
     override suspend fun deleteAll() {
         realm.write {
             val all = this.query(clazz).find()

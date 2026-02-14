@@ -67,12 +67,6 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
     suspend fun deleteById(exampleId: ObjectId): Int
 
     /**
-     * Delete all example entities.
-     */
-    //suspend fun deleteAll()
-
-
-    /**
      * Delete all example entities with given toggle value.
      *
      * @param toggleStatus the value of the toggle to be removed
@@ -150,14 +144,6 @@ class ExampleDaoImpl(db: Database) :
     override suspend fun deleteById(exampleId: ObjectId): Int {
         TODO()
     }
-
-    /**
-     * Delete all example entities.
-     */
-    override suspend fun deleteAll() {
-        TODO()
-    }
-
 
     /**
      * Delete all example entities with given toggle value.
