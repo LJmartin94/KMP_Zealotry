@@ -25,7 +25,22 @@ interface RealmDao<T : RealmObject> {
      * @return all T entities.
      */
     suspend fun stream(): Flow<ResultsChange<T>>
+
+    /**
+     * Delete T entity by id.
+     *
+     * @return the number of entities deleted. This should always be 1.
+     */
+    suspend fun deleteById(exampleId: ObjectId): Int
+
+    /**
+     * Delete T entity.
+     */
     suspend fun delete(entity: T)
+
+    /**
+     * Delete all entities.
+     */
     suspend fun deleteAll()
 }
 
@@ -71,26 +86,20 @@ open class RealmDaoImpl<T : RealmObject>(
         //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
     }
 
+    override suspend fun deleteById(exampleId: ObjectId): Int {
+        TODO()
+    }
+
     override suspend fun delete(entity: T) {
         realm.write {
             delete(entity)
         }
     }
 
-    /**
-     * Observes change flow of example entities.
-     *
-     * TIP: Can get a list of results by taking ret.map { change -> change.list }
-     *
-     * @return all example entities.
-     */
     override suspend fun stream(): Flow<ResultsChange<T>> {
         return realm.query(clazz).asFlow()
     }
 
-    /**
-     * Delete all entities.
-     */
     override suspend fun deleteAll() {
         realm.write {
             val all = this.query(clazz).find()
