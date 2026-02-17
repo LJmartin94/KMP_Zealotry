@@ -18,13 +18,21 @@ interface RealmDao<T : RealmObject> {
     suspend fun findById(id: ObjectId): T?
 
     /**
+     * Observes a single entity.
+     *
+     * @param id the id of the entity.
+     * @return flow of the T entity with that id.
+     */
+    fun observeById(id: ObjectId): Flow<T>
+
+    /**
      * Observes change flow of T entities.
      *
      * TIP: Can get a list of results by taking ret.map { change -> change.list }
      *
      * @return all T entities.
      */
-    suspend fun stream(): Flow<ResultsChange<T>>
+    fun observeAll(): Flow<ResultsChange<T>>
 
     /**
      * Delete T entity by id.
@@ -96,7 +104,11 @@ open class RealmDaoImpl<T : RealmObject>(
         }
     }
 
-    override suspend fun stream(): Flow<ResultsChange<T>> {
+    override fun observeById(id: ObjectId): Flow<T> {
+        TODO()
+    }
+
+    override fun observeAll(): Flow<ResultsChange<T>> {
         return realm.query(clazz).asFlow()
     }
 

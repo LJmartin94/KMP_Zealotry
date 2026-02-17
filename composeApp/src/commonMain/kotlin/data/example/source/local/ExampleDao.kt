@@ -9,14 +9,6 @@ import org.mongodb.kbson.ObjectId
 interface ExampleDao : RealmDao<ExampleEntityLocal> {
 
     /**
-     * Observes a single entity.
-     *
-     * @param exampleId the id of the entity.
-     * @return the example entity with that exampleId.
-     */
-    fun observeById(exampleId: ObjectId): Flow<ExampleEntityLocal>
-
-    /**
      * Select all entities from the table.
      *
      * @return all entities.
@@ -65,10 +57,6 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
 class ExampleDaoImpl(db: Database) :
     ExampleDao,
     RealmDaoImpl<ExampleEntityLocal> (db, ExampleEntityLocal::class) {
-
-    override fun observeById(exampleId: ObjectId): Flow<ExampleEntityLocal> {
-        TODO()
-    }
 
     override suspend fun getAll(): List<ExampleEntityLocal> {
         TODO()
