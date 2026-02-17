@@ -11,9 +11,12 @@ import kotlin.reflect.KClass
 
 // Interface of Generic CRUD operations we expect each specific DAO to be able to fulfill
 interface RealmDao<T : RealmObject> {
+
+    // *C* reate ---------------------------------------------------------------------------
     suspend fun insert(entity: T)
     suspend fun insertAll(entities: List<T>)
-    suspend fun update(entity: T)
+
+    // *R* ead -----------------------------------------------------------------------------
     suspend fun findAll(): RealmResults<T>
     suspend fun findById(id: ObjectId): T?
 
@@ -33,6 +36,11 @@ interface RealmDao<T : RealmObject> {
      * @return all T entities.
      */
     fun observeAll(): Flow<ResultsChange<T>>
+
+    // *U* pdate ---------------------------------------------------------------------------
+    suspend fun update(entity: T)
+
+    // *D* elete ---------------------------------------------------------------------------
 
     /**
      * Delete T entity by id.
@@ -62,6 +70,8 @@ open class RealmDaoImpl<T : RealmObject>(
             return db.getRealm()
         }
 
+    // *C* reate ---------------------------------------------------------------------------
+
     override suspend fun insert(entity: T) {
         realm.write {
             copyToRealm(entity)
@@ -76,12 +86,7 @@ open class RealmDaoImpl<T : RealmObject>(
         }
     }
 
-    // Functionally the same as insert
-    override suspend fun update(entity: T) {
-        realm.write {
-            copyToRealm(entity)
-        }
-    }
+    // *R* ead -----------------------------------------------------------------------------
 
     override suspend fun findAll(): RealmResults<T> {
         return realm.query(clazz).find()
@@ -94,6 +99,25 @@ open class RealmDaoImpl<T : RealmObject>(
         //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
     }
 
+    override fun observeById(id: ObjectId): Flow<T> {
+        TODO()
+    }
+
+    override fun observeAll(): Flow<ResultsChange<T>> {
+        return realm.query(clazz).asFlow()
+    }
+
+    // *U* pdate ---------------------------------------------------------------------------
+
+    // Functionally the same as insert
+    override suspend fun update(entity: T) {
+        realm.write {
+            copyToRealm(entity)
+        }
+    }
+
+    // *D* elete ---------------------------------------------------------------------------
+
     override suspend fun deleteById(exampleId: ObjectId): Int {
         TODO()
     }
@@ -102,14 +126,6 @@ open class RealmDaoImpl<T : RealmObject>(
         realm.write {
             delete(entity)
         }
-    }
-
-    override fun observeById(id: ObjectId): Flow<T> {
-        TODO()
-    }
-
-    override fun observeAll(): Flow<ResultsChange<T>> {
-        return realm.query(clazz).asFlow()
     }
 
     override suspend fun deleteAll() {
