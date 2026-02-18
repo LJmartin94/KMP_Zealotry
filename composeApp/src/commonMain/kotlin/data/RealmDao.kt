@@ -4,6 +4,7 @@ import data.tutorial.Database
 import io.realm.kotlin.Realm
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.notifications.SingleQueryChange
+import io.realm.kotlin.query.RealmQuery
 import io.realm.kotlin.query.RealmResults
 import io.realm.kotlin.types.RealmObject
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,14 @@ interface RealmDao<T : RealmObject> {
      * @return all entities.
      */
     suspend fun findAll(): RealmResults<T>
+
+    /**
+     * Select all entities from the table for which query is true.
+     *
+     * @param query from RealmQueries.kt that defines the criteria that must be satisfied.
+     * @return all entities.
+     */
+    suspend fun findAllByQuery(query: Realm.() -> RealmQuery<T>): RealmResults<T>
 
     /**
      * Select an entity by id.
@@ -91,6 +100,11 @@ interface RealmDao<T : RealmObject> {
     suspend fun delete(entity: T)
 
     /**
+     * Delete all entities in list.
+     */
+    suspend fun deleteAllFrom(entities: List<T>)
+
+    /**
      * Delete all entities.
      */
     suspend fun deleteAll()
@@ -126,6 +140,10 @@ open class RealmDaoImpl<T : RealmObject>(
 
     override suspend fun findAll(): RealmResults<T> {
         return realm.query(clazz).find()
+    }
+
+    override suspend fun findAllByQuery(query: Realm.() -> RealmQuery<T>): RealmResults<T> {
+        return query.invoke(realm).find()
     }
 
     override suspend fun findById(id: ObjectId): T? {
@@ -165,8 +183,14 @@ open class RealmDaoImpl<T : RealmObject>(
     }
 
     override suspend fun delete(entity: T) {
-        realm.write {
-            delete(entity)
+        try {
+            realm.write {
+                delete(entity)
+            }
+            return
+        }
+        catch (e: Exception){
+            println("Couldn't delete entity: $entity, $e")
         }
     }
 
@@ -174,6 +198,12 @@ open class RealmDaoImpl<T : RealmObject>(
         realm.write {
             val all = this.query(clazz).find()
             delete(all)
+        }
+    }
+
+    override suspend fun deleteAllFrom(entities: List<T>){
+        for (entity in entities) {
+                delete(entity)
         }
     }
 }
