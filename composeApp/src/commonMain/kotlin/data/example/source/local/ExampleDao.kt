@@ -3,7 +3,7 @@ package data.example.source.local
 import data.RealmDao
 import data.RealmDaoImpl
 import data.queryEqual
-import data.tutorial.Database
+import data.Database
 import org.mongodb.kbson.ObjectId
 
 interface ExampleDao : RealmDao<ExampleEntityLocal> {

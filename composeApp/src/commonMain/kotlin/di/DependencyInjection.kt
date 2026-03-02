@@ -4,7 +4,7 @@ import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
 import data.example.source.local.ExampleDao
 import data.example.source.local.ExampleDaoImpl
-import data.tutorial.Database
+import data.Database
 import z.calendar.CalendarRepository
 import z.screens.dayPartMenu.DayPartMenuRepository
 import z.screens.mainMenu.MainMenuRepository
@@ -16,8 +16,6 @@ import presentation.components.calendar.CalendarViewModel
 import presentation.example.ExampleViewModel
 import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuViewModel
-import presentation.screens.tutorial.home.HomeViewModel
-import presentation.screens.tutorial.task.TaskViewModel
 
 fun initKoin() {
     startKoin {
@@ -33,8 +31,6 @@ fun initKoin() {
                 factory { CalendarViewModel(get()) }
 
                 single { Database() }
-                factory { HomeViewModel(get()) }
-                factory { TaskViewModel(get()) }
 
                 singleOf(::ExampleDaoImpl) { bind<ExampleDao>() }
                 singleOf(::ExampleRepositoryImpl) { bind<ExampleRepository>() }

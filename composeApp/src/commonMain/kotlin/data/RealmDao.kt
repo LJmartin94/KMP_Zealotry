@@ -1,6 +1,6 @@
 package data
 
-import data.tutorial.Database
+import data.Database
 import io.realm.kotlin.Realm
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.notifications.SingleQueryChange
