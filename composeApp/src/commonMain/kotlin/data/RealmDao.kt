@@ -55,7 +55,7 @@ interface RealmDao<T : RealmObject> {
      * @param id the entity id.
      * @return the entity with that id.
      */
-    suspend fun findById(id: ObjectId): T?
+    suspend fun findById(id: ObjectId): Result<T>
 
     /**
      * Observes a single entity.
@@ -146,10 +146,11 @@ open class RealmDaoImpl<T : RealmObject>(
         return query.invoke(realm).find()
     }
 
-    override suspend fun findById(id: ObjectId): T? {
+    override suspend fun findById(id: ObjectId): Result<T> = runCatching {
 //        //TODO: check this query syntax actually works
-//        return realm.query(clazz, "_id == $0", id).first().find()
-        return realm.queryEqual(clazz, "_id", id).first().find()
+//        realm.query(clazz, "_id == $0", id).first().find()
+        realm.queryEqual(clazz, "_id", id).first().find()
+            ?: throw NoSuchElementException("No entity found with id: $id")
         //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
         //Change method below if it does actually work.
     }
@@ -173,13 +174,10 @@ open class RealmDaoImpl<T : RealmObject>(
     // *D* elete ---------------------------------------------------------------------------
 
     override suspend fun deleteById(id: ObjectId): Int {
-        val toDelete = findById(id)
-        if (toDelete != null) {
-            delete(toDelete)
-            return 1
-        }
-        println("Couldn't find entity to delete with id: $id")
-        return 0
+        return findById(id).fold(
+            onSuccess = { delete(it); 1 },
+            onFailure = { println("Couldn't find entity to delete with id: $id"); 0 }
+        )
     }
 
     override suspend fun delete(entity: T) {

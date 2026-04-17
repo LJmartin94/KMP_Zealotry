@@ -30,8 +30,7 @@ class ExampleDaoImpl(db: Database) :
     RealmDaoImpl<ExampleEntityLocal> (db, ExampleEntityLocal::class) {
 
     override suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean) {
-        val toUpdate = findById(exampleId)
-        if (toUpdate != null){
+        findById(exampleId).onSuccess { toUpdate ->
             update(toUpdate.apply { this.toggle = toggleStatus })
         }
     }
