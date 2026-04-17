@@ -11,8 +11,18 @@ import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
 import kotlin.reflect.KClass
 
+/**
+ * Interface enforced on all Realm entities in this project.
+ * Any RealmObject that does not implement this interface cannot be used
+ * with RealmDao or RealmDaoImpl, enforced at compile time via type constraints.
+ */
+interface DatabaseObject {
+    var id: ObjectId //This should be annotated as the @PrimaryKey in the implementing class
+    var seedKey: String?
+}
+
 // Interface of Generic CRUD operations we expect each specific DAO to be able to fulfill
-interface RealmDao<T : RealmObject> {
+interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
 
     // *C* reate ---------------------------------------------------------------------------
 
@@ -119,10 +129,10 @@ interface RealmDao<T : RealmObject> {
 }
 
 // Base DAO class each specific DAO can inherit from to satisfy basic CRUD requirements
-open class RealmDaoImpl<T : RealmObject>(
+open class RealmDaoImpl<T>(
     val db: Database,
     val clazz: KClass<T>
-) : RealmDao<T> {
+) : RealmDao<T> where T : RealmObject, T : DatabaseObject {
     protected val realm: Realm
         get() {
             return db.getRealm()
