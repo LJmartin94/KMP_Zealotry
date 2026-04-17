@@ -6,4 +6,8 @@ data class Example (
 ){
     val isActive
         get() = toggle
+
+    companion object {
+        const val SEED_EXAMPLE_ONE = "example_one"
+    }
 }

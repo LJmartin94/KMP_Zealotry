@@ -1,5 +1,6 @@
 package presentation.example
 
+import data.example.Example
 import toad.ActionScope
 import toad.ViewAction
 
@@ -14,7 +15,7 @@ data object LoadExample: ExampleAction() { // 'object' because it is a singleton
     ) {
         scope.withLoadingResult(
             setLoading = { copy(isLoading = it)},
-            block = { dependencies.exampleRepository.getExample() },
+            block = { dependencies.exampleRepository.getExampleBySeedKey(Example.SEED_EXAMPLE_ONE) },
             onSuccess = { result ->
                 scope.setState {
                     copy(id = result.id,

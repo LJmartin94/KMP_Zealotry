@@ -3,7 +3,10 @@ package data
 import data.example.source.local.ExampleEntityLocal
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.migration.AutomaticSchemaMigration
 import z.libs.tristateBool.isTrueOrNull
+
+private const val SCHEMA_VERSION = 1L
 
 class Database {
     private var realm: Realm? = null
@@ -27,7 +30,17 @@ class Database {
                             ExampleEntityLocal::class,
                             ),
                     )
+                        .schemaVersion(SCHEMA_VERSION)
                         .compactOnLaunch()
+                        .initialDataCallback { mutableRealm ->
+                            DatabaseSeeder.seedAll(mutableRealm)
+                        }
+                        .migration(AutomaticSchemaMigration { context ->
+                            DatabaseSeeder.seedFrom(
+                                context.oldRealm.schemaVersion(),
+                                context.newRealm
+                            )
+                        })
                         .build()
                 realm = Realm.Companion.open(config)
             }

@@ -58,6 +58,14 @@ interface RealmDao<T : RealmObject> {
     suspend fun findById(id: ObjectId): Result<T>
 
     /**
+     * Find a seeded entity by its seed key.
+     * Requires the entity to have a seedKey: String? field.
+     *
+     * @param seedKey one of the constants defined on the domain model's Companion
+     */
+    suspend fun findBySeedKey(seedKey: String): Result<T>
+
+    /**
      * Observes a single entity.
      *
      * @param id the id of the entity.
@@ -153,6 +161,11 @@ open class RealmDaoImpl<T : RealmObject>(
             ?: throw NoSuchElementException("No entity found with id: $id")
         //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
         //Change method below if it does actually work.
+    }
+
+    override suspend fun findBySeedKey(seedKey: String): Result<T> = runCatching {
+        realm.queryEqual(clazz, "seedKey", seedKey).first().find()
+            ?: throw NoSuchElementException("No entity found with seedKey: $seedKey")
     }
 
     override fun observeById(id: ObjectId): Flow<SingleQueryChange<T>> {

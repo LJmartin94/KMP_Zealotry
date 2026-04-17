@@ -10,5 +10,6 @@ import org.mongodb.kbson.ObjectId
 class ExampleEntityLocal: RealmObject {
     @PrimaryKey
     var id: ObjectId = ObjectId()
+    var seedKey: String? = null
     var toggle: Boolean = false
 }
