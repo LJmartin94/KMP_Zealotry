@@ -6,29 +6,29 @@ import io.realm.kotlin.MutableRealm
 
 /**
  * Manages seed data for the Realm database.
+ * Called on every app launch — all functions must be idempotent.
  *
- * When adding seed data for a new schema version:
- *  1. Bump SCHEMA_VERSION in Database.kt
- *  2. Add an `if (oldVersion < N) seedVN(realm)` block to seedFrom()
- *  3. Implement the private seedVN function with the new seed data.
- *     Note: AutomaticSchemaMigration handles structural schema changes for you.
- *     You only need to handle data concerns here: seeding default rows, transforming
- *     existing values, or migrating data across renamed/retyped fields that Realm cannot infer.
+ * To add a new seeded row:
+ *  - Add a private seed function guarded by alreadySeeded()
+ *  - Call it from seedAll()
+ *
+ * To remove a seeded row (e.g. when its entity is removed from the schema):
+ *  - Remove its seed function and its call from seedAll()
+ *  - The row itself will be dropped automatically by AutomaticSchemaMigration
+ *    when the entity class is removed from the schema set in Database.kt
  */
 object DatabaseSeeder {
 
-    /** Called on fresh install — treats a fresh db as migrating from version 0. */
-    fun seedAll(realm: MutableRealm) = seedFrom(0L, realm)
-
-    /** Called during migration — seeds only what's new since oldVersion. */
-    fun seedFrom(oldVersion: Long, realm: MutableRealm) {
-        if (oldVersion < 1L) seedV1(realm)
+    fun seedAll(realm: MutableRealm) {
+        seedExampleOne(realm)
     }
 
-    private fun seedV1(realm: MutableRealm) {
-        realm.copyToRealm(ExampleEntityLocal().apply {
-            seedKey = Example.SEED_EXAMPLE_ONE
-            toggle = true
-        })
+    private fun seedExampleOne(realm: MutableRealm) {
+        if (!realm.alreadySeeded<ExampleEntityLocal>(Example.SEED_EXAMPLE_ONE)) {
+            realm.copyToRealm(ExampleEntityLocal().apply {
+                seedKey = Example.SEED_EXAMPLE_ONE
+                toggle = true
+            })
+        }
     }
 }

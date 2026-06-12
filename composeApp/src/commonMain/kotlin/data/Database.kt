@@ -23,7 +23,10 @@ class Database {
     private fun configureTheRealm() : Realm {
         try {
             if (realm?.isClosed().isTrueOrNull()) {
-                // Pass all collection Model classes here.
+                // Register all RealmObject entity classes here.
+                // Bump SCHEMA_VERSION above whenever you make a structural change:
+                //   - Add or remove a class from this set
+                //   - Add, remove, rename, or retype a field on any class in this set
                 val config =
                     RealmConfiguration.Builder(
                         schema = setOf(
@@ -32,17 +35,13 @@ class Database {
                     )
                         .schemaVersion(SCHEMA_VERSION)
                         .compactOnLaunch()
-                        .initialDataCallback { mutableRealm ->
-                            DatabaseSeeder.seedAll(mutableRealm)
-                        }
-                        .migration(AutomaticSchemaMigration { context ->
-                            DatabaseSeeder.seedFrom(
-                                context.oldRealm.schemaVersion(),
-                                context.newRealm
-                            )
+                        .migration(AutomaticSchemaMigration {
+                            // Manual schema migration logic here, e.g. how one field should be transformed into another.
+                            // Adding or removing fields handled automatically.
                         })
                         .build()
                 realm = Realm.Companion.open(config)
+                realm!!.writeBlocking { DatabaseSeeder.seedAll(this) }
             }
             return realm!!
         } catch (e: Exception) {
