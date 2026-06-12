@@ -3,10 +3,9 @@ package data
 import data.example.source.local.ExampleEntityLocal
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.migration.AutomaticSchemaMigration
 import z.libs.tristateBool.isTrueOrNull
 
-private const val SCHEMA_VERSION = 1L
+private const val SCHEMA_VERSION = 0L
 
 class Database {
     private var realm: Realm? = null
@@ -35,10 +34,7 @@ class Database {
                     )
                         .schemaVersion(SCHEMA_VERSION)
                         .compactOnLaunch()
-                        .migration(AutomaticSchemaMigration {
-                            // Manual schema migration logic here, e.g. how one field should be transformed into another.
-                            // Adding or removing fields handled automatically.
-                        })
+                        .migration(DatabaseMigration.migration)
                         .build()
                 realm = Realm.Companion.open(config)
                 realm!!.writeBlocking { DatabaseSeeder.seedAll(this) }
