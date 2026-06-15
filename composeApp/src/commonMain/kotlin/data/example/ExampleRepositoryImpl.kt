@@ -9,7 +9,7 @@ data object MockDataBase{
 }
 
 class ExampleRepositoryImpl(
-//    private val networkDataSource: NetworkDataSource,
+//    private val networkDataSource: NetworkDao,
     private val localDataSource: ExampleDao,
 ) : ExampleRepository {
     //PLACEHOLDER CODE FOR WHAT A DB MIGHT ACTUALLY RETURN:
