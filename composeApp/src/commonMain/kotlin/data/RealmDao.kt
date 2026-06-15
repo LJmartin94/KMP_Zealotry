@@ -176,12 +176,8 @@ open class RealmDaoImpl<T>(
     }
 
     override suspend fun findById(id: ObjectId): Result<T> = runCatching {
-//        //TODO: check this query syntax actually works
-//        realm.query(clazz, "_id == $0", id).first().find()
-        realm.queryEqual(clazz, "_id", id).first().find()
+        realm.queryEqual(clazz, "id", id).first().find()
             ?: throw NoSuchElementException("No entity found with id: $id")
-        //Should field be _id or id? Is the example wrong or is this a quirk of ObjectId? Or PrimaryKey?
-        //Change method below if it does actually work.
     }
 
     override suspend fun findBySeedKey(seedKey: String): Result<T> = runCatching {
