@@ -1,34 +1,54 @@
 package data
 
-import data.example.Example
 import data.example.source.local.ExampleEntityLocal
 import io.realm.kotlin.MutableRealm
+import io.realm.kotlin.types.RealmObject
+import kotlin.reflect.KClass
+
+/**
+ * Describes a single row to be pre-seeded into the database.
+ *
+ * @param clazz the Realm entity class to query against when checking idempotency.
+ * @param seedKey the unique key used to identify this seeded row.
+ * @param create factory lambda that produces the unmanaged entity to insert.
+ */
+data class SeedEntry<T : RealmObject>(
+    val clazz: KClass<T>,
+    val seedKey: String,
+    val create: () -> T,
+)
 
 /**
  * Manages seed data for the Realm database.
- * Called on every app launch — all functions must be idempotent.
+ * Called on every app launch — all seed operations are idempotent.
  *
- * To add a new seeded row:
- *  - Add a private seed function guarded by alreadySeeded()
- *  - Call it from seedAll()
- *
- * To remove a seeded row (e.g. when its entity is removed from the schema):
- *  - Remove its seed function and its call from seedAll()
- *  - The row itself will be dropped automatically by AutomaticSchemaMigration
- *    when the entity class is removed from the schema set in Database.kt
+ * To add a new seeded row: add a [SeedEntry] to [seeds].
+ * To remove a seeded row: remove its [SeedEntry] from [seeds].
+ *   The row itself will be dropped automatically by AutomaticSchemaMigration
+ *   when the entity class is removed from the schema set in Database.kt
  */
 object DatabaseSeeder {
 
+    private val seeds = listOf(
+        SeedEntry(
+            clazz = ExampleEntityLocal::class,
+            seedKey = ExampleEntityLocal.SEED_EXAMPLE_ONE,
+            create = { ExampleEntityLocal().apply { seedKey = ExampleEntityLocal.SEED_EXAMPLE_ONE; toggle = true } }
+        ),
+        SeedEntry(
+            clazz = ExampleEntityLocal::class,
+            seedKey = ExampleEntityLocal.SEED_EXAMPLE_TWO,
+            create = { ExampleEntityLocal().apply { seedKey = ExampleEntityLocal.SEED_EXAMPLE_TWO; toggle = false } }
+        ),
+    )
+
     fun seedAll(realm: MutableRealm) {
-        seedExampleOne(realm)
+        seeds.forEach { entry -> realm.seedIfNeeded(entry) }
     }
 
-    private fun seedExampleOne(realm: MutableRealm) {
-        if (!realm.alreadySeeded<ExampleEntityLocal>(Example.SEED_EXAMPLE_ONE.value)) {
-            realm.copyToRealm(ExampleEntityLocal().apply {
-                seedKey = Example.SEED_EXAMPLE_ONE.value
-                toggle = true
-            })
+    private fun <T : RealmObject> MutableRealm.seedIfNeeded(entry: SeedEntry<T>) {
+        if (queryEqual(entry.clazz, "seedKey", entry.seedKey).first().find() == null) {
+            copyToRealm(entry.create())
         }
     }
 }
