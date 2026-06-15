@@ -1,0 +1,6 @@
+See: https://medium.com/@shehryarzaheer112/a-better-way-to-write-migrations-in-realm-for-android-0b7d6dff39b8
+
+This task is no longer necessary now that we have DatabaseMigration.kt
+Slightly less elaborate than the example, but I don't think all the boilerplate code is justified
+(at least not yet anyway), if all it delivers is an array of migration that can be iterated over in a forEach loop.
+I'd rather keep the database migration logic contained to its own file for now.
