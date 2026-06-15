@@ -12,15 +12,6 @@ import kotlin.jvm.JvmInline
 import kotlin.reflect.KClass
 
 @JvmInline
-value class HexStringId(val value: String) {
-    init { ObjectId(value) }
-
-    fun obj(): ObjectId {
-        return ObjectId(this.value)
-    }
-}
-
-@JvmInline
 value class SeedKey(val value: String)
 
 /**
@@ -115,6 +106,18 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
      */
     suspend fun update(entity: T)
 
+    /**
+     * Find an entity by id and apply a mutation within a single write transaction.
+     *
+     * Prefer this over [findById] + [update] for field-level mutations, as it correctly
+     * brings the managed object into the write transaction via [io.realm.kotlin.MutableRealm.findLatest].
+     *
+     * @param id the id of the entity to update.
+     * @param mutation lambda applied to the entity inside the write transaction.
+     * @return [Result.success] if the entity was found and updated, [Result.failure] otherwise.
+     */
+    suspend fun updateById(id: ObjectId, mutation: T.() -> Unit): Result<Unit>
+
     // *D* elete ---------------------------------------------------------------------------
 
     /**
@@ -203,6 +206,15 @@ open class RealmDaoImpl<T>(
     override suspend fun update(entity: T) {
         realm.write {
             copyToRealm(entity)
+        }
+    }
+
+    override suspend fun updateById(id: ObjectId, mutation: T.() -> Unit): Result<Unit> {
+        return findById(id).mapCatching { entity ->
+            realm.write {
+                findLatest(entity)?.apply(mutation)
+                    ?: throw NoSuchElementException("No entity found with id: $id")
+            }
         }
     }
 
