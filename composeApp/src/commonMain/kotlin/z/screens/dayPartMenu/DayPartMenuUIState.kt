@@ -2,12 +2,14 @@ package z.screens.dayPartMenu
 
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.mongodb.kbson.ObjectId
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.empty
 
+@Serializable
 enum class DayPart {
     MORNING,
     MIDDAY,
