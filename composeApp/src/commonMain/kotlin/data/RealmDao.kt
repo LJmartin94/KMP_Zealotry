@@ -1,6 +1,5 @@
 package data
 
-import data.Database
 import io.realm.kotlin.Realm
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.notifications.SingleQueryChange
@@ -9,7 +8,20 @@ import io.realm.kotlin.query.RealmResults
 import io.realm.kotlin.types.RealmObject
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
+import kotlin.jvm.JvmInline
 import kotlin.reflect.KClass
+
+@JvmInline
+value class HexStringId(val value: String) {
+    init { ObjectId(value) }
+
+    fun obj(): ObjectId {
+        return ObjectId(this.value)
+    }
+}
+
+@JvmInline
+value class SeedKey(val value: String)
 
 /**
  * Interface enforced on all Realm entities in this project.
@@ -73,7 +85,7 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
      *
      * @param seedKey one of the constants defined on the domain model's Companion
      */
-    suspend fun findBySeedKey(seedKey: String): Result<T>
+    suspend fun findBySeedKey(seedKey: SeedKey): Result<T>
 
     /**
      * Observes a single entity.
@@ -173,9 +185,9 @@ open class RealmDaoImpl<T>(
         //Change method below if it does actually work.
     }
 
-    override suspend fun findBySeedKey(seedKey: String): Result<T> = runCatching {
-        realm.queryEqual(clazz, "seedKey", seedKey).first().find()
-            ?: throw NoSuchElementException("No entity found with seedKey: $seedKey")
+    override suspend fun findBySeedKey(seedKey: SeedKey): Result<T> = runCatching {
+        realm.queryEqual(clazz, "seedKey", seedKey.value).first().find()
+            ?: throw NoSuchElementException("No entity found with seedKey: ${seedKey.value}")
     }
 
     override fun observeById(id: ObjectId): Flow<SingleQueryChange<T>> {

@@ -1,5 +1,7 @@
 package data.example
 
+import data.SeedKey
+
 data class Example (
     val id: String,
     val toggle: Boolean,
@@ -8,6 +10,6 @@ data class Example (
         get() = toggle
 
     companion object {
-        const val SEED_EXAMPLE_ONE = "example_one"
+        val SEED_EXAMPLE_ONE = SeedKey("example_one")
     }
 }

@@ -24,9 +24,9 @@ object DatabaseSeeder {
     }
 
     private fun seedExampleOne(realm: MutableRealm) {
-        if (!realm.alreadySeeded<ExampleEntityLocal>(Example.SEED_EXAMPLE_ONE)) {
+        if (!realm.alreadySeeded<ExampleEntityLocal>(Example.SEED_EXAMPLE_ONE.value)) {
             realm.copyToRealm(ExampleEntityLocal().apply {
-                seedKey = Example.SEED_EXAMPLE_ONE
+                seedKey = Example.SEED_EXAMPLE_ONE.value
                 toggle = true
             })
         }

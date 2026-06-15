@@ -1,5 +1,6 @@
 package presentation.example
 
+import data.HexStringId
 import data.example.Example
 import toad.ActionScope
 import toad.ViewAction
@@ -31,14 +32,14 @@ data object LoadExample: ExampleAction() { // 'object' because it is a singleton
     }
 }
 
-data class UpdateToggle(val newVal: Boolean): ExampleAction() {
+data class UpdateToggle(val id: HexStringId, val newVal: Boolean): ExampleAction() {
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
         scope: ActionScope<ExampleUiState, ExampleEvent>
     ) {
         scope.withLoadingResult(
             setLoading = { copy(isLoading = it)},
-            block = { dependencies.exampleRepository.updateToggle(newVal) },
+            block = { dependencies.exampleRepository.updateToggle(id, newVal) },
             onSuccess = { _ ->
                 scope.setState {
                     copy(toggle = newVal)

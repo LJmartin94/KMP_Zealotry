@@ -1,9 +1,10 @@
 package data.example
 
-import org.mongodb.kbson.ObjectId
+import data.HexStringId
+import data.SeedKey
 
 interface ExampleRepository {
-    suspend fun getExample(id: ObjectId, forceUpdate: Boolean = false): Result<Example>
-    suspend fun getExampleBySeedKey(seedKey: String): Result<Example>
-    suspend fun updateToggle(toggle: Boolean): Result<Unit>
+    suspend fun getExample(id: HexStringId, forceUpdate: Boolean = false): Result<Example>
+    suspend fun getExampleBySeedKey(seedKey: SeedKey): Result<Example>
+    suspend fun updateToggle(id: HexStringId, toggle: Boolean): Result<Unit>
 }
