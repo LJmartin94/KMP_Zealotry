@@ -14,14 +14,12 @@ class ExampleRepositoryImpl(
 //    private val networkDataSource: NetworkDao,
     private val localDataSource: ExampleDao,
 ) : ExampleRepository {
-    //PLACEHOLDER CODE FOR WHAT A DB MIGHT ACTUALLY RETURN:
     init {
         println("Initialised Example Repository")
     }
 
     override suspend fun getExampleBySeedKey(seedKey: SeedKey): Result<Example> {
-        return localDataSource.findBySeedKey(seedKey)
-            .map { entity -> Example(entity.id.toHexString(), entity.toggle) }
+        return localDataSource.findBySeedKey(seedKey).map { it.toExternal() }
     }
 
     override suspend fun getExample(id: HexStringId, forceUpdate: Boolean): Result<Example> {
@@ -30,14 +28,12 @@ class ExampleRepositoryImpl(
             // unless we ever have a data source with more than a Single Source of Truth.
             TODO()
         }
-        return localDataSource.findById(id.obj())
-            .map { entity -> Example(entity.id.toHexString(), entity.toggle) }
-        //return Result.success(Example(MockDataBase.id, MockDataBase.toggleState))
+        return localDataSource.findById(id.obj()).map { it.toExternal() }
     }
 
     override suspend fun updateToggle(id: HexStringId, toggle: Boolean): Result<Unit> {
         MockDataBase.toggleState = toggle
         println("Toggle state is: ${MockDataBase.toggleState}")
-        return localDataSource.updateToggle(id.obj(), toggle)
+        return runCatching { localDataSource.updateToggle(id.obj(), toggle).getOrThrow() }
     }
 }
