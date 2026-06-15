@@ -1,5 +1,6 @@
 package data
 
+import data.example.Example
 import data.example.source.local.ExampleEntityLocal
 import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.types.RealmObject
@@ -32,13 +33,13 @@ object DatabaseSeeder {
     private val seeds = listOf(
         SeedEntry(
             clazz = ExampleEntityLocal::class,
-            seedKey = ExampleEntityLocal.SEED_EXAMPLE_ONE,
-            create = { ExampleEntityLocal().apply { seedKey = ExampleEntityLocal.SEED_EXAMPLE_ONE; toggle = true } }
+            seedKey = Example.FIRST,
+            create = { ExampleEntityLocal().apply { seedKey = Example.FIRST; toggle = true } }
         ),
         SeedEntry(
             clazz = ExampleEntityLocal::class,
-            seedKey = ExampleEntityLocal.SEED_EXAMPLE_TWO,
-            create = { ExampleEntityLocal().apply { seedKey = ExampleEntityLocal.SEED_EXAMPLE_TWO; toggle = false } }
+            seedKey = Example.SECOND,
+            create = { ExampleEntityLocal().apply { seedKey = Example.SECOND; toggle = false } }
         ),
     )
 

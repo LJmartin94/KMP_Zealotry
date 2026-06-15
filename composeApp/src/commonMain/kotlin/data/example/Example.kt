@@ -6,4 +6,9 @@ data class Example (
 ){
     val isActive
         get() = toggle
+
+    companion object {
+        const val FIRST = "example_one"
+        const val SECOND = "example_two"
+    }
 }
