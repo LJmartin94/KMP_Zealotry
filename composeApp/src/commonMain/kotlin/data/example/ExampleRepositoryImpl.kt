@@ -38,7 +38,6 @@ class ExampleRepositoryImpl(
     override suspend fun updateToggle(id: HexStringId, toggle: Boolean): Result<Unit> {
         MockDataBase.toggleState = toggle
         println("Toggle state is: ${MockDataBase.toggleState}")
-        localDataSource.updateToggle(id.obj(), toggle)
-        return Result.success(Unit)
+        return localDataSource.updateToggle(id.obj(), toggle)
     }
 }

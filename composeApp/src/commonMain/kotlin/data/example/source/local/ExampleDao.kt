@@ -14,7 +14,7 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
      * @param exampleId id of the example entity (no-op if entity not found)
      * @param toggleStatus value the toggle should have after updating
      */
-    suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean)
+    suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean): Result<Unit>
 
     /**
      * Delete all example entities with given toggle value.
@@ -22,24 +22,26 @@ interface ExampleDao : RealmDao<ExampleEntityLocal> {
      * @param toggleStatus the value of the toggle to be removed
      * @return the number of example entities deleted.
      */
-    suspend fun deleteToggleWhen(toggleStatus: Boolean): Unit
+    suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit>
 }
 
 class ExampleDaoImpl(db: Database) :
     ExampleDao,
     RealmDaoImpl<ExampleEntityLocal> (db, ExampleEntityLocal::class) {
 
-    override suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean) {
-        findById(exampleId).onSuccess { toUpdate ->
+    override suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean): Result<Unit> {
+        return findById(exampleId).map { toUpdate ->
             update(toUpdate.apply { this.toggle = toggleStatus })
         }
     }
 
-    override suspend fun deleteToggleWhen(toggleStatus: Boolean) {
-        val fieldName = ExampleEntityLocal::toggle.name
-        val toDelete = findAllByQuery {
-            queryEqual(ExampleEntityLocal::class, fieldName, toggleStatus)
+    override suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit> {
+        return runCatching {
+            val fieldName = ExampleEntityLocal::toggle.name
+            val toDelete = findAllByQuery {
+                queryEqual(ExampleEntityLocal::class, fieldName, toggleStatus)
+            }
+            deleteAllFrom(toDelete.toList())
         }
-        deleteAllFrom(toDelete.toList())
     }
 }
