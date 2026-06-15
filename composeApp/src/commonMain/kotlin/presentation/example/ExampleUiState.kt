@@ -8,19 +8,18 @@ import toad.ViewState
  * All values must be explicitly initialised, unless fetching the state resulted in an error.
  */
 data class ExampleUiState (
-    val id: String,
+    val id: String, //TODO: UI layer shouldn't care about id - it's a database detail, not something to display right? Can we avoid it?
     val toggle: Boolean,
     val isLoading: Boolean,
-): ViewState {
     private var error: String? = null
-
-    constructor(error: Throwable) : this(
-        id = "",
-        toggle = false,
-        isLoading = false,
-    ) {
-        this.error = error.message.toString()
-    }
+): ViewState {
+//    constructor(error: Throwable) : this(
+//        id = "",
+//        toggle = false,
+//        isLoading = false,
+//    ) {
+//        this.error = error.message.toString()
+//    }
 }
 
 // Old implementation:

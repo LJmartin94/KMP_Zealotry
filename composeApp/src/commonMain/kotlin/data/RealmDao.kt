@@ -240,3 +240,5 @@ open class RealmDaoImpl<T>(
         }
     }
 }
+
+//TODO: Need a consistent strategy for how DAO behaves. For now I like the idea of returning Result<> where possible

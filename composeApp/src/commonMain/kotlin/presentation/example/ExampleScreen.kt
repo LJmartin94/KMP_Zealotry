@@ -1,6 +1,5 @@
 package presentation.example
 
-import data.HexStringId
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,8 +25,9 @@ fun StatelessExampleScreen(
     onAction: (ExampleAction) -> Unit,
 ){
     Button(
-        onClick = { onAction(UpdateToggle(HexStringId(state.id), !state.toggle))}
+        onClick = { onAction(UpdateToggle(!state.toggle))}
     ){
         Text( text = if (state.toggle) "on" else "off")
+        println("id of toggle: ${state.id}")
     }
 }

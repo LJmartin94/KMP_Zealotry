@@ -25,18 +25,19 @@ data object LoadExample: ExampleAction() { // 'object' because it is a singleton
             },
             onFailure = { result ->
                 scope.setState {
-                    ExampleUiState(error = result)
+                    copy(error = result.toString())
                 }
             }
         )
     }
 }
 
-data class UpdateToggle(val id: HexStringId, val newVal: Boolean): ExampleAction() {
+data class UpdateToggle(val newVal: Boolean): ExampleAction() {
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
         scope: ActionScope<ExampleUiState, ExampleEvent>
     ) {
+        val id = HexStringId(scope.currentState.id) //TODO: I don't like importing this data layer implementation detail to presentation. Need to refactor
         scope.withLoadingResult(
             setLoading = { copy(isLoading = it)},
             block = { dependencies.exampleRepository.updateToggle(id, newVal) },
@@ -47,7 +48,7 @@ data class UpdateToggle(val id: HexStringId, val newVal: Boolean): ExampleAction
             },
             onFailure = { result ->
                 scope.setState {
-                    ExampleUiState(error = result)
+                    copy(error = result.toString())
                 }
             }
         )
