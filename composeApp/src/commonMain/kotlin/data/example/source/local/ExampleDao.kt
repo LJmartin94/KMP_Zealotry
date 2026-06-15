@@ -30,9 +30,7 @@ class ExampleDaoImpl(db: Database) :
     RealmDaoImpl<ExampleEntityLocal> (db, ExampleEntityLocal::class) {
 
     override suspend fun updateToggle(exampleId: ObjectId, toggleStatus: Boolean): Result<Unit> {
-        return findById(exampleId).map { toUpdate ->
-            update(toUpdate.apply { this.toggle = toggleStatus })
-        }
+        return updateById(exampleId) { toggle = toggleStatus }
     }
 
     override suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit> {
