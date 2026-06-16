@@ -13,13 +13,13 @@ class ExampleRepositoryImpl(
         println("Initialised Example Repository")
     }
 
-    override suspend fun getSeededExample(seedString: String, forceUpdate: Boolean): Result<Example> {
+    override suspend fun getCanonicalExample(canonicalKey: String, forceUpdate: Boolean): Result<Example> {
         if (forceUpdate) {
             //TODO: fetch example from network first - just a back-up mechanism probably,
             // unless we ever have a data source with more than a Single Source of Truth.
             TODO()
         }
-        return localDataSource.findBySeedKey(seedString).map { it.toExternal() }
+        return localDataSource.findBySeedKey(canonicalKey).map { it.toExternal() }
     }
 
     override suspend fun getAllExamples(forceUpdate: Boolean): Result<List<Example>> {

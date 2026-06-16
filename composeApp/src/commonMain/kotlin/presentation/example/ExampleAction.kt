@@ -15,7 +15,7 @@ data object LoadExample: ExampleAction() { // 'object' because it is a singleton
     ) {
         scope.withLoadingResult(
             setLoading = { copy(isLoading = it) },
-            block = { dependencies.exampleRepository.getSeededExample(Example.FIRST) },
+            block = { dependencies.exampleRepository.getCanonicalExample(Example.FIRST) },
             onSuccess = { result ->
                 scope.setState { copy(id = result.id, toggle = result.toggle) }
             },

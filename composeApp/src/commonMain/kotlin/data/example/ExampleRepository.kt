@@ -2,8 +2,8 @@ package data.example
 
 interface ExampleRepository {
 
-    // --- Seeded examples: retrieved by seedString as defined in Example.companion ---
-    suspend fun getSeededExample(seedString: String, forceUpdate: Boolean = false): Result<Example>
+    // --- Seeded examples: retrieved by canonicalKey as defined in Example.companion ---
+    suspend fun getCanonicalExample(canonicalKey: String, forceUpdate: Boolean = false): Result<Example>
 
     // --- User-generated examples ---
     suspend fun getAllExamples(forceUpdate: Boolean = false): Result<List<Example>>
