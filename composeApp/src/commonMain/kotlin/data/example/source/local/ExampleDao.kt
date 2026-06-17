@@ -33,13 +33,11 @@ class ExampleDaoImpl(db: Database) :
         return updateById(exampleId) { toggle = toggleStatus }
     }
 
-    override suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit> {
-        return runCatching {
-            val fieldName = ExampleEntityLocal::toggle.name
-            val toDelete = findAllByQuery {
-                queryEqual(ExampleEntityLocal::class, fieldName, toggleStatus)
-            }
-            deleteAllFrom(toDelete.toList())
+    override suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit> = runCatching {
+        val fieldName = ExampleEntityLocal::toggle.name
+        val toDelete = findAllByQuery {
+            queryEqual(ExampleEntityLocal::class, fieldName, toggleStatus)
         }
+        deleteAllFrom(toDelete.toList()).getOrThrow()
     }
 }

@@ -32,14 +32,14 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
      *
      * @param entity the entity to be inserted or updated.
      */
-    suspend fun insert(entity: T)
+    suspend fun insert(entity: T): Result<Unit>
 
     /**
      * Insert or update entities in the database. If an entity already exists, replace it.
      *
      * @param entities the entities that will be inserted or updated.
      */
-    suspend fun insertAll(entities: List<T>)
+    suspend fun insertAll(entities: List<T>): Result<Unit>
 
     // *R* ead -----------------------------------------------------------------------------
 
@@ -65,14 +65,6 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
      * @return the entity with that id.
      */
     suspend fun findById(id: ObjectId): Result<T>
-
-    /**
-     * Find a seeded entity by its seed key.
-     * Requires the entity to have a seedKey: String? field.
-     *
-     * @param seedKey one of the constants defined on the domain model's Companion
-     */
-    suspend fun findBySeedKey(seedKey: String): Result<T>
 
     /**
      * Observes a single entity.
@@ -108,7 +100,7 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
      *
      * @param entity the entity to be inserted or updated.
      */
-    suspend fun update(entity: T)
+    suspend fun update(entity: T): Result<Unit>
 
     /**
      * Find an entity by id and apply a mutation within a single write transaction.
@@ -126,25 +118,23 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
 
     /**
      * Delete T entity by id.
-     *
-     * @return the number of entities deleted. This should always be 1.
      */
-    suspend fun deleteById(id: ObjectId): Int
+    suspend fun deleteById(id: ObjectId): Result<Unit>
 
     /**
      * Delete T entity.
      */
-    suspend fun delete(entity: T)
+    suspend fun delete(entity: T): Result<Unit>
 
     /**
      * Delete all entities in list.
      */
-    suspend fun deleteAllFrom(entities: List<T>)
+    suspend fun deleteAllFrom(entities: List<T>): Result<Unit>
 
     /**
      * Delete all entities.
      */
-    suspend fun deleteAll()
+    suspend fun deleteAll(): Result<Unit>
 }
 
 // Base DAO class each specific DAO can inherit from to satisfy basic CRUD requirements
@@ -159,18 +149,12 @@ open class RealmDaoImpl<T>(
 
     // *C* reate ---------------------------------------------------------------------------
 
-    override suspend fun insert(entity: T) {
-        realm.write {
-            copyToRealm(entity)
-        }
+    override suspend fun insert(entity: T): Result<Unit> = runCatching {
+        realm.write { copyToRealm(entity) }
     }
 
-    override suspend fun insertAll(entities: List<T>) {
-        realm.write {
-            for (entity in entities) {
-                copyToRealm(entity)
-            }
-        }
+    override suspend fun insertAll(entities: List<T>): Result<Unit> = runCatching {
+        realm.write { for (entity in entities) { copyToRealm(entity) } }
     }
 
     // *R* ead -----------------------------------------------------------------------------
@@ -188,11 +172,6 @@ open class RealmDaoImpl<T>(
             ?: throw NoSuchElementException("No entity found with id: $id")
     }
 
-    override suspend fun findBySeedKey(seedKey: String): Result<T> = runCatching {
-        realm.queryEqual(clazz, "seedKey", seedKey).first().find()
-            ?: throw NoSuchElementException("No entity found with seedKey: $seedKey")
-    }
-
     override fun observeById(id: ObjectId): Flow<SingleQueryChange<T>> {
         return realm.queryEqual(clazz, "id", id).first().asFlow()
     }
@@ -207,10 +186,8 @@ open class RealmDaoImpl<T>(
 
     // *U* pdate ---------------------------------------------------------------------------
 
-    override suspend fun update(entity: T) {
-        realm.write {
-            copyToRealm(entity)
-        }
+    override suspend fun update(entity: T): Result<Unit> = runCatching {
+        realm.write { copyToRealm(entity) }
     }
 
     override suspend fun updateById(id: ObjectId, mutation: T.() -> Unit): Result<Unit> {
@@ -224,37 +201,28 @@ open class RealmDaoImpl<T>(
 
     // *D* elete ---------------------------------------------------------------------------
 
-    override suspend fun deleteById(id: ObjectId): Int {
-        return findById(id).fold(
-            onSuccess = { delete(it); 1 },
-            onFailure = { println("Couldn't find entity to delete with id: $id"); 0 }
-        )
-    }
-
-    override suspend fun delete(entity: T) {
-        try {
-            realm.write {
-                delete(entity)
-            }
-            return
-        }
-        catch (e: Exception){
-            println("Couldn't delete entity: $entity, $e")
+    override suspend fun deleteById(id: ObjectId): Result<Unit> = runCatching {
+        realm.write {
+            val entity = queryEqual(clazz, "id", id).first().find()
+                ?: throw NoSuchElementException("No entity found with id: $id")
+            delete(entity)
         }
     }
 
-    override suspend fun deleteAll() {
+    override suspend fun delete(entity: T): Result<Unit> = runCatching {
+        realm.write { delete(entity) }
+    }
+
+    override suspend fun deleteAll(): Result<Unit> = runCatching {
         realm.write {
             val all = this.query(clazz).find()
             delete(all)
         }
     }
 
-    override suspend fun deleteAllFrom(entities: List<T>){
-        for (entity in entities) {
-                delete(entity)
+    override suspend fun deleteAllFrom(entities: List<T>): Result<Unit> = runCatching {
+        realm.write {
+            entities.forEach { entity -> findLatest(entity)?.let { delete(it) } }
         }
     }
 }
-
-//TODO: Need a consistent strategy for how DAO behaves. For now I like the idea of returning Result<> where possible
