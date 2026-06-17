@@ -1,6 +1,7 @@
 package presentation.example
 
 import data.example.Example
+import kotlinx.coroutines.flow.catch
 import toad.ActionScope
 import toad.ViewAction
 
@@ -8,21 +9,17 @@ import toad.ViewAction
 
 abstract class ExampleAction: ViewAction<ExampleActionDependencies, ExampleUiState, ExampleEvent>
 
-data object LoadExample: ExampleAction() { // 'object' because it is a singleton & without constructor/params
+data object ObserveExample : ExampleAction() { // 'object' because it is a singleton & without constructor/params
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
         scope: ActionScope<ExampleUiState, ExampleEvent>
     ) {
-        scope.withLoadingResult(
-            setLoading = { copy(isLoading = it) },
-            block = { dependencies.exampleRepository.getCanonicalExample(Example.FIRST) },
-            onSuccess = { result ->
-                scope.setState { copy(id = result.id, toggle = result.toggle) }
-            },
-            onFailure = { result ->
-                scope.setState { copy(error = result.message) }
+        scope.setState { copy(isLoading = true) }
+        dependencies.exampleRepository.observeCanonicalExample(Example.FIRST)
+            .catch { e -> scope.setState { copy(isLoading = false, error = e.message) } }
+            .collect { example ->
+                scope.setState { copy(id = example.id, toggle = example.toggle, isLoading = false) }
             }
-        )
     }
 }
 
@@ -35,7 +32,7 @@ data class UpdateToggle(val newVal: Boolean): ExampleAction() {
             setLoading = { copy(isLoading = it) },
             block = { dependencies.exampleRepository.updateToggle(scope.currentState.id, newVal) },
             onSuccess = {
-                scope.setState { copy(toggle = newVal) }
+                // Flow will emit the updated value automatically via observeCanonicalExample
             },
             onFailure = { result ->
                 scope.setState { copy(error = result.message) }

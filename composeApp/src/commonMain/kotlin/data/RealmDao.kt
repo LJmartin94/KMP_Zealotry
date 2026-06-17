@@ -83,6 +83,14 @@ interface RealmDao<T> where T : RealmObject, T : DatabaseObject {
     fun observeById(id: ObjectId): Flow<SingleQueryChange<T>>
 
     /**
+     * Observes a single entity by its seed key.
+     *
+     * @param seedKey the seed key of the entity.
+     * @return flow of the T entity with that seed key.
+     */
+    fun observeBySeedKey(seedKey: String): Flow<SingleQueryChange<T>>
+
+    /**
      * Observes change flow of T entities.
      *
      * TIP: Can get a list of results by taking ret.map { change -> change.list }
@@ -187,6 +195,10 @@ open class RealmDaoImpl<T>(
 
     override fun observeById(id: ObjectId): Flow<SingleQueryChange<T>> {
         return realm.queryEqual(clazz, "id", id).first().asFlow()
+    }
+
+    override fun observeBySeedKey(seedKey: String): Flow<SingleQueryChange<T>> {
+        return realm.queryEqual(clazz, "seedKey", seedKey).first().asFlow()
     }
 
     override fun observeAll(): Flow<ResultsChange<T>> {

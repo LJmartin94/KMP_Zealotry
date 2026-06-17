@@ -2,10 +2,15 @@ package data.example
 
 import data.example.source.local.ExampleDao
 import data.example.source.local.ExampleEntityLocal
+import io.realm.kotlin.notifications.DeletedObject
+import io.realm.kotlin.notifications.InitialObject
+import io.realm.kotlin.notifications.UpdatedObject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import org.mongodb.kbson.ObjectId
 
 class ExampleRepositoryImpl(
-//    private val networkDataSource: NetworkDao,
     private val localDataSource: ExampleDao,
 ) : ExampleRepository {
 
@@ -13,29 +18,55 @@ class ExampleRepositoryImpl(
         println("Initialised Example Repository")
     }
 
-    override suspend fun getCanonicalExample(canonicalKey: String, forceUpdate: Boolean): Result<Example> {
-        if (forceUpdate) {
-            //TODO: fetch example from network first - just a back-up mechanism probably,
-            // unless we ever have a data source with more than a Single Source of Truth.
-            TODO()
+    override fun observeCanonicalExample(canonicalKey: String): Flow<Example> {
+        return localDataSource.observeBySeedKey(canonicalKey).mapNotNull { change ->
+            when (change) {
+                is InitialObject -> change.obj.toExternal()
+                is UpdatedObject -> change.obj.toExternal()
+                is DeletedObject -> {
+                    // A canonical entity should never be deleted — this likely indicates a
+                    // migration failure or data corruption. TODO: replace with proper error logging.
+                    println("ERROR: Canonical example '$canonicalKey' was deleted unexpectedly.")
+                    null
+                }
+                else -> null
+            }
         }
-        return localDataSource.findBySeedKey(canonicalKey).map { it.toExternal() }
     }
 
-    override suspend fun getAllExamples(forceUpdate: Boolean): Result<List<Example>> {
-        if (forceUpdate) {
-            //TODO: fetch examples from network first.
-            TODO()
-        }
-        return runCatching { localDataSource.findAll().map { it.toExternal() } }
+    override suspend fun refreshCanonicalExample(canonicalKey: String): Result<Unit> {
+        // TODO: fetch from network and write to local DB.
+        // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
+        // A successful write will automatically trigger observeCanonicalExample to emit.
+        return Result.success(Unit)
     }
 
-    override suspend fun getExampleById(id: String, forceUpdate: Boolean): Result<Example> {
-        if (forceUpdate) {
-            //TODO: fetch example from network first.
-            TODO()
+    override fun observeAllExamples(): Flow<List<Example>> {
+        return localDataSource.observeAll().map { change -> change.list.map { it.toExternal() } }
+    }
+
+    override suspend fun refreshAllExamples(): Result<Unit> {
+        // TODO: fetch all from network and write to local DB.
+        // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
+        // A successful write will automatically trigger observeAllExamples to emit.
+        return Result.success(Unit)
+    }
+
+    override fun observeExampleById(id: String): Flow<Example> {
+        return localDataSource.observeById(ObjectId(id)).mapNotNull { change ->
+            when (change) {
+                is InitialObject -> change.obj.toExternal()
+                is UpdatedObject -> change.obj.toExternal()
+                else -> null
+            }
         }
-        return runCatching { localDataSource.findById(ObjectId(id)).map { it.toExternal() }.getOrThrow() }
+    }
+
+    override suspend fun refreshExampleById(id: String): Result<Unit> {
+        // TODO: fetch from network by id and write to local DB.
+        // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
+        // A successful write will automatically trigger observeExampleById to emit.
+        return Result.success(Unit)
     }
 
     override suspend fun createExample(toggle: Boolean): Result<Example> {
