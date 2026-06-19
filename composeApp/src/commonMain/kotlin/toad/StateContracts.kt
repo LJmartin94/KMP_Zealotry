@@ -44,20 +44,19 @@ interface ViewEvent
  * - Dispatchers (if needed for specific operations)
  * - Any other dependencies actions need
  *
- * The [coroutineScope] is provided for actions that need to launch
- * child coroutines (e.g., parallel operations, timeouts).
- * Note: Actions already run within viewModelScope, so this is only
- * needed for advanced coroutine scenarios.
+ * Override [coroutineScope] only when an action needs to launch child coroutines
+ * (e.g., parallel operations, timeouts). Actions already run within viewModelScope,
+ * so this is only needed for advanced coroutine scenarios.
  *
  * Example:
  * ```
  * class ProfileDependencies(
- *     override val coroutineScope: CoroutineScope,
  *     val userRepository: UserRepository,
- *     val analyticsTracker: AnalyticsTracker
+ *     val analyticsTracker: AnalyticsTracker,
+ *     override val coroutineScope: CoroutineScope? = null // only if parallel coroutines needed
  * ) : ActionDependencies()
  * ```
  */
 abstract class ActionDependencies {
-    abstract val coroutineScope: CoroutineScope
+    open val coroutineScope: CoroutineScope? = null
 }

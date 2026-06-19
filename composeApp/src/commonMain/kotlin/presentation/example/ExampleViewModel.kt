@@ -1,6 +1,5 @@
 package presentation.example
 
-import androidx.lifecycle.viewModelScope
 import data.example.ExampleRepository
 import toad.ToadViewModel
 
@@ -17,7 +16,6 @@ class ExampleViewModel (
 ){
     override val dependencies = ExampleActionDependencies(
         exampleRepository = repository,
-        coroutineScope = viewModelScope,
     )
 
     init {
