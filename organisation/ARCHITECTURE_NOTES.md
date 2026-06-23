@@ -6,6 +6,23 @@
 
 ---
 
+## AI Session Setup Instructions
+
+This file is the single source of truth for ongoing architectural work. The Copilot CLI session system uses a per-session `plan.md` file — to keep it in sync with this file, `plan.md` should be a symlink pointing here.
+
+**If you are resuming in a new session**, run the following to re-establish the symlink (replace `<session-id>` with the current session UUID, visible in the session context at the top of the conversation):
+
+```bash
+PLAN=~/.copilot/session-state/<session-id>/plan.md
+NOTES=/Users/lindsayjames.martin/ghZealotry/organisation/ARCHITECTURE_NOTES.md
+rm "$PLAN"
+ln -s "$NOTES" "$PLAN"
+```
+
+After running this, writes to `plan.md` and writes to this file are the same operation.
+
+---
+
 ## Background
 
 The project is a KMP (Kotlin Multiplatform) Compose app. The `data/example/` feature is the architectural template — a deliberately simple stand-in that pioneers the patterns all real features will follow. The `z` package contains earlier, messier implementations of real features (calendar, day-part menu, main menu) that need to be refactored to match the patterns established by `data/example/`.
@@ -77,7 +94,16 @@ If `ObserveExample` fails, the ViewModel's `state.id` is the literal string `"ex
 Fixed as part of Concern 4 work — now executes in a single transaction.
 
 ### ⏳ Concern 9 — No tests
-TOAD's primary selling point is testable actions. No tests exist. At minimum, a unit test for `ObserveExample` with a mock repository and mock `ActionScope` should be written to validate the pattern. Position decision needed: write tests alongside new code, or treat as post-refactor.
+TOAD's primary selling point is testable actions. No tests exist.
+
+**Testing policy decided:**
+- Any Action with branching logic, null guards, or non-trivial state transitions gets a unit test at the time it is written — not deferred to a later pass.
+- Actions that collect Flows use Turbine for testing.
+
+**Planned test order:**
+1. After testing framework is set up: write `UpdateToggleTest` (suspend action, mock repo — establishes the Mokkery pattern) and `ObserveExampleTest` (Flow-collecting action — establishes the Turbine pattern).
+2. During z refactor: new Actions (`ObserveCalendarContext`, `SetDayPart`, etc.) get tests as they are created.
+3. During UseCase extraction: `GetAstronomicalContextUseCase` tests are written first (test-driven), then the UseCase is extracted to satisfy them.
 
 ---
 
@@ -131,3 +157,28 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 6. **`initialActions`** in ViewModels = one-shot startup actions only (fed to `dispatchAll`); long-running observations dispatched separately via `dispatch()`
 7. **All DAO write methods return `Result<Unit>`** — consistent error surfacing
 8. The **4-hour day offset** is a domain/business rule, not a repository concern — belongs in a UseCase
+
+---
+
+## Ordered Execution Plan (updated 2026-06-23)
+
+1. **Room migration** — replace Realm with Room KMP (`room-runtime`, `room-compiler` via KSP). Realm is unmaintained and blocks Kotlin 2.x upgrade. All Realm entities → `@Entity` data classes; `RealmDaoImpl` → Room DAO implementations; `Database` → `RoomDatabase`. The `RealmDao` interface is preserved — only the implementation changes. Note: `TaskButtonState` in `z` is also a Realm entity; migrate it as part of this step.
+
+2. **Kotlin + AGP + dependency upgrade** — once Room replaces Realm:
+   - Kotlin 1.9.23 → 2.2.0 (latest stable)
+   - AGP 8.2.2 → 8.13.x (latest stable 8.x)
+   - Compose Multiplatform 1.6.1 → 1.8.2
+   - kotlinx-coroutines → 1.10.2, kotlinx-serialization → 1.9.0, kotlinx-datetime → 0.7.0
+   - compileSdk / targetSdk → 35
+   - Add `org.jetbrains.kotlin.plugin.compose` plugin (required for Kotlin 2.0+)
+   - Update `androidTarget { compilerOptions { jvmTarget } }` (replaces deprecated `kotlinOptions`)
+
+3. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
+   - `UpdateToggleTest` — suspend action with mocked repo (establishes Mokkery pattern)
+   - `ObserveExampleTest` — Flow-collecting action with mocked Flow (establishes Turbine pattern)
+
+4. **z refactor (Concerns 2, 3)** — migrate `z` package to proper structure; rewrite `MainMenuViewModel` and `DayPartMenuViewModel` as `ToadViewModel`; fix composition side-effect bug in `DayPartMenuScreen`; new Actions get tests as they are created.
+
+5. **`GetAstronomicalContextUseCase` extraction (Concern 5, step 2)** — test-driven: write tests first, then extract the UseCase to satisfy them.
+
+**Testing policy:** Any Action with branching logic, null guards, or non-trivial state transitions gets a unit test at the time it is written.

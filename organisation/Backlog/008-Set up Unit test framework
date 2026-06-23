@@ -1,2 +1,5 @@
 Need to make Unit tests
 Unit testing season info would be a good component to start with
+
+Article about Mockk alternatives that work cross-platform for KMP:
+https://medium.com/@mhristev/mocking-in-kotlin-multiplatform-ksp-vs-compiler-plugins-4424751b83d7
