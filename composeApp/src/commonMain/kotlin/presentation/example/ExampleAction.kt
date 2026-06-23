@@ -28,9 +28,14 @@ data class UpdateToggle(val newVal: Boolean): ExampleAction() {
         dependencies: ExampleActionDependencies,
         scope: ActionScope<ExampleUiState, ExampleEvent>
     ) {
+        val id = scope.currentState.id
+        if (id == null) {
+            scope.setState { copy(error = "Cannot update toggle: example not yet loaded.") }
+            return
+        }
         scope.withLoadingResult(
             setLoading = { copy(isLoading = it) },
-            block = { dependencies.exampleRepository.updateToggle(scope.currentState.id, newVal) },
+            block = { dependencies.exampleRepository.updateToggle(id, newVal) },
             onSuccess = {
                 // Flow will emit the updated value automatically via observeCanonicalExample
             },

@@ -5,30 +5,15 @@ import toad.ViewState
 
 /**
  * The relevant data to be represented in the UI from the [data.example.Example] data model.
- * All values must be explicitly initialised, unless fetching the state resulted in an error.
+ * [id] is null until [ObserveExample] emits its first value — actions that require an id
+ * should guard against this and no-op or emit an error if it is null.
  */
 data class ExampleUiState (
-    val id: String,
-    val toggle: Boolean,
-    val isLoading: Boolean,
+    val id: String? = null,
+    val toggle: Boolean = false,
+    val isLoading: Boolean = false,
     val error: String? = null
-): ViewState {
-//    constructor(error: Throwable) : this(
-//        id = "",
-//        toggle = false,
-//        isLoading = false,
-//    ) {
-//        this.error = error.message.toString()
-//    }
-}
-
-// Old implementation:
-
-//sealed interface ExampleUiState: ViewState {
-//    data object Loading: ExampleUiState
-//    data class Error(val errorMessage: String): ExampleUiState
-//    data class Success(val id: String, val toggle: Boolean): ExampleUiState
-//}
+): ViewState
 
 sealed interface ExampleEvent: ViewEvent {
     data object NavigateBack: ExampleEvent

@@ -8,11 +8,7 @@ import toad.ToadViewModel
 class ExampleViewModel (
     private val repository: ExampleRepository,
 ) : ToadViewModel<ExampleUiState, ExampleEvent>(
-    initialState = ExampleUiState(
-        id = "example",
-        toggle = false,
-        isLoading = false
-    )
+    initialState = ExampleUiState()
 ){
     override val dependencies = ExampleActionDependencies(
         exampleRepository = repository,
