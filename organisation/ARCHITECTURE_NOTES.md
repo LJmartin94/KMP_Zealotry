@@ -48,7 +48,7 @@ The two reference architectures used as inspiration:
 - `ObserveExample` dispatched via `dispatch()` separately from `dispatchAll(initialActions)` — because `collect` never returns and would block sequential dispatch
 - `initialActions` is now intentionally empty (ready for one-shot startup actions)
 - Deletion of a canonical entity logs an explicit error (println placeholder, TODO for proper logging)
-- All DAO write methods now return `Result<Unit>` consistently (previously mixed Unit/Int/Result)
+- All DAO write methods now return `Result<Unit>` consistently (previously mixed Unit/Int/Result) — **later revised: see decision #7 below**
 - `deleteAllFrom` now executes in a single write transaction (was N transactions — performance bug fixed)
 - `findBySeedKey` removed from `RealmDao` interface (superseded by `observeBySeedKey`)
 
@@ -155,7 +155,7 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 4. **`Example.kt` stays in `data/example/`** — not moved to domain; entity domain models live with their data layer feature
 5. **`seedKey` stays as the field name** at the DAO/entity level; `canonicalKey` is the vocabulary at the repository interface and above
 6. **`initialActions`** in ViewModels = one-shot startup actions only (fed to `dispatchAll`); long-running observations dispatched separately via `dispatch()`
-7. **All DAO write methods return `Result<Unit>`** — consistent error surfacing
+7. **DAO methods do not return `Result`** — DAOs throw on failure; `runCatching` is applied once at the repository boundary for operations where the interface contracts `Result<T>`. This aligns with Room's design (suspend functions propagate exceptions naturally) and avoids catching programmer errors silently at the wrong layer.
 8. The **4-hour day offset** is a domain/business rule, not a repository concern — belongs in a UseCase
 
 ---
@@ -168,11 +168,10 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 1. **Room migration** ✅ Code complete — commit as broken intermediate state, then immediately do step 2.
    - All Realm entities → Room `@Entity` data classes
    - `RealmDao.kt` → `BaseDao.kt` (generic interface, no Realm types; `RealmDaoImpl` removed)
-   - `ExampleDao` → Room `@Dao` abstract class (abstract internal methods + concrete `Result<Unit>` wrappers)
-   - `Database.kt` → `AppDatabase.kt` + `DatabaseFactory.kt` (expect/actual for platform paths)
-   - `ZealotryApp` Application class added on Android; `initKoin()` moved from `MainActivity` to `Application.onCreate()`
-   - `DatabaseSeeder` uses `insertIgnoreInternal` (idempotent via unique index on `seedKey`)
-   - `DatabaseMigration.kt` and `RoomQueries.kt` preserved and updated for Room patterns
+   - `ExampleDao` → Room `@Dao` abstract class; generic CRUD inherited from `BaseDao`; entity-specific `@Query` overrides only
+   - `DatabaseSeeder` uses `insertIfAbsent` (idempotent via unique index on `seedKey`)
+   - `DatabaseMigration.kt` preserved and updated for Room patterns
+   - `RoomQueries.kt` removed (annotation arguments must be compile-time constants; no functional benefit over inline SQL)
    - `TaskButtonState` stripped of `RealmObject`; ObjectId replaced with String UUID
    - New files: `BaseDao.kt`, `AppDatabase.kt`, `DatabaseFactory.kt`, `EntityId.kt`, `RoomQueries.kt`, `DatabaseFactory.android.kt`, `DatabaseFactory.ios.kt`, `ZealotryApp.kt`
    - Deleted: `Database.kt`, `RealmDao.kt`, `RealmQueries.kt`

@@ -20,7 +20,7 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
     abstract override suspend fun findAll(): List<ExampleEntityLocal>
 
     @Query("SELECT * FROM example WHERE id = :id LIMIT 1")
-    protected abstract override suspend fun findByIdInternal(id: String): ExampleEntityLocal?
+    protected abstract override suspend fun findByIdOrNull(id: String): ExampleEntityLocal?
 
     @Query("SELECT * FROM example WHERE id = :id LIMIT 1")
     abstract override fun observeById(id: String): Flow<ExampleEntityLocal?>
@@ -34,10 +34,10 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
     // *D* elete — @Query overrides --------------------------------------------------------
 
     @Query("DELETE FROM example WHERE id = :id")
-    protected abstract override suspend fun deleteByIdInternal(id: String)
+    abstract override suspend fun deleteById(id: String)
 
     @Query("DELETE FROM example")
-    protected abstract override suspend fun deleteAllInternal()
+    abstract override suspend fun deleteAll()
 
     // Example-specific operations ---------------------------------------------------------
 
@@ -47,7 +47,7 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
      * @param exampleId id of the example entity (no-op if entity not found)
      * @param toggleStatus value the toggle should have after updating
      */
-    suspend fun updateToggle(exampleId: String, toggleStatus: Boolean): Result<Unit> =
+    suspend fun updateToggle(exampleId: String, toggleStatus: Boolean) =
         updateById(exampleId) { toggle = toggleStatus }
 
     /**
@@ -55,11 +55,7 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
      *
      * @param toggleStatus the value of the toggle to be removed
      */
-    suspend fun deleteToggleWhen(toggleStatus: Boolean): Result<Unit> = runCatching {
-        deleteToggleWhenInternal(toggleStatus)
-    }
-
     @Query("DELETE FROM example WHERE toggle = :toggleStatus")
-    protected abstract suspend fun deleteToggleWhenInternal(toggleStatus: Boolean)
+    abstract suspend fun deleteToggleWhen(toggleStatus: Boolean)
 }
 

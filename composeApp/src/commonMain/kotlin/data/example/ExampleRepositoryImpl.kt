@@ -53,17 +53,18 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 
-    override suspend fun createExample(toggle: Boolean): Result<Example> {
+    override suspend fun createExample(toggle: Boolean): Result<Example> = runCatching {
         val entity = ExampleEntityLocal(toggle = toggle)
-        return localDataSource.insert(entity).map { entity.toExternal() }
+        localDataSource.upsert(entity)
+        entity.toExternal()
     }
 
-    override suspend fun deleteExample(id: String): Result<Unit> {
-        return localDataSource.deleteById(id)
+    override suspend fun deleteExample(id: String): Result<Unit> = runCatching {
+        localDataSource.deleteById(id)
     }
 
-    override suspend fun updateToggle(id: String, toggle: Boolean): Result<Unit> {
-        return localDataSource.updateToggle(id, toggle)
+    override suspend fun updateToggle(id: String, toggle: Boolean): Result<Unit> = runCatching {
+        localDataSource.updateToggle(id, toggle)
     }
 }
 
