@@ -160,11 +160,24 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 
 ---
 
-## Ordered Execution Plan (updated 2026-06-23)
+## Ordered Execution Plan (updated 2026-06-24)
 
-1. **Room migration** — replace Realm with Room KMP (`room-runtime`, `room-compiler` via KSP). Realm is unmaintained and blocks Kotlin 2.x upgrade. All Realm entities → `@Entity` data classes; `RealmDaoImpl` → Room DAO implementations; `Database` → `RoomDatabase`. The `RealmDao` interface is preserved — only the implementation changes. Note: `TaskButtonState` in `z` is also a Realm entity; migrate it as part of this step.
+> **Current status:** Room migration code is complete but does not compile yet.
+> Root cause: Room 2.7.0 was compiled with Kotlin 2.1.x — pulling in `kotlin-stdlib:2.1.10` — which Kotlin 1.9.23 cannot read (reads up to 2.0.0 metadata only). The Kotlin upgrade must happen immediately after committing the Room migration. Both commits together produce a compiling state.
 
-2. **Kotlin + AGP + dependency upgrade** — once Room replaces Realm:
+1. **Room migration** ✅ Code complete — commit as broken intermediate state, then immediately do step 2.
+   - All Realm entities → Room `@Entity` data classes
+   - `RealmDao.kt` → `BaseDao.kt` (generic interface, no Realm types; `RealmDaoImpl` removed)
+   - `ExampleDao` → Room `@Dao` abstract class (abstract internal methods + concrete `Result<Unit>` wrappers)
+   - `Database.kt` → `AppDatabase.kt` + `DatabaseFactory.kt` (expect/actual for platform paths)
+   - `ZealotryApp` Application class added on Android; `initKoin()` moved from `MainActivity` to `Application.onCreate()`
+   - `DatabaseSeeder` uses `insertIgnoreInternal` (idempotent via unique index on `seedKey`)
+   - `DatabaseMigration.kt` and `RoomQueries.kt` preserved and updated for Room patterns
+   - `TaskButtonState` stripped of `RealmObject`; ObjectId replaced with String UUID
+   - New files: `BaseDao.kt`, `AppDatabase.kt`, `DatabaseFactory.kt`, `EntityId.kt`, `RoomQueries.kt`, `DatabaseFactory.android.kt`, `DatabaseFactory.ios.kt`, `ZealotryApp.kt`
+   - Deleted: `Database.kt`, `RealmDao.kt`, `RealmQueries.kt`
+
+2. **Kotlin + AGP + dependency upgrade** — unblocks Room compilation:
    - Kotlin 1.9.23 → 2.2.0 (latest stable)
    - AGP 8.2.2 → 8.13.x (latest stable 8.x)
    - Compose Multiplatform 1.6.1 → 1.8.2
@@ -172,6 +185,7 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
    - compileSdk / targetSdk → 35
    - Add `org.jetbrains.kotlin.plugin.compose` plugin (required for Kotlin 2.0+)
    - Update `androidTarget { compilerOptions { jvmTarget } }` (replaces deprecated `kotlinOptions`)
+   - TODO: Replace `generateEntityId()` in `EntityId.kt` with `kotlin.uuid.Uuid.random().toString()` (available post-2.0.0 as `@ExperimentalUuidApi`)
 
 3. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
    - `UpdateToggleTest` — suspend action with mocked repo (establishes Mokkery pattern)

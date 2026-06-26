@@ -4,7 +4,8 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.realm.plugin)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -46,10 +47,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.jb.androidx.navigation.compose)
 
-            // Realm db from tutorial:
-            implementation(libs.mongodb.realm)
+            // Room KMP database:
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
             implementation(libs.kotlin.coroutines)
-            implementation(libs.stately.common)
 
             // material 3 from tutorial
             implementation(compose.material3)
@@ -92,4 +93,15 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }

@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
-import org.mongodb.kbson.ObjectId
 import presentation.screens.dayPartMenu.DayPartMenuScreen
 import presentation.screens.mainMenu.MainMenuScreen
 import kotlin.reflect.typeOf
@@ -18,7 +17,6 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
     val navigateTo = remember { { destination: NavDestination -> navController.navigate(route = destination) } }
     // Define how to pass keys around for loading items from db: avoid passing the objects themselves
     val typeMap = mapOf(
-        typeOf<ObjectId?>() to navTypeOf<ObjectId?>(),
         typeOf<z.screens.dayPartMenu.DayPart>() to navTypeOf<z.screens.dayPartMenu.DayPart>(),
     )
 
