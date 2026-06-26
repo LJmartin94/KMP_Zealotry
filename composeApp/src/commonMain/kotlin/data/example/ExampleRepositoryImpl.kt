@@ -63,7 +63,7 @@ class ExampleRepositoryImpl(
     }
 
     override suspend fun updateToggle(id: String, toggle: Boolean): Result<Unit> {
-        return runCatching { localDataSource.updateToggle(id, toggle).getOrThrow() }
+        return localDataSource.updateToggle(id, toggle)
     }
 }
 

@@ -23,5 +23,4 @@ fun createAppDatabase(context: Any?): AppDatabase =
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .addMigrations(*DatabaseMigration.all.toTypedArray())
-        .fallbackToDestructiveMigration(dropAllTables = true)
         .build()

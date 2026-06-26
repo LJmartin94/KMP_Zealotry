@@ -5,9 +5,13 @@ import kotlin.random.Random
 /**
  * Generates a RFC-4122 UUID v4 string, compatible with all KMP targets.
  *
- * TODO: Replace with [kotlin.uuid.Uuid.random().toString()] after the Kotlin 2.2.0 upgrade.
- *       See: https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.uuid/-uuid/
- *       (Introduced in Kotlin 2.0.0 as @ExperimentalUuidApi)
+ * TODO: After the Kotlin 2.2.0 upgrade:
+ *       1. Replace this manual implementation with [kotlin.uuid.Uuid.random().toString()].
+ *          See: https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.uuid/-uuid/
+ *          (Introduced in Kotlin 2.0.0 as @ExperimentalUuidApi)
+ *       2. Wrap the raw String in a value class (e.g. `value class EntityId(val value: String)`)
+ *          with an `init` block that validates the wrapped String is a well-formed UUID,
+ *          using [kotlin.uuid.Uuid.parse] or a regex, throwing [IllegalArgumentException] if not.
  */
 fun generateEntityId(): String {
     val bytes = Random.nextBytes(16)
