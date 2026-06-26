@@ -77,6 +77,6 @@ fun FestiveDay.toResourceString(): String {
 @OptIn(ExperimentalResourceApi::class)
 fun Int.toOrdinalNumberString(locale: String = Locale.current.language): String {
     val pluralForm = getLocale(locale).getOrdinal(this)
-    val ordinalSignifier = stringArrayResource(Res.string.ordinal)[pluralForm.ordinal]
+    val ordinalSignifier = stringArrayResource(Res.array.ordinal)[pluralForm.ordinal]
     return stringResource(Res.string.ordinal_number, this, ordinalSignifier)
 }

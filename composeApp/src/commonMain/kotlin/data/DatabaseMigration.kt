@@ -1,7 +1,8 @@
 package data
 
 import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
 
 /**
  * Handles data migrations between Room schema versions.
@@ -39,7 +40,7 @@ object DatabaseMigration {
     // In v1, toggle is a plain Boolean.
     //
     // val MIGRATION_VFAKE_TO_V1 = object : Migration(0, 1) {
-    //     override fun migrate(db: SupportSQLiteDatabase) {
+    //     override fun migrate(db: SQLiteConnection) {
     //         // Step 1: Create a new table with the target schema.
     //         db.execSQL("""
     //             CREATE TABLE example_new (

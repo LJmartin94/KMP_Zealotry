@@ -1,16 +1,22 @@
 package data
 
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-actual fun databaseFilePath(context: Any?): String {
-    val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
+@OptIn(ExperimentalForeignApi::class)
+actual fun getDatabaseBuilder(context: Any?): RoomDatabase.Builder<AppDatabase> {
+    val documentDirectory =
+        NSFileManager.defaultManager.URLForDirectory(
         directory = NSDocumentDirectory,
         inDomain = NSUserDomainMask,
         appropriateForURL = null,
         create = false,
         error = null,
     )
-    return requireNotNull(documentDirectory).path + "/zealotry.db"
+    val dbFilePath = requireNotNull(documentDirectory).path + "/zealotry.db"
+    return Room.databaseBuilder<AppDatabase>(name = dbFilePath)
 }

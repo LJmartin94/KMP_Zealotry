@@ -1,7 +1,7 @@
 # Zealotry Architecture Review — Remaining Work
 
 **Repository:** LJmartin94/KMP_Zealotry  
-**Last commit when this was written:** c4be39c (session 1); continued in session 2 on 2026-06-19  
+**Last commit when this was written:** c4be39c (session 1); continued in session 2 on 2026-06-19; session 3 on 2026-06-26  
 **Session context:** Working through 9 architectural concerns raised in an initial review, then executing a planned refactor of the `z` package.
 
 ---
@@ -162,8 +162,7 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 
 ## Ordered Execution Plan (updated 2026-06-24)
 
-> **Current status:** Room migration code is complete but does not compile yet.
-> Root cause: Room 2.7.0 was compiled with Kotlin 2.1.x — pulling in `kotlin-stdlib:2.1.10` — which Kotlin 1.9.23 cannot read (reads up to 2.0.0 metadata only). The Kotlin upgrade must happen immediately after committing the Room migration. Both commits together produce a compiling state.
+> **Current status:** Kotlin 2.2.0 upgrade complete. Android and iOS both compile cleanly. `./gradlew build` fails on ktlint (150 pre-existing violations — not introduced by the upgrade). Next: ktlint cleanup commit, then EntityId value class.
 
 1. **Room migration** ✅ Code complete — commit as broken intermediate state, then immediately do step 2.
    - All Realm entities → Room `@Entity` data classes
@@ -176,22 +175,30 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
    - New files: `BaseDao.kt`, `AppDatabase.kt`, `DatabaseFactory.kt`, `EntityId.kt`, `RoomQueries.kt`, `DatabaseFactory.android.kt`, `DatabaseFactory.ios.kt`, `ZealotryApp.kt`
    - Deleted: `Database.kt`, `RealmDao.kt`, `RealmQueries.kt`
 
-2. **Kotlin + AGP + dependency upgrade** — unblocks Room compilation:
-   - Kotlin 1.9.23 → 2.2.0 (latest stable)
-   - AGP 8.2.2 → 8.13.x (latest stable 8.x)
-   - Compose Multiplatform 1.6.1 → 1.8.2
-   - kotlinx-coroutines → 1.10.2, kotlinx-serialization → 1.9.0, kotlinx-datetime → 0.7.0
+2. **Kotlin + AGP + dependency upgrade** ✅ Complete:
+   - Kotlin 1.9.23 → 2.2.0; KSP `2.2.0-2.0.2` (note: KSP suffix changed from `1.0.x` to `2.0.x` at Kotlin 2.x)
+   - AGP 8.2.2 → 8.7.0; Gradle wrapper 8.7 → 8.9 (AGP 8.7 requires Gradle 8.9+)
+   - Compose Multiplatform 1.6.1 → 1.8.2; Compose 1.7.3 → 1.8.0
+   - kotlinx-coroutines → 1.10.2; kotlinx-serialization → 1.7.3
    - compileSdk / targetSdk → 35
-   - Add `org.jetbrains.kotlin.plugin.compose` plugin (required for Kotlin 2.0+)
-   - Update `androidTarget { compilerOptions { jvmTarget } }` (replaces deprecated `kotlinOptions`)
-   - TODO: Replace `generateEntityId()` in `EntityId.kt` with `kotlin.uuid.Uuid.random().toString()` (available post-2.0.0 as `@ExperimentalUuidApi`)
+   - `org.jetbrains.kotlin.plugin.compose` plugin added (mandatory since Kotlin 2.0.0)
+   - `androidTarget { kotlinOptions { jvmTarget } }` → `compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }` (old DSL removed in Kotlin 2.x)
+   - `EntityId.kt`: manual UUID → `kotlin.uuid.Uuid.random().toString()` with `@OptIn(ExperimentalUuidApi::class)`
+   - `DatabaseFactory.kt`: removed `setQueryCoroutineContext(Dispatchers.IO)` — `Dispatchers.IO` is internal on Kotlin Native in coroutines 1.10.2; Room defaults correctly per platform without it
+   - `DatabaseMigration.kt`: `SupportSQLiteDatabase` (Android-only) → `SQLiteConnection` + `androidx.sqlite.execSQL` (KMP-compatible)
+   - `DatabaseFactory.ios.kt`: added `@OptIn(ExperimentalForeignApi::class)` (required in Kotlin 2.x for any Objective-C/cinterop API access; was implicit in 1.9.x)
+   - **Note:** `./gradlew build` runs ktlint as part of the `check` lifecycle and currently fails (150 pre-existing violations). Compilation itself (`assembleDebug` / Android Studio) succeeds. Ktlint cleanup is a separate step before testing.
 
-3. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
+3. **Ktlint cleanup** — 150 pre-existing violations across 33 files. Run `ktlintFormat`, review, commit as `chore: ktlint formatting` before proceeding to testing.
+
+4. **EntityId value class** — `EntityId.kt` still has a TODO: wrap the String in a `value class` with UUID validation in an `init` block. This adds compile-time type safety (can't accidentally pass a raw String where an EntityId is expected). Do this as a small focused commit.
+
+5. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
    - `UpdateToggleTest` — suspend action with mocked repo (establishes Mokkery pattern)
    - `ObserveExampleTest` — Flow-collecting action with mocked Flow (establishes Turbine pattern)
 
-4. **z refactor (Concerns 2, 3)** — migrate `z` package to proper structure; rewrite `MainMenuViewModel` and `DayPartMenuViewModel` as `ToadViewModel`; fix composition side-effect bug in `DayPartMenuScreen`; new Actions get tests as they are created.
+6. **z refactor (Concerns 2, 3)** — migrate `z` package to proper structure; rewrite `MainMenuViewModel` and `DayPartMenuViewModel` as `ToadViewModel`; fix composition side-effect bug in `DayPartMenuScreen`; new Actions get tests as they are created.
 
-5. **`GetAstronomicalContextUseCase` extraction (Concern 5, step 2)** — test-driven: write tests first, then extract the UseCase to satisfy them.
+7. **`GetAstronomicalContextUseCase` extraction (Concern 5, step 2)** — test-driven: write tests first, then extract the UseCase to satisfy them.
 
 **Testing policy:** Any Action with branching logic, null guards, or non-trivial state transitions gets a unit test at the time it is written.

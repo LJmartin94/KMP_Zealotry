@@ -1,9 +1,11 @@
 package data
 
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import data.example.source.local.ExampleEntityLocal
+import androidx.room.RoomDatabaseConstructor
 import data.example.source.local.ExampleDao
+import data.example.source.local.ExampleEntityLocal
 
 /**
  * The Room database for this app.
@@ -22,6 +24,13 @@ import data.example.source.local.ExampleDao
     version = 1,
     exportSchema = true,
 )
+@ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun exampleDao(): ExampleDao
+}
+
+// Room KSP generates the actual implementations for each platform.
+@Suppress("KotlinNoActualForExpect")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
 }
