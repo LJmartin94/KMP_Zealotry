@@ -24,8 +24,8 @@ fun interface SeedEntry {
 object DatabaseSeeder {
     private fun seeds(db: AppDatabase): List<SeedEntry> =
         listOf(
-            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.FIRST, toggle = true)) },
-            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.SECOND, toggle = false)) },
+            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.value, toggle = true)) },
+            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.value, toggle = false)) },
         )
 
     suspend fun seedAll(db: AppDatabase) {

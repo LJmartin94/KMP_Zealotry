@@ -3,10 +3,10 @@ package data.example
 import kotlinx.coroutines.flow.Flow
 
 interface ExampleRepository {
-    // --- Seeded examples: retrieved by canonicalKey as defined in Example.companion ---
-    fun observeCanonicalExample(canonicalKey: String): Flow<Example>
+    // --- Seeded examples: retrieved by CanonicalKey as defined in Example.CanonicalKey ---
+    fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example>
 
-    suspend fun refreshCanonicalExample(canonicalKey: String): Result<Unit>
+    suspend fun refreshCanonicalExample(canonicalKey: Example.CanonicalKey): Result<Unit>
 
     // --- User-generated examples ---
     fun observeAllExamples(): Flow<List<Example>>

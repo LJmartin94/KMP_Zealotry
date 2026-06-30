@@ -7,11 +7,21 @@ data class Example(
     val isActive
         get() = toggle
 
-    // These are the so called 'canonicalKeys' by which we refer to the data we know will be part of the database.
-    // Hierarchically the data we specify sits alongside user created data, but we need a handle on how to interact with our data specifically.
     // At the data layer these are 'seedKeys', but as seeding is strictly a database concern, at the domain level we call them canonicalKeys.
-    companion object {
-        const val FIRST = "example_one"
-        const val SECOND = "example_two"
+
+    /**
+     * Typed identifiers for pre-seeded rows that are always present in the database.
+     *
+     * Hierarchically, these rows sit alongside user-created data in the same table — [CanonicalKey]
+     * is how the domain layer holds a handle on our pre-seeded data specifically.
+     *
+     * At the data layer these keys are stored as [seedKey] strings, but seeding is a database-only
+     * concern. So at the domain layer we call these [CanonicalKey]s.
+     * Using a typed enum rather than plain String constants ensures canonical keys
+     * cannot be accidentally passed to methods expecting an entity id, and vice versa.
+     */
+    enum class CanonicalKey(val value: String) {
+        FIRST("example_one"),
+        SECOND("example_two"),
     }
 }

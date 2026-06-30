@@ -14,8 +14,8 @@ class ExampleRepositoryImpl(
         println("Initialised Example Repository")
     }
 
-    override fun observeCanonicalExample(canonicalKey: String): Flow<Example> {
-        return localDataSource.observeBySeedKey(canonicalKey)
+    override fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example> {
+        return localDataSource.observeBySeedKey(canonicalKey.value)
             .onUnexpectedNull {
                 // TODO: replace with proper error logging.
                 println("ERROR: Canonical example '$canonicalKey' was deleted unexpectedly.")
@@ -23,7 +23,7 @@ class ExampleRepositoryImpl(
             .mapNotNull { it?.toExternal() }
     }
 
-    override suspend fun refreshCanonicalExample(canonicalKey: String): Result<Unit> {
+    override suspend fun refreshCanonicalExample(canonicalKey: Example.CanonicalKey): Result<Unit> {
         // TODO: fetch from network and write to local DB.
         // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
         // A successful write will automatically trigger observeCanonicalExample to emit.

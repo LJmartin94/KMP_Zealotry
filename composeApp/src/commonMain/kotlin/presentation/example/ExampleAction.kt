@@ -15,7 +15,7 @@ data object ObserveExample : ExampleAction() { // 'object' because it is a singl
         scope: ActionScope<ExampleUiState, ExampleEvent>,
     ) {
         scope.setState { copy(isLoading = true) }
-        dependencies.exampleRepository.observeCanonicalExample(Example.FIRST)
+        dependencies.exampleRepository.observeCanonicalExample(Example.CanonicalKey.FIRST)
             .catch { e -> scope.setState { copy(isLoading = false, error = e.message) } }
             .collect { example ->
                 scope.setState { copy(id = example.id, toggle = example.toggle, isLoading = false) }
