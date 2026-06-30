@@ -7,13 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import z.screens.mainMenu.MainMenuUIState
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.resourceComposition.toOrdinalNumberString
 import presentation.resourceComposition.toResourceString
 import presentation.reusableUi.OutlinedText
 import presentation.style.MainTypography
+import z.screens.mainMenu.MainMenuUIState
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.day_of_season
 

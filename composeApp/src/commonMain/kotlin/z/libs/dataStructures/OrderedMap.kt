@@ -12,8 +12,9 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
     private val orderedEntries: MutableList<K> = mutableMap.keys.toMutableList()
 
     // Helper to provide a clear exception if invariant is violated
-    private fun valueOrThrow(key: K): V = mutableMap[key]
-        ?: throw IllegalStateException("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
+    private fun valueOrThrow(key: K): V =
+        mutableMap[key]
+            ?: throw IllegalStateException("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
 
     /**
      * Commonly Inherited:

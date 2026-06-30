@@ -2,13 +2,13 @@ package presentation.resourceComposition
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.intl.Locale
-import z.calendar.FestiveDay
-import z.calendar.Season
 import kotlinx.datetime.DayOfWeek
-import z.libs.localisation.getLocale
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
+import z.calendar.FestiveDay
+import z.calendar.Season
+import z.libs.localisation.getLocale
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
 import zealotry.composeapp.generated.resources.autumn_start

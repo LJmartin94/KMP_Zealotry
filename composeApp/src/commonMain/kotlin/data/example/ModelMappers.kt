@@ -1,7 +1,6 @@
 package data.example
 
 import data.example.source.local.ExampleEntityLocal
-import kotlin.jvm.JvmName
 
 fun Example.toLocal(): ExampleEntityLocal {
     return ExampleEntityLocal(
@@ -12,9 +11,10 @@ fun Example.toLocal(): ExampleEntityLocal {
 
 fun List<Example>.toLocal() = map(Example::toLocal)
 
-fun ExampleEntityLocal.toExternal() = Example(
-    id = id,
-    toggle = toggle,
-)
+fun ExampleEntityLocal.toExternal() =
+    Example(
+        id = id,
+        toggle = toggle,
+    )
 
 fun List<ExampleEntityLocal>.toExternal() = map(ExampleEntityLocal::toExternal)

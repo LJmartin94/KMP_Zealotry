@@ -10,7 +10,6 @@ import z.libs.flow.onUnexpectedNull
 class ExampleRepositoryImpl(
     private val localDataSource: ExampleDao,
 ) : ExampleRepository {
-
     init {
         println("Initialised Example Repository")
     }
@@ -53,18 +52,23 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 
-    override suspend fun createExample(toggle: Boolean): Result<Example> = runCatching {
-        val entity = ExampleEntityLocal(toggle = toggle)
-        localDataSource.upsert(entity)
-        entity.toExternal()
-    }
+    override suspend fun createExample(toggle: Boolean): Result<Example> =
+        runCatching {
+            val entity = ExampleEntityLocal(toggle = toggle)
+            localDataSource.upsert(entity)
+            entity.toExternal()
+        }
 
-    override suspend fun deleteExample(id: String): Result<Unit> = runCatching {
-        localDataSource.deleteById(id)
-    }
+    override suspend fun deleteExample(id: String): Result<Unit> =
+        runCatching {
+            localDataSource.deleteById(id)
+        }
 
-    override suspend fun updateToggle(id: String, toggle: Boolean): Result<Unit> = runCatching {
-        localDataSource.updateToggle(id, toggle)
-    }
+    override suspend fun updateToggle(
+        id: String,
+        toggle: Boolean,
+    ): Result<Unit> =
+        runCatching {
+            localDataSource.updateToggle(id, toggle)
+        }
 }
-

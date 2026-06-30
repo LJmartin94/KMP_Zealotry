@@ -13,9 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import z.screens.dayPartMenu.DayPart
-import toad.getViewModel
-import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
@@ -23,6 +20,9 @@ import presentation.reusableUi.ImageButton
 import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
+import toad.getViewModel
+import z.navigation.NavDestination
+import z.screens.dayPartMenu.DayPart
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
 import zealotry.composeapp.generated.resources.day
@@ -34,9 +34,7 @@ import zealotry.composeapp.generated.resources.morning_button
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun MainMenuScreen(
-    onNavigate: (NavDestination) -> Unit
-) {
+fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
     val viewModel = getViewModel<MainMenuViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 

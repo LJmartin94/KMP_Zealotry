@@ -11,12 +11,12 @@ import platform.Foundation.NSUserDomainMask
 actual fun getDatabaseBuilder(context: Any?): RoomDatabase.Builder<AppDatabase> {
     val documentDirectory =
         NSFileManager.defaultManager.URLForDirectory(
-        directory = NSDocumentDirectory,
-        inDomain = NSUserDomainMask,
-        appropriateForURL = null,
-        create = false,
-        error = null,
-    )
+            directory = NSDocumentDirectory,
+            inDomain = NSUserDomainMask,
+            appropriateForURL = null,
+            create = false,
+            error = null,
+        )
     val dbFilePath = requireNotNull(documentDirectory).path + "/zealotry.db"
     return Room.databaseBuilder<AppDatabase>(name = dbFilePath)
 }

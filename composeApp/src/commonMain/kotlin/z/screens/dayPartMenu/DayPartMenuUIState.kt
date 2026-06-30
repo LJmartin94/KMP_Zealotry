@@ -15,7 +15,7 @@ enum class DayPart {
 
 data class TaskButtonState(
     val id: String = "",
-    //var state: OrderedMap<String, ChecklistButtonState> = OrderedMap()
+    // var state: OrderedMap<String, ChecklistButtonState> = OrderedMap()
 )
 
 @OptIn(ExperimentalResourceApi::class)

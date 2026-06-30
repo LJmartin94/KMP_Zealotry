@@ -40,7 +40,10 @@ interface ViewAction<D : ActionDependencies, S : ViewState, E : ViewEvent> {
      * @param dependencies The [ActionDependencies] providing repositories, use cases, etc.
      * @param scope The [ActionScope] for updating state and emitting events.
      */
-    suspend fun execute(dependencies: D, scope: ActionScope<S, E>)
+    suspend fun execute(
+        dependencies: D,
+        scope: ActionScope<S, E>,
+    )
 }
 
 /**
@@ -54,7 +57,7 @@ interface ViewAction<D : ActionDependencies, S : ViewState, E : ViewEvent> {
  */
 open class ActionScope<S : ViewState, E : ViewEvent>(
     private val stateFlow: MutableStateFlow<S>,
-    private val eventChannel: Channel<E>
+    private val eventChannel: Channel<E>,
 ) {
     /**
      * The current state value. Use this to read state before making decisions.
@@ -132,7 +135,7 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             // Default: log the error. Override to emit events or update error state.
             println("Action failed: ${throwable.message}")
             throwable.printStackTrace()
-        }
+        },
     ) {
         setState { setLoading(true) }
         try {
@@ -167,13 +170,13 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
         onFailure: (Throwable) -> Unit = { throwable ->
             println("Action failed: ${throwable.message}")
             throwable.printStackTrace()
-        }
+        },
     ) {
         setState { setLoading(true) }
         try {
             block().fold(
                 onSuccess = onSuccess,
-                onFailure = onFailure
+                onFailure = onFailure,
             )
         } catch (e: Throwable) {
             onFailure(e)
@@ -193,7 +196,10 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
      * )
      * ```
      */
-    fun setStateAndEmit(reducer: S.() -> S, event: E) {
+    fun setStateAndEmit(
+        reducer: S.() -> S,
+        event: E,
+    ) {
         setState(reducer)
         sendEvent(event)
     }

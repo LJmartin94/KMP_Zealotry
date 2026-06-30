@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.catch
 import toad.ActionScope
 import toad.ViewAction
 
-//Relies on ExampleUiState, ExampleActionDependencies
+// Relies on ExampleUiState, ExampleActionDependencies
 
-abstract class ExampleAction: ViewAction<ExampleActionDependencies, ExampleUiState, ExampleEvent>
+abstract class ExampleAction : ViewAction<ExampleActionDependencies, ExampleUiState, ExampleEvent>
 
 data object ObserveExample : ExampleAction() { // 'object' because it is a singleton & without constructor/params
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
-        scope: ActionScope<ExampleUiState, ExampleEvent>
+        scope: ActionScope<ExampleUiState, ExampleEvent>,
     ) {
         scope.setState { copy(isLoading = true) }
         dependencies.exampleRepository.observeCanonicalExample(Example.FIRST)
@@ -23,10 +23,10 @@ data object ObserveExample : ExampleAction() { // 'object' because it is a singl
     }
 }
 
-data class UpdateToggle(val newVal: Boolean): ExampleAction() {
+data class UpdateToggle(val newVal: Boolean) : ExampleAction() {
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
-        scope: ActionScope<ExampleUiState, ExampleEvent>
+        scope: ActionScope<ExampleUiState, ExampleEvent>,
     ) {
         val id = scope.currentState.id
         if (id == null) {
@@ -41,7 +41,7 @@ data class UpdateToggle(val newVal: Boolean): ExampleAction() {
             },
             onFailure = { result ->
                 scope.setState { copy(error = result.message) }
-            }
+            },
         )
     }
 }

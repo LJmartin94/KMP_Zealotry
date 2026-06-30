@@ -6,9 +6,6 @@ import data.createAppDatabase
 import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
 import data.example.source.local.ExampleDao
-import z.calendar.CalendarRepository
-import z.screens.dayPartMenu.DayPartMenuRepository
-import z.screens.mainMenu.MainMenuRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +17,9 @@ import presentation.components.calendar.CalendarViewModel
 import presentation.example.ExampleViewModel
 import presentation.screens.dayPartMenu.DayPartMenuViewModel
 import presentation.screens.mainMenu.MainMenuViewModel
+import z.calendar.CalendarRepository
+import z.screens.dayPartMenu.DayPartMenuRepository
+import z.screens.mainMenu.MainMenuRepository
 
 fun initKoin(context: Any? = null) {
     startKoin {
@@ -49,4 +49,3 @@ fun initKoin(context: Any? = null) {
         )
     }
 }
-

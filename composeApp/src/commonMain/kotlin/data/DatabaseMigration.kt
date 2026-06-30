@@ -1,8 +1,6 @@
 package data
 
 import androidx.room.migration.Migration
-import androidx.sqlite.SQLiteConnection
-import androidx.sqlite.execSQL
 
 /**
  * Handles data migrations between Room schema versions.
@@ -24,15 +22,15 @@ import androidx.sqlite.execSQL
  * The v0 → v1 transition is a fresh install — no data to preserve.
  */
 object DatabaseMigration {
-
     /**
      * All migrations, in ascending version order.
      * The builder applies them sequentially via [addMigrations].
      */
-    val all: List<Migration> = listOf(
-        // Add new migrations here — no other file needs to change.
-        // Example: MIGRATION_1_TO_2,
-    )
+    val all: List<Migration> =
+        listOf(
+            // Add new migrations here — no other file needs to change.
+            // Example: MIGRATION_1_TO_2,
+        )
 
     // NOTE: This migration is illustrative only — it documents the fictional pre-history
     // of ExampleEntityLocal before real migration history began at v1 (the first Room schema).
@@ -65,4 +63,3 @@ object DatabaseMigration {
     //     }
     // }
 }
-

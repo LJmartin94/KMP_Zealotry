@@ -1,8 +1,8 @@
 package z.screens.mainMenu
 
+import kotlinx.datetime.DayOfWeek
 import z.calendar.FestiveDay
 import z.calendar.Season
-import kotlinx.datetime.DayOfWeek
 
 data class MainMenuUIState(
     val dayOfWeek: DayOfWeek = DayOfWeek.MONDAY,

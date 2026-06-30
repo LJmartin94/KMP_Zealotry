@@ -1,13 +1,13 @@
 package presentation.screens.dayPartMenu
 
 import androidx.lifecycle.ViewModel
-import z.screens.dayPartMenu.DayPart
-import z.screens.dayPartMenu.DayPartMenuUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
+import z.screens.dayPartMenu.DayPart
+import z.screens.dayPartMenu.DayPartMenuUIState
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.good_day
 import zealotry.composeapp.generated.resources.good_evening

@@ -16,9 +16,10 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
     // Define how to navigate to a route, now we can only navigate to NavDestination type
     val navigateTo = remember { { destination: NavDestination -> navController.navigate(route = destination) } }
     // Define how to pass keys around for loading items from db: avoid passing the objects themselves
-    val typeMap = mapOf(
-        typeOf<z.screens.dayPartMenu.DayPart>() to navTypeOf<z.screens.dayPartMenu.DayPart>(),
-    )
+    val typeMap =
+        mapOf(
+            typeOf<z.screens.dayPartMenu.DayPart>() to navTypeOf<z.screens.dayPartMenu.DayPart>(),
+        )
 
     NavHost(navController = navController, startDestination = NavDestination.MainMenu) {
         composable<NavDestination.MainMenu> {
@@ -30,7 +31,7 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
         // TODO: Making every daypart a separate instance of the same screen may be a premature abstraction
         // Probably does make sense: Underlying data structure for daypart will be one db entry -
         // this allows easily moving of tasks between day parts, displaying different routines on workdays/rest days
-        composable<NavDestination.DayPart> (typeMap = typeMap) {backstackEntry ->
+        composable<NavDestination.DayPart> (typeMap = typeMap) { backstackEntry ->
             val part: NavDestination.DayPart = backstackEntry.toRoute()
             DayPartMenuScreen(
                 content = part,
@@ -49,12 +50,12 @@ sealed class NavDestination {
 
     // With destination arguments - to display specific content
     @Serializable
-    class DayPart private constructor (val part: z.screens.dayPartMenu.DayPart, val working: Boolean) : NavDestination() {
+    class DayPart private constructor(val part: z.screens.dayPartMenu.DayPart, val working: Boolean) : NavDestination() {
         constructor(part: z.screens.dayPartMenu.DayPart) : this(part, true)
     }
 
-    //@Serializable
-    //class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
+    // @Serializable
+    // class Task private constructor(val taskKey: ObjectId?) : NavDestination() {
     //    constructor(task: ToDoTask?) : this(task?.id)
-    //}
+    // }
 }

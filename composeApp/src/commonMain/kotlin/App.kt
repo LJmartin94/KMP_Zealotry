@@ -4,12 +4,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import z.navigation.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.style.DarkThemeCompositionLocal
 import presentation.style.MainTheme
 import presentation.style.dimIfDarkMode
 import presentation.style.isDark
+import z.navigation.Navigation
 
 @Composable
 @Preview
@@ -17,7 +17,7 @@ fun App() {
     CompositionLocalProvider(DarkThemeCompositionLocal provides isDark()) {
         MainTheme {
             Surface(modifier = Modifier.fillMaxSize().dimIfDarkMode()) {
-                Navigation() //Non-voyager nav from z.navigation.Navigation.kt
+                Navigation() // Non-voyager nav from z.navigation.Navigation.kt
 //                TutorialNavigation() // Temp navigation function to transition from voyager library to androidx.navigation
             }
         }

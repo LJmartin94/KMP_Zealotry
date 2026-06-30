@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
-
     // *R* ead — @Query overrides (table name is entity-specific) --------------------------
 
     @Query("SELECT * FROM example")
@@ -47,8 +46,10 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
      * @param exampleId id of the example entity (no-op if entity not found)
      * @param toggleStatus value the toggle should have after updating
      */
-    suspend fun updateToggle(exampleId: String, toggleStatus: Boolean) =
-        updateById(exampleId) { toggle = toggleStatus }
+    suspend fun updateToggle(
+        exampleId: String,
+        toggleStatus: Boolean,
+    ) = updateById(exampleId) { toggle = toggleStatus }
 
     /**
      * Delete all example entities with the given toggle value.
@@ -58,4 +59,3 @@ abstract class ExampleDao : BaseDao<ExampleEntityLocal>() {
     @Query("DELETE FROM example WHERE toggle = :toggleStatus")
     abstract suspend fun deleteToggleWhen(toggleStatus: Boolean)
 }
-

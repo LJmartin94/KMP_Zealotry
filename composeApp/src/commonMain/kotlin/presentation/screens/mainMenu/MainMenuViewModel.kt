@@ -2,13 +2,13 @@ package presentation.screens.mainMenu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import z.calendar.CalendarRepository
 import z.calendar.CalendarState
 import z.calendar.getFestiveDay
 import z.screens.mainMenu.MainMenuUIState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 class MainMenuViewModel(private val calendarRepository: CalendarRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(MainMenuUIState())

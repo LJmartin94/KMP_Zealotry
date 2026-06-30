@@ -76,9 +76,8 @@ import kotlinx.coroutines.launch
  * @see ActionScope
  */
 abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
-    initialState: S
+    initialState: S,
 ) : ViewModel() {
-
     /**
      * Dependencies available to all actions in this ViewModel.
      * Override to provide repositories, use cases, dispatchers, etc.
@@ -113,7 +112,7 @@ abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
      */
     protected fun <D : ActionDependencies> dispatch(
         action: ViewAction<D, S, E>,
-        dispatcher: CoroutineDispatcher = Dispatchers.Default
+        dispatcher: CoroutineDispatcher = Dispatchers.Default,
     ) {
         val scope = ActionScope(_state, _events)
         viewModelScope.launch(dispatcher) {
@@ -133,7 +132,7 @@ abstract class ToadViewModel<S : ViewState, E : ViewEvent>(
      */
     protected fun <D : ActionDependencies> dispatchAll(
         actions: List<ViewAction<D, S, E>>,
-        dispatcher: CoroutineDispatcher = Dispatchers.Default
+        dispatcher: CoroutineDispatcher = Dispatchers.Default,
     ) {
         if (actions.isEmpty()) return
 

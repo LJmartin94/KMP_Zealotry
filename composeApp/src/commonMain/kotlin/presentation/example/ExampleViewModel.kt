@@ -3,16 +3,17 @@ package presentation.example
 import data.example.ExampleRepository
 import toad.ToadViewModel
 
-//Relies on ExampleUiState, ExampleActionDependencies, ExampleAction
+// Relies on ExampleUiState, ExampleActionDependencies, ExampleAction
 
-class ExampleViewModel (
+class ExampleViewModel(
     private val repository: ExampleRepository,
 ) : ToadViewModel<ExampleUiState, ExampleEvent>(
-    initialState = ExampleUiState()
-){
-    override val dependencies = ExampleActionDependencies(
-        exampleRepository = repository,
-    )
+        initialState = ExampleUiState(),
+    ) {
+    override val dependencies =
+        ExampleActionDependencies(
+            exampleRepository = repository,
+        )
 
     init {
         dispatchAll(initialActions)
@@ -23,11 +24,12 @@ class ExampleViewModel (
 
     fun runAction(action: ExampleAction) = dispatch(action)
 
-    companion object{
+    companion object {
         // Instead of passing the initial actions,
         // we have a single source of truth for what & how state should be restored
-        val initialActions = listOf<ExampleAction>(
-            // One-shot startup actions go here (e.g. load user preferences)
-        )
+        val initialActions =
+            listOf<ExampleAction>(
+                // One-shot startup actions go here (e.g. load user preferences)
+            )
     }
 }

@@ -10,7 +10,7 @@ import toad.getViewModel
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
 
 @Composable
-fun ExampleScreen(){
+fun ExampleScreen() {
     val viewModel = getViewModel<ExampleViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     StatelessExampleScreen(
@@ -23,11 +23,11 @@ fun ExampleScreen(){
 fun StatelessExampleScreen(
     state: ExampleUiState,
     onAction: (ExampleAction) -> Unit,
-){
+) {
     Button(
-        onClick = { onAction(UpdateToggle(!state.toggle))}
-    ){
-        Text( text = if (state.toggle) "on" else "off")
+        onClick = { onAction(UpdateToggle(!state.toggle)) },
+    ) {
+        Text(text = if (state.toggle) "on" else "off")
         println("id of toggle: ${state.id}")
     }
 }

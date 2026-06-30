@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import z.screens.dayPartMenu.DayPart
-import toad.getViewModel
-import z.navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.example.ExampleScreen
 import presentation.screens.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.screens.dayPartMenu.morningButtons.MorningButtons
+import toad.getViewModel
+import z.navigation.NavDestination
+import z.screens.dayPartMenu.DayPart
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -31,7 +31,7 @@ fun DayPartMenuScreen(
     content: NavDestination.DayPart,
     onBack: () -> Unit,
 ) {
-    //TODO: We're trying to figure out how to link screen state to a singleton-like db object
+    // TODO: We're trying to figure out how to link screen state to a singleton-like db object
     // see: https://medium.com/@shahadzawinski.non/using-realm-kotlin-sdk-in-android-97cf9affac8c
     val viewModel = getViewModel<DayPartMenuViewModel>()
     viewModel.setDayPart(content.part)
@@ -60,7 +60,7 @@ fun DayPartMenuScreen(
             visibleButtons.forEach { button -> ChecklistButton(button) }
         }
 
-        if (uiState.part == DayPart.MIDDAY){
+        if (uiState.part == DayPart.MIDDAY) {
             ExampleScreen()
         }
     }

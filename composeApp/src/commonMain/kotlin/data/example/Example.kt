@@ -1,9 +1,9 @@
 package data.example
 
-data class Example (
+data class Example(
     val id: String,
     val toggle: Boolean,
-){
+) {
     val isActive
         get() = toggle
 
