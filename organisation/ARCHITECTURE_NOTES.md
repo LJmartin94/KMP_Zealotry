@@ -81,8 +81,8 @@ The UseCase will:
 
 **UseCases as Action dependencies:** When a UseCase exists, it is injected into `ActionDependencies` (not into the ViewModel directly). Actions call the UseCase; they do not call the repository if a UseCase is present.
 
-### ⏳ Concern 6 — `viewModelScope` passed into `ActionDependencies`
-`ExampleViewModel` passes `viewModelScope` into `ExampleActionDependencies`. The `coroutineScope` field on `ActionDependencies` is described as "for advanced scenarios only" but is required by the abstract class, so every ViewModel is forced to pass its scope even when not needed. This is a scope leak — actions could launch rogue coroutines. Fix: make `coroutineScope` optional or remove the abstract requirement.
+### ✅ Concern 6 — `viewModelScope` passed into `ActionDependencies`
+`ActionDependencies.coroutineScope` is an `open val` defaulting to `null` — no ViewModel is forced to pass anything. `ExampleActionDependencies` does not pass `viewModelScope`. Concern was based on an outdated version of the code; already resolved.
 
 ### ✅ Concern 7 — Placeholder `id = "example"` in `ExampleViewModel` initial state
 `ExampleUiState.id` is now `String? = null`. `UpdateToggle` guards against null and no-ops with an error message if the example has not yet loaded. Concern resolved.
