@@ -1,7 +1,7 @@
 # Zealotry Architecture Review — Remaining Work
 
 **Repository:** LJmartin94/KMP_Zealotry  
-**Last commit when this was written:** c4be39c (session 1); continued in session 2 on 2026-06-19; session 3 on 2026-06-26  
+**Last commit when this was written:** c4be39c (session 1); continued in session 2 on 2026-06-19; session 3 on 2026-06-26; session 4 on 2026-06-30  
 **Session context:** Working through 9 architectural concerns raised in an initial review, then executing a planned refactor of the `z` package.
 
 ---
@@ -39,7 +39,7 @@ The two reference architectures used as inspiration:
 - Renamed `getSeededExample` → `getCanonicalExample` in `ExampleRepository`
 - Renamed parameter `seedString` → `canonicalKey`
 - The `seedKey` field name is intentionally kept at the DAO/entity layer (data-layer internal)
-- The companion object constants (`FIRST`, `SECOND`) on `Example` are kept — they are stable domain identifiers, not seed artifacts. The seeder depends on the domain constants (correct direction), not the other way around.
+- The companion object String constants (`FIRST`, `SECOND`) on `Example` were later replaced by `Example.CanonicalKey` enum (see decision #9)
 
 ### ✅ Concern 4 — Suspend-only repository with `forceUpdate` anti-pattern
 - All read methods in `ExampleRepository` now return `Flow<T>` (not `suspend fun` returning `Result<T>`)
@@ -84,11 +84,8 @@ The UseCase will:
 ### ⏳ Concern 6 — `viewModelScope` passed into `ActionDependencies`
 `ExampleViewModel` passes `viewModelScope` into `ExampleActionDependencies`. The `coroutineScope` field on `ActionDependencies` is described as "for advanced scenarios only" but is required by the abstract class, so every ViewModel is forced to pass its scope even when not needed. This is a scope leak — actions could launch rogue coroutines. Fix: make `coroutineScope` optional or remove the abstract requirement.
 
-### ⏳ Concern 7 — Placeholder `id = "example"` in `ExampleViewModel` initial state
-```kotlin
-initialState = ExampleUiState(id = "example", toggle = false, isLoading = false)
-```
-If `ObserveExample` fails, the ViewModel's `state.id` is the literal string `"example"`. Any subsequent action using `scope.currentState.id` (e.g. `UpdateToggle`) would look up an entity with a fake ID. Fix: make `id` nullable and guard in actions, or reconsider initial state design.
+### ✅ Concern 7 — Placeholder `id = "example"` in `ExampleViewModel` initial state
+`ExampleUiState.id` is now `String? = null`. `UpdateToggle` guards against null and no-ops with an error message if the example has not yet loaded. Concern resolved.
 
 ### ⏳ Concern 8 — `deleteAllFrom` opened N write transactions ✅ ALREADY FIXED
 Fixed as part of Concern 4 work — now executes in a single transaction.
@@ -157,12 +154,15 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 6. **`initialActions`** in ViewModels = one-shot startup actions only (fed to `dispatchAll`); long-running observations dispatched separately via `dispatch()`
 7. **DAO methods do not return `Result`** — DAOs throw on failure; `runCatching` is applied once at the repository boundary for operations where the interface contracts `Result<T>`. This aligns with Room's design (suspend functions propagate exceptions naturally) and avoids catching programmer errors silently at the wrong layer.
 8. The **4-hour day offset** is a domain/business rule, not a repository concern — belongs in a UseCase
+9. **Entity IDs are plain `String` throughout the stack** — a typed `EntityId` wrapper was explored and deliberately rejected. UUID uniqueness comes from `generateEntityId()` (which uses `Uuid.random()`), not from the type system. The specific canonical-key/entity-ID confusion risk is handled by decision #10 below. Reference: both android/architecture-samples and the TOAD example use plain `String` for IDs.
+10. **Canonical keys use a per-entity nested enum** — `Example.CanonicalKey` (with `FIRST`, `SECOND`) replaces the former companion object String constants. The enum type is incompatible with `String` parameters at compile time, preventing canonical keys from being accidentally passed to entity ID methods. Each entity owns its own nested `CanonicalKey` enum; they are distinct types (`Example.CanonicalKey` ≠ `Foo.CanonicalKey`). `BaseDao.observeBySeedKey(seedKey: String)` remains generic — the repository impl calls `canonicalKey.value` to extract the String before passing to the DAO.
+11. **Presentation layer uses `String?` for entity IDs** — the domain model (`Example.id: String`) flows into `ExampleUiState.id: String?` without wrapping. If a repository method requires an ID, the action passes `currentState.id` directly. No unwrapping or re-wrapping is needed at any layer boundary.
 
 ---
 
 ## Ordered Execution Plan (updated 2026-06-24)
 
-> **Current status:** Kotlin 2.2.0 upgrade complete. Android and iOS both compile cleanly. `./gradlew build` fails on ktlint (150 pre-existing violations — not introduced by the upgrade). Next: ktlint cleanup commit, then EntityId value class.
+> **Current status:** Ktlint cleanup and EntityId/CanonicalKey work complete. Both targets compile cleanly. Next: testing framework + POC tests.
 
 1. **Room migration** ✅ Code complete — commit as broken intermediate state, then immediately do step 2.
    - All Realm entities → Room `@Entity` data classes
@@ -189,9 +189,9 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
    - `DatabaseFactory.ios.kt`: added `@OptIn(ExperimentalForeignApi::class)` (required in Kotlin 2.x for any Objective-C/cinterop API access; was implicit in 1.9.x)
    - **Note:** `./gradlew build` runs ktlint as part of the `check` lifecycle and currently fails (150 pre-existing violations). Compilation itself (`assembleDebug` / Android Studio) succeeds. Ktlint cleanup is a separate step before testing.
 
-3. **Ktlint cleanup** — 150 pre-existing violations across 33 files. Run `ktlintFormat`, review, commit as `chore: ktlint formatting` before proceeding to testing.
+3. **Ktlint cleanup** ✅ — violations fixed and committed.
 
-4. **EntityId value class** — `EntityId.kt` still has a TODO: wrap the String in a `value class` with UUID validation in an `init` block. This adds compile-time type safety (can't accidentally pass a raw String where an EntityId is expected). Do this as a small focused commit.
+4. **EntityId / CanonicalKey** ✅ — EntityId wrapper rejected (see decisions #9–11). Companion object String constants replaced with `Example.CanonicalKey` nested enum. Committed.
 
 5. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
    - `UpdateToggleTest` — suspend action with mocked repo (establishes Mokkery pattern)
