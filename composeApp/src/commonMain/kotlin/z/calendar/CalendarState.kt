@@ -1,6 +1,6 @@
 package z.calendar
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.DayOfWeek
 
 data class CalendarState(
