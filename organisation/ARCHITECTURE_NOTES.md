@@ -193,12 +193,14 @@ Pattern after refactor: `SetDayPart(part)` TOAD action, or use `ToadViewModel.up
 
 4. **EntityId / CanonicalKey** ✅ — EntityId wrapper rejected (see decisions #9–11). Companion object String constants replaced with `Example.CanonicalKey` nested enum. Committed.
 
-5. **Testing framework + POC tests** — Mokkery 3.0.0 + Turbine in `commonTest`:
-   - `UpdateToggleTest` — suspend action with mocked repo (establishes Mokkery pattern)
-   - `ObserveExampleTest` — Flow-collecting action with mocked Flow (establishes Turbine pattern)
+5. **Testing framework + POC tests** ✅ — Mokkery 3.3.0 + Turbine 1.2.1 in `commonTest`. `UpdateToggleTest` and `ObserveExampleTest` pass on Android and iOS. Note: backtick test names cannot contain commas on Kotlin Native — spaces only.
+
+5a. **Dependency upgrade** ✅ — Kotlin 2.2.0 → 2.3.21; KSP 2.3.9 (now version-independent); AGP 8.7.0 → 8.13.2; Gradle 8.9 → 9.5.1; Compose Multiplatform 1.8.2 → 1.11.1 (dropped iosX64 — only iosArm64 + iosSimulatorArm64 now); kotlinx-datetime 0.5.0 → 0.8.0 (breaking: `kotlinx.datetime.Clock/Instant` → `kotlin.time.Clock/Instant`); jb-navigation 2.8.0-alpha10 → 2.9.2 (breaking: `NavType` now uses `SavedState` not `Bundle`); Room 2.7.0 → 2.8.4; all other deps bumped to latest stable.
 
 6. **z refactor (Concerns 2, 3)** — migrate `z` package to proper structure; rewrite `MainMenuViewModel` and `DayPartMenuViewModel` as `ToadViewModel`; fix composition side-effect bug in `DayPartMenuScreen`; new Actions get tests as they are created.
 
 7. **`GetAstronomicalContextUseCase` extraction (Concern 5, step 2)** — test-driven: write tests first, then extract the UseCase to satisfy them.
+
+8. **Kover coverage enforcement** — add the Kover Gradle plugin after the z refactor is complete. Configure HTML report generation and a minimum coverage threshold (to be decided once baseline coverage from steps 6–7 is known). Kover measures via JVM/Android test execution; coverage of `commonMain` logic is fully captured. iOS native targets are not measured directly but share the same logic paths.
 
 **Testing policy:** Any Action with branching logic, null guards, or non-trivial state transitions gets a unit test at the time it is written.
