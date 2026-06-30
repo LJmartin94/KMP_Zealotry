@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -56,6 +57,12 @@ kotlin {
 
             // tutorial navigation -replacing voyager:
             implementation(libs.kotlinx.serializationJson)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.mokkery.coroutines)
+            implementation(libs.turbine)
+            implementation(libs.coroutines.test)
         }
     }
 }
