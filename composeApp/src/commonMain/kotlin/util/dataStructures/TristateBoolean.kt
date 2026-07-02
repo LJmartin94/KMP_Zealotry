@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions")
 
-package z.libs.tristateBool
+package util.dataStructures
 
 /**
  *  A check if value is true or undefined

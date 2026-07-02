@@ -1,7 +1,7 @@
 // Turns out, linguistic counting systems often contain Magic Numbers... Who knew?!
 @file:Suppress("MagicNumber")
 
-package z.libs.localisation
+package util.localisation
 
 /**
  * This file is a programmatic representation of the information about ordinal counting systems

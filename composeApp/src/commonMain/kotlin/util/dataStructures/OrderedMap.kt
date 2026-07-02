@@ -1,4 +1,4 @@
-package z.libs.dataStructures
+package util.dataStructures
 
 /**
  * An ordered/indexed mutable map, that allows for list-like operations on its keys.

@@ -1,4 +1,4 @@
-package presentation.screens.dayPartMenu.checklistButtons
+package presentation.dayPartMenu.checklistButtons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import presentation.dayPartMenu.morningButtons.MorningButtons
+import presentation.dayPartMenu.morningButtons.toBundle
 import presentation.reusableUi.Chiaroscuro
-import presentation.screens.dayPartMenu.morningButtons.MorningButtons
-import presentation.screens.dayPartMenu.morningButtons.toBundle
 
 data class ChecklistButtonState(
     val mainIcon: Chiaroscuro,

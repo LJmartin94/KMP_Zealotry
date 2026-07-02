@@ -1,4 +1,4 @@
-package presentation.screens.dayPartMenu.checklistButtons
+package presentation.dayPartMenu.checklistButtons
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon

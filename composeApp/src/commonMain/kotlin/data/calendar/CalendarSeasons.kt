@@ -1,4 +1,4 @@
-package z.calendar
+package data.calendar
 
 import kotlin.time.Instant
 import kotlinx.datetime.LocalDate

@@ -1,3 +1,3 @@
-package z.screens.mainMenu
+package data.mainMenu
 
 class MainMenuRepository

@@ -1,4 +1,4 @@
-package z.libs.flow
+package util
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.drop

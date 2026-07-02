@@ -1,4 +1,4 @@
-package z.navigation
+package navigation
 
 import androidx.navigation.NavType
 import androidx.savedstate.SavedState

@@ -1,4 +1,4 @@
-package z.calendar
+package data.calendar
 
 import kotlin.time.Clock
 import kotlinx.datetime.DayOfWeek

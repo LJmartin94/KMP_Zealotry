@@ -1,4 +1,4 @@
-package z.calendar
+package data.calendar
 
 enum class FestiveDay {
     SPRING_START,

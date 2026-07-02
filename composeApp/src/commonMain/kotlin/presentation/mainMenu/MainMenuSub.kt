@@ -1,4 +1,4 @@
-package presentation.screens.mainMenu
+package presentation.mainMenu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
