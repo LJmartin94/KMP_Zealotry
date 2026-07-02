@@ -1,4 +1,5 @@
-package z.navigation
+package navigation
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -6,9 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import data.dayPartMenu.DayPart as DayPartEnum
 import kotlinx.serialization.Serializable
-import presentation.screens.dayPartMenu.DayPartMenuScreen
-import presentation.screens.mainMenu.MainMenuScreen
+import presentation.dayPartMenu.DayPartMenuScreen
+import presentation.mainMenu.MainMenuScreen
 import kotlin.reflect.typeOf
 
 @Composable
@@ -18,7 +20,7 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
     // Define how to pass keys around for loading items from db: avoid passing the objects themselves
     val typeMap =
         mapOf(
-            typeOf<z.screens.dayPartMenu.DayPart>() to navTypeOf<z.screens.dayPartMenu.DayPart>(),
+            typeOf<DayPartEnum>() to navTypeOf<DayPartEnum>(),
         )
 
     NavHost(navController = navController, startDestination = NavDestination.MainMenu) {
@@ -50,8 +52,8 @@ sealed class NavDestination {
 
     // With destination arguments - to display specific content
     @Serializable
-    class DayPart private constructor(val part: z.screens.dayPartMenu.DayPart, val working: Boolean) : NavDestination() {
-        constructor(part: z.screens.dayPartMenu.DayPart) : this(part, true)
+    class DayPart private constructor(val part: DayPartEnum, val working: Boolean) : NavDestination() {
+        constructor(part: DayPartEnum) : this(part, true)
     }
 
     // @Serializable

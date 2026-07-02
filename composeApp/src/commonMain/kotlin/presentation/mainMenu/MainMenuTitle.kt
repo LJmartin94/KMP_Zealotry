@@ -1,4 +1,4 @@
-package presentation.screens.mainMenu
+package presentation.mainMenu
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,14 +13,13 @@ import presentation.resourceComposition.toOrdinalNumberString
 import presentation.resourceComposition.toResourceString
 import presentation.reusableUi.OutlinedText
 import presentation.style.MainTypography
-import z.screens.mainMenu.MainMenuUIState
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.day_of_season
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun MainMenuTitle(
-    uiState: MainMenuUIState,
+    uiState: MainMenuUiState,
     modifier: Modifier = Modifier,
 ) {
     val dayName = uiState.festiveDay?.toResourceString() ?: uiState.dayOfWeek.toResourceString()

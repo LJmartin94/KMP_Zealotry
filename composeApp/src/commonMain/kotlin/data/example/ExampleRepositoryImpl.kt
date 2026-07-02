@@ -5,7 +5,7 @@ import data.example.source.local.ExampleEntityLocal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import z.libs.flow.onUnexpectedNull
+import util.onUnexpectedNull
 
 class ExampleRepositoryImpl(
     private val localDataSource: ExampleDao,

@@ -1,4 +1,4 @@
-package presentation.screens.mainMenu
+package presentation.mainMenu
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import data.dayPartMenu.DayPart
+import navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
@@ -21,8 +23,6 @@ import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
 import toad.getViewModel
-import z.navigation.NavDestination
-import z.screens.dayPartMenu.DayPart
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
 import zealotry.composeapp.generated.resources.day
@@ -36,7 +36,7 @@ import zealotry.composeapp.generated.resources.morning_button
 @Composable
 fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
     val viewModel = getViewModel<MainMenuViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.state.collectAsState()
 
     Box(
         modifier =
