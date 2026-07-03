@@ -2,7 +2,11 @@ package di
 
 import data.AppDatabase
 import data.DatabaseSeeder
+import data.calendar.CalendarRepository
+import data.calendar.CalendarRepositoryImpl
 import data.createAppDatabase
+import data.dayPartMenu.DayPartMenuRepository
+import data.dayPartMenu.DayPartMenuRepositoryImpl
 import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
 import data.example.source.local.ExampleDao
@@ -13,26 +17,19 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import presentation.components.calendar.CalendarViewModel
+import presentation.dayPartMenu.DayPartMenuViewModel
 import presentation.example.ExampleViewModel
-import presentation.screens.dayPartMenu.DayPartMenuViewModel
-import presentation.screens.mainMenu.MainMenuViewModel
-import z.calendar.CalendarRepository
-import z.screens.dayPartMenu.DayPartMenuRepository
-import z.screens.mainMenu.MainMenuRepository
+import presentation.mainMenu.MainMenuViewModel
 
 fun initKoin(context: Any? = null) {
     startKoin {
         modules(
             module {
-                single { MainMenuRepository() }
+                singleOf(::CalendarRepositoryImpl) { bind<CalendarRepository>() }
                 factory { MainMenuViewModel(get()) }
 
-                single { DayPartMenuRepository() }
-                factory { DayPartMenuViewModel() }
-
-                single { CalendarRepository() }
-                factory { CalendarViewModel(get()) }
+                singleOf(::DayPartMenuRepositoryImpl) { bind<DayPartMenuRepository>() }
+                factory { DayPartMenuViewModel(get()) }
 
                 single {
                     createAppDatabase(context).also { db ->
