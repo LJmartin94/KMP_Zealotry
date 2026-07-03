@@ -19,8 +19,8 @@ import kotlin.time.Duration
 class CalendarRepositoryImpl : CalendarRepository {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val _updateFlow = MutableStateFlow(currentCalendarState())
-    override val updateFlow: StateFlow<CalendarState> = _updateFlow.asStateFlow()
+    private val _updateFlow = MutableStateFlow(Clock.System.now())
+    override val updateFlow: StateFlow<Instant> = _updateFlow.asStateFlow()
 
     init {
         scope.launch {
@@ -31,23 +31,13 @@ class CalendarRepositoryImpl : CalendarRepository {
                 println("getToday - Delaying next check for $delayBy!")
                 delay(delayBy.inWholeMilliseconds)
                 println("getToday - Coroutine waking up, emitting new day...")
-                _updateFlow.value = currentCalendarState()
+                _updateFlow.value = Clock.System.now()
             }
         }
     }
 
     override fun forceRefresh() {
-        _updateFlow.value = currentCalendarState()
-    }
-
-    private fun currentCalendarState(): CalendarState {
-        val now: Instant = Clock.System.now()
-        val modifiedInstant: Instant = getInstantMinusOffset(moment = now, h = 4)
-        val modifiedDay = getDateMinusOffset(moment = now, h = 4)
-        return CalendarState(
-            dayOfWeek = modifiedDay.dayOfWeek,
-            seasonInfo = SeasonInfo(modifiedInstant),
-        )
+        _updateFlow.value = Clock.System.now()
     }
 
     private fun getDurationUntilNextDay(
