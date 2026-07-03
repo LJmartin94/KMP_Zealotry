@@ -10,17 +10,15 @@ data object ObserveCalendarContext : MainMenuAction() {
         dependencies: MainMenuActionDependencies,
         scope: ActionScope<MainMenuUiState, MainMenuEvent>,
     ) {
-        dependencies.calendarRepository.updateFlow
-            .collect { instant ->
-                val context = dependencies.astronomicalContextUseCase(instant)
-                scope.setState {
-                    copy(
-                        dayOfWeek = context.dayOfWeek,
-                        festiveDay = context.festiveDay,
-                        dayOfSeason = context.dayOfSeason,
-                        currentSeason = context.season,
-                    )
-                }
+        dependencies.observeAstronomicalContextUseCase().collect { context ->
+            scope.setState {
+                copy(
+                    dayOfWeek = context.dayOfWeek,
+                    festiveDay = context.festiveDay,
+                    dayOfSeason = context.dayOfSeason,
+                    currentSeason = context.season,
+                )
             }
+        }
     }
 }

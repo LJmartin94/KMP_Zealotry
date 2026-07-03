@@ -13,6 +13,7 @@ import data.example.source.local.ExampleDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import domain.ObserveAstronomicalContextUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
@@ -26,7 +27,8 @@ fun initKoin(context: Any? = null) {
         modules(
             module {
                 singleOf(::CalendarRepositoryImpl) { bind<CalendarRepository>() }
-                factory { MainMenuViewModel(get()) }
+                singleOf(::ObserveAstronomicalContextUseCase)
+                factory { MainMenuViewModel(get(), get()) }
 
                 singleOf(::DayPartMenuRepositoryImpl) { bind<DayPartMenuRepository>() }
                 factory { DayPartMenuViewModel(get()) }

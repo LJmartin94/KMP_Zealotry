@@ -1,15 +1,18 @@
 package presentation.mainMenu
 
 import data.calendar.CalendarRepository
+import domain.ObserveAstronomicalContextUseCase
 import toad.ToadViewModel
 
 class MainMenuViewModel(
     calendarRepository: CalendarRepository,
+    observeAstronomicalContextUseCase: ObserveAstronomicalContextUseCase,
 ) : ToadViewModel<MainMenuUiState, MainMenuEvent>(
     initialState = MainMenuUiState(),
 ) {
     override val dependencies = MainMenuActionDependencies(
         calendarRepository = calendarRepository,
+        observeAstronomicalContextUseCase = observeAstronomicalContextUseCase,
     )
 
     init {
