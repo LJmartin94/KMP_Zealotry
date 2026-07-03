@@ -110,9 +110,13 @@ The owner reviews all code changes before committing. The AI should flag when a 
 
 `organisation/AI/SESSION_NOTES.md` tracks current state only. It is not a log. The AI should prune it at the start of each session as part of setup — stale content creates noise and inflates context.
 
+**At session start — verify before pruning:**
+
+Run `git status` and compare the output against the "Uncommitted Changes" section of SESSION_NOTES.md. Reconcile any discrepancies first — entries that git shows as already committed should be removed, and any unstaged changes not listed should be added. Do this before any other work.
+
 **Rules for trimming:**
 
-- **Uncommitted changes** — remove an entry once the relevant files have been committed.
+- **Uncommitted changes** — remove an entry once the relevant files have been committed. Also update mid-session: when the owner commits a batch, remove those files from the list immediately rather than waiting for the next session start.
 - **Step status table** — once a step is fully committed, collapse it to a single ✅ row. Detailed notes about what a step involved belong in the Step History section of `ARCHITECTURE_NOTES.md`, not in session notes.
 - **Concerns table** — once all concerns are stably resolved and are unlikely to resurface, compress the table to a single summary line (e.g. "All 9 original concerns resolved ✅ — see ARCHITECTURE_NOTES.md for decisions").
 - **Remaining planned work** — remove sections as steps complete.
