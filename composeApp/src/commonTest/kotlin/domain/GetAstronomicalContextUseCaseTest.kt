@@ -181,10 +181,10 @@ class GetAstronomicalContextUseCaseTest {
     // 2:00am CET (UTC+1) forward to 3:00am CEST (UTC+2). Local 2:00am–2:59am
     // does not exist.
     //
-    // This is the regression the fall-back test does NOT cover: with local-time
-    // arithmetic, local 4:30am − 4h = 0:30am today, giving "today". With UTC
-    // arithmetic, the offset instant (UTC 22:30 March 28) converts to 23:30 CET
-    // March 28 — still "yesterday". The test pins the UTC behaviour.
+    // This is the regression the fall-back test does NOT cover: with UTC arithmetic,
+    // the offset instant (UTC 22:30 March 28) converts to 23:30 CET March 28, giving
+    // "yesterday" at local 4:30am. With local-time logic (hour >= 4 → today), the
+    // result is correctly "today". The test pins the local-time behaviour.
 
     @Test
     fun `DST spring-forward in Amsterdam does not affect the 4am day-boundary logic`() {
@@ -197,16 +197,49 @@ class GetAstronomicalContextUseCaseTest {
         assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justBefore))
         assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justAfter))
 
-        // 4:30am CEST (UTC 02:30Z): local arithmetic gives 0:30am today ("today"),
-        // but UTC arithmetic gives 22:30 CET March 28 ("yesterday"). This is the
-        // divergence point between the two approaches.
-        val justPast4am  = Instant.parse("2026-03-29T02:30:00Z") // 4:30am CEST
-        val march28Anchor = Instant.parse("2026-03-28T12:00:00Z")
+        // 4:30am CEST (UTC 02:30Z): hour >= 4, so effectiveDate = March 29 ("today").
+        // UTC arithmetic would give "yesterday" here — this test catches that regression.
+        val justPast4am   = Instant.parse("2026-03-29T02:30:00Z") // 4:30am CEST
+        val march29Anchor = Instant.parse("2026-03-29T12:00:00Z")
 
-        val result    = dstUseCase(justPast4am)
-        val yesterday = dstUseCase(march28Anchor)
+        val result = dstUseCase(justPast4am)
+        val today  = dstUseCase(march29Anchor)
 
-        assertEquals(yesterday.season,      result.season)
-        assertEquals(yesterday.dayOfSeason, result.dayOfSeason)
+        assertEquals(today.season,      result.season)
+        assertEquals(today.dayOfSeason, result.dayOfSeason)
+    }
+
+    // -------------------------------------------------------------------------
+    // Timezone travel — the 4am boundary must apply in whatever timezone the
+    // device is currently set to. Simulated by injecting two different timezones
+    // for the same UTC instant.
+    //
+    // At 2024-07-15T04:00:00Z:
+    //   Amsterdam (UTC+2) = 6:00am July 15 → hour >= 4 → effectiveDate = July 15
+    //   New York  (UTC-4) = midnight July 15 → hour < 4 → effectiveDate = July 14
+    //
+    // A user traveling from Amsterdam to New York should see July 14 context once
+    // their device switches timezone, even though the UTC instant is the same.
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun `4am boundary applies in the device timezone, not UTC`() {
+        val travelInstant   = Instant.parse("2024-07-15T04:00:00Z")
+        val amsterdamUseCase = GetAstronomicalContextUseCase(TimeZone.of("Europe/Amsterdam"))
+        val newYorkUseCase   = GetAstronomicalContextUseCase(TimeZone.of("America/New_York"))
+
+        val amsterdamAnchor = Instant.parse("2024-07-15T12:00:00Z") // noon UTC = 2pm Amsterdam
+        val newYorkAnchor   = Instant.parse("2024-07-14T16:00:00Z") // noon UTC-4 = 8am New York
+
+        val amsterdamResult = amsterdamUseCase(travelInstant)
+        val newYorkResult   = newYorkUseCase(travelInstant)
+        val amsterdamToday  = amsterdamUseCase(amsterdamAnchor)
+        val newYorkYesterday = newYorkUseCase(newYorkAnchor)
+
+        // Same instant, different timezone → different effective date
+        assertEquals(amsterdamToday.season,      amsterdamResult.season)
+        assertEquals(amsterdamToday.dayOfSeason, amsterdamResult.dayOfSeason)
+        assertEquals(newYorkYesterday.season,      newYorkResult.season)
+        assertEquals(newYorkYesterday.dayOfSeason, newYorkResult.dayOfSeason)
     }
 }

@@ -64,3 +64,5 @@ Kover measures coverage via JVM/Android test execution. Coverage of `commonMain`
 ### Deferred: forceRefresh() lifecycle wiring
 
 `CalendarRepository.forceRefresh()` exists as a Doze mode mitigation but is not yet wired to any lifecycle observer. Wire it to `ON_START`/`onResume` when the lifecycle layer is established.
+
+When wiring `forceRefresh()`, also cancel and restart the coroutine sleep in `CalendarRepositoryImpl` with a freshly-computed duration based on the current timezone. This covers the timezone-change-during-travel case: the coroutine pre-computes its sleep duration at departure-timezone time and will fire at the wrong local time if the device timezone changes mid-sleep. A foreground refresh corrects the emitted value, but the coroutine sleep should also be reset so background updates stay accurate.
