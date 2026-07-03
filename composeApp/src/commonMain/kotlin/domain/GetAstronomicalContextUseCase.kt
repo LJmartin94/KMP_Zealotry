@@ -1,11 +1,44 @@
-package data.calendar
+package domain
 
+import data.calendar.getInstantMinusOffset
+import kotlin.time.Duration
 import kotlin.time.Instant
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Duration
+
+class GetAstronomicalContextUseCase(
+    private val timeZone: TimeZone = TimeZone.currentSystemDefault(),
+) {
+    operator fun invoke(moment: Instant): AstronomicalContext {
+        val offsetInstant = getInstantMinusOffset(moment, h = 4)
+        val seasonInfo = SeasonInfo(offsetInstant, timeZone)
+        return AstronomicalContext(
+            dayOfWeek = offsetInstant.toLocalDateTime(timeZone).dayOfWeek,
+            dayOfSeason = seasonInfo.dayOfTheSeason,
+            season = seasonInfo.currentSeason,
+            festiveDay = seasonInfo.getFestiveDay(),
+        )
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Output type
+// ---------------------------------------------------------------------------
+
+data class AstronomicalContext(
+    val dayOfWeek: DayOfWeek,
+    val dayOfSeason: Int,
+    val season: Season,
+    val festiveDay: FestiveDay?,
+)
+
+// ---------------------------------------------------------------------------
+// Domain enums
+// ---------------------------------------------------------------------------
 
 enum class Season {
     SPRING,
@@ -14,7 +47,22 @@ enum class Season {
     WINTER,
 }
 
-data class SeasonInfo(
+enum class FestiveDay {
+    SPRING_START,
+    MID_SPRING,
+    SUMMER_START,
+    MID_SUMMER,
+    AUTUMN_START,
+    MID_AUTUMN,
+    WINTER_START,
+    MID_WINTER,
+}
+
+// ---------------------------------------------------------------------------
+// SeasonInfo — internal implementation detail, not exposed outside this file
+// ---------------------------------------------------------------------------
+
+private data class SeasonInfo(
     val moment: Instant,
     val timeZone: TimeZone = TimeZone.currentSystemDefault(),
 ) {
@@ -39,7 +87,24 @@ data class SeasonInfo(
     val currentSeason: Season = getCurrentSeason(dayOfTheYear, seasonStarts)
     val dayOfTheSeason: Int =
         getDayOfSeason(currentSeason, dayOfTheYear, seasonStarts, prevWinterStart)
+
+    fun getFestiveDay(): FestiveDay? =
+        when (dayOfTheYear) {
+            startOfSpring -> FestiveDay.SPRING_START
+            vernalEquinox -> FestiveDay.MID_SPRING
+            startOfSummer -> FestiveDay.SUMMER_START
+            summerSolstice -> FestiveDay.MID_SUMMER
+            startOfAutumn -> FestiveDay.AUTUMN_START
+            autumnalEquinox -> FestiveDay.MID_AUTUMN
+            startOfWinter -> FestiveDay.WINTER_START
+            winterSolstice -> FestiveDay.MID_WINTER
+            else -> null
+        }
 }
+
+// ---------------------------------------------------------------------------
+// Pure computation functions — internal to this file
+// ---------------------------------------------------------------------------
 
 /**
  * Naive and relatively inaccurate method for getting the solstice and equinoxes of a given year
@@ -47,7 +112,7 @@ data class SeasonInfo(
  *
  * @return Map of Instants on which spring eqi, summer sol, autumn eqi, winter sol occur
  */
-const val REF_YEAR = 2005
+private const val REF_YEAR = 2005
 
 private fun getEquinoxesAndSolstices(year: Int): Map<Season, Instant> {
     // Reference Equinoxes and Solstices for 2005 (REF_YEAR), UTC
@@ -116,15 +181,14 @@ private fun getSeasonStart(
 private fun getCurrentSeason(
     dayOfYear: Int,
     seasonStart: Map<Season, Instant>,
-): Season {
-    return when {
+): Season =
+    when {
         dayOfYear < seasonStart.getValue(Season.SPRING).toUtcDayOfYear() -> Season.WINTER
         dayOfYear < seasonStart.getValue(Season.SUMMER).toUtcDayOfYear() -> Season.SPRING
         dayOfYear < seasonStart.getValue(Season.AUTUMN).toUtcDayOfYear() -> Season.SUMMER
         dayOfYear < seasonStart.getValue(Season.WINTER).toUtcDayOfYear() -> Season.AUTUMN
         else -> Season.WINTER
     }
-}
 
 private fun getDayOfSeason(
     currentSeason: Season,
