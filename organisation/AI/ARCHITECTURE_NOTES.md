@@ -45,9 +45,8 @@ composeApp/src/
 │   ├── data/
 │   │   ├── AppDatabase.kt / BaseDao.kt / DatabaseFactory.kt / DatabaseMigration.kt / DatabaseSeeder.kt / EntityId.kt
 │   │   ├── calendar/
-│   │   │   ├── CalendarRepository.kt         ← interface; Flow<Instant>
-│   │   │   ├── CalendarRepositoryImpl.kt     ← polls clock, emits Instant at day boundary
-│   │   │   └── CalendarTimeUtils.kt          ← getInstantMinusOffset / getDateMinusOffset (used to schedule next wake time)
+│   │   │   ├── CalendarRepository.kt         ← interface; Flow<Instant> + refresh()
+│   │   │   └── CalendarRepositoryImpl.kt     ← passive store; emits Instant on refresh(), no scheduling loop
 │   │   ├── dayPartMenu/
 │   │   │   ├── DayPart.kt                    ← @Serializable enum (MORNING, MIDDAY, EVENING) — data layer entity
 │   │   │   ├── DayPartMenuRepository.kt      ← interface (empty — stub for future task button queries)
@@ -68,7 +67,8 @@ composeApp/src/
 │   ├── di/
 │   │   └── DependencyInjection.kt            ← Koin setup
 │   ├── domain/
-│   │   └── GetAstronomicalContextUseCase.kt  ← AstronomicalContext + Season + FestiveDay (public); SeasonInfo + computation (private)
+│   │   ├── GetAstronomicalContextUseCase.kt  ← top-level functions: computeAstronomicalContext, effectiveDateOf, nextAppDayInstant; AstronomicalContext + Season + FestiveDay (public); SeasonInfo + computation (private)
+│   │   └── ObserveAstronomicalContextUseCase.kt ← owns scheduling loop; returns Flow<AstronomicalContext>; calls computeAstronomicalContext
 │   ├── navigation/
 │   │   ├── Navigation.kt                     ← NavHost + NavDestination sealed class
 │   │   └── NavTypeOf.kt                      ← generic NavType<T> helper using SavedState (JB Nav 2.9.x API)
@@ -118,7 +118,8 @@ composeApp/src/
 │           └── Locale.kt                     ← Locale interface + implementations for ~50 languages
 └── commonTest/kotlin/
     ├── domain/
-    │   └── GetAstronomicalContextUseCaseTest.kt  ← 11 tests; TimeZone.UTC injected for determinism
+    │   ├── AstronomicalContextTest.kt            ← 11 tests; TimeZone.UTC injected for determinism
+    │   └── ObserveAstronomicalContextUseCaseTest.kt ← 2 tests; fixed clock + mock repo
     └── presentation/
         ├── example/
         │   ├── UpdateToggleTest.kt
@@ -131,7 +132,27 @@ composeApp/src/
 
 ---
 
-## Key Architectural Decisions
+## Layer Dependency Rules
+
+Allowed directions — **presentation → domain → data**, and each layer may depend on its own layer:
+
+| From | May import | Must never import |
+|---|---|---|
+| `presentation/` | `domain/`, `data/` (interfaces only) | — |
+| `domain/` | `data/` (interfaces only) | `presentation/` |
+| `data/` | — | `domain/`, `presentation/` |
+
+**The single most important forbidden direction: `data/` must never import `domain/`.** Domain logic (business rules, computation) flows into data via constructor injection or interfaces — never via direct import. A `data/` file with `import domain.*` is always a layering violation.
+
+### Layer Responsibilities
+
+**`data/`** — storage and retrieval only. No business rules, no scheduling logic, no computation beyond mapping to/from storage formats.
+
+**`domain/`** — pure business logic and computation. Owns rules about *what* the app considers true (4am day boundary, season calculation, scheduling intervals). No UI, no platform I/O beyond injected interfaces.
+
+**`presentation/`** — UI state and user interaction. Orchestrates domain calls and reacts to their output. Must not contain business rules or decide *when* something is true based on domain knowledge.
+
+**Signal to watch for:** if a presentation-layer file needs to import a domain function to make a timing or scheduling decision, that decision belongs in domain — not in the action that calls it.
 
 1. **TOAD everywhere** — no raw MVVM ViewModels
 2. **Offline-first, Flow-based repositories** — `observe*` for reactive reads, `refresh*` for explicit network sync
@@ -182,8 +203,8 @@ Even though currently empty, it is declared as `interface DayPartMenuRepository`
 **G. `CalendarRepositoryImpl` implements `CalendarRepository` interface.**
 `CalendarRepository` (interface) defines `val updateFlow: Flow<Instant>`. DI binds `CalendarRepositoryImpl` to `CalendarRepository` via `singleOf(::CalendarRepositoryImpl) { bind<CalendarRepository>() }`.
 
-**G2. `CalendarRepository.forceRefresh()` — Doze mode mitigation.**
-`CalendarRepositoryImpl` uses a `StateFlow` updated by a coroutine that sleeps until the next day boundary. Doze mode can defer `delay()` calls when the app is backgrounded, leaving a stale value on resume. `forceRefresh()` recomputes and sets `_updateFlow.value` synchronously (thread-safe on `MutableStateFlow`). Call site: a lifecycle observer on app foreground (`ON_START`/`onResume`). **Not yet implemented** — wire when lifecycle layer is established.
+**G2. `CalendarRepository.refresh()` — passive store trigger.**
+`CalendarRepositoryImpl` is a passive `StateFlow` store — it emits `Clock.System.now()` whenever `refresh()` is called. There is no internal scheduling loop. Scheduling is owned by `ObserveAstronomicalContextUseCase` (domain layer): it launches a coroutine that calls `refresh()` then delays until `nextAppDayInstant()`, looping indefinitely, and returns a `Flow<AstronomicalContext>`. `ObserveCalendarContext` (presentation action) simply collects from that flow and updates ViewModel state — it has no knowledge of scheduling or business rules. A lifecycle observer will also call `refresh()` on app foreground (`ON_START`/`onResume`) as a Doze mode mitigation. **Lifecycle wiring not yet implemented** — wire when lifecycle layer is established.
 
 **H. `presentation/calendar/` removed.**
 `CalendarFragment` and `CalendarViewModel` were dead code (not routed to by the navigation graph). Deleted during review of the z refactor content commit. They are a valid candidate implementation reference if a standalone calendar view is eventually needed — check git history.

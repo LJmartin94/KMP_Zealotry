@@ -70,6 +70,8 @@ Any file with zero output from that filter is trivial and should be grouped with
 
 Comments in the codebase are part of the codebase. The AI should be very hesitant to delete them.
 
+**Prefer surgical edits over full rewrites.** When modifying an existing file, make targeted `old_str → new_str` replacements rather than rewriting the whole file. Full rewrites are permitted when a file changes structurally enough that surgical edits would produce an unreasonably fragmented diff, but they require extra care — see the verification rule below.
+
 **Illustrative comments** — explaining what a line does, why a decision was made, or providing context for a non-obvious implementation — should be preserved whenever the code they describe is still present and the comment remains accurate. If code moves to a new file, its comments move with it.
 
 **Commented-out code** — requires judgment:
@@ -80,6 +82,12 @@ Comments in the codebase are part of the codebase. The AI should be very hesitan
 **Misleading or actively incorrect comments** — should be updated to reflect current behaviour rather than deleted where possible. If deletion is the right call, it still requires explicit consent (see below).
 
 **Consent rule:** Removing any comment — illustrative, decision-rationale, or commented-out code — must be raised explicitly with the owner and requires separate approval. It must not be bundled silently into a main code change.
+
+**Verification rule:** Before presenting any diff that modifies an existing file, the AI must run:
+```bash
+git diff HEAD -- <file> | grep "^-" | grep -v "^---" | grep "//"
+```
+If this produces output, each removed comment must be either restored or explicitly raised with the owner for approval before the diff is presented. This check applies regardless of whether the change was a surgical edit or a full rewrite.
 
 ---
 
