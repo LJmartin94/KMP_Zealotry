@@ -1,31 +1,30 @@
-package presentation.screens.mainMenu
+package presentation.mainMenu
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import z.calendar.CalendarRepository
-import z.calendar.CalendarState
-import z.calendar.getFestiveDay
-import z.screens.mainMenu.MainMenuUIState
+import data.calendar.CalendarRepository
+import toad.ToadViewModel
 
-class MainMenuViewModel(private val calendarRepository: CalendarRepository) : ViewModel() {
-    private val _uiState = MutableStateFlow(MainMenuUIState())
-    val uiState = _uiState.asStateFlow()
+class MainMenuViewModel(
+    calendarRepository: CalendarRepository,
+) : ToadViewModel<MainMenuUiState, MainMenuEvent>(
+    initialState = MainMenuUiState(),
+) {
+    override val dependencies = MainMenuActionDependencies(
+        calendarRepository = calendarRepository,
+    )
 
     init {
-        viewModelScope.launch {
-            calendarRepository.updateFlow
-                .collect { state: CalendarState ->
-                    _uiState.value =
-                        _uiState.value.copy(
-                            festiveDay = state.seasonInfo.getFestiveDay(),
-                            dayOfWeek = state.dayOfWeek,
-                            dayOfSeason = state.seasonInfo.dayOfTheSeason,
-                            currentSeason = state.seasonInfo.currentSeason,
-                        )
-                }
-        }
+        dispatchAll(initialActions)
+        // ObserveCalendarContext runs indefinitely (collects a Flow), so it is dispatched separately
+        // rather than included in initialActions, which are run sequentially via dispatchAll.
+        dispatch(ObserveCalendarContext)
+    }
+
+    fun runAction(action: MainMenuAction) = dispatch(action)
+
+    companion object {
+        val initialActions =
+            listOf<MainMenuAction>(
+                // One-shot startup actions go here (e.g. load user preferences)
+            )
     }
 }

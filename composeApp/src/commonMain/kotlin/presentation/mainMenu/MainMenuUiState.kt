@@ -1,12 +1,16 @@
-package z.screens.mainMenu
+package presentation.mainMenu
 
+import data.calendar.FestiveDay
+import data.calendar.Season
 import kotlinx.datetime.DayOfWeek
-import z.calendar.FestiveDay
-import z.calendar.Season
+import toad.ViewEvent
+import toad.ViewState
 
-data class MainMenuUIState(
+data class MainMenuUiState(
     val dayOfWeek: DayOfWeek = DayOfWeek.MONDAY,
     val festiveDay: FestiveDay? = null,
     val dayOfSeason: Int = 0,
     val currentSeason: Season = Season.WINTER,
-)
+) : ViewState
+
+sealed interface MainMenuEvent : ViewEvent
