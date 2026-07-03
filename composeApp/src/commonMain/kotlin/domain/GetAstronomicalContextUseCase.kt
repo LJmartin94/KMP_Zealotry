@@ -1,27 +1,48 @@
 package domain
 
-import data.calendar.getInstantMinusOffset
-import kotlin.time.Duration
 import kotlin.time.Instant
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
+import kotlinx.datetime.plus
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
 class GetAstronomicalContextUseCase(
     private val timeZone: TimeZone = TimeZone.currentSystemDefault(),
 ) {
     operator fun invoke(moment: Instant): AstronomicalContext {
-        val offsetInstant = getInstantMinusOffset(moment, h = 4)
-        val seasonInfo = SeasonInfo(offsetInstant, timeZone)
+        val effectiveDate = effectiveDateOf(moment, timeZone)
+        // Use noon of the effective date so SeasonInfo is never given a midnight or
+        // DST-gap instant.
+        val referenceInstant = LocalDateTime(effectiveDate, LocalTime(12, 0)).toInstant(timeZone)
+        val seasonInfo = SeasonInfo(referenceInstant, timeZone)
         return AstronomicalContext(
-            dayOfWeek = offsetInstant.toLocalDateTime(timeZone).dayOfWeek,
+            dayOfWeek = effectiveDate.dayOfWeek,
             dayOfSeason = seasonInfo.dayOfTheSeason,
             season = seasonInfo.currentSeason,
             festiveDay = seasonInfo.getFestiveDay(),
         )
+    }
+
+    companion object {
+        // The app day changes at 4am local time. Before 4am, the previous calendar
+        // date is used so late-night moments are treated as part of the previous day.
+
+        fun effectiveDateOf(moment: Instant, timeZone: TimeZone): LocalDate {
+            val local = moment.toLocalDateTime(timeZone)
+            return if (local.hour < 4) local.date.plus(-1, DateTimeUnit.DAY) else local.date
+        }
+
+        fun nextAppDayInstant(moment: Instant, timeZone: TimeZone): Instant {
+            val local = moment.toLocalDateTime(timeZone)
+            val next4amDate = if (local.hour < 4) local.date else local.date.plus(1, DateTimeUnit.DAY)
+            return LocalDateTime(next4amDate, LocalTime(4, 0)).toInstant(timeZone)
+        }
     }
 }
 
