@@ -1,6 +1,8 @@
 package domain
 
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.UtcOffset
+import kotlinx.datetime.offsetAt
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -89,6 +91,22 @@ class GetAstronomicalContextUseCaseTest {
     }
 
     // -------------------------------------------------------------------------
+    // Year boundary — winter spans the year boundary so dayOfSeason must
+    // increment correctly from Dec 31 into Jan 1 of the following year.
+    // One test is sufficient: the calculation is purely algebraic and holds
+    // for both leap and non-leap years.
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun `day of season increments correctly across the Dec 31 to Jan 1 year boundary`() {
+        val dec31 = useCase(Instant.parse("2026-12-31T12:00:00Z"))
+        val jan1 = useCase(Instant.parse("2027-01-01T12:00:00Z"))
+        assertEquals(Season.WINTER, dec31.season)
+        assertEquals(Season.WINTER, jan1.season)
+        assertEquals(dec31.dayOfSeason + 1, jan1.dayOfSeason)
+    }
+
+    // -------------------------------------------------------------------------
     // 4-hour offset rule
     // -------------------------------------------------------------------------
 
@@ -107,5 +125,88 @@ class GetAstronomicalContextUseCaseTest {
         val atNoon = useCase(Instant.parse("2024-07-15T12:00:00Z"))
         val sameDay = useCase(Instant.parse("2024-07-15T18:00:00Z"))
         assertEquals(sameDay.dayOfSeason, atNoon.dayOfSeason)
+    }
+
+    // -------------------------------------------------------------------------
+    // DST transitions — Europe/Amsterdam (CET/CEST). DST ends on the last Sunday
+    // of October: 2026-10-25T01:00:00Z — clocks go from 3:00am CEST (UTC+2) back
+    // to 2:00am CET (UTC+1).
+    //
+    // The 4-hour offset is applied to the UTC Instant via pure Duration arithmetic,
+    // so DST transitions cannot affect day-boundary logic. This test documents
+    // that invariant: if the offset logic is ever refactored to use local time,
+    // this test will catch the regression.
+    //
+    // The dangerous local moment is 2:00am–2:59am, which occurs twice (once as CEST,
+    // once as CET). Both occurrences should be treated as "yesterday".
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun `DST fall-back in Amsterdam does not affect the 4am day-boundary logic`() {
+        val amsterdamTz = TimeZone.of("Europe/Amsterdam")
+        val dstUseCase = GetAstronomicalContextUseCase(amsterdamTz)
+
+        // Pre-check: verify the DST transition is real and occurs at the expected instant
+        val justBefore = Instant.parse("2026-10-25T00:59:59Z") // 2:59am CEST (UTC+2)
+        val justAfter  = Instant.parse("2026-10-25T01:00:00Z") // 2:00am CET (UTC+1) — clocks fell back
+        assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justBefore))
+        assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justAfter))
+
+        // Local 2:30am occurs twice on this date. In UTC:
+        //   first  occurrence: 00:30Z (2:30am CEST) — before fallback
+        //   second occurrence: 01:30Z (2:30am CET)  — after fallback
+        // Both are before the 4am boundary, so both should resolve to Oct 24.
+        val firstOccurrence  = Instant.parse("2026-10-25T00:30:00Z")
+        val secondOccurrence = Instant.parse("2026-10-25T01:30:00Z")
+        val oct24Anchor      = Instant.parse("2026-10-24T12:00:00Z")
+        val oct25Anchor      = Instant.parse("2026-10-25T12:00:00Z")
+
+        val result1   = dstUseCase(firstOccurrence)
+        val result2   = dstUseCase(secondOccurrence)
+        val yesterday = dstUseCase(oct24Anchor)
+        val today     = dstUseCase(oct25Anchor)
+
+        assertEquals(yesterday.season,      result1.season)
+        assertEquals(yesterday.dayOfSeason, result1.dayOfSeason)
+        assertEquals(yesterday.season,      result2.season)
+        assertEquals(yesterday.dayOfSeason, result2.dayOfSeason)
+
+        // Sanity check: 4:30am CET on Oct 25 resolves to today, not yesterday
+        val clearlyToday = dstUseCase(Instant.parse("2026-10-25T03:30:00Z")) // 4:30am CET
+        assertEquals(today.season,      clearlyToday.season)
+        assertEquals(today.dayOfSeason, clearlyToday.dayOfSeason)
+    }
+
+    // DST spring-forward in Amsterdam: 2026-03-29T01:00:00Z — clocks go from
+    // 2:00am CET (UTC+1) forward to 3:00am CEST (UTC+2). Local 2:00am–2:59am
+    // does not exist.
+    //
+    // This is the regression the fall-back test does NOT cover: with local-time
+    // arithmetic, local 4:30am − 4h = 0:30am today, giving "today". With UTC
+    // arithmetic, the offset instant (UTC 22:30 March 28) converts to 23:30 CET
+    // March 28 — still "yesterday". The test pins the UTC behaviour.
+
+    @Test
+    fun `DST spring-forward in Amsterdam does not affect the 4am day-boundary logic`() {
+        val amsterdamTz = TimeZone.of("Europe/Amsterdam")
+        val dstUseCase = GetAstronomicalContextUseCase(amsterdamTz)
+
+        // Pre-check: verify the DST transition is real and occurs at the expected instant
+        val justBefore = Instant.parse("2026-03-29T00:59:59Z") // 1:59am CET (UTC+1)
+        val justAfter  = Instant.parse("2026-03-29T01:00:00Z") // 3:00am CEST (UTC+2) — clocks sprang forward
+        assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justBefore))
+        assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justAfter))
+
+        // 4:30am CEST (UTC 02:30Z): local arithmetic gives 0:30am today ("today"),
+        // but UTC arithmetic gives 22:30 CET March 28 ("yesterday"). This is the
+        // divergence point between the two approaches.
+        val justPast4am  = Instant.parse("2026-03-29T02:30:00Z") // 4:30am CEST
+        val march28Anchor = Instant.parse("2026-03-28T12:00:00Z")
+
+        val result    = dstUseCase(justPast4am)
+        val yesterday = dstUseCase(march28Anchor)
+
+        assertEquals(yesterday.season,      result.season)
+        assertEquals(yesterday.dayOfSeason, result.dayOfSeason)
     }
 }

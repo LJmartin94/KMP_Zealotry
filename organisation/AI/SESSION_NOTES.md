@@ -20,7 +20,7 @@
 | 5 | Testing framework + POC tests | ✅ Complete |
 | 5a | Second dependency upgrade | ✅ Complete |
 | 6 | z refactor | ✅ Complete |
-| 7 | GetAstronomicalContextUseCase extraction | ✅ Mostly complete — 3 files + 1 test directory uncommitted |
+| 7 | GetAstronomicalContextUseCase extraction | ✅ Complete |
 | 8 | Kover coverage enforcement | ⏳ Not started |
 
 ---
@@ -43,27 +43,11 @@ All 9 original architectural concerns are now resolved.
 
 ---
 
-## Uncommitted Changes (Step 7 remainder)
-
-Three modified files and one untracked test directory remain from Step 7:
-
-```bash
-# Modified
-composeApp/src/commonMain/kotlin/presentation/resourceComposition/Drawables.kt
-composeApp/src/commonMain/kotlin/presentation/resourceComposition/Strings.kt
-composeApp/src/commonTest/kotlin/presentation/mainMenu/ObserveCalendarContextTest.kt
-
-# Untracked
-composeApp/src/commonTest/kotlin/domain/  # contains GetAstronomicalContextUseCaseTest.kt
-```
-
-Suggested grouping:
-
-**Group A — Import updates** (`Drawables.kt`, `Strings.kt`, `ObserveCalendarContextTest.kt`): import paths updated from deleted `data/calendar/` types to `domain/` types. No logic changes.
-
-**Group B — New UseCase tests** (`domain/GetAstronomicalContextUseCaseTest.kt`): 11 tests, all passing on Android and iOS. Uses `TimeZone.UTC` injection for timezone determinism.
+## Recently Committed
 
 ~~`organisation/AI/` — INDEX.md, SESSION_NOTES.md, ARCHITECTURE_NOTES.md split, AI_WORKING_AGREEMENT.md updates~~ — committed in 410c9c3
+
+~~Step 7 remainder — `Drawables.kt`, `Strings.kt`, `ObserveCalendarContextTest.kt`, `domain/GetAstronomicalContextUseCaseTest.kt`~~ — committed in 73e5ac4
 
 ---
 
