@@ -1,6 +1,5 @@
 package presentation.mainMenu
 
-import data.calendar.getFestiveDay
 import toad.ActionScope
 import toad.ViewAction
 
@@ -12,13 +11,14 @@ data object ObserveCalendarContext : MainMenuAction() {
         scope: ActionScope<MainMenuUiState, MainMenuEvent>,
     ) {
         dependencies.calendarRepository.updateFlow
-            .collect { state ->
+            .collect { instant ->
+                val context = dependencies.astronomicalContextUseCase(instant)
                 scope.setState {
                     copy(
-                        dayOfWeek = state.dayOfWeek,
-                        festiveDay = state.seasonInfo.getFestiveDay(),
-                        dayOfSeason = state.seasonInfo.dayOfTheSeason,
-                        currentSeason = state.seasonInfo.currentSeason,
+                        dayOfWeek = context.dayOfWeek,
+                        festiveDay = context.festiveDay,
+                        dayOfSeason = context.dayOfSeason,
+                        currentSeason = context.season,
                     )
                 }
             }

@@ -1,7 +1,7 @@
 package presentation.mainMenu
 
-import data.calendar.FestiveDay
-import data.calendar.Season
+import domain.FestiveDay
+import domain.Season
 import kotlinx.datetime.DayOfWeek
 import toad.ViewEvent
 import toad.ViewState
