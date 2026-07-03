@@ -1,39 +1,27 @@
-package presentation.screens.dayPartMenu
+package presentation.dayPartMenu
 
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.StringResource
-import z.screens.dayPartMenu.DayPart
-import z.screens.dayPartMenu.DayPartMenuUIState
-import zealotry.composeapp.generated.resources.Res
-import zealotry.composeapp.generated.resources.good_day
-import zealotry.composeapp.generated.resources.good_evening
-import zealotry.composeapp.generated.resources.good_morning
+import data.dayPartMenu.DayPartMenuRepository
+import toad.ToadViewModel
 
-class DayPartMenuViewModel : ViewModel() {
-    @OptIn(ExperimentalResourceApi::class)
-    private val _uiState = MutableStateFlow(DayPartMenuUIState())
-    val uiState = _uiState.asStateFlow()
+class DayPartMenuViewModel(
+    dayPartMenuRepository: DayPartMenuRepository,
+) : ToadViewModel<DayPartMenuUiState, DayPartMenuEvent>(
+    initialState = DayPartMenuUiState(),
+) {
+    override val dependencies = DayPartMenuActionDependencies(
+        dayPartMenuRepository = dayPartMenuRepository,
+    )
 
-    @OptIn(ExperimentalResourceApi::class)
-    fun setDayPart(part: DayPart) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                part = part,
-                greeting = setGreeting(part),
-                // taskButtons =
-            )
-        }
+    init {
+        dispatchAll(initialActions)
     }
 
-    @OptIn(ExperimentalResourceApi::class)
-    private fun setGreeting(part: DayPart): StringResource =
-        when (part) {
-            DayPart.MORNING -> Res.string.good_morning
-            DayPart.MIDDAY -> Res.string.good_day
-            DayPart.EVENING -> Res.string.good_evening
-        }
+    fun runAction(action: DayPartMenuAction) = dispatch(action)
+
+    companion object {
+        val initialActions =
+            listOf<DayPartMenuAction>(
+                // One-shot startup actions go here (e.g. load task buttons)
+            )
+    }
 }
