@@ -1,3 +1,3 @@
-package z.screens.dayPartMenu
+package data.dayPartMenu
 
-class DayPartMenuRepository
+interface DayPartMenuRepository
