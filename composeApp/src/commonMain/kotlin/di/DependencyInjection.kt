@@ -27,7 +27,7 @@ fun initKoin(context: Any? = null) {
         modules(
             module {
                 singleOf(::CalendarRepositoryImpl) { bind<CalendarRepository>() }
-                singleOf(::ObserveAstronomicalContextUseCase)
+                single { ObserveAstronomicalContextUseCase(get()) }
                 factory { MainMenuViewModel(get(), get()) }
 
                 singleOf(::DayPartMenuRepositoryImpl) { bind<DayPartMenuRepository>() }
