@@ -106,6 +106,22 @@ The owner reviews all code changes before committing. The AI should flag when a 
 
 ---
 
-## Architecture Notes
+## Session Notes Maintenance
 
-`organisation/ARCHITECTURE_NOTES.md` is the current single source of truth for architectural decisions, the execution plan, and session continuity context for the AI. It should be updated at meaningful milestones. It is not a log — it reflects current state and decisions, not history. This file may be superseded or replaced over time; the AI Working Agreement takes precedence as the permanent record of how this repository is maintained.
+`organisation/AI/SESSION_NOTES.md` tracks current state only. It is not a log. The AI should prune it at the start of each session as part of setup — stale content creates noise and inflates context.
+
+**Rules for trimming:**
+
+- **Uncommitted changes** — remove an entry once the relevant files have been committed.
+- **Step status table** — once a step is fully committed, collapse it to a single ✅ row. Detailed notes about what a step involved belong in the Step History section of `ARCHITECTURE_NOTES.md`, not in session notes.
+- **Concerns table** — once all concerns are stably resolved and are unlikely to resurface, compress the table to a single summary line (e.g. "All 9 original concerns resolved ✅ — see ARCHITECTURE_NOTES.md for decisions").
+- **Remaining planned work** — remove sections as steps complete.
+- **Anything that has become permanently true** — if a decision or pattern has been stable across multiple sessions, it belongs in `ARCHITECTURE_NOTES.md`, not repeated in session notes.
+
+The target state for SESSION_NOTES.md is always: the minimum information a new AI needs to understand what is currently in progress and what to do next.
+
+---
+
+## Document Hierarchy
+
+Described in `organisation/AI/INDEX.md`. That file is the single source of truth for what documents exist, what they contain, and how they relate to each other.
