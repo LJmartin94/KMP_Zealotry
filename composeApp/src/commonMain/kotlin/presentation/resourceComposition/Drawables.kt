@@ -3,7 +3,7 @@ package presentation.resourceComposition
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import data.calendar.Season
+import domain.Season
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
 import zealotry.composeapp.generated.resources.spring

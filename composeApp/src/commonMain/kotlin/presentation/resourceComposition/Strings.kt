@@ -6,8 +6,8 @@ import kotlinx.datetime.DayOfWeek
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
-import data.calendar.FestiveDay
-import data.calendar.Season
+import domain.FestiveDay
+import domain.Season
 import util.localisation.getLocale
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
