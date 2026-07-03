@@ -116,7 +116,9 @@ Run `git status` and compare the output against the "Uncommitted Changes" sectio
 
 **Rules for trimming:**
 
-- **Uncommitted changes** — remove an entry once the relevant files have been committed. Also update mid-session: when the owner commits a batch, remove those files from the list immediately rather than waiting for the next session start.
+- **Uncommitted changes** — when the owner commits a batch, do not remove the entry. Instead, mark it as committed with the short hash immediately (mid-session, not deferred to next session start):
+  `~~Drawables.kt, Strings.kt~~ — committed in abc1234`
+  Keep the last 3 committed batches visible in the list. Remove only the oldest entry when a 4th committed batch is added. This gives a new session a recent-history anchor it can verify against `git log`.
 - **Step status table** — once a step is fully committed, collapse it to a single ✅ row. Detailed notes about what a step involved belong in the Step History section of `ARCHITECTURE_NOTES.md`, not in session notes.
 - **Concerns table** — once all concerns are stably resolved and are unlikely to resurface, compress the table to a single summary line (e.g. "All 9 original concerns resolved ✅ — see ARCHITECTURE_NOTES.md for decisions").
 - **Remaining planned work** — remove sections as steps complete.

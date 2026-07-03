@@ -63,7 +63,7 @@ Suggested grouping:
 
 **Group B — New UseCase tests** (`domain/GetAstronomicalContextUseCaseTest.kt`): 11 tests, all passing on Android and iOS. Uses `TimeZone.UTC` injection for timezone determinism.
 
-Also uncommitted: `organisation/AI/` directory restructure (INDEX.md, SESSION_NOTES.md, ARCHITECTURE_NOTES.md split) — commit as a documentation batch once the split is reviewed.
+~~`organisation/AI/` — INDEX.md, SESSION_NOTES.md, ARCHITECTURE_NOTES.md split, AI_WORKING_AGREEMENT.md updates~~ — committed in 410c9c3
 
 ---
 
