@@ -10,6 +10,8 @@
 
 This file is the single source of truth for ongoing architectural work. The Copilot CLI session system uses a per-session `plan.md` file — to keep it in sync with this file, `plan.md` should be a symlink pointing here.
 
+**Also read before starting any work:** `organisation/AI_WORKING_AGREEMENT.md` — this document governs how the AI and the repository owner collaborate (git permissions, code review process, comment preservation, git history preservation). It takes precedence over any assumptions or defaults. If context has been compacted or summarised, reread it before continuing.
+
 **If you are resuming in a new session**, run the following to re-establish the symlink (replace `<session-id>` with the current session UUID, visible in the session context at the top of the conversation):
 
 ```bash
@@ -79,7 +81,13 @@ The UseCase will:
 - `CalendarRepositoryImpl` will be simplified to just emit `Instant` at day-boundary intervals (scheduling only — 4hr rule moves out of it)
 - `SeasonInfo` becomes an internal implementation detail of the UseCase, not a public data class
 
-**UseCases as Action dependencies:** When a UseCase exists, it is injected into `ActionDependencies` (not into the ViewModel directly). Actions call the UseCase; they do not call the repository if a UseCase is present.
+**UseCases as Action dependencies:** When a UseCase exists, it is accessed via `ActionDependencies`. Actions call the UseCase; they do not call the repository directly if a UseCase mediates that concern.
+
+**UseCase wiring — differentiated approach:** Where a UseCase lives depends on whether it has external dependencies:
+- **Pure computation UseCase** (no repositories, no network, no platform resources — e.g. `GetAstronomicalContextUseCase`): constructed directly inside `ActionDependencies`. Not registered in Koin. Not passed through the ViewModel constructor. The ViewModel constructor only reflects *external* dependencies.
+- **UseCase with external dependencies** (e.g. depends on a repository or network client): registered as a singleton in Koin, passed through the ViewModel constructor into `ActionDependencies`, exactly like a repository.
+
+This makes the ViewModel constructor a reliable signal: everything in it has external dependencies managed by DI. `ActionDependencies` may additionally construct pure UseCases itself without those appearing in the constructor.
 
 ### ✅ Concern 6 — `viewModelScope` passed into `ActionDependencies`
 `ActionDependencies.coroutineScope` is an `open val` defaulting to `null` — no ViewModel is forced to pass anything. Already resolved.
