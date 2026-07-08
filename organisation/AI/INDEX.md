@@ -18,12 +18,21 @@ Orient yourself here first. Contains the session setup instructions and describe
 ### `AI_WORKING_AGREEMENT.md`
 **Permanent** — updated only when the working process itself changes.
 Governs how the AI agent and the repository owner collaborate. Covers:
+- Pushing back / raising concerns proactively
 - Git permissions (AI reads only; owner commits and pushes)
-- Code review process and commit grouping heuristics
-- Comment preservation rules
-- Git history preservation (rename-before-modify pattern)
+- How to pause and request input from the owner
+- Path handling (stay scoped to the repo, prefer relative paths)
+- The `skills/` library (bootstrap, and where the rest of the process lives)
 
 **Always read this before starting work.** If context has been compacted or summarised, reread it before continuing — it takes precedence over any AI defaults.
+
+### `skills/`
+**Permanent** — updated only when the working process itself changes.
+Tool-agnostic Agent Skills library (`SKILL.md` spec). `.claude/skills`, `.github/skills`, and `.agents/skills` are symlinks into it — bootstrap command is in `AI_WORKING_AGREEMENT.md`. Holds the process detail that used to live directly in the working agreement.
+
+**Not enumerated here on purpose** — the list of skills changes independently of this file, and this entry would silently go stale. Each skill's own `description` frontmatter says when it should load; list the directory to see what currently exists.
+
+Each skill's own `description` frontmatter says when it should load — list the directory to see what's available.
 
 ### `ARCHITECTURE_NOTES.md`
 **Stable** — updated only when architectural decisions change.
@@ -69,3 +78,5 @@ ln -s "$NOTES" "$PLAN"
 2. `AI_WORKING_AGREEMENT.md` — confirm collaboration rules
 3. `SESSION_NOTES.md` — understand current state and remaining work
 4. Relevant sections of `ARCHITECTURE_NOTES.md` as needed
+
+Skills in `skills/` load on demand when their trigger conditions are met — no need to read them all up front.

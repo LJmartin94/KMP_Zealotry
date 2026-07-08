@@ -4,6 +4,16 @@ This document establishes how the AI agent (GitHub Copilot CLI) and the reposito
 
 **Whenever conversation history is compacted or context is summarised, the AI must reread this document in full and treat its contents as explicit instruction before continuing any work.**
 
+This document governs the standing git-safety rule and collaboration stance for this repository, plus the skills library that holds the rest of the process so it loads only when relevant rather than on every turn.
+
+---
+
+## Pushing Back
+
+Push back on requests or suggestions when a best-practice, idiomatic, or unbiased perspective points to a better approach — don't just execute uncritically. Assume the owner has a junior-to-intermediate level of familiarity with the specific context area being discussed and may not have already weighed the alternatives or tradeoffs. Raise concerns proactively, before implementing, not after.
+
+This applies with extra weight when the owner asks a framing question like "or do you disagree?", "what do you think?", or "be unbiased" — answer with a genuine, reasoned opinion rather than validating whatever was proposed. The owner has final say, but back-and-forth discussion before committing to an approach consistently produces a better outcome than silent compliance.
+
 ---
 
 ## Git Interaction
@@ -15,124 +25,44 @@ This document establishes how the AI agent (GitHub Copilot CLI) and the reposito
 - No `git commit`, `git push`, `git rebase`, `git merge`, `git restore`, `git reset`, `git stash`, or any command that mutates the repository state or history.
 - If a write command is needed (e.g. `git restore` to recover a deleted file), the AI must ask permission first and explain why.
 
+**Exception — keeping the local clone current:** `git fetch` never touches the working tree or local branches (it only updates remote-tracking refs), so the AI is encouraged to run it at the start of a session, and before evaluating or resuming any plan, regardless of any uncommitted or unpushed local work. This ensures the commit-anchor drift check (see the `maintain-session-notes` skill) can see commits pushed by others, not just local history.
+
 All committing and pushing is done by the owner.
 
 ---
 
-## Code Review Process
+## Requesting Input
 
-When the AI has made a set of changes, it presents them to the owner for review before committing. The review process works as follows:
+Whenever pausing to ask the user something — permission to run a risky command, a clarifying question, a choice between approaches — give one short line of context on why the pause is happening before asking, naming the specific part of the request that prompted it (e.g. "This includes `rm -rf build/`, which deletes the build output — safe to regenerate" or "Two approaches here have different tradeoffs") rather than posing the question cold.
 
-### Grouping principle
-
-Changes are grouped into small, cohesive batches that a reviewer can understand as a single unit. The primary goal is **minimising cognitive burden on the reviewer**, not reflecting the order in which changes were made.
-
-**Grouping heuristics (in order of priority):**
-
-1. **Trivial changes travel together.** Package/import-only changes, comment restorations, and renamed type references with no logic impact should be grouped together — even if they span different features — rather than mixed into substantive groups. A reviewer should be able to scan a trivial group in seconds.
-
-2. **Substantive changes are grouped by concept, not by file location.** A ViewModel change and its corresponding Action change belong together. A repository interface change and its implementation change belong together.
-
-3. **Deletions travel with their destination.** When code is deleted because it moved somewhere else, the deleted file and the destination file are reviewed together. This allows the reviewer to verify that nothing was lost, not just that something was removed.
-
-4. **Tests travel with the code they test**, unless the test suite is large enough to warrant its own group at the end.
-
-5. **DI and wiring changes** are typically last — they connect already-reviewed pieces and are easiest to verify once the pieces themselves are understood.
-
-### Review commands
-
-For each group, the AI provides a single runnable command of the form:
-
-```bash
-git add <files> && git diff --cached HEAD -- <files>
-```
-
-This stages exactly the files in the group and shows the diff. The owner can then:
-- Commit the group if satisfied: `git commit`
-- Unstage and request changes: `git restore --staged .`
-- Ask follow-up questions before deciding
-
-New (untracked) files must be staged with `git add` before they appear in `git diff --cached HEAD`. Deleted files must also be staged for their removal to appear in the diff.
-
-### Before presenting groups
-
-Before presenting review groups, the AI should identify which changes are trivial (package/import/comment only, no logic impact) by running the equivalent of:
-
-```bash
-git diff HEAD -- <file> | grep "^[+-]" | grep -v "^---\|^+++" | grep -v "^[+-]package\|^[+-]import"
-```
-
-Any file with zero output from that filter is trivial and should be grouped with other trivial files.
+Strongly favor leaving an open-ended reply path over a closed set of options. When using a structured choice tool that offers a free-text option, don't treat the listed choices as if they were exhaustive. When asking in plain text, explicitly invite a counter-proposal (e.g. "...or suggest a different approach") rather than framing the question as pick-one-of-these.
 
 ---
 
-## Preserving Comments
+## Path Handling
 
-Comments in the codebase are part of the codebase. The AI should be very hesitant to delete them.
+Treat the directory a session was started in as the default scope for file access — do not reach outside it unless explicitly instructed to. When running commands, prefer paths relative to the current working directory over absolute paths — relative paths are far less likely to trigger permission prompts and keep the AI's operations visibly scoped to the repository. Where an absolute anchor is genuinely needed (e.g. the first `cd` in a fresh shell), use it once, then switch to relative paths for everything after.
 
-**Prefer surgical edits over full rewrites.** When modifying an existing file, make targeted `old_str → new_str` replacements rather than rewriting the whole file. Full rewrites are permitted when a file changes structurally enough that surgical edits would produce an unreasonably fragmented diff, but they require extra care — see the verification rule below.
+---
 
-**Illustrative comments** — explaining what a line does, why a decision was made, or providing context for a non-obvious implementation — should be preserved whenever the code they describe is still present and the comment remains accurate. If code moves to a new file, its comments move with it.
+## Skills Library
 
-**Commented-out code** — requires judgment:
-- If the context is clearly no longer relevant (e.g. the feature it relates to has been removed or fundamentally changed), it can be deleted — but see the consent rule below.
-- If the commented-out code follows a similar pattern to the live code being modified, adapt it to match the new pattern and leave it commented out. Do not uncomment it as part of the adaptation.
-- When in doubt, keep it.
+`organisation/AI/skills/` is the canonical, tool-agnostic storage for Agent Skills (the open `SKILL.md` spec), usable regardless of which tool is driving a session. `.claude/skills`, `.github/skills`, and `.agents/skills` at the repository root are symlinks into it, matching each tool's project-level discovery convention (Claude Code, GitHub Copilot CLI, and the growing set of tools that read `.agents/skills`).
 
-**Misleading or actively incorrect comments** — should be updated to reflect current behaviour rather than deleted where possible. If deletion is the right call, it still requires explicit consent (see below).
+**Announcing skill use:** whenever a skill fires, say so in the response text: name the skill and, in one line, what triggered it. This overrides the general preference for not narrating tool calls; skill triggering in particular should stay visible so misfires (wrong skill, or a skill that should have fired but didn't) are easy to spot.
 
-**Consent rule:** Removing any comment — illustrative, decision-rationale, or commented-out code — must be raised explicitly with the owner and requires separate approval. It must not be bundled silently into a main code change.
+**Bootstrap (once per machine):** run from the repository root.
 
-**Verification rule:** Before presenting any diff that modifies an existing file, the AI must run:
 ```bash
-git diff HEAD -- <file> | grep "^-" | grep -v "^---" | grep "//"
+mkdir -p .github .agents .claude
+[ -e .claude/skills ] || ln -s ../organisation/AI/skills .claude/skills
+[ -e .github/skills ] || ln -s ../organisation/AI/skills .github/skills
+[ -e .agents/skills ] || ln -s ../organisation/AI/skills .agents/skills
 ```
-If this produces output, each removed comment must be either restored or explicitly raised with the owner for approval before the diff is presented. This check applies regardless of whether the change was a surgical edit or a full rewrite.
 
----
+### Process skills in this library
 
-Git rename detection depends on content similarity. When files are renamed or their code moves to new locations, history is only traceable if git can detect the rename. To maximise this:
-
-### Rename-before-modify pattern
-
-*Note: throughout this section, "commit" refers to the intended unit of work the owner will commit. The AI prepares and stages the files; the owner writes the commit message and runs `git commit`.*
-
-When a file is being renamed AND its content is changing substantially, split the work into two commits:
-
-1. **Rename commit:** Move the file to its new location with zero content changes. Git will detect this as a 100% similarity rename. No logic, no package declarations, no imports — pure file move.
-2. **Content commit:** Apply all content changes (package declarations, imports, logic) to the already-renamed file.
-
-This is especially important when:
-- A file is being renamed or moved as part of a refactor
-- A large file is being split into multiple smaller files — git can only trace one rename per deleted file (the highest content-similarity match). Identify the **primary destination** (the one receiving the most of the original file's content), move the source file to that destination first (rename commit), then create secondary destinations as new files in the content commit. The AI should explain in its group summary that a split occurred and name all destinations, so the owner can write a commit message that makes the split human-traceable even where git history is not.
-- Old files are being deleted because their code has been distributed into new files — same rule applies: move to the primary destination in the rename commit, the AI documents the rest in its group summary.
-- Very short files are involved, since small files fall below git's rename similarity threshold (~50%) even with minor content changes
-
-### General principle
-
-The owner reviews all code changes before committing. The AI should flag when a planned change risks severing file history and suggest the rename-first approach proactively.
-
----
-
-## Session Notes Maintenance
-
-`organisation/AI/SESSION_NOTES.md` tracks current state only. It is not a log. The AI should prune it at the start of each session as part of setup — stale content creates noise and inflates context.
-
-**At session start — verify before pruning:**
-
-Run `git status` and compare the output against the "Uncommitted Changes" section of SESSION_NOTES.md. Reconcile any discrepancies first — entries that git shows as already committed should be removed, and any unstaged changes not listed should be added. Do this before any other work.
-
-**Rules for trimming:**
-
-- **Uncommitted changes** — when the owner commits a batch, do not remove the entry. Instead, mark it as committed with the short hash immediately (mid-session, not deferred to next session start):
-  `~~Drawables.kt, Strings.kt~~ — committed in abc1234`
-  Keep the last 3 committed batches visible in the list. Remove only the oldest entry when a 4th committed batch is added. This gives a new session a recent-history anchor it can verify against `git log`.
-- **Step status table** — once a step is fully committed, collapse it to a single ✅ row. Detailed notes about what a step involved belong in the Step History section of `ARCHITECTURE_NOTES.md`, not in session notes.
-- **Concerns table** — once all concerns are stably resolved and are unlikely to resurface, compress the table to a single summary line (e.g. "All 9 original concerns resolved ✅ — see ARCHITECTURE_NOTES.md for decisions").
-- **Remaining planned work** — remove sections as steps complete.
-- **Anything that has become permanently true** — if a decision or pattern has been stable across multiple sessions, it belongs in `ARCHITECTURE_NOTES.md`, not repeated in session notes.
-
-The target state for SESSION_NOTES.md is always: the minimum information a new AI needs to understand what is currently in progress and what to do next.
+List `organisation/AI/skills/` to see what exists — each skill's own `description` frontmatter says what it covers and when to use it.
 
 ---
 
