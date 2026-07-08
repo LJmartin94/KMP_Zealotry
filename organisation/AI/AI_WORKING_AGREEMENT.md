@@ -43,6 +43,11 @@ Strongly favor leaving an open-ended reply path over a closed set of options. Wh
 
 Treat the directory a session was started in as the default scope for file access — do not reach outside it unless explicitly instructed to. When running commands, prefer paths relative to the current working directory over absolute paths — relative paths are far less likely to trigger permission prompts and keep the AI's operations visibly scoped to the repository. Where an absolute anchor is genuinely needed (e.g. the first `cd` in a fresh shell), use it once, then switch to relative paths for everything after.
 
+The redundant-`cd` case (`cd <absolute path already inside this repo> && ...`) can be enforced mechanically:
+
+- **Claude Code** — a `PreToolUse` hook in `.claude/settings.json`.
+- **GitHub Copilot CLI** — a `preToolUse` hook in `.github/hooks/*.json` (see [Using hooks with Copilot CLI](https://docs.github.com/en/copilot/tutorials/copilot-cli-hooks)). The hook script receives the tool name and arguments as JSON on stdin and can return `{"permissionDecision": "deny", "permissionDecisionReason": "..."}` to block execution before it happens — functionally equivalent to Claude Code's `PreToolUse` hook. This repo's implementation lives at `.github/hooks/copilot-cli-policy.json` and `.github/hooks/scripts/pre-tool-policy.sh`.
+
 ---
 
 ## Skills Library
