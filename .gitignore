@@ -17,3 +17,10 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 .gitconfig
 .kotlin/
+
+# Agent tool directories: only the skills symlink is intentionally tracked.
+# Anything else that shows up here (e.g. local settings, auth config) stays untracked by default.
+/.claude/*
+!/.claude/skills
+/.agents/*
+!/.agents/skills
