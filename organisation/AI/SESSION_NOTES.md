@@ -21,7 +21,7 @@
 | 5a | Second dependency upgrade | ✅ Complete |
 | 6 | z refactor | ✅ Complete |
 | 7 | GetAstronomicalContextUseCase extraction | ✅ Complete |
-| 8 | Kover coverage enforcement | ⏳ Not started |
+| 8 | Kover coverage enforcement | ✅ Complete |
 
 ---
 
@@ -45,28 +45,24 @@ All 9 original architectural concerns are now resolved.
 
 ## Uncommitted Changes
 
-**Layering violation fix (this session):**
+**Step 8 — Kover setup (complete, uncommitted):**
 
-| Group | Files | Description |
-|---|---|---|
-| A — Layering fix | `CalendarRepository.kt`, `CalendarRepositoryImpl.kt`, `MainMenuAction.kt`, deleted `CalendarTimeUtils.kt` | Scheduling loop moved from repository to action; repository is now a passive store |
-| B — Latent bug | `GetAstronomicalContextUseCase.kt` | Restored missing `import kotlin.time.Duration` (removed by previous session) |
-| C — Test update | `ObserveCalendarContextTest.kt` | Added `every { repo.refresh() } returns Unit` mock |
-| D — Docs | `ARCHITECTURE_NOTES.md`, `SESSION_NOTES.md` | G2 updated; package structure updated; CalendarTimeUtils removed from tree |
-
-All tests passing (24/24 Android).
+| File | Change |
+|---|---|
+| `gradle/libs.versions.toml` | Added `kover = "0.9.1"` version + plugin entry |
+| `build.gradle.kts` | Added `alias(libs.plugins.kover) apply false` |
+| `composeApp/build.gradle.kts` | Kover plugin applied + excludes + 40% line threshold |
+| `organisation/AI/AI_WORKING_AGREEMENT.md` | Added Script Transparency section (echo rule) |
 
 ---
 
 ## Recently Committed
 
-~~`organisation/AI/` — INDEX.md, SESSION_NOTES.md, ARCHITECTURE_NOTES.md split, AI_WORKING_AGREEMENT.md updates~~ — committed in 410c9c3
+~~Groups A–D: layering violation fix, top-level functions, DI wiring, docs~~ — committed in 7f89d55, 3e27036, 08da832, c7f7ded
 
-~~Step 7 remainder — `Drawables.kt`, `Strings.kt`, `ObserveCalendarContextTest.kt`, `domain/GetAstronomicalContextUseCaseTest.kt`~~ — committed in 73e5ac4
+~~Symlinks at project root, hooks to enforce AI behaviour, skills library~~ — committed in d3f063c, d7608b9, b66c82c, c708fd0
 
-~~Additional regression tests — DST fall-back/spring-forward, year boundary, timezone travel~~ — committed in aec1c4c
-
-~~4am rule refactor — local timezone boundary, UseCase companion object, CalendarRepositoryImpl simplified~~ — committed in 97f7167 + 477882f
+~~Koin default-parameter crash fix~~ — committed in 95de691
 
 ---
 
