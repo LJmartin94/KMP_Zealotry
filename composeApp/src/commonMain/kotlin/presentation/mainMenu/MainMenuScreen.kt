@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import data.dayPartMenu.DayPart
 import navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -37,6 +39,10 @@ import zealotry.composeapp.generated.resources.morning_button
 fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
     val viewModel = getViewModel<MainMenuViewModel>()
     val uiState by viewModel.state.collectAsState()
+
+    LifecycleEventEffect(Lifecycle.Event.ON_START) {
+        viewModel.onForeground()
+    }
 
     Box(
         modifier =

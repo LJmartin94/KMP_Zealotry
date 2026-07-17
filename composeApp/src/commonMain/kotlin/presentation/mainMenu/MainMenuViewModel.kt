@@ -25,6 +25,8 @@ class MainMenuViewModel(
 
     fun runAction(action: MainMenuAction) = dispatch(action)
 
+    fun onForeground() = dispatch(RefreshCalendarContext)
+
     companion object {
         val initialActions =
             listOf<MainMenuAction>(
