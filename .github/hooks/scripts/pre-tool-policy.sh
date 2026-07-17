@@ -1,8 +1,12 @@
 #!/bin/bash
-# Enforces the "Path Handling" rule in organisation/AI/AI_WORKING_AGREEMENT.md:
-# don't `cd` to an absolute path that's already inside this repo when a
-# relative path (or no `cd` at all) would do. This mirrors the Claude Code
-# `PreToolUse` hook mentioned in the same section of that document.
+# Enforces rules from organisation/AI/AI_WORKING_AGREEMENT.md:
+#
+#   Path Handling — don't `cd` to an absolute path already inside this repo
+#   when a relative path (or no `cd` at all) would do.
+#
+#   Script Transparency — commands that invoke an interpreter (python3, node,
+#   etc.) must include at least one `echo` call so the intent of the script is
+#   visible in the terminal output.
 set -euo pipefail
 
 INPUT="$(cat)"
@@ -29,6 +33,7 @@ deny() {
 # calling shell currently is.
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 
+# ── Rule: Path Handling ───────────────────────────────────────────────────────
 # Match a leading `cd <absolute path>` followed by `&&`, e.g.
 # `cd /Users/x/repo && git status` or `cd /Users/x/repo/sub && ls`.
 if [[ "$COMMAND" =~ ^[[:space:]]*cd[[:space:]]+(/[^[:space:]]+)[[:space:]]*\&\& ]]; then
@@ -37,6 +42,16 @@ if [[ "$COMMAND" =~ ^[[:space:]]*cd[[:space:]]+(/[^[:space:]]+)[[:space:]]*\&\& 
   RESOLVED="$(cd "$TARGET" 2>/dev/null && pwd -P || echo "$TARGET")"
   if [[ "$RESOLVED" == "$REPO_ROOT" || "$RESOLVED" == "$REPO_ROOT"/* ]]; then
     deny "Redundant absolute cd into a path already inside this repo ($REPO_ROOT). Use a relative path instead, per the Path Handling section of organisation/AI/AI_WORKING_AGREEMENT.md."
+  fi
+fi
+
+# ── Rule: Script Transparency ─────────────────────────────────────────────────
+# Commands that invoke an interpreter must include at least one echo so the
+# intent of the script is visible in the terminal. Matches python3, python,
+# node, ruby, perl as whole words to avoid false positives on path segments.
+if echo "$COMMAND" | grep -qE '\b(python3?|node|ruby|perl)\b'; then
+  if ! echo "$COMMAND" | grep -qE '\becho\b'; then
+    deny "Command invokes an interpreter without any explanation. Add a brief echo describing what the script does before running it, per the Script Transparency section of organisation/AI/AI_WORKING_AGREEMENT.md."
   fi
 fi
 
