@@ -39,6 +39,24 @@ Strongly favor leaving an open-ended reply path over a closed set of options. Wh
 
 ---
 
+## Script Transparency
+
+For any bash script or command sequence with more than one logical operation, interleave `echo` statements between steps. Each echo should describe the *intent* of the following operation, not just restate it syntactically. Example:
+
+```bash
+echo "Extracting coverage totals from Kover XML report"
+python3 -c "..."
+
+echo "Checking for any test failures in the output"
+grep -i "fail" build/test-results/...
+```
+
+Single-command calls are exempt — a bare `git status` or `cat file.md` needs no echo.
+
+This rule exists for three reasons, in descending reliability: (1) it forces multi-step scripts to be structured as discrete operations rather than dense one-liners; (2) it produces a visible audit trail in the terminal; (3) formulating the intent before each step may surface mismatches between what the AI thinks a command does and what it actually does.
+
+---
+
 ## Path Handling
 
 Treat the directory a session was started in as the default scope for file access — do not reach outside it unless explicitly instructed to. When running commands, prefer paths relative to the current working directory over absolute paths — relative paths are far less likely to trigger permission prompts and keep the AI's operations visibly scoped to the repository. Where an absolute anchor is genuinely needed (e.g. the first `cd` in a fresh shell), use it once, then switch to relative paths for everything after.

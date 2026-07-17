@@ -13,7 +13,7 @@ Changes are grouped into small, cohesive batches that a reviewer can understand 
 
 **Grouping heuristics (in order of priority):**
 
-1. **Trivial changes travel together.** Package/import-only changes, comment restorations, and renamed type references with no logic impact should be grouped together — even if they span different features — rather than mixed into substantive groups. A reviewer should be able to scan a trivial group in seconds.
+1. **Trivial changes travel together.** Package/import-only changes, comment restorations, renamed type references with no logic impact, and **linting/formatting auto-fixes** should be grouped together — even if they span different features — rather than mixed into substantive groups. A reviewer should be able to scan a trivial group in seconds.
 
 2. **Substantive changes are grouped by concept, not by file location.** A ViewModel change and its corresponding Action change belong together. A repository interface change and its implementation change belong together.
 
@@ -37,6 +37,17 @@ This stages exactly the files in the group and shows the diff. The owner can the
 - Ask follow-up questions before deciding
 
 New (untracked) files must be staged with `git add` before they appear in `git diff --cached HEAD`. Deleted files must also be staged for their removal to appear in the diff.
+
+## Linting sequencing
+
+**Do not run linting auto-fixes until all logical changes for the current task are approved and committed.** Linting is typically run sporadically rather than on every save, which means a linting pass can touch files that are simultaneously being edited for logical reasons — producing diff noise that makes logical changes harder to review.
+
+The correct sequence is:
+1. Implement logical changes → present for review → owner commits
+2. *Then* run the linting auto-fixer (e.g. `./gradlew ktlintFormat`) as a separate step
+3. Present the linting-only diff as its own group → owner commits
+
+If the owner asks to run `./gradlew composeApp:check` during development and it fails on linting violations, report the violations but **do not auto-fix them inline** — note that a linting-only commit should follow once the logical work is approved.
 
 ## Before presenting groups
 
