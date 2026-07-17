@@ -10,7 +10,6 @@ import kotlin.test.assertTrue
 import kotlin.time.Instant
 
 class AstronomicalContextTest {
-
     // Inject UTC so tests are timezone-independent
     private val tz = TimeZone.UTC
 
@@ -147,7 +146,7 @@ class AstronomicalContextTest {
 
         // Pre-check: verify the DST transition is real and occurs at the expected instant
         val justBefore = Instant.parse("2026-10-25T00:59:59Z") // 2:59am CEST (UTC+2)
-        val justAfter  = Instant.parse("2026-10-25T01:00:00Z") // 2:00am CET (UTC+1) — clocks fell back
+        val justAfter = Instant.parse("2026-10-25T01:00:00Z") // 2:00am CET (UTC+1) — clocks fell back
         assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justBefore))
         assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justAfter))
 
@@ -155,24 +154,24 @@ class AstronomicalContextTest {
         //   first  occurrence: 00:30Z (2:30am CEST) — before fallback
         //   second occurrence: 01:30Z (2:30am CET)  — after fallback
         // Both are before the 4am boundary, so both should resolve to Oct 24.
-        val firstOccurrence  = Instant.parse("2026-10-25T00:30:00Z")
+        val firstOccurrence = Instant.parse("2026-10-25T00:30:00Z")
         val secondOccurrence = Instant.parse("2026-10-25T01:30:00Z")
-        val oct24Anchor      = Instant.parse("2026-10-24T12:00:00Z")
-        val oct25Anchor      = Instant.parse("2026-10-25T12:00:00Z")
+        val oct24Anchor = Instant.parse("2026-10-24T12:00:00Z")
+        val oct25Anchor = Instant.parse("2026-10-25T12:00:00Z")
 
-        val result1   = computeAstronomicalContext(firstOccurrence, amsterdamTz)
-        val result2   = computeAstronomicalContext(secondOccurrence, amsterdamTz)
+        val result1 = computeAstronomicalContext(firstOccurrence, amsterdamTz)
+        val result2 = computeAstronomicalContext(secondOccurrence, amsterdamTz)
         val yesterday = computeAstronomicalContext(oct24Anchor, amsterdamTz)
-        val today     = computeAstronomicalContext(oct25Anchor, amsterdamTz)
+        val today = computeAstronomicalContext(oct25Anchor, amsterdamTz)
 
-        assertEquals(yesterday.season,      result1.season)
+        assertEquals(yesterday.season, result1.season)
         assertEquals(yesterday.dayOfSeason, result1.dayOfSeason)
-        assertEquals(yesterday.season,      result2.season)
+        assertEquals(yesterday.season, result2.season)
         assertEquals(yesterday.dayOfSeason, result2.dayOfSeason)
 
         // Sanity check: 4:30am CET on Oct 25 resolves to today, not yesterday
         val clearlyToday = computeAstronomicalContext(Instant.parse("2026-10-25T03:30:00Z"), amsterdamTz) // 4:30am CET
-        assertEquals(today.season,      clearlyToday.season)
+        assertEquals(today.season, clearlyToday.season)
         assertEquals(today.dayOfSeason, clearlyToday.dayOfSeason)
     }
 
@@ -191,19 +190,19 @@ class AstronomicalContextTest {
 
         // Pre-check: verify the DST transition is real and occurs at the expected instant
         val justBefore = Instant.parse("2026-03-29T00:59:59Z") // 1:59am CET (UTC+1)
-        val justAfter  = Instant.parse("2026-03-29T01:00:00Z") // 3:00am CEST (UTC+2) — clocks sprang forward
+        val justAfter = Instant.parse("2026-03-29T01:00:00Z") // 3:00am CEST (UTC+2) — clocks sprang forward
         assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justBefore))
         assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justAfter))
 
         // 4:30am CEST (UTC 02:30Z): hour >= 4, so effectiveDate = March 29 ("today").
         // UTC arithmetic would give "yesterday" here — this test catches that regression.
-        val justPast4am   = Instant.parse("2026-03-29T02:30:00Z") // 4:30am CEST
+        val justPast4am = Instant.parse("2026-03-29T02:30:00Z") // 4:30am CEST
         val march29Anchor = Instant.parse("2026-03-29T12:00:00Z")
 
         val result = computeAstronomicalContext(justPast4am, amsterdamTz)
-        val today  = computeAstronomicalContext(march29Anchor, amsterdamTz)
+        val today = computeAstronomicalContext(march29Anchor, amsterdamTz)
 
-        assertEquals(today.season,      result.season)
+        assertEquals(today.season, result.season)
         assertEquals(today.dayOfSeason, result.dayOfSeason)
     }
 
@@ -221,24 +220,22 @@ class AstronomicalContextTest {
     // -------------------------------------------------------------------------
 
     @Test
-    fun `4am boundary applies in the device timezone, not UTC`() {
-        val travelInstant    = Instant.parse("2024-07-15T04:00:00Z")
-        val amsterdamTz      = TimeZone.of("Europe/Amsterdam")
-        val newYorkTz        = TimeZone.of("America/New_York")
-        val amsterdamAnchor  = Instant.parse("2024-07-15T12:00:00Z") // noon UTC = 2pm Amsterdam
-        val newYorkAnchor    = Instant.parse("2024-07-14T16:00:00Z") // noon UTC-4 = 8am New York
+    fun `4am boundary applies in the device timezone - not UTC`() {
+        val travelInstant = Instant.parse("2024-07-15T04:00:00Z")
+        val amsterdamTz = TimeZone.of("Europe/Amsterdam")
+        val newYorkTz = TimeZone.of("America/New_York")
+        val amsterdamAnchor = Instant.parse("2024-07-15T12:00:00Z") // noon UTC = 2pm Amsterdam
+        val newYorkAnchor = Instant.parse("2024-07-14T16:00:00Z") // noon UTC-4 = 8am New York
 
-        val amsterdamResult   = computeAstronomicalContext(travelInstant, amsterdamTz)
-        val newYorkResult     = computeAstronomicalContext(travelInstant, newYorkTz)
-        val amsterdamToday    = computeAstronomicalContext(amsterdamAnchor, amsterdamTz)
-        val newYorkYesterday  = computeAstronomicalContext(newYorkAnchor, newYorkTz)
+        val amsterdamResult = computeAstronomicalContext(travelInstant, amsterdamTz)
+        val newYorkResult = computeAstronomicalContext(travelInstant, newYorkTz)
+        val amsterdamToday = computeAstronomicalContext(amsterdamAnchor, amsterdamTz)
+        val newYorkYesterday = computeAstronomicalContext(newYorkAnchor, newYorkTz)
 
         // Same instant, different timezone → different effective date
-        assertEquals(amsterdamToday.season,       amsterdamResult.season)
-        assertEquals(amsterdamToday.dayOfSeason,  amsterdamResult.dayOfSeason)
-        assertEquals(newYorkYesterday.season,      newYorkResult.season)
+        assertEquals(amsterdamToday.season, amsterdamResult.season)
+        assertEquals(amsterdamToday.dayOfSeason, amsterdamResult.dayOfSeason)
+        assertEquals(newYorkYesterday.season, newYorkResult.season)
         assertEquals(newYorkYesterday.dayOfSeason, newYorkResult.dayOfSeason)
     }
 }
-
-
