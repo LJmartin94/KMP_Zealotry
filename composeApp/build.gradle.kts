@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -68,7 +69,10 @@ kotlin {
 
 android {
     namespace = "com.github.ljmartin94.zealotry"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.android.compileSdk
+            .get()
+            .toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -76,8 +80,14 @@ android {
 
     defaultConfig {
         applicationId = "com.github.ljmartin94.zealotry"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.android.targetSdk
+                .get()
+                .toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -108,4 +118,36 @@ dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                // Compose UI — screens and composable functions are not unit-testable
+                annotatedBy("androidx.compose.runtime.Composable")
+                // Generated resources (Compose multiplatform resource system)
+                packages("zealotry.composeapp.generated.resources")
+                // Wiring and plumbing — not business logic
+                packages("navigation", "di")
+                // Presentation support packages — style, reusable UI, resource strings/drawables
+                packages(
+                    "presentation.style",
+                    "presentation.reusableUi",
+                    "presentation.resourceComposition",
+                )
+                // Utilities with no associated tests
+                packages("util.localisation", "util.dataStructures", "util")
+                // Room-generated, DAO, and network stub classes for any data feature
+                packages("data.*.source.local", "data.*.source.network")
+                // App entry point and Compose-generated singleton wrappers
+                classes("AppKt", "ComposableSingletons*")
+            }
+        }
+        verify {
+            rule("Minimum line coverage on testable code") {
+                minBound(40)
+            }
+        }
+    }
 }

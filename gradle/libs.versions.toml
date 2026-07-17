@@ -27,6 +27,7 @@ kotlinx-serialization = "1.11.0"
 coroutines = "1.11.0"
 mokkery = "3.3.0"
 turbine = "1.2.1"
+kover = "0.9.1"
 
 # Room KMP database:
 room = "2.8.4"
@@ -79,3 +80,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
