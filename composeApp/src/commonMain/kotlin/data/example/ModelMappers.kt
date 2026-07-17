@@ -2,12 +2,11 @@ package data.example
 
 import data.example.source.local.ExampleEntityLocal
 
-fun Example.toLocal(): ExampleEntityLocal {
-    return ExampleEntityLocal(
+fun Example.toLocal(): ExampleEntityLocal =
+    ExampleEntityLocal(
         id = this.id,
         toggle = this.toggle,
     )
-}
 
 fun List<Example>.toLocal() = map(Example::toLocal)
 

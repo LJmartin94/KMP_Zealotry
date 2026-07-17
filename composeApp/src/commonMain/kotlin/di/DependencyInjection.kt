@@ -10,10 +10,10 @@ import data.dayPartMenu.DayPartMenuRepositoryImpl
 import data.example.ExampleRepository
 import data.example.ExampleRepositoryImpl
 import data.example.source.local.ExampleDao
+import domain.ObserveAstronomicalContextUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import domain.ObserveAstronomicalContextUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf

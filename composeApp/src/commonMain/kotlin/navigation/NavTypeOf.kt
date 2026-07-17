@@ -24,11 +24,7 @@ inline fun <reified T> navTypeOf(isNullableAllowed: Boolean = true) =
             bundle.write { putString(key, Json.Default.encodeToString(value)) }
         }
 
-        override fun parseValue(value: String): T {
-            return Json.Default.decodeFromString(value)
-        }
+        override fun parseValue(value: String): T = Json.Default.decodeFromString(value)
 
-        override fun serializeAsValue(value: T): String {
-            return Json.Default.encodeToString(value)
-        }
+        override fun serializeAsValue(value: T): String = Json.Default.encodeToString(value)
     }

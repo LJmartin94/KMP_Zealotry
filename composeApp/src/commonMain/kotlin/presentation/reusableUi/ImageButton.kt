@@ -26,7 +26,8 @@ fun ImageButton(
     onClick: () -> Unit,
 ) = Box(
     modifier =
-        imgModifier.clickable { onClick() }
+        imgModifier
+            .clickable { onClick() }
             .paint(
                 painterResource(imgRes),
                 alpha = imgAlpha,

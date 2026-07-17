@@ -36,40 +36,36 @@ fun AdaptiveColumn(
     content:
         @Composable()
         (() -> Unit),
-) {
-    return BoxWithConstraints {
-        val portrait: Boolean = this.maxHeight >= this.maxWidth
-        when (portrait) {
-            true ->
-                Column(
-                    modifier,
-                    verticalArrangement,
-                    horizontalAlignment,
-                ) { this.apply { content() } }
+) = BoxWithConstraints {
+    val portrait: Boolean = this.maxHeight >= this.maxWidth
+    when (portrait) {
+        true ->
+            Column(
+                modifier,
+                verticalArrangement,
+                horizontalAlignment,
+            ) { this.apply { content() } }
 
-            false ->
-                Row(
-                    modifier,
-                    verticalArrangement.flip(),
-                    horizontalAlignment.flip(),
-                ) { content() }
-        }
+        false ->
+            Row(
+                modifier,
+                verticalArrangement.flip(),
+                horizontalAlignment.flip(),
+            ) { content() }
     }
 }
 
-private fun Arrangement.Vertical.flip(): Arrangement.Horizontal {
-    return when (this) {
+private fun Arrangement.Vertical.flip(): Arrangement.Horizontal =
+    when (this) {
         Arrangement.Top -> Arrangement.Start
         Arrangement.Bottom -> Arrangement.End
         else -> this as Arrangement.Horizontal
     }
-}
 
-private fun Alignment.Horizontal.flip(): Alignment.Vertical {
-    return when (this) {
+private fun Alignment.Horizontal.flip(): Alignment.Vertical =
+    when (this) {
         Alignment.Start -> Alignment.Top
         Alignment.End -> Alignment.Bottom
         Alignment.CenterHorizontally -> Alignment.CenterVertically
         else -> this as Alignment.Vertical
     }
-}

@@ -6,7 +6,9 @@ package util.dataStructures
  * Behaves like it inherits from MutableMap and MutableList, but these are incompatible in minor ways
  */
 @Suppress("TooManyFunctions")
-class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>, MutableList<K>
+class OrderedMap<K, V>(
+    initial: Map<out K, V> = mapOf(),
+) { // : MutableMap<K,V>, MutableList<K>
     // Make an internal copy of the provided map to avoid external mutation desyncs.
     private val mutableMap: MutableMap<K, V> = LinkedHashMap(initial)
     private val orderedEntries: MutableList<K> = mutableMap.keys.toMutableList()
@@ -61,28 +63,18 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
         return mutableMap.put(key, value)
     }
 
-    fun get(key: K): V? {
-        return mutableMap[key]
-    }
+    fun get(key: K): V? = mutableMap[key]
 
-    fun containsValue(value: V): Boolean {
-        return mutableMap.containsValue(value)
-    }
+    fun containsValue(value: V): Boolean = mutableMap.containsValue(value)
 
-    fun containsKey(key: K): Boolean {
-        return mutableMap.containsKey(key)
-    }
+    fun containsKey(key: K): Boolean = mutableMap.containsKey(key)
 
     /**
      * Inherited from MutableList:
      */
-    fun getKey(index: Int): K {
-        return orderedEntries[index]
-    }
+    fun getKey(index: Int): K = orderedEntries[index]
 
-    fun getValue(index: Int): V? {
-        return mutableMap[orderedEntries[index]]
-    }
+    fun getValue(index: Int): V? = mutableMap[orderedEntries[index]]
 
     fun mapIterator(): MutableMapIterator = MutableMapIterator(0)
 
@@ -172,13 +164,9 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
         return orderedEntries.removeAll(keys)
     }
 
-    fun indexOf(key: K): Int {
-        return orderedEntries.indexOf(key)
-    }
+    fun indexOf(key: K): Int = orderedEntries.indexOf(key)
 
-    fun containsAll(keys: Collection<K>): Boolean {
-        return orderedEntries.containsAll(keys)
-    }
+    fun containsAll(keys: Collection<K>): Boolean = orderedEntries.containsAll(keys)
 
     // Formerly addAll
     fun putAllAt(
@@ -210,7 +198,9 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
      * A ListIterator implementation that manipulates both the ordered key list and the backing map
      * to preserve the invariant that both structures contain the same keys.
      */
-    inner class MutableMapIterator(private var cursor: Int = 0) : MutableListIterator<Pair<K, V>> {
+    inner class MutableMapIterator(
+        private var cursor: Int = 0,
+    ) : MutableListIterator<Pair<K, V>> {
         // index of last element returned by next()/previous(); -1 if none or after add/remove
         private var lastReturnedIndex: Int = -1
 
@@ -235,13 +225,9 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
             lastReturnedIndex = -1
         }
 
-        override fun hasNext(): Boolean {
-            return cursor < orderedEntries.size
-        }
+        override fun hasNext(): Boolean = cursor < orderedEntries.size
 
-        override fun hasPrevious(): Boolean {
-            return cursor > 0
-        }
+        override fun hasPrevious(): Boolean = cursor > 0
 
         override fun next(): Pair<K, V> {
             if (!hasNext()) throw NoSuchElementException()
@@ -251,9 +237,7 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
             return Pair(key, valueOrThrow(key))
         }
 
-        override fun nextIndex(): Int {
-            return cursor
-        }
+        override fun nextIndex(): Int = cursor
 
         override fun previous(): Pair<K, V> {
             if (!hasPrevious()) throw NoSuchElementException()
@@ -263,9 +247,7 @@ class OrderedMap<K, V>(initial: Map<out K, V> = mapOf()) { // : MutableMap<K,V>,
             return Pair(key, valueOrThrow(key))
         }
 
-        override fun previousIndex(): Int {
-            return cursor - 1
-        }
+        override fun previousIndex(): Int = cursor - 1
 
         override fun remove() {
             if (lastReturnedIndex == -1) throw IllegalStateException()

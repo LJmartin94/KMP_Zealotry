@@ -5,5 +5,6 @@ import kotlin.time.Instant
 
 interface CalendarRepository {
     val updateFlow: Flow<Instant>
+
     fun refresh()
 }

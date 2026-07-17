@@ -21,14 +21,14 @@ import data.dayPartMenu.DayPart
 import navigation.NavDestination
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import zealotry.composeapp.generated.resources.Res
-import zealotry.composeapp.generated.resources.good_day
-import zealotry.composeapp.generated.resources.good_evening
-import zealotry.composeapp.generated.resources.good_morning
 import presentation.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.dayPartMenu.morningButtons.MorningButtons
 import presentation.example.ExampleScreen
 import toad.getViewModel
+import zealotry.composeapp.generated.resources.Res
+import zealotry.composeapp.generated.resources.good_day
+import zealotry.composeapp.generated.resources.good_evening
+import zealotry.composeapp.generated.resources.good_morning
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -42,11 +42,12 @@ fun DayPartMenuScreen(
     LaunchedEffect(content.part) {
         viewModel.runAction(SetDayPart(content.part))
     }
-    val greeting = when (uiState.part) {
-        DayPart.MORNING -> stringResource(Res.string.good_morning)
-        DayPart.MIDDAY -> stringResource(Res.string.good_day)
-        DayPart.EVENING -> stringResource(Res.string.good_evening)
-    }
+    val greeting =
+        when (uiState.part) {
+            DayPart.MORNING -> stringResource(Res.string.good_morning)
+            DayPart.MIDDAY -> stringResource(Res.string.good_day)
+            DayPart.EVENING -> stringResource(Res.string.good_evening)
+        }
     val visibleButtons =
         when (uiState.part) {
             DayPart.MORNING -> MorningButtons.entries

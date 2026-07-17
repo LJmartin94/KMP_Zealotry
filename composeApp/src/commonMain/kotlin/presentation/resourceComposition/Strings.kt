@@ -2,12 +2,12 @@ package presentation.resourceComposition
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.intl.Locale
+import domain.FestiveDay
+import domain.Season
 import kotlinx.datetime.DayOfWeek
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
-import domain.FestiveDay
-import domain.Season
 import util.localisation.getLocale
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
@@ -34,8 +34,8 @@ import zealotry.composeapp.generated.resources.winter_start
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun DayOfWeek.toResourceString(): String {
-    return when (this) {
+fun DayOfWeek.toResourceString(): String =
+    when (this) {
         DayOfWeek.MONDAY -> stringResource(Res.string.monday)
         DayOfWeek.TUESDAY -> stringResource(Res.string.tuesday)
         DayOfWeek.WEDNESDAY -> stringResource(Res.string.wednesday)
@@ -45,23 +45,21 @@ fun DayOfWeek.toResourceString(): String {
         DayOfWeek.SUNDAY -> stringResource(Res.string.sunday)
         else -> "Error"
     }
-}
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun Season.toResourceString(): String {
-    return when (this) {
+fun Season.toResourceString(): String =
+    when (this) {
         Season.SPRING -> stringResource(Res.string.spring)
         Season.SUMMER -> stringResource(Res.string.summer)
         Season.AUTUMN -> stringResource(Res.string.autumn)
         Season.WINTER -> stringResource(Res.string.winter)
     }
-}
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
-fun FestiveDay.toResourceString(): String {
-    return when (this) {
+fun FestiveDay.toResourceString(): String =
+    when (this) {
         FestiveDay.SPRING_START -> stringResource(Res.string.spring_start)
         FestiveDay.MID_SPRING -> stringResource(Res.string.mid_spring)
         FestiveDay.SUMMER_START -> stringResource(Res.string.summer_start)
@@ -71,7 +69,6 @@ fun FestiveDay.toResourceString(): String {
         FestiveDay.WINTER_START -> stringResource(Res.string.winter_start)
         FestiveDay.MID_WINTER -> stringResource(Res.string.mid_winter)
     }
-}
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)

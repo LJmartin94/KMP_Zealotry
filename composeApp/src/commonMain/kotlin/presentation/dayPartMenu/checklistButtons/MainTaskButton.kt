@@ -34,9 +34,12 @@ fun MainTaskButton(
     onClick: () -> Unit,
 ) = Row(
     modifier =
-        buttonModifier.clickable(
-            onClick = onClick,
-        ).padding(8.dp).defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
+        buttonModifier
+            .clickable(
+                onClick = onClick,
+            ).padding(8.dp)
+            .defaultMinSize(minHeight = buttonHeight.dp)
+            .minimumInteractiveComponentSize(),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = verticalAlign,
 ) {

@@ -6,11 +6,12 @@ import toad.ToadViewModel
 class DayPartMenuViewModel(
     dayPartMenuRepository: DayPartMenuRepository,
 ) : ToadViewModel<DayPartMenuUiState, DayPartMenuEvent>(
-    initialState = DayPartMenuUiState(),
-) {
-    override val dependencies = DayPartMenuActionDependencies(
-        dayPartMenuRepository = dayPartMenuRepository,
-    )
+        initialState = DayPartMenuUiState(),
+    ) {
+    override val dependencies =
+        DayPartMenuActionDependencies(
+            dayPartMenuRepository = dayPartMenuRepository,
+        )
 
     init {
         dispatchAll(initialActions)

@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.runningFold
 fun <T : Any> Flow<T?>.onUnexpectedNull(action: () -> Unit): Flow<T?> =
     runningFold(Pair(false, null as T?)) { (seenValue, _), emission ->
         Pair(seenValue || emission != null, emission)
-    }
-        .drop(1) // discard the initial runningFold seed state
+    }.drop(1) // discard the initial runningFold seed state
         .onEach { (seenValue, emission) -> if (emission == null && seenValue) action() }
         .map { (_, emission) -> emission }

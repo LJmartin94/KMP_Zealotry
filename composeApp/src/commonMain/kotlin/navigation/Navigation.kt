@@ -7,11 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import data.dayPartMenu.DayPart as DayPartEnum
 import kotlinx.serialization.Serializable
 import presentation.dayPartMenu.DayPartMenuScreen
 import presentation.mainMenu.MainMenuScreen
 import kotlin.reflect.typeOf
+import data.dayPartMenu.DayPart as DayPartEnum
 
 @Composable
 fun Navigation(navController: NavHostController = rememberNavController()) {
@@ -52,7 +52,10 @@ sealed class NavDestination {
 
     // With destination arguments - to display specific content
     @Serializable
-    class DayPart private constructor(val part: DayPartEnum, val working: Boolean) : NavDestination() {
+    class DayPart private constructor(
+        val part: DayPartEnum,
+        val working: Boolean,
+    ) : NavDestination() {
         constructor(part: DayPartEnum) : this(part, true)
     }
 

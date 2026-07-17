@@ -6,7 +6,9 @@ import toad.ViewAction
 
 abstract class DayPartMenuAction : ViewAction<DayPartMenuActionDependencies, DayPartMenuUiState, DayPartMenuEvent>
 
-data class SetDayPart(val part: DayPart) : DayPartMenuAction() {
+data class SetDayPart(
+    val part: DayPart,
+) : DayPartMenuAction() {
     override suspend fun execute(
         dependencies: DayPartMenuActionDependencies,
         scope: ActionScope<DayPartMenuUiState, DayPartMenuEvent>,

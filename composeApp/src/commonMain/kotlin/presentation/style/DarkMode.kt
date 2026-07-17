@@ -12,9 +12,7 @@ val DarkThemeCompositionLocal =
     }
 
 @Composable
-fun isDark(): Boolean {
-    return isSystemInDarkTheme()
-}
+fun isDark(): Boolean = isSystemInDarkTheme()
 
 @Composable
 @Suppress("MagicNumber")

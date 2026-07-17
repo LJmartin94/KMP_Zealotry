@@ -20,7 +20,9 @@ data class Example(
      * Using a typed enum rather than plain String constants ensures canonical keys
      * cannot be accidentally passed to methods expecting an entity id, and vice versa.
      */
-    enum class CanonicalKey(val value: String) {
+    enum class CanonicalKey(
+        val value: String,
+    ) {
         FIRST("example_one"),
         SECOND("example_two"),
     }

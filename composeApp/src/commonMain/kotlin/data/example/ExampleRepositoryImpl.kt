@@ -14,14 +14,13 @@ class ExampleRepositoryImpl(
         println("Initialised Example Repository")
     }
 
-    override fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example> {
-        return localDataSource.observeBySeedKey(canonicalKey.value)
+    override fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example> =
+        localDataSource
+            .observeBySeedKey(canonicalKey.value)
             .onUnexpectedNull {
                 // TODO: replace with proper error logging.
                 println("ERROR: Canonical example '$canonicalKey' was deleted unexpectedly.")
-            }
-            .mapNotNull { it?.toExternal() }
-    }
+            }.mapNotNull { it?.toExternal() }
 
     override suspend fun refreshCanonicalExample(canonicalKey: Example.CanonicalKey): Result<Unit> {
         // TODO: fetch from network and write to local DB.
@@ -30,9 +29,8 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 
-    override fun observeAllExamples(): Flow<List<Example>> {
-        return localDataSource.observeAll().map { entities -> entities.map { it.toExternal() } }
-    }
+    override fun observeAllExamples(): Flow<List<Example>> =
+        localDataSource.observeAll().map { entities -> entities.map { it.toExternal() } }
 
     override suspend fun refreshAllExamples(): Result<Unit> {
         // TODO: fetch all from network and write to local DB.
@@ -41,9 +39,7 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 
-    override fun observeExampleById(id: String): Flow<Example> {
-        return localDataSource.observeById(id).mapNotNull { it?.toExternal() }
-    }
+    override fun observeExampleById(id: String): Flow<Example> = localDataSource.observeById(id).mapNotNull { it?.toExternal() }
 
     override suspend fun refreshExampleById(id: String): Result<Unit> {
         // TODO: fetch from network by id and write to local DB.
