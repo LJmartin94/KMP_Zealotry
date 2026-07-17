@@ -1,1 +1,10 @@
 Possibly with Github actions?
+
+Single line check: ./gradlew composeApp:check
+Should include:
+
+koverVerify
+detekt
+ktlint*Check (all source sets)
+testDebugUnitTest + iosSimulatorArm64Test + allTests
+lintDebug
