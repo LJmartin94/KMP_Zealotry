@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Local-only safety net, not a gate: runs the full check suite (ktlint, detekt,
+# JVM/Android unit tests, iOS simulator test, Kover coverage) before every push.
+#
+# Intentionally non-blocking — always exits 0 — so a failing check never stops
+# the push. It exists purely to surface issues you'd otherwise only notice
+# later, right at the moment you push.
+#
+# One-time setup per machine (hooks aren't tracked by git on their own):
+#   git config core.hooksPath .githooks
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+echo "Running ./gradlew composeApp:check before push (non-blocking — push proceeds regardless)"
+./gradlew composeApp:check
+result=$?
+
+if [ $result -ne 0 ]; then
+  echo ""
+  echo -e "${RED}composeApp:check FAILED (exit $result) — see output above.${RESET}"
+  echo -e "${RED}Push is proceeding anyway; this hook is intentionally non-blocking.${RESET}"
+else
+  echo -e "${GREEN}composeApp:check passed.${RESET}"
+fi
+
+exit 0
