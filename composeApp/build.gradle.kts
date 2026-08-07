@@ -128,6 +128,13 @@ tasks.named("check") {
     dependsOn("detektMetadataMain")
 }
 
+// Detekt tasks implement Gradle's PatternFilterable, so exclude() filters files out
+// before any rule runs — one global exclude here covers every rule, instead of adding
+// the same 'excludes' glob list to each rule individually in config/detekt/detekt.yml.
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    exclude("**/generated/**")
+}
+
 kover {
     reports {
         filters {
