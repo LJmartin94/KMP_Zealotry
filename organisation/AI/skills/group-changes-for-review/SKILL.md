@@ -23,6 +23,8 @@ Changes are grouped into small, cohesive batches that a reviewer can understand 
 
 5. **DI and wiring changes** are typically last — they connect already-reviewed pieces and are easiest to verify once the pieces themselves are understood.
 
+**Groups are units of review, not units of deployability.** An intermediate commit is allowed to leave the codebase non-functional or not-yet-wired-together — e.g. a new script or hook file that nothing invokes yet — as long as the commit message says so plainly (see heuristic 5: the artifact and its wiring are deliberately separate groups, not one merged group, even though the artifact alone "does nothing" until the wiring lands). Don't hedge into bundling separable pieces together just to keep every commit self-sufficient; that only inflates the diff without reducing what the reviewer has to understand at once.
+
 ## Review commands
 
 For each group, the AI provides a single runnable command of the form:
