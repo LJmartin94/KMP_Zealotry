@@ -5,6 +5,7 @@ ktlint = disabled
 ktlint_code_style = ktlint_official
 ktlint_ignore_back_ticked_identifier = true
 ktlint_standard = enabled
+max_line_length = 100
 # ktlint_experimental = enabled
 
 # Composable methods allowed to start with uppercase letter
