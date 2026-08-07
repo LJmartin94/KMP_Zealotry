@@ -16,7 +16,7 @@ class OrderedMap<K, V>(
     // Helper to provide a clear exception if invariant is violated
     private fun valueOrThrow(key: K): V =
         mutableMap[key]
-            ?: throw IllegalStateException("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
+            ?: error("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
 
     /**
      * Commonly Inherited:
@@ -250,7 +250,7 @@ class OrderedMap<K, V>(
         override fun previousIndex(): Int = cursor - 1
 
         override fun remove() {
-            if (lastReturnedIndex == -1) throw IllegalStateException()
+            check(lastReturnedIndex != -1) { "Cannot remove: next() or previous() must be called first" }
             val key = orderedEntries.removeAt(lastReturnedIndex)
             mutableMap.remove(key)
 
@@ -259,7 +259,7 @@ class OrderedMap<K, V>(
         }
 
         override fun set(element: Pair<K, V>) {
-            if (lastReturnedIndex == -1) throw IllegalStateException()
+            check(lastReturnedIndex != -1) { "Cannot set: next() or previous() must be called first" }
             val newKey = element.first
             val newValue = element.second
 
