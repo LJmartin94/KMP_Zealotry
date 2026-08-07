@@ -59,16 +59,7 @@ Current session state. Updated each session. Contains:
 
 ## Session Setup Instructions
 
-At the start of a new session, re-establish the `plan.md` symlink so that writes to `plan.md` and writes to `SESSION_NOTES.md` are the same operation.
-
-Replace `<session-id>` with the current session UUID (visible in the session context block at the top of the conversation):
-
-```bash
-PLAN=~/.copilot/session-state/<session-id>/plan.md
-NOTES=/Users/lindsayjames.martin/ghZealotry/organisation/AI/SESSION_NOTES.md
-rm "$PLAN"
-ln -s "$NOTES" "$PLAN"
-```
+At the start of a new session, run `./first-time-setup.sh <session-id>` from the repository root (replace `<session-id>` with the current session UUID, visible in the session context block at the top of the conversation). Safe to re-run any time — it also handles one-time machine bootstrap (skills symlinks, `.githooks` wiring) idempotently, and re-establishes the `plan.md` -> `SESSION_NOTES.md` symlink for this session so writes to either are the same operation.
 
 ---
 

@@ -80,18 +80,17 @@ The redundant-`cd` case (`cd <absolute path already inside this repo> && ...`) c
 
 **Announcing skill use:** whenever a skill fires, say so in the response text: name the skill and, in one line, what triggered it. This overrides the general preference for not narrating tool calls; skill triggering in particular should stay visible so misfires (wrong skill, or a skill that should have fired but didn't) are easy to spot.
 
-**Bootstrap (once per machine):** run from the repository root.
-
-```bash
-mkdir -p .github .agents .claude
-[ -e .claude/skills ] || ln -s ../organisation/AI/skills .claude/skills
-[ -e .github/skills ] || ln -s ../organisation/AI/skills .github/skills
-[ -e .agents/skills ] || ln -s ../organisation/AI/skills .agents/skills
-```
+**Bootstrap (once per machine):** run `./first-time-setup.sh` from the repository root (safe to re-run any time).
 
 ### Process skills in this library
 
 List `organisation/AI/skills/` to see what exists — each skill's own `description` frontmatter says what it covers and when to use it.
+
+---
+
+## Local Git Hooks
+
+`.githooks/` is a tracked directory containing local-only git hooks (currently: `pre-push`, a non-blocking safety net that runs `composeApp:check` before every push and always exits 0). Hooks aren't tracked by git on their own — they must live under `.git/hooks/`, which every clone starts empty — so this repo points git at the tracked directory via `core.hooksPath`, set by the same `./first-time-setup.sh` used for the skills symlinks.
 
 ---
 
