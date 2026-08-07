@@ -51,7 +51,8 @@ class UpdateToggleTest {
     fun `when id is set and update fails error state is set`() =
         runTest {
             val repo = mock<ExampleRepository>()
-            everySuspend { repo.updateToggle(any(), any()) } returns Result.failure(RuntimeException("network error"))
+            everySuspend { repo.updateToggle(any(), any()) } returns
+                Result.failure(RuntimeException("network error"))
             val deps = ExampleActionDependencies(exampleRepository = repo)
             val scope = makeScope(ExampleUiState(id = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"))
 

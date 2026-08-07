@@ -20,7 +20,11 @@ class SetDayPartTest {
     fun `when SetDayPart executes part is updated in state`() =
         runTest {
             val stateFlow = MutableStateFlow(DayPartMenuUiState())
-            val scope = ActionScope<DayPartMenuUiState, DayPartMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<DayPartMenuUiState, DayPartMenuEvent>(
+                    stateFlow,
+                    Channel(Channel.UNLIMITED),
+                )
 
             SetDayPart(DayPart.EVENING).execute(makeDeps(), scope)
 
@@ -31,7 +35,11 @@ class SetDayPartTest {
     fun `when SetDayPart executes state reflects each different part`() =
         runTest {
             val stateFlow = MutableStateFlow(DayPartMenuUiState())
-            val scope = ActionScope<DayPartMenuUiState, DayPartMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<DayPartMenuUiState, DayPartMenuEvent>(
+                    stateFlow,
+                    Channel(Channel.UNLIMITED),
+                )
 
             SetDayPart(DayPart.MORNING).execute(makeDeps(), scope)
             assertEquals(DayPart.MORNING, stateFlow.value.part)

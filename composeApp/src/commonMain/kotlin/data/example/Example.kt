@@ -7,7 +7,8 @@ data class Example(
     val isActive
         get() = toggle
 
-    // At the data layer these are 'seedKeys', but as seeding is strictly a database concern, at the domain level we call them canonicalKeys.
+    // At the data layer these are 'seedKeys', but as seeding is strictly a database concern,
+    // at the domain level we call them canonicalKeys.
 
     /**
      * Typed identifiers for pre-seeded rows that are always present in the database.

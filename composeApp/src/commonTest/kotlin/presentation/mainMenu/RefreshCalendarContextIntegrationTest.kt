@@ -52,7 +52,8 @@ class RefreshCalendarContextIntegrationTest {
                     observeAstronomicalContextUseCase = useCase,
                 )
             val stateFlow = MutableStateFlow(MainMenuUiState())
-            val scope = ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
 
             stateFlow.test {
                 awaitItem() // discard initial empty state

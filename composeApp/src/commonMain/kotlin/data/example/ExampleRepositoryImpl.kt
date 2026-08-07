@@ -39,7 +39,8 @@ class ExampleRepositoryImpl(
         return Result.success(Unit)
     }
 
-    override fun observeExampleById(id: String): Flow<Example> = localDataSource.observeById(id).mapNotNull { it?.toExternal() }
+    override fun observeExampleById(id: String): Flow<Example> =
+        localDataSource.observeById(id).mapNotNull { it?.toExternal() }
 
     override suspend fun refreshExampleById(id: String): Result<Unit> {
         // TODO: fetch from network by id and write to local DB.

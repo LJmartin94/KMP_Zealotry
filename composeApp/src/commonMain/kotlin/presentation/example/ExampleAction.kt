@@ -9,7 +9,8 @@ import toad.ViewAction
 
 abstract class ExampleAction : ViewAction<ExampleActionDependencies, ExampleUiState, ExampleEvent>
 
-data object ObserveExample : ExampleAction() { // 'object' because it is a singleton & without constructor/params
+// 'object' because it is a singleton & without constructor/params
+data object ObserveExample : ExampleAction() {
     override suspend fun execute(
         dependencies: ExampleActionDependencies,
         scope: ActionScope<ExampleUiState, ExampleEvent>,

@@ -3,7 +3,8 @@ package presentation.mainMenu
 import toad.ActionScope
 import toad.ViewAction
 
-abstract class MainMenuAction : ViewAction<MainMenuActionDependencies, MainMenuUiState, MainMenuEvent>
+abstract class MainMenuAction :
+    ViewAction<MainMenuActionDependencies, MainMenuUiState, MainMenuEvent>
 
 data object ObserveCalendarContext : MainMenuAction() {
     override suspend fun execute(

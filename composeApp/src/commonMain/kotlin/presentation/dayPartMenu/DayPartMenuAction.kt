@@ -4,7 +4,8 @@ import data.dayPartMenu.DayPart
 import toad.ActionScope
 import toad.ViewAction
 
-abstract class DayPartMenuAction : ViewAction<DayPartMenuActionDependencies, DayPartMenuUiState, DayPartMenuEvent>
+abstract class DayPartMenuAction :
+    ViewAction<DayPartMenuActionDependencies, DayPartMenuUiState, DayPartMenuEvent>
 
 data class SetDayPart(
     val part: DayPart,

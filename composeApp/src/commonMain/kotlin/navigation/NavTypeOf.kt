@@ -12,9 +12,7 @@ inline fun <reified T> navTypeOf(isNullableAllowed: Boolean = true) =
         override fun get(
             bundle: SavedState,
             key: String,
-        ): T? {
-            return Json.Default.decodeFromString(bundle.read { getStringOrNull(key) } ?: return null)
-        }
+        ): T? = bundle.read { getStringOrNull(key) }?.let { Json.Default.decodeFromString(it) }
 
         override fun put(
             bundle: SavedState,

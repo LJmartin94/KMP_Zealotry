@@ -18,7 +18,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class ObserveExampleTest {
-    private fun makeScope(initialState: ExampleUiState = ExampleUiState()): ActionScope<ExampleUiState, ExampleEvent> =
+    private fun makeScope(
+        initialState: ExampleUiState = ExampleUiState(),
+    ): ActionScope<ExampleUiState, ExampleEvent> =
         ActionScope(MutableStateFlow(initialState), Channel(Channel.UNLIMITED))
 
     @Test
@@ -29,7 +31,8 @@ class ObserveExampleTest {
             every { repo.observeCanonicalExample(any()) } returns flowOf(example)
             val deps = ExampleActionDependencies(exampleRepository = repo)
             val stateFlow = MutableStateFlow(ExampleUiState())
-            val scope = ActionScope<ExampleUiState, ExampleEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<ExampleUiState, ExampleEvent>(stateFlow, Channel(Channel.UNLIMITED))
 
             stateFlow.test {
                 awaitItem() // initial state
@@ -52,10 +55,12 @@ class ObserveExampleTest {
     fun `when flow throws error state is set and loading is cleared`() =
         runTest {
             val repo = mock<ExampleRepository>()
-            every { repo.observeCanonicalExample(any()) } returns flow { throw RuntimeException("upstream error") }
+            every { repo.observeCanonicalExample(any()) } returns
+                flow { throw RuntimeException("upstream error") }
             val deps = ExampleActionDependencies(exampleRepository = repo)
             val stateFlow = MutableStateFlow(ExampleUiState())
-            val scope = ActionScope<ExampleUiState, ExampleEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<ExampleUiState, ExampleEvent>(stateFlow, Channel(Channel.UNLIMITED))
 
             stateFlow.test {
                 awaitItem() // initial state

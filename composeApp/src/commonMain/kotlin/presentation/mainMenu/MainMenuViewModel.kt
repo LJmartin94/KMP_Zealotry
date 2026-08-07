@@ -18,8 +18,9 @@ class MainMenuViewModel(
 
     init {
         dispatchAll(initialActions)
-        // ObserveCalendarContext runs indefinitely (collects a Flow), so it is dispatched separately
-        // rather than included in initialActions, which are run sequentially via dispatchAll.
+        // ObserveCalendarContext runs indefinitely (collects a Flow), so it is dispatched
+        // separately rather than included in initialActions, which are run sequentially via
+        // dispatchAll.
         dispatch(ObserveCalendarContext)
     }
 

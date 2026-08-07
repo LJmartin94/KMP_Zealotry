@@ -28,7 +28,8 @@ fun MainTaskButton(
     text: String,
     time: String,
     buttonHeight: Int = 50,
-    buttonModifier: Modifier = Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
+    buttonModifier: Modifier =
+        Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     textAlign: TextAlign = TextAlign.Center,
     onClick: () -> Unit,
@@ -44,7 +45,8 @@ fun MainTaskButton(
     verticalAlignment = verticalAlign,
 ) {
     Image(
-        modifier = Modifier.defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
+        modifier =
+            Modifier.defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
         painter = chiaro.getPainter(),
         contentScale = ContentScale.FillHeight,
         contentDescription = null,
@@ -70,7 +72,8 @@ data class IconTextTimeBundle(
 @Composable
 fun MainTaskButton(
     bundle: IconTextTimeBundle,
-    buttonModifier: Modifier = Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
+    buttonModifier: Modifier =
+        Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     textAlign: TextAlign = TextAlign.Center,
 ) {

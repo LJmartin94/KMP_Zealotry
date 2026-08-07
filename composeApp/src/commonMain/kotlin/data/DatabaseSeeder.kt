@@ -21,11 +21,20 @@ fun interface SeedEntry {
  * **To remove a seeded row:** remove its entry from [seeds]. The row is NOT automatically
  * deleted from the database — write a migration if you need to clean up old seeded rows.
  */
+@Suppress("MaxLineLength")
 object DatabaseSeeder {
     private fun seeds(db: AppDatabase): List<SeedEntry> =
         listOf(
-            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.value, toggle = true)) },
-            SeedEntry { db.exampleDao().insertIfAbsent(ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.value, toggle = false)) },
+            SeedEntry {
+                db.exampleDao().insertIfAbsent(
+                    ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.value, toggle = true),
+                )
+            },
+            SeedEntry {
+                db.exampleDao().insertIfAbsent(
+                    ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.value, toggle = false),
+                )
+            },
         )
 
     suspend fun seedAll(db: AppDatabase) {

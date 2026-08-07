@@ -31,7 +31,8 @@ class ObserveCalendarContextTest {
                     observeAstronomicalContextUseCase = ObserveAstronomicalContextUseCase(repo),
                 )
             val stateFlow = MutableStateFlow(MainMenuUiState())
-            val scope = ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
 
             stateFlow.test {
                 awaitItem() // initial state
@@ -60,15 +61,28 @@ class ObserveCalendarContextTest {
                     observeAstronomicalContextUseCase = ObserveAstronomicalContextUseCase(repo),
                 )
             val stateFlow = MutableStateFlow(MainMenuUiState())
-            val scope = ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
+            val scope =
+                ActionScope<MainMenuUiState, MainMenuEvent>(stateFlow, Channel(Channel.UNLIMITED))
 
             stateFlow.test {
                 awaitItem() // initial state
                 ObserveCalendarContext.execute(deps, scope)
                 val firstUpdate = awaitItem()
-                assertEquals(computeAstronomicalContext(instantOne, TimeZone.currentSystemDefault()).dayOfWeek, firstUpdate.dayOfWeek)
+                assertEquals(
+                    computeAstronomicalContext(
+                        instantOne,
+                        TimeZone.currentSystemDefault(),
+                    ).dayOfWeek,
+                    firstUpdate.dayOfWeek,
+                )
                 val secondUpdate = awaitItem()
-                assertEquals(computeAstronomicalContext(instantTwo, TimeZone.currentSystemDefault()).dayOfWeek, secondUpdate.dayOfWeek)
+                assertEquals(
+                    computeAstronomicalContext(
+                        instantTwo,
+                        TimeZone.currentSystemDefault(),
+                    ).dayOfWeek,
+                    secondUpdate.dayOfWeek,
+                )
                 cancelAndIgnoreRemainingEvents()
             }
         }

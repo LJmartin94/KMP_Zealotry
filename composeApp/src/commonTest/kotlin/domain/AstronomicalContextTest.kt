@@ -50,7 +50,10 @@ class AstronomicalContextTest {
         // Start of spring 2024 is approximately May 5 (midpoint between winter solstice and vernal equinox)
         // We test that the first day of spring returns dayOfSeason == 1
         val result = computeAstronomicalContext(Instant.parse("2024-04-15T12:00:00Z"), tz)
-        assertTrue(result.dayOfSeason >= 1, "dayOfSeason should be at least 1, was ${result.dayOfSeason}")
+        assertTrue(
+            result.dayOfSeason >= 1,
+            "dayOfSeason should be at least 1, was ${result.dayOfSeason}",
+        )
     }
 
     @Test
@@ -146,7 +149,9 @@ class AstronomicalContextTest {
 
         // Pre-check: verify the DST transition is real and occurs at the expected instant
         val justBefore = Instant.parse("2026-10-25T00:59:59Z") // 2:59am CEST (UTC+2)
-        val justAfter = Instant.parse("2026-10-25T01:00:00Z") // 2:00am CET (UTC+1) — clocks fell back
+
+        // 2:00am CET (UTC+1) — clocks fell back
+        val justAfter = Instant.parse("2026-10-25T01:00:00Z")
         assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justBefore))
         assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justAfter))
 
@@ -170,7 +175,10 @@ class AstronomicalContextTest {
         assertEquals(yesterday.dayOfSeason, result2.dayOfSeason)
 
         // Sanity check: 4:30am CET on Oct 25 resolves to today, not yesterday
-        val clearlyToday = computeAstronomicalContext(Instant.parse("2026-10-25T03:30:00Z"), amsterdamTz) // 4:30am CET
+
+        // 4:30am CET
+        val clearlyToday =
+            computeAstronomicalContext(Instant.parse("2026-10-25T03:30:00Z"), amsterdamTz)
         assertEquals(today.season, clearlyToday.season)
         assertEquals(today.dayOfSeason, clearlyToday.dayOfSeason)
     }
@@ -190,7 +198,9 @@ class AstronomicalContextTest {
 
         // Pre-check: verify the DST transition is real and occurs at the expected instant
         val justBefore = Instant.parse("2026-03-29T00:59:59Z") // 1:59am CET (UTC+1)
-        val justAfter = Instant.parse("2026-03-29T01:00:00Z") // 3:00am CEST (UTC+2) — clocks sprang forward
+
+        // 3:00am CEST (UTC+2) — clocks sprang forward
+        val justAfter = Instant.parse("2026-03-29T01:00:00Z")
         assertEquals(UtcOffset(hours = 1), amsterdamTz.offsetAt(justBefore))
         assertEquals(UtcOffset(hours = 2), amsterdamTz.offsetAt(justAfter))
 

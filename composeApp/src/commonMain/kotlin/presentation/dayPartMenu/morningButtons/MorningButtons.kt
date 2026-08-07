@@ -85,7 +85,7 @@ enum class MorningButtons {
 }
 
 @Composable
-@Suppress("LongMethod", "CyclomaticComplexMethod")
+@Suppress("LongMethod", "CyclomaticComplexMethod", "MaxLineLength")
 @OptIn(ExperimentalResourceApi::class)
 fun MorningButtons.toBundle(): IconTextTimeBundle =
     when (this) {
@@ -101,7 +101,11 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.SHOWER ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.water_bath_small, Res.drawable.water_bath_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.water_bath_small,
+                        Res.drawable.water_bath_small_inv,
+                    ),
                 text = stringResource(Res.string.shower),
             )
         MorningButtons.NEWS ->
@@ -116,22 +120,38 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.COFFEE ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.energy_rune_small, Res.drawable.energy_rune_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.energy_rune_small,
+                        Res.drawable.energy_rune_small_inv,
+                    ),
                 text = stringResource(Res.string.coffee),
             )
         MorningButtons.SMOOTHIE ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.health_rune_small, Res.drawable.health_rune_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.health_rune_small,
+                        Res.drawable.health_rune_small_inv,
+                    ),
                 text = stringResource(Res.string.smoothie),
             )
         MorningButtons.WATER ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.water_alt_small, Res.drawable.water_alt_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.water_alt_small,
+                        Res.drawable.water_alt_small_inv,
+                    ),
                 text = stringResource(Res.string.water),
             )
         MorningButtons.VITAMINS ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.asclepius_small, Res.drawable.asclepius_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.asclepius_small,
+                        Res.drawable.asclepius_small_inv,
+                    ),
                 text = stringResource(Res.string.vitamins),
             )
         MorningButtons.DISHES ->
@@ -145,17 +165,29 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.BREAKFAST ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.grain_jar_small, Res.drawable.grain_jar_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.grain_jar_small,
+                        Res.drawable.grain_jar_small_inv,
+                    ),
                 text = stringResource(Res.string.breakfast),
             )
         MorningButtons.WATER_PLANTS ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.lotus_watered_small, Res.drawable.lotus_watered_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.lotus_watered_small,
+                        Res.drawable.lotus_watered_small_inv,
+                    ),
                 text = stringResource(Res.string.water_plants),
             )
         MorningButtons.MEDITATION ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.meditation_small, Res.drawable.meditation_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.meditation_small,
+                        Res.drawable.meditation_small_inv,
+                    ),
                 text = stringResource(Res.string.meditation),
             )
         MorningButtons.LANGUAGE ->
@@ -165,12 +197,20 @@ fun MorningButtons.toBundle(): IconTextTimeBundle =
             )
         MorningButtons.BRUSH_TEETH ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.tooth_alt_small, Res.drawable.tooth_alt_small_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.tooth_alt_small,
+                        Res.drawable.tooth_alt_small_inv,
+                    ),
                 text = stringResource(Res.string.brush_teeth),
             )
         MorningButtons.COSMETICISM ->
             IconTextTimeBundle(
-                chiaro = Chiaroscuro(Res.drawable.ic_baseline_flare_24, Res.drawable.ic_baseline_flare_24_inv),
+                chiaro =
+                    Chiaroscuro(
+                        Res.drawable.ic_baseline_flare_24,
+                        Res.drawable.ic_baseline_flare_24_inv,
+                    ),
                 text = stringResource(Res.string.cosmeticism),
             )
         MorningButtons.PACK_BAG ->

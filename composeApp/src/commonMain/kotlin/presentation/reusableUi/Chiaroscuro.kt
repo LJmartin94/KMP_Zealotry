@@ -13,7 +13,8 @@ class Chiaroscuro(
     private val darkRes: DrawableResource,
 ) {
     @Composable
-    fun getDrawable(): DrawableResource = if (DarkThemeCompositionLocal.current) this.darkRes else this.lightRes
+    fun getDrawable(): DrawableResource =
+        if (DarkThemeCompositionLocal.current) this.darkRes else this.lightRes
 
     @Composable
     fun getPainter(): Painter = painterResource(this.getDrawable())

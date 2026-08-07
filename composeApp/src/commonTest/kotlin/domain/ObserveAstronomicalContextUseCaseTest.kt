@@ -38,7 +38,10 @@ class ObserveAstronomicalContextUseCaseTest {
             useCase().test {
                 val context = awaitItem()
                 assertEquals(Season.SUMMER, context.season)
-                assertEquals(computeAstronomicalContext(fixedInstant, TimeZone.UTC).dayOfWeek, context.dayOfWeek)
+                assertEquals(
+                    computeAstronomicalContext(fixedInstant, TimeZone.UTC).dayOfWeek,
+                    context.dayOfWeek,
+                )
                 awaitComplete()
             }
         }

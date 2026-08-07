@@ -3,7 +3,8 @@ package util.dataStructures
 /**
  * An ordered/indexed mutable map, that allows for list-like operations on its keys.
  *
- * Behaves like it inherits from MutableMap and MutableList, but these are incompatible in minor ways
+ * Behaves like it inherits from MutableMap and MutableList,
+ * but these are incompatible in minor ways
  */
 @Suppress("TooManyFunctions")
 class OrderedMap<K, V>(
@@ -16,7 +17,10 @@ class OrderedMap<K, V>(
     // Helper to provide a clear exception if invariant is violated
     private fun valueOrThrow(key: K): V =
         mutableMap[key]
-            ?: error("OrderedMap invariant broken: key '$key' present in orderedEntries but missing from backing map")
+            ?: error(
+                "OrderedMap invariant broken: key '$key' present in orderedEntries " +
+                    "but missing from backing map",
+            )
 
     /**
      * Commonly Inherited:
@@ -205,7 +209,9 @@ class OrderedMap<K, V>(
         private var lastReturnedIndex: Int = -1
 
         init {
-            if (cursor < 0 || cursor > orderedEntries.size) throw IndexOutOfBoundsException("Index: $cursor")
+            if (cursor < 0 || cursor > orderedEntries.size) {
+                throw IndexOutOfBoundsException("Index: $cursor")
+            }
         }
 
         override fun add(element: Pair<K, V>) {
@@ -250,7 +256,9 @@ class OrderedMap<K, V>(
         override fun previousIndex(): Int = cursor - 1
 
         override fun remove() {
-            check(lastReturnedIndex != -1) { "Cannot remove: next() or previous() must be called first" }
+            check(lastReturnedIndex != -1) {
+                "Cannot remove: next() or previous() must be called first"
+            }
             val key = orderedEntries.removeAt(lastReturnedIndex)
             mutableMap.remove(key)
 
@@ -259,7 +267,9 @@ class OrderedMap<K, V>(
         }
 
         override fun set(element: Pair<K, V>) {
-            check(lastReturnedIndex != -1) { "Cannot set: next() or previous() must be called first" }
+            check(lastReturnedIndex != -1) {
+                "Cannot set: next() or previous() must be called first"
+            }
             val newKey = element.first
             val newValue = element.second
 
