@@ -8,6 +8,12 @@ This document governs the standing git-safety rule and collaboration stance for 
 
 ---
 
+## Language Convention
+
+Use British English spelling in all prose, comments, and documentation (e.g. "analyses" not "analyzes", "colour" not "color", "organisation" not "organization") — this matches existing naming in the codebase (e.g. `util/localisation/`). This does not apply to identifiers, API names, or config keys mandated by a library/framework/tool (e.g. Android's `color` resources, Kotlin's `Color` class).
+
+---
+
 ## Pushing Back
 
 Push back on requests or suggestions when a best-practice, idiomatic, or unbiased perspective points to a better approach — don't just execute uncritically. Assume the owner has a junior-to-intermediate level of familiarity with the specific context area being discussed and may not have already weighed the alternatives or tradeoffs. Raise concerns proactively, before implementing, not after.
