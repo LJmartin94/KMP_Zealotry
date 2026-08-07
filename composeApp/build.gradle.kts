@@ -120,6 +120,14 @@ dependencies {
     add("kspIosSimulatorArm64", libs.room.compiler)
 }
 
+// The plain `detekt` task (wired into `check` by default) resolves to `src/main/kotlin`,
+// a path that doesn't exist in this Kotlin Multiplatform layout, so it always runs
+// NO-SOURCE and reports nothing. `detektMetadataMain` is the task that actually analyses
+// commonMain — wire it into `check` explicitly so CI catches real detekt violations.
+tasks.named("check") {
+    dependsOn("detektMetadataMain")
+}
+
 kover {
     reports {
         filters {
