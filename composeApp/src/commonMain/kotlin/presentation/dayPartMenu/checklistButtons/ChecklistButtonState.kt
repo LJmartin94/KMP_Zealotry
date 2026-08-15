@@ -2,7 +2,7 @@ package presentation.dayPartMenu.checklistButtons
 
 import presentation.reusableUi.Chiaroscuro
 
-data class `ChecklistButtonState.kt`(
+data class ChecklistButtonState(
     val mainIcon: Chiaroscuro,
     val mainText: String,
     val isActive: Boolean = true,
