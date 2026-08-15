@@ -15,6 +15,8 @@ import kotlin.time.Instant
 
 // The app day changes at 4am local time. Before 4am, the previous calendar
 // date is used so late-night moments are treated as part of the previous day.
+val MIDDAY = LocalTime(12, 0)
+val NEW_DAY = LocalTime(4,0)
 
 fun computeAstronomicalContext(
     moment: Instant,
@@ -23,7 +25,7 @@ fun computeAstronomicalContext(
     val effectiveDate = effectiveDateOf(moment, timeZone)
     // Use noon of the effective date so SeasonInfo is never given a midnight or
     // DST-gap instant.
-    val referenceInstant = LocalDateTime(effectiveDate, LocalTime(12, 0)).toInstant(timeZone)
+    val referenceInstant = LocalDateTime(effectiveDate, MIDDAY).toInstant(timeZone)
     val seasonInfo = SeasonInfo(referenceInstant, timeZone)
     return AstronomicalContext(
         dayOfWeek = effectiveDate.dayOfWeek,
@@ -38,7 +40,7 @@ fun effectiveDateOf(
     timeZone: TimeZone,
 ): LocalDate {
     val local = moment.toLocalDateTime(timeZone)
-    return if (local.hour < 4) local.date.plus(-1, DateTimeUnit.DAY) else local.date
+    return if (local.time < NEW_DAY) local.date.plus(-1, DateTimeUnit.DAY) else local.date
 }
 
 fun nextAppDayInstant(
@@ -46,8 +48,8 @@ fun nextAppDayInstant(
     timeZone: TimeZone,
 ): Instant {
     val local = moment.toLocalDateTime(timeZone)
-    val next4amDate = if (local.hour < 4) local.date else local.date.plus(1, DateTimeUnit.DAY)
-    return LocalDateTime(next4amDate, LocalTime(4, 0)).toInstant(timeZone)
+    val dateNextDay = if (local.time < NEW_DAY) local.date else local.date.plus(1, DateTimeUnit.DAY)
+    return LocalDateTime(dateNextDay, NEW_DAY).toInstant(timeZone)
 }
 
 // ---------------------------------------------------------------------------
