@@ -16,7 +16,7 @@ import kotlin.time.Instant
 // The app day changes at 4am local time. Before 4am, the previous calendar
 // date is used so late-night moments are treated as part of the previous day.
 val MIDDAY = LocalTime(12, 0)
-val NEW_DAY = LocalTime(4,0)
+val NEW_DAY = LocalTime(4, 0)
 
 fun computeAstronomicalContext(
     moment: Instant,
