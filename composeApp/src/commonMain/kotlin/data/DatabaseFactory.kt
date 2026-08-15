@@ -17,11 +17,9 @@ expect fun getDatabaseBuilder(context: Any?): RoomDatabase.Builder<AppDatabase>
  * Usage: call once at startup and hold the result as a singleton
  * (provided via Koin's `single { createAppDatabase(context) }`).
  */
+@Suppress("SpreadOperator") // Room's addMigrations() only accepts vararg
 fun createAppDatabase(context: Any?): AppDatabase =
     getDatabaseBuilder(context)
         .setDriver(BundledSQLiteDriver())
-        // Room's addMigrations() only accepts vararg, so spreading a dynamically-built
-        // list is unavoidable here. Runs once at startup over a small list — negligible cost.
-        @Suppress("SpreadOperator")
         .addMigrations(*DatabaseMigration.all.toTypedArray())
         .build()
