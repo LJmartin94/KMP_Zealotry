@@ -34,11 +34,10 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
             )
         }
 
-        // TODO: Making every daypart a separate instance of the same screen may be
-        // a premature abstraction
-        // Probably does make sense: Underlying data structure for daypart will be one db entry -
-        // this allows easily moving of tasks between day parts, displaying different routines
-        // on workdays/rest days
+        // Each daypart is a separate instance of the same screen. This is not a premature
+        // abstraction: the underlying data structure for the three dayparts is one shared db entry,
+        // which will allow easily moving tasks between day parts and displaying different routines
+        // on workdays/rest days.
         composable<NavDestination.DayPart> (typeMap = typeMap) { backstackEntry ->
             val part: NavDestination.DayPart = backstackEntry.toRoute()
             DayPartMenuScreen(

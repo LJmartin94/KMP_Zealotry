@@ -45,21 +45,19 @@ All 9 original architectural concerns are now resolved.
 
 ## Uncommitted Changes
 
-None — `organisation/AI/SESSION_NOTES.md` (this file) is the only unstaged change.
+- `Navigation.kt` — reworded resolved-design comment, dropped `TODO` keyword (fixes `ForbiddenComment`)
+- `ExampleRepositoryImpl.kt` — `@Suppress("ForbiddenComment")` per-function on the 3 network-fetch TODOs (not applicable to the `Example` template domain), with "remove suppression and do the TODO if implementing this template" note; logging TODO left untouched
+- `organisation/AI/SESSION_NOTES.md` (this file)
 
 ---
 
 ## Recently Committed
 
+~~Magic numbers replaced with named constants in `GetAstronomicalContextUseCase.kt`; `ChecklistButtonState` extracted out of `ChecklistButton.kt` into its own file (resolves `MatchingDeclarationName`); `DatabaseFactory.kt` `SpreadOperator` suppressed with justification comment~~ — committed in `1c6abaf`, `7848c36`, `21f9125`, `fa67698`, `c3a7a21`, `6ba32b5`
+
 ~~Detekt wired into `check` (was silently NO-SOURCE); pre-push git hook + `first-time-setup.sh` bootstrap script; British English + Local Git Hooks docs~~ — committed in `10c9771`, `ccf26d0`, `1b54a3e`, `8ab4bd7`, `91fb1a3`
 
 ~~Global detekt `generated/**` exclude (replaces ad-hoc per-rule excludes); 100-char line limit adopted for both detekt and ktlint (`.editorconfig` + `detekt.yml`); `OrderedMap.kt` detekt fixes (`UseCheckOrError`/`ThrowingExceptionsWithoutMessageOrCause`); full line-wrap pass across 21 files to satisfy the new 100-char limit~~ — committed in `36cae7c`, `f198049`, `c958832`, `3fa048f`, `b890e40`
-
-~~Kover coverage enforcement, linting cleanup, script-transparency hook~~ — committed in 98b1f32, e4dbc45, 57aa43d, 482d782, ee6a265
-
-~~Doze mode mitigation: `RefreshCalendarContext` action fired on `ON_START` + integration test~~ — committed in 2f3c7a8, 1beb3db
-
-~~Symlinks at project root, hooks to enforce AI behaviour, skills library~~ — committed in d3f063c, d7608b9, b66c82c, c708fd0
 
 ---
 
@@ -67,20 +65,17 @@ None — `organisation/AI/SESSION_NOTES.md` (this file) is the only unstaged cha
 
 **In progress: fixing all `detektMetadataMain` violations flagged by the pre-push hook, before adding further checks.**
 
-Started at 33 issues (after fixing the `check`/detekt wiring bug). Now at **18 remaining**, categorised:
+Started at 33 issues (after fixing the `check`/detekt wiring bug). Now at **8 remaining** (verified live via `./gradlew detektMetadataMain`), categorised:
 
 | Rule | Count | Location(s) | Notes |
 |---|---|---|---|
-| `ForbiddenComment` | 5 | `Navigation.kt`, `ExampleRepositoryImpl.kt` (×4) | TODO markers — need to view context and decide resolve/remove/reword per TODO |
-| `MagicNumber` | 4 | `GetAstronomicalContextUseCase.kt` | Define named constants |
+| `ForbiddenComment` | 1 | `ExampleRepositoryImpl.kt` (logging TODO) | Genuinely pending — will resolve by implementing proper error reporting, not by suppressing |
 | `EmptyFunctionBlock` | 3 | `SubTaskList.kt` | Need to view context to decide: suppress vs. add comment vs. remove |
 | `TooGenericExceptionCaught` | 2 | `ActionContracts.kt` | Core toad-framework exception handling — may be intentional design, review carefully before "fixing" |
 | `UnusedParameter` | 1 | `DayPartMenuScreen.kt` (`onBack`) | Wire it up or prefix `_`/remove |
 | `TooManyFunctions` | 1 | `BaseDao.kt` (15 vs threshold 11) | Architectural — split class or raise threshold, needs judgment call |
-| `SpreadOperator` | 1 | `DatabaseFactory.kt` | Performance suggestion — judgment call on restructure vs. suppress |
-| `MatchingDeclarationName` | 1 | `ChecklistButton.kt` (contains `ChecklistButtonState`) | File **rename** scenario — must invoke `rename-before-modify` skill before touching |
 
-Already resolved this pass: `UseCheckOrError` (3), `ThrowingExceptionsWithoutMessageOrCause` (2), `MaxLineLength` (all — first 6 at 120-char limit, then a further ~29 after adopting the 100-char limit).
+Already resolved this pass: `UseCheckOrError` (3), `ThrowingExceptionsWithoutMessageOrCause` (2), `MaxLineLength` (all — first 6 at 120-char limit, then a further ~29 after adopting the 100-char limit), `MagicNumber` (4, named constants in `GetAstronomicalContextUseCase.kt`), `MatchingDeclarationName` (1, `ChecklistButtonState` moved to its own file), `SpreadOperator` (1, suppressed in `DatabaseFactory.kt` with justification comment), `ForbiddenComment` (4 of 5 — Navigation.kt reworded as a resolved design note since it wasn't real pending work; the 3 `ExampleRepositoryImpl.kt` network-fetch TODOs are `@Suppress`'d per-function with a "remove suppression and do the TODO if implementing this template" comment, since `Example` is a template domain, not a real feature needing network sync — the 4th, the logging TODO, is left unsuppressed as a genuine reminder).
 
 **Key working agreement for this remaining work:** group fixes into small, separately-reviewable commits (not one giant "fix all detekt issues" commit) — mechanical/trivial fixes travel together; anything touching behaviour or requiring judgment gets its own group. Never run `git add`/`commit`/`push` directly — always hand the owner a runnable `git add && git diff --cached` command.
 

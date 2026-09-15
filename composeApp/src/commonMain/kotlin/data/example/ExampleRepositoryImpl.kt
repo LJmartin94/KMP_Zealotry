@@ -22,7 +22,9 @@ class ExampleRepositoryImpl(
                 println("ERROR: Canonical example '$canonicalKey' was deleted unexpectedly.")
             }.mapNotNull { it?.toExternal() }
 
+    @Suppress("ForbiddenComment")
     override suspend fun refreshCanonicalExample(canonicalKey: Example.CanonicalKey): Result<Unit> {
+        // Remove suppression and do the TODO if implementing this template.
         // TODO: fetch from network and write to local DB.
         // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
         // A successful write will automatically trigger observeCanonicalExample to emit.
@@ -32,7 +34,9 @@ class ExampleRepositoryImpl(
     override fun observeAllExamples(): Flow<List<Example>> =
         localDataSource.observeAll().map { entities -> entities.map { it.toExternal() } }
 
+    @Suppress("ForbiddenComment")
     override suspend fun refreshAllExamples(): Result<Unit> {
+        // Remove suppression and do the TODO if implementing this template.
         // TODO: fetch all from network and write to local DB.
         // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
         // A successful write will automatically trigger observeAllExamples to emit.
@@ -42,7 +46,9 @@ class ExampleRepositoryImpl(
     override fun observeExampleById(id: String): Flow<Example> =
         localDataSource.observeById(id).mapNotNull { it?.toExternal() }
 
+    @Suppress("ForbiddenComment")
     override suspend fun refreshExampleById(id: String): Result<Unit> {
+        // Remove suppression and do the TODO if implementing this template.
         // TODO: fetch from network by id and write to local DB.
         // Network is a back-up mechanism only - local DB is always the Single Source of Truth.
         // A successful write will automatically trigger observeExampleById to emit.
