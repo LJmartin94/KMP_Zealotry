@@ -2,12 +2,17 @@ package presentation.dayPartMenu
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,11 +29,15 @@ import org.jetbrains.compose.resources.stringResource
 import presentation.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.dayPartMenu.morningButtons.MorningButtons
 import presentation.example.ExampleScreen
+import presentation.reusableUi.Chiaroscuro
 import toad.getViewModel
 import zealotry.composeapp.generated.resources.Res
+import zealotry.composeapp.generated.resources.back
 import zealotry.composeapp.generated.resources.good_day
 import zealotry.composeapp.generated.resources.good_evening
 import zealotry.composeapp.generated.resources.good_morning
+import zealotry.composeapp.generated.resources.ic_baseline_arrow_back_24
+import zealotry.composeapp.generated.resources.ic_baseline_arrow_back_24_inv
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -56,12 +65,30 @@ fun DayPartMenuScreen(
         }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = greeting,
-            modifier = Modifier.padding(20.dp).wrapContentSize(),
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.minimumInteractiveComponentSize(),
+            ) {
+                Icon(
+                    painter = Chiaroscuro(Res.drawable.ic_baseline_arrow_back_24, Res.drawable.ic_baseline_arrow_back_24_inv).getPainter(),
+                    contentDescription = stringResource(Res.string.back),
+                )
+            }
+
+            Text(
+                text = greeting,
+                modifier = Modifier.weight(1f).padding(20.dp),
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+            )
+
+            // Spacer with same size as back button to ensure title is centred.
+            Spacer(modifier = Modifier.minimumInteractiveComponentSize())
+        }
 
         val scrollState = rememberScrollState()
         Column(
