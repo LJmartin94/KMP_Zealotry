@@ -1,5 +1,6 @@
 package toad
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -141,7 +142,9 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
         try {
             val result = block()
             onSuccess(result)
-        } catch (e: Throwable) {
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
             onFailure(e)
         } finally {
             setState { setLoading(false) }
@@ -178,7 +181,9 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
                 onSuccess = onSuccess,
                 onFailure = onFailure,
             )
-        } catch (e: Throwable) {
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
             onFailure(e)
         } finally {
             setState { setLoading(false) }
