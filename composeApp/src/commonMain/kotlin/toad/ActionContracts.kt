@@ -4,6 +4,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import util.Logger
+
+private const val TAG = "ActionScope"
 
 /**
  * A **Typed Object** that encapsulates a single piece of business logic.
@@ -134,8 +137,9 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
         onSuccess: (T) -> Unit,
         onFailure: (Throwable) -> Unit = { throwable ->
             // Default: log the error. Override to emit events or update error state.
-            println("Action failed: ${throwable.message}")
-            throwable.printStackTrace()
+            // currentState's class name gives a more specific tag than the generic TAG
+            // fallback; not guaranteed (e.g. under future minification), hence the fallback.
+            Logger.e(currentState::class.simpleName ?: TAG, throwable) { "Action failed: ${throwable.message}" }
         },
     ) {
         setState { setLoading(true) }
@@ -172,8 +176,10 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
         block: suspend () -> Result<T>,
         onSuccess: (T) -> Unit,
         onFailure: (Throwable) -> Unit = { throwable ->
-            println("Action failed: ${throwable.message}")
-            throwable.printStackTrace()
+            // Default: log the error. Override to emit events or update error state.
+            // currentState's class name gives a more specific tag than the generic TAG
+            // fallback; not guaranteed (e.g. under future minification), hence the fallback.
+            Logger.e(currentState::class.simpleName ?: TAG, throwable) { "Action failed: ${throwable.message}" }
         },
     ) {
         setState { setLoading(true) }

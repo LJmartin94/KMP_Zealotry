@@ -10,6 +10,7 @@ import kotlinx.datetime.daysUntil
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import util.Logger
 import kotlin.time.Duration
 import kotlin.time.Instant
 
@@ -17,6 +18,8 @@ import kotlin.time.Instant
 // date is used so late-night moments are treated as part of the previous day.
 val MIDDAY = LocalTime(12, 0)
 val NEW_DAY = LocalTime(4, 0)
+
+private const val TAG = "GetAstronomicalContextUseCase"
 
 fun computeAstronomicalContext(
     moment: Instant,
@@ -160,11 +163,11 @@ private fun getEquinoxesAndSolstices(year: Int): Map<Season, Instant> {
     summerSolstice += summerConstant * increments
     autumnalEquinox += autumnConstant * increments
     winterSolstice += winterConstant * increments
-//        println("Year: $refYear")
-//        println("Vernal Equinox: $vernalEquinox")
-//        println("Summer Solstice: $summerSolstice")
-//        println("Autumn Equinox: $autumnalEquinox")
-//        println("Winter Solstice: $winterSolstice")
+    Logger.v(TAG) { "Year: $year" }
+    Logger.v(TAG) { "Vernal Equinox: $vernalEquinox" }
+    Logger.v(TAG) { "Summer Solstice: $summerSolstice" }
+    Logger.v(TAG) { "Autumn Equinox: $autumnalEquinox" }
+    Logger.v(TAG) { "Winter Solstice: $winterSolstice" }
 
     return mapOf(
         Season.SPRING to vernalEquinox,

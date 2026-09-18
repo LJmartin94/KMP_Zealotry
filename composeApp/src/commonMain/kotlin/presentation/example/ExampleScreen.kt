@@ -6,8 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import toad.getViewModel
+import util.Logger
 
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
+
+private const val TAG = "ExampleScreen"
 
 @Composable
 fun ExampleScreen() {
@@ -25,9 +28,11 @@ fun StatelessExampleScreen(
     onAction: (ExampleAction) -> Unit,
 ) {
     Button(
-        onClick = { onAction(UpdateToggle(!state.toggle)) },
+        onClick = {
+            Logger.d(TAG) { "id of toggle: ${state.id}" }
+            onAction(UpdateToggle(!state.toggle))
+        },
     ) {
         Text(text = if (state.toggle) "on" else "off")
-        println("id of toggle: ${state.id}")
     }
 }

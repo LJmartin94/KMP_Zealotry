@@ -5,21 +5,23 @@ import data.example.source.local.ExampleEntityLocal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import util.Logger
 import util.onUnexpectedNull
+
+private const val TAG = "ExampleRepositoryImpl"
 
 class ExampleRepositoryImpl(
     private val localDataSource: ExampleDao,
 ) : ExampleRepository {
     init {
-        println("Initialised Example Repository")
+        Logger.i(TAG) { "Initialised Example Repository" }
     }
 
     override fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example> =
         localDataSource
             .observeBySeedKey(canonicalKey.value)
             .onUnexpectedNull {
-                // TODO: replace with proper error logging.
-                println("ERROR: Canonical example '$canonicalKey' was deleted unexpectedly.")
+                Logger.e(TAG) { "Canonical example '$canonicalKey' was deleted unexpectedly." }
             }.mapNotNull { it?.toExternal() }
 
     @Suppress("ForbiddenComment")
