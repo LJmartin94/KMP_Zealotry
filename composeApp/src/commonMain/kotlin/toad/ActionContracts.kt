@@ -144,7 +144,8 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             onSuccess(result)
         } catch (e: CancellationException) {
             throw e
-        } catch (e: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            // onFailure supplied by caller, suppressed as it must stay a generic template
             onFailure(e)
         } finally {
             setState { setLoading(false) }
@@ -183,7 +184,8 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             )
         } catch (e: CancellationException) {
             throw e
-        } catch (e: Exception) {
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            // onFailure supplied by caller, suppressed as it must stay a generic template
             onFailure(e)
         } finally {
             setState { setLoading(false) }
