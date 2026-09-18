@@ -70,8 +70,14 @@ fun SubTaskList(
     }
 }
 
-private fun defaultSubtask() {}
+private fun defaultSubtask() {
+    TODO()
+}
 
-private fun defaultDone() {}
+private fun defaultDone() {
+    TODO()
+}
 
-private fun defaultSkip() {}
+private fun defaultSkip() {
+    TODO()
+}
