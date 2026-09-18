@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.TextUnit
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
@@ -22,6 +23,7 @@ fun ImageButton(
     imgRes: DrawableResource,
     imgAlpha: Float = DefaultAlpha,
     textModifier: Modifier = Modifier,
+    textFontSize: TextUnit = TextUnit.Unspecified,
     textRes: StringResource,
     onClick: () -> Unit,
 ) = Box(
@@ -37,5 +39,6 @@ fun ImageButton(
     Text(
         text = stringResource(textRes),
         modifier = textModifier.align(Alignment.BottomCenter),
+        fontSize = textFontSize,
     )
 }

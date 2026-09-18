@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import presentation.reusableUi.AdaptiveColumn
+import presentation.reusableUi.AdaptiveScope
 import presentation.style.COMPONENT_BODY_WEIGHT
 import presentation.style.COMPONENT_TITLE_WEIGHT
 import presentation.style.ColourCompositionLocal
@@ -26,9 +28,7 @@ fun MainMenuSub(
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
-    content:
-        @Composable()
-        (() -> Unit),
+    content: @Composable AdaptiveScope.() -> Unit,
 ) {
     // Top level for sub menu
     return Column(
@@ -49,7 +49,7 @@ fun MainMenuSub(
         }
 
         // Container
-        Column(
+        AdaptiveColumn(
             modifier =
                 Modifier
                     .fillMaxSize()

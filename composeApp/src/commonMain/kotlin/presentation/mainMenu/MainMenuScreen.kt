@@ -3,7 +3,6 @@ package presentation.mainMenu
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import data.dayPartMenu.DayPart
@@ -67,25 +67,28 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
             modifier = Modifier.weight(FILLER_SPACE),
         ) {
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier = Modifier.adaptiveFillCrossAxis().adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.morning_button,
                 imgAlpha = 0.8f,
+                textFontSize = 18.sp,
                 onClick = { onNavigate(NavDestination.DayPart(DayPart.MORNING)) },
                 textRes = Res.string.morning,
             )
 
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier = Modifier.adaptiveFillCrossAxis().adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.day_button,
                 imgAlpha = 0.8f,
+                textFontSize = 18.sp,
                 onClick = { onNavigate(NavDestination.DayPart(DayPart.MIDDAY)) },
                 textRes = Res.string.day,
             )
 
             ImageButton(
-                imgModifier = Modifier.fillMaxWidth().weight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier = Modifier.adaptiveFillCrossAxis().adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.evening_button,
                 imgAlpha = 0.8f,
+                textFontSize = 18.sp,
                 onClick = { onNavigate(NavDestination.DayPart(DayPart.EVENING)) },
                 textRes = Res.string.evening,
             )
