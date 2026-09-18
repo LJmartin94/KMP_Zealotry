@@ -74,7 +74,10 @@ fun DayPartMenuScreen(
                 modifier = Modifier.minimumInteractiveComponentSize(),
             ) {
                 Icon(
-                    painter = Chiaroscuro(Res.drawable.ic_baseline_arrow_back_24, Res.drawable.ic_baseline_arrow_back_24_inv).getPainter(),
+                    painter = Chiaroscuro(
+                        lightRes = Res.drawable.ic_baseline_arrow_back_24,
+                        darkRes = Res.drawable.ic_baseline_arrow_back_24_inv,
+                        ).getPainter(),
                     contentDescription = stringResource(Res.string.back),
                 )
             }
