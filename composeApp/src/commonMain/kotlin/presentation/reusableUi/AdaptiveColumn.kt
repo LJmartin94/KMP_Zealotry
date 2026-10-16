@@ -13,43 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 /**
- * Scope for [AdaptiveColumn]'s content, exposing [adaptiveWeight] as a stand-in for
- * [ColumnScope.weight]/[RowScope.weight], and [adaptiveFillCrossAxis] as a stand-in for
- * whichever of [Modifier.fillMaxWidth]/[Modifier.fillMaxHeight] fills the axis [AdaptiveColumn]
- * *isn't* laying children out along — whichever actually matches the orientation it rendered with.
- */
-interface AdaptiveScope {
-    fun Modifier.adaptiveWeight(
-        weight: Float,
-        fill: Boolean = true,
-    ): Modifier
-
-    fun Modifier.adaptiveFillCrossAxis(): Modifier
-}
-
-private class ColumnAdaptiveScope(
-    private val scope: ColumnScope,
-) : AdaptiveScope {
-    override fun Modifier.adaptiveWeight(
-        weight: Float,
-        fill: Boolean,
-    ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
-
-    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxWidth()
-}
-
-private class RowAdaptiveScope(
-    private val scope: RowScope,
-) : AdaptiveScope {
-    override fun Modifier.adaptiveWeight(
-        weight: Float,
-        fill: Boolean,
-    ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
-
-    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxHeight()
-}
-
-/**
  * UI element that will display as a column in portrait mode, and as row in landscape
  */
 @Composable
@@ -91,3 +54,40 @@ private fun Alignment.Horizontal.flip(): Alignment.Vertical =
         Alignment.CenterHorizontally -> Alignment.CenterVertically
         else -> this as Alignment.Vertical
     }
+
+/**
+ * Scope for [AdaptiveColumn]'s content, exposing [adaptiveWeight] as a stand-in for
+ * [ColumnScope.weight]/[RowScope.weight], and [adaptiveFillCrossAxis] as a stand-in for
+ * whichever of [Modifier.fillMaxWidth]/[Modifier.fillMaxHeight] fills the axis [AdaptiveColumn]
+ * *isn't* laying children out along — whichever actually matches the orientation it rendered with.
+ */
+interface AdaptiveScope {
+    fun Modifier.adaptiveWeight(
+        weight: Float,
+        fill: Boolean = true,
+    ): Modifier
+
+    fun Modifier.adaptiveFillCrossAxis(): Modifier
+}
+
+private class ColumnAdaptiveScope(
+    private val scope: ColumnScope,
+) : AdaptiveScope {
+    override fun Modifier.adaptiveWeight(
+        weight: Float,
+        fill: Boolean,
+    ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
+
+    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxWidth()
+}
+
+private class RowAdaptiveScope(
+    private val scope: RowScope,
+) : AdaptiveScope {
+    override fun Modifier.adaptiveWeight(
+        weight: Float,
+        fill: Boolean,
+    ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
+
+    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxHeight()
+}
