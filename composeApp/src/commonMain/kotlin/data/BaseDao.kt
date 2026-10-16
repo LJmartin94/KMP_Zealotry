@@ -29,8 +29,7 @@ interface DatabaseObject {
  * Methods throw on failure; callers (typically repositories) wrap in [runCatching] where a
  * [Result] return type is appropriate.
  */
-// Generic Room CRUD base - suppressed because still respects Single Responsibility Principle
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions") // still respects Single Responsibility Principle
 abstract class BaseDao<T : DatabaseObject> {
     // *C* reate ---------------------------------------------------------------------------
 

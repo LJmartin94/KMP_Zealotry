@@ -139,7 +139,7 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             // Default: log the error. Override to emit events or update error state.
             // currentState's class name gives a more specific tag than the generic TAG
             // fallback; not guaranteed (e.g. under future minification), hence the fallback.
-            Logger.e(currentState::class.simpleName ?: TAG, throwable){
+            Logger.e(currentState::class.simpleName ?: TAG, throwable) {
                 "Action failed: ${throwable.message}"
             }
         },
@@ -150,7 +150,9 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             onSuccess(result)
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (
+            @Suppress("TooGenericExceptionCaught") e: Exception,
+        ) {
             // onFailure supplied by caller, suppressed as it must stay a generic template
             onFailure(e)
         } finally {
@@ -181,7 +183,7 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             // Default: log the error. Override to emit events or update error state.
             // currentState's class name gives a more specific tag than the generic TAG
             // fallback; not guaranteed (e.g. under future minification), hence the fallback.
-            Logger.e(currentState::class.simpleName ?: TAG, throwable){
+            Logger.e(currentState::class.simpleName ?: TAG, throwable) {
                 "Action failed: ${throwable.message}"
             }
         },
@@ -194,7 +196,9 @@ open class ActionScope<S : ViewState, E : ViewEvent>(
             )
         } catch (e: CancellationException) {
             throw e
-        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+        } catch (
+            @Suppress("TooGenericExceptionCaught") e: Exception,
+        ) {
             // onFailure supplied by caller, suppressed as it must stay a generic template
             onFailure(e)
         } finally {

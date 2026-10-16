@@ -68,9 +68,10 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
             modifier = Modifier.weight(FILLER_SPACE),
         ) {
             ImageButton(
-                imgModifier = Modifier
-                    .adaptiveFillCrossAxis()
-                    .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier =
+                    Modifier
+                        .adaptiveFillCrossAxis()
+                        .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.morning_button,
                 imgAlpha = 0.8f,
                 textFontSize = 18.sp,
@@ -79,9 +80,10 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
             )
 
             ImageButton(
-                imgModifier = Modifier
-                    .adaptiveFillCrossAxis()
-                    .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier =
+                    Modifier
+                        .adaptiveFillCrossAxis()
+                        .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.day_button,
                 imgAlpha = 0.8f,
                 textFontSize = 18.sp,
@@ -90,9 +92,10 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
             )
 
             ImageButton(
-                imgModifier = Modifier
-                    .adaptiveFillCrossAxis()
-                    .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
+                imgModifier =
+                    Modifier
+                        .adaptiveFillCrossAxis()
+                        .adaptiveWeight(COMPONENT_EQUAL_WEIGHT),
                 imgRes = Res.drawable.evening_button,
                 imgAlpha = 0.8f,
                 textFontSize = 18.sp,
