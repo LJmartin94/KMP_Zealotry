@@ -45,15 +45,15 @@ All 9 original architectural concerns are now resolved.
 
 ## Uncommitted Changes
 
-None — working tree clean.
+Staged (not yet committed): rename of `organisation/Backlog/015-Create proper Logger & Logging` → `organisation/Backlog/Done/015-Create proper Logger & Logging`.
 
 ---
 
 ## Recently Committed
 
-~~Detekt wired into `check` (was silently NO-SOURCE); pre-push git hook + `first-time-setup.sh` bootstrap script; British English + Local Git Hooks docs~~ — committed in `10c9771`, `ccf26d0`, `1b54a3e`, `8ab4bd7`, `91fb1a3`
+~~Kermit-based logger + facade (`util/Logger.kt`) and logging at call sites (backlog 015, now moved to Done); adaptive column fix applied to main-menu buttons~~ — committed in `38c70a5`, `6da223f`, `a2a8449`
 
-~~Global detekt `generated/**` exclude (replaces ad-hoc per-rule excludes); 100-char line limit adopted for both detekt and ktlint (`.editorconfig` + `detekt.yml`); `OrderedMap.kt` detekt fixes (`UseCheckOrError`/`ThrowingExceptionsWithoutMessageOrCause`); full line-wrap pass across 21 files to satisfy the new 100-char limit~~ — committed in `36cae7c`, `f198049`, `c958832`, `3fa048f`, `b890e40`
+~~All remaining detekt and ktlint violations cleared (`AdaptiveColumn.kt` reordered so the Composable is first; trivial detekt fixes; remaining ktlint errors) — the previously open `ForbiddenComment` warning is gone~~ — committed in `60c122c`, `42aa5e7`, `79e8736` (HEAD at time of writing)
 
 ~~Remaining `detektMetadataMain` violations resolved: `EmptyFunctionBlock` (TODO() stubs in `SubTaskList.kt`), `TooManyFunctions` (suppressed on `BaseDao` with justification), `TooGenericExceptionCaught` (narrowed to `Exception` + explicit `CancellationException` rethrow in `ActionContracts.kt`, then suppressed with justification), `UnusedParameter` (`onBack` wired up: back button + centred title with mirrored spacer in `DayPartMenuScreen.kt`, `back`/`terug` string resources, `minimumInteractiveComponentSize()` reused from Material instead of a custom size constant)~~ — committed in `a22cfcd`, `4d4b055`, `6de392a`, `5033e35`, `5e24a6d`, `258b415`, `2eaea2c`, `c5e3a29`, `d07c095`
 
@@ -61,13 +61,30 @@ None — working tree clean.
 
 ## Remaining Planned Work
 
-**Detekt cleanup essentially complete.** Of the original 8 tracked `detektMetadataMain` violations, 7 are resolved (see Recently Committed). Only one remains, deliberately left as a live, unsuppressed warning rather than fixed:
+**Detekt and ktlint cleanup complete** (reported clean by the owner; not independently re-run this session). The logger (backlog 015) is done.
 
-| Rule | Count | Location(s) | Notes |
-|---|---|---|---|
-| `ForbiddenComment` | 1 | `ExampleRepositoryImpl.kt:21` (logging TODO) | Genuinely pending — resolve by implementing proper error reporting, not by suppressing |
+**Current goal (owner, 2026-10-16): resolve every remaining story in `organisation/Backlog/000-Linting Epic/` and move the whole epic to `Done/`.** The remaining stories are architecture/convention rules that stock detekt/ktlint can't enforce, so the chosen approach is **Konsist architecture tests run via `composeApp:check`**. The existing non-blocking `.githooks/pre-push` then covers them with no extra wiring.
 
-**Next decision (raised 2026-09-18, not yet started):** whether to build a proper error-reporting mechanism next (small, self-contained — no logging library or abstraction exists yet; `println` is used ad-hoc in ~5 files) or close out the rest of `organisation/Backlog/000-Linting Epic/` (bigger: custom detekt rules or Konsist architecture tests for `No hardcoded strings`, `No .dp or .sp in files that aren't style-files`, `No @Composable annotation in data layer`, `Only one viewmodel per view`, `Presentation should never import from data layer unless in ViewModel`). `No hardcoded strings` still needs the feasibility check flagged previously (Android Lint's `HardcodedText` likely doesn't cover Compose `Text()` calls).
+**Agreed sequencing (owner, 2026-10-16) — two phases, do not merge them:**
+
+1. **Phase 1 — implement all the checks, and leave the violations in place.** `composeApp:check` is *expected to fail* during this phase; that is deliberate. Do **not** fix, suppress, baseline or exclude any violation to make it pass. The pre-push hook is non-blocking, so a red `check` doesn't impede pushing.
+2. **Phase 2 — the owner fixes the violations personally** (as practice). Each rule's failures going away is the verification that the check fires correctly and detects the right things. The AI must not fix them unprompted; if asked, guide rather than just do it.
+
+Verify in phase 1 that every check genuinely fails against the current violations (a rule that passes vacuously on an empty/mis-scoped scope is the main risk). Rules with no current violations (`@Composable` in data, one ViewModel per view) can't be proven by the existing code — prove them with a temporary deliberate violation, reverted afterwards, and tell the owner.
+
+**Open technical question for phase 1:** Konsist is JVM-only, and this project's targets are Android + iOS only. The tests probably have to live in the Android unit-test source set (`androidUnitTest`, run by `testDebugUnitTest`, already part of `check`) rather than `commonTest`, with `Konsist.scopeFromProject()` / module scoping confirmed to find `commonMain` sources. Not yet verified — check this first. Also confirm the Konsist dependency goes in `libs.versions.toml` as a test-only dependency and that Kover's exclusions don't need changing (the tests add no production code).
+
+| Story | Violations at 2026-10-16 (grep scan) — left in place until phase 2 | Check to implement |
+|---|---|---|
+| `No .dp or .sp in files that aren't style-files` | ~17 literals outside `presentation/style/` (screens, `MainTaskButton`, `ChecklistButton`, `MainMenuSub`, `CustomFABs` private vals) | Konsist rule: no `.dp`/`.sp` literal outside `presentation.style` |
+| `No @Composable annotation in data layer` | None (only `toad/GetViewModel.kt`, which is not the data layer) | Konsist rule on the `data` package |
+| `No hardcoded strings` | No Compose `Text("...")` literals found; one user-facing literal in `ExampleAction.kt:37`; `error(...)` messages in `style/` are developer-facing | Feasibility check first (Android Lint `HardcodedText` likely misses Compose); else a Konsist rule, with a decision on developer-facing strings (`error(...)`, logging) |
+| `Only one viewmodel per view` | None (3 ViewModels, 3 screens, one `getViewModel<T>()` each) | Konsist rule: one `getViewModel` call per `*Screen` file |
+| `Presentation should never import from data layer unless in ViewModel` | 11 (Actions, ActionDependencies, UiStates, Screens import `data.*`) | **Decide the allowed boundary first** — ViewModel only, or ViewModel + Actions/ActionDependencies (the strict option implies presentation models in phase 2). Then a Konsist import rule |
+
+`016-Run linting & tests on commit or push to main` also sits in the epic folder but is **deliberately not being implemented via GitHub Actions** — see below. A dry run (2026-10-16) confirmed `composeApp:check` already includes every item the story lists (`koverVerify`, detekt, all ktlint source sets, `testDebugUnitTest`, `iosSimulatorArm64Test`/`allTests`, `lintDebug`), and the hook runs it on push. Proposed close-out, awaiting owner's go-ahead: rewrite the story as "local pre-push only", then move it to `Done/`. Open question for the owner: should the hook stay non-blocking (current, deliberate) or become blocking?
+
+Also still in the epic folder: `Fix existing linter issues` (now satisfied — verify with a clean `composeApp:check`, then move to `Done/`) and `General Info` (reference notes, not a story — decide where it lives when the epic moves).
 
 **`016-Run linting & tests on commit or push to main` (GitHub Actions CI) is intentionally being avoided, not deferred** — see memory `no-github-actions-ci`. This is a solo project the owner wants to be able to make private at will; any dependency on GitHub-hosted runners is seen as jeopardising that, and CI's core value (catching bad changes from other contributors) doesn't apply with a single contributor. Only revisit if a desired lint/architecture rule turns out to be strictly impossible to enforce via the local `.githooks/pre-push` hook alone — and raise that explicitly rather than adding a workflow unprompted.
 
