@@ -40,7 +40,8 @@ object Logger {
         message: () -> String,
     ) = Kermit.e(throwable = throwable, tag = tag, message = message)
 
-    /** "What a terrible failure" — the highest severity level (Kermit's [co.touchlab.kermit.Severity.Assert]). */
+    /** "What a terrible failure" —
+     * the highest severity level (Kermit's [co.touchlab.kermit.Severity.Assert]). */
     fun wtf(
         tag: String,
         throwable: Throwable? = null,

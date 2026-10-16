@@ -78,7 +78,8 @@ private class ColumnAdaptiveScope(
         fill: Boolean,
     ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
 
-    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxWidth()
+    override fun Modifier.adaptiveFillCrossAxis(): Modifier =
+        this@adaptiveFillCrossAxis.fillMaxWidth()
 }
 
 private class RowAdaptiveScope(
@@ -89,5 +90,6 @@ private class RowAdaptiveScope(
         fill: Boolean,
     ): Modifier = with(scope) { this@adaptiveWeight.weight(weight, fill) }
 
-    override fun Modifier.adaptiveFillCrossAxis(): Modifier = this@adaptiveFillCrossAxis.fillMaxHeight()
+    override fun Modifier.adaptiveFillCrossAxis(): Modifier =
+        this@adaptiveFillCrossAxis.fillMaxHeight()
 }
