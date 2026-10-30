@@ -43,6 +43,13 @@ Whenever pausing to ask the user something — permission to run a risky command
 
 Strongly favor leaving an open-ended reply path over a closed set of options. When using a structured choice tool that offers a free-text option, don't treat the listed choices as if they were exhaustive. When asking in plain text, explicitly invite a counter-proposal (e.g. "...or suggest a different approach") rather than framing the question as pick-one-of-these.
 
+**Ask about intent with code, not with labels.** The owner knows the intent behind the code but may not have touched it for a while, so a bare "option A, B, C?" prompt is not enough. When a design decision depends on facts only the owner knows:
+1. Say what the decision actually hinges on, in one sentence.
+2. Show each possible case as a small, separate code example drawn from the real files (e.g. "if X is a filter, the repository looks like this; if it is UI-only, it looks like this").
+3. Say what each case means for the decision, and when you would choose it.
+4. Ask one concrete question about the intended behaviour (not "which option?"), and give your own recommendation.
+Never write a hedge into the notes ("revisit if…", "expected to…") in place of getting the answer; if the answer is unknown, ask using the steps above until it is settled, then record it as final.
+
 ---
 
 ## Script Transparency
