@@ -29,6 +29,7 @@ coroutines = "1.11.0"
 mokkery = "3.3.0"
 turbine = "1.2.1"
 kover = "0.9.1"
+konsist = "0.18.1"
 
 # Room KMP database:
 room = "2.8.4"
@@ -67,6 +68,7 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 mokkery-coroutines = { module = "dev.mokkery:mokkery-coroutines", version.ref = "mokkery" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

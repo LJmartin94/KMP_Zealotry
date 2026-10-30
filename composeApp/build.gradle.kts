@@ -65,6 +65,10 @@ kotlin {
             implementation(libs.turbine)
             implementation(libs.coroutines.test)
         }
+        // Konsist is JVM-only, so the architecture tests cannot live in commonTest.
+        androidUnitTest.dependencies {
+            implementation(libs.konsist)
+        }
     }
 }
 
