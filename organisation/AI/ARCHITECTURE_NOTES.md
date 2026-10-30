@@ -134,13 +134,14 @@ composeApp/src/
 
 ## Layer Dependency Rules
 
-Allowed directions — **presentation → domain → data**, and each layer may depend on its own layer:
+Allowed directions — **presentation → domain → data**, and each layer may depend on its own layer. A neutral **`model/`** package sits below all three layers and any of them may import it:
 
 | From | May import | Must never import |
 |---|---|---|
-| `presentation/` | `domain/`, `data/` (interfaces only) | — |
-| `domain/` | `data/` (interfaces only) | `presentation/` |
-| `data/` | — | `domain/`, `presentation/` |
+| `presentation/` | `domain/`, `model/`, and from `data/` **repository interfaces only, and only in ViewModels and `*ActionDependencies`** (see "TOAD boundary rules") | `data/` entities anywhere; any `data/` import in Actions or view-side files |
+| `domain/` | `data/` (interfaces only), `model/` | `presentation/` |
+| `data/` | `model/` | `domain/`, `presentation/` |
+| `model/` | nothing from this project's layers | `data/`, `domain/`, `presentation/`, `toad/`, `navigation/`, `di/` |
 
 **The single most important forbidden direction: `data/` must never import `domain/`.** Domain logic (business rules, computation) flows into data via constructor injection or interfaces — never via direct import. A `data/` file with `import domain.*` is always a layering violation.
 
@@ -154,6 +155,24 @@ Allowed directions — **presentation → domain → data**, and each layer may 
 
 **Signal to watch for:** if a presentation-layer file needs to import a domain function to make a timing or scheduling decision, that decision belongs in domain — not in the action that calls it.
 
+### TOAD boundary rules (presentation ↔ data)
+
+Spirit: the UI must not depend on how data is stored. In TOAD, the ViewModel is the composition root: it receives repositories from Koin and builds an `*ActionDependencies` bag; Actions get data only via that bag (`dependencies.exampleRepository...`). The original story ("presentation never imports data unless in ViewModel") predates TOAD; a literal ViewModel-only rule would wrongly flag `*ActionDependencies`, which must name repository types. The enforced rules instead follow roles, identified by file-name suffix (enforced in `BoundaryRulesTest`):
+
+| Role | File names | May import from `data.*` |
+|---|---|---|
+| Wiring | `*ViewModel`, `*ActionDependencies` | Repository types only (names ending `Repository`) — never entities |
+| Action | `*Action`, `*Actions` | Nothing — use what `dependencies` exposes |
+| View-side | every other file under `presentation/` (Screens, UiState, events, components) | Nothing |
+
+Plus: **`model/` imports nothing from `data`, `domain`, `presentation`, `toad`, `navigation` or `di`.** It holds plain, behaviour-free types genuinely shared across layers (e.g. `DayPart`). It must not become a dumping ground: if a type has behaviour or belongs to one layer, it does not go there. Because `data/` may not import `domain/`, `model/` is the only legal home for a type both `data/` and `presentation/` need.
+
+**Phase 2 plan (owner fixes; guide, don't do unprompted) — the 5 violations at 2026-10-30:**
+1. **`DayPart` → `model/`** (4 imports): move `data/dayPartMenu/DayPart.kt` to `composeApp/src/commonMain/kotlin/model/DayPart.kt` (package `model`, keep `@Serializable`: it is a navigation argument). Update imports in `DayPartMenuUiState`, `DayPartMenuAction`, `DayPartMenuScreen`, `MainMenuScreen`, `Navigation.kt` (which aliases it `DayPartEnum` to avoid clashing with the `NavDestination.DayPart` class) and `commonTest/.../SetDayPartTest.kt`. `DayPartMenuRepository` and its impl are empty placeholders today. Settled owner intent (2026-10-30): all activities live in one db object, each item carries the day part it belongs to (so a user can move a task from morning to evening), and the UI shows items per active day part. So the data layer names `DayPart` (as a stored attribute and query filter), which is why it lives in `model/`. This decision is final. Use a rename-before-modify commit for the move (mechanical, no content change). Check Kover and tests still compile; `model/` is not in Kover's exclusions so keep it behaviour-free (an enum needs no tests).
+2. **`ExampleAction` imports `data.example.Example`** only to say `Example.CanonicalKey.FIRST`. Hide the key behind the repository: add `observeFirstExample()` (or similar) to `ExampleRepository` and call that, so the Action names no data type. Update the repository tests and `ObserveExample` test accordingly. Behavioural change — its own commit.
+3. After both, `composeApp:check` should be green for these rules. The `model/` rule has no violations by construction and passes vacuously while the package is empty — that is intended; it was proven with a temporary violation (see session notes).
+Decision 12 below is superseded by (1).
+
 1. **TOAD everywhere** — no raw MVVM ViewModels
 2. **Offline-first, Flow-based repositories** — `observe*` for reactive reads, `refresh*` for explicit network sync
 3. **`domain/` for pure computation UseCases only** — not every feature needs a UseCase; see UseCase Policy above
@@ -165,7 +184,7 @@ Allowed directions — **presentation → domain → data**, and each layer may 
 9. **Entity IDs are plain `String` throughout the stack** — typed `EntityId` wrapper rejected. UUID uniqueness via `generateEntityId()` (`Uuid.random()`). See also decision #10 for canonical key safety.
 10. **Canonical keys use a per-entity nested enum** — `Example.CanonicalKey` (with `FIRST`, `SECOND`). Type-incompatible with `String` at compile time, preventing accidental passing to entity ID methods. Each entity owns its own `CanonicalKey` enum; they are distinct types.
 11. **Presentation layer uses `String?` for entity IDs** — `Example.id: String` flows into `ExampleUiState.id: String?` without wrapping. No re-wrapping at any layer boundary.
-12. **`DayPart` is a data-layer filter, not a presentation type** — same pattern as `CanonicalKey`. `@Serializable` retained because it is used as a navigation argument.
+12. **`DayPart` moves to the shared `model/` package** (supersedes the earlier "data-layer filter, not a presentation type" decision, 2026-10-30). It is the UI's own vocabulary (UI state, screens, navigation argument) *and* a stored attribute and filter in the data layer (owner intent: each db item carries its day part so users can move a task between day parts; the repository is an empty placeholder today). Because `data/` may not import `domain/`, so a neutral package is the only place that keeps dependencies one-directional without a duplicate enum and mapper. `@Serializable` retained (navigation argument). Until the move happens (phase 2) the current location is `data/dayPartMenu/`. `CanonicalKey` stays an entity-owned nested enum in `data/` and is hidden behind repository methods.
 13. **`greeting` does not live in `DayPartMenuUiState`** — it is a pure function of `DayPart`, derived in the composable. Storing Compose `StringResource` objects in state breaks unit testability.
 14. **Lambda receiver shadowing** — when an action parameter name matches a UiState field name, capture it in a `val` before the `setState` lambda to prevent the receiver from shadowing it.
 
