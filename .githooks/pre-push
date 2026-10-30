@@ -13,8 +13,9 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
-echo "Running ./gradlew composeApp:check before push (non-blocking — push proceeds regardless)"
-./gradlew composeApp:check
+echo "Running ./gradlew composeApp:check --continue before push (non-blocking — push proceeds regardless)"
+# --continue keeps running after a failing task, so one failure (e.g. detekt) cannot hide the others.
+./gradlew composeApp:check --continue
 result=$?
 
 if [ $result -ne 0 ]; then
