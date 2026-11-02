@@ -1,4 +1,4 @@
-package data.dayPartMenu
+package model
 
 import kotlinx.serialization.Serializable
 

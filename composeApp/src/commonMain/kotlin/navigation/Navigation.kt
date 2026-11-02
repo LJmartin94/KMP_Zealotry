@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import presentation.dayPartMenu.DayPartMenuScreen
 import presentation.mainMenu.MainMenuScreen
 import kotlin.reflect.typeOf
-import data.dayPartMenu.DayPart as DayPartEnum
+import model.DayPart as DayPartEnum
 
 @Composable
 fun Navigation(navController: NavHostController = rememberNavController()) {

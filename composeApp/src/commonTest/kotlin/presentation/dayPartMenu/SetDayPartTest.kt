@@ -1,6 +1,6 @@
 package presentation.dayPartMenu
 
-import data.dayPartMenu.DayPart
+import model.DayPart
 import data.dayPartMenu.DayPartMenuRepository
 import dev.mokkery.mock
 import kotlinx.coroutines.channels.Channel

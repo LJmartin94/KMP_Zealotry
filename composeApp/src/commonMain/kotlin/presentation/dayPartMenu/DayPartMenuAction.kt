@@ -1,6 +1,6 @@
 package presentation.dayPartMenu
 
-import data.dayPartMenu.DayPart
+import model.DayPart
 import toad.ActionScope
 import toad.ViewAction
 
