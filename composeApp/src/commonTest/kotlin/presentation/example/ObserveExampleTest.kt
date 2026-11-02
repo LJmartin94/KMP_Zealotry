@@ -1,7 +1,6 @@
 package presentation.example
 
 import app.cash.turbine.test
-import data.example.Example
 import data.example.ExampleRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.every
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import model.Example
 import toad.ActionScope
 import kotlin.test.Test
 import kotlin.test.assertEquals

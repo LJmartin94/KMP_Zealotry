@@ -1,7 +1,8 @@
 package data
 
-import data.example.Example
 import data.example.source.local.ExampleEntityLocal
+import data.example.toSeedKey
+import model.Example
 
 /**
  * A single seed operation. The [insert] lambda performs an idempotent insert —
@@ -27,12 +28,12 @@ object DatabaseSeeder {
         listOf(
             SeedEntry {
                 db.exampleDao().insertIfAbsent(
-                    ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.value, toggle = true),
+                    ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.toSeedKey(), toggle = true),
                 )
             },
             SeedEntry {
                 db.exampleDao().insertIfAbsent(
-                    ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.value, toggle = false),
+                    ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.toSeedKey(), toggle = false),
                 )
             },
         )

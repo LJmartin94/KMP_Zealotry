@@ -1,7 +1,7 @@
 package presentation.example
 
-import data.example.Example
 import kotlinx.coroutines.flow.catch
+import model.Example
 import toad.ActionScope
 import toad.ViewAction
 

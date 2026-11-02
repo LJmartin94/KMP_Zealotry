@@ -1,6 +1,7 @@
 package data.example
 
 import kotlinx.coroutines.flow.Flow
+import model.Example
 
 interface ExampleRepository {
     // --- Seeded examples: retrieved by CanonicalKey as defined in Example.CanonicalKey ---

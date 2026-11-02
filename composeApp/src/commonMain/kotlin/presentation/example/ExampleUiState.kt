@@ -4,7 +4,7 @@ import toad.ViewEvent
 import toad.ViewState
 
 /**
- * The relevant data to be represented in the UI from the [data.example.Example] data model.
+ * The relevant data to be represented in the UI from the [model.Example] data model.
  * [id] is null until [ObserveExample] emits its first value — actions that require an id
  * should guard against this and no-op or emit an error if it is null.
  */

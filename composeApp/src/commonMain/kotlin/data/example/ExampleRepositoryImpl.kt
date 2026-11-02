@@ -5,6 +5,7 @@ import data.example.source.local.ExampleEntityLocal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import model.Example
 import util.Logger
 import util.onUnexpectedNull
 
@@ -19,7 +20,7 @@ class ExampleRepositoryImpl(
 
     override fun observeCanonicalExample(canonicalKey: Example.CanonicalKey): Flow<Example> =
         localDataSource
-            .observeBySeedKey(canonicalKey.value)
+            .observeBySeedKey(canonicalKey.toSeedKey())
             .onUnexpectedNull {
                 Logger.e(TAG) { "Canonical example '$canonicalKey' was deleted unexpectedly." }
             }.mapNotNull { it?.toExternal() }

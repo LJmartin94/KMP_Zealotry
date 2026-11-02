@@ -48,16 +48,14 @@ composeApp/src/
 │   │   │   ├── CalendarRepository.kt         ← interface; Flow<Instant> + refresh()
 │   │   │   └── CalendarRepositoryImpl.kt     ← passive store; emits Instant on refresh(), no scheduling loop
 │   │   ├── dayPartMenu/
-│   │   │   ├── DayPart.kt                    ← @Serializable enum (MORNING, MIDDAY, EVENING) — data layer entity
 │   │   │   ├── DayPartMenuRepository.kt      ← interface (empty — stub for future task button queries)
 │   │   │   ├── DayPartMenuRepositoryImpl.kt  ← empty stub implementing DayPartMenuRepository
 │   │   │   └── source/local/
 │   │   │       └── TaskButtonState.kt        ← data class (id: String) — will grow into full entity
 │   │   ├── example/
-│   │   │   ├── Example.kt                    ← domain model + CanonicalKey nested enum
-│   │   │   ├── ExampleRepository.kt          ← interface
+│   │   │   ├── ExampleRepository.kt          ← interface; signatures use `model.Example` / `model.Example.CanonicalKey` only
 │   │   │   ├── ExampleRepositoryImpl.kt
-│   │   │   ├── ModelMappers.kt
+│   │   │   ├── ModelMappers.kt               ← entity ↔ `model.Example`, and `CanonicalKey.toSeedKey()` (storage values)
 │   │   │   └── source/local/
 │   │   │       ├── ExampleDao.kt
 │   │   │       ├── ExampleEntityLocal.kt
@@ -69,6 +67,9 @@ composeApp/src/
 │   ├── domain/
 │   │   ├── GetAstronomicalContextUseCase.kt  ← top-level functions: computeAstronomicalContext, effectiveDateOf, nextAppDayInstant; AstronomicalContext + Season + FestiveDay (public); SeasonInfo + computation (private)
 │   │   └── ObserveAstronomicalContextUseCase.kt ← owns scheduling loop; returns Flow<AstronomicalContext>; calls computeAstronomicalContext
+│   ├── model/
+│   │   ├── DayPart.kt                        ← @Serializable enum (MORNING, MIDDAY, EVENING) — shared by data, UI and navigation
+│   │   └── Example.kt                        ← plain type returned by ExampleRepository + `CanonicalKey` nested enum (identity only; storage values live in data)
 │   ├── navigation/
 │   │   ├── Navigation.kt                     ← NavHost + NavDestination sealed class
 │   │   └── NavTypeOf.kt                      ← generic NavType<T> helper using SavedState (JB Nav 2.9.x API)
@@ -169,38 +170,41 @@ Plus: **`model/` imports nothing from `data`, `domain`, `presentation`, `toad`, 
 
 **Repository signatures expose only primitives and `model/` types (guideline, not machine-enforced).** Repository interfaces live in `data/` next to their implementations and entities. This is deliberate: the interface is the data layer's public face, and the boundary rules above let wiring files import `data.*Repository`. Layering is not inverted, so there is no `domain`-owned interface.
 
-The cost is that anything in a method signature leaks to every caller. So a repository's parameters and return types must be primitives, standard-library types, or `model/` types. They must never be `data/` entities, DAO types or `CanonicalKey`.
+The cost is that anything in a method signature leaks to every caller. So a repository's parameters and return types must be primitives, standard-library types, or `model/` types. They must never be Room entities (`*EntityLocal`), DAO types or other `data/` types.
 
 ```kotlin
-// Wrong: the UI becomes coupled to the Room entity without ever importing it
-interface ExampleRepository { fun observeExample(key: Example.CanonicalKey): Flow<Example> }
+// Wrong: the UI becomes coupled to a data-layer type without ever importing it
+interface ActivityRepository { fun observe(key: ActivityKey): Flow<ActivityEntityLocal> }
 
-// Right: the entity and its key stay inside data/ (ExampleSummary is illustrative, in model/)
-interface ExampleRepository { fun observeFirstExample(): Flow<ExampleSummary> }
+// Right: the repository maps entity → model type internally. This is how ExampleRepository
+// works: `observeCanonicalExample(key: Example.CanonicalKey): Flow<Example>`, both from `model/`.
+interface ActivityRepository { fun observe(key: ActivityKey): Flow<Activity> }
 ```
 
-The repository maps entity → `model/` type internally. If only the UI needs the shape, define a small type in `presentation/` instead, and map in the Action or ViewModel. Pick `model/` only when two or more layers need the same type.
+**Always-present items are addressed by a typed canonical key, never by per-item methods.** The app has items that exist regardless of what users add. The key is a `model/` enum nested in or next to the type (`Example.CanonicalKey.FIRST`), and the repository exposes one generic method that takes it (`observeCanonicalExample(key)`), never `observeFirstExample()` — those would be meaningless bloat that grows with every seeded item. The key is only an identity. Its storage value (the `seedKey` string in the database) is a data-layer concern, kept in a `toSeedKey()` mapper in `data/<feature>/ModelMappers.kt` as an exhaustive `when`, so adding a key without defining its storage value does not compile. Persisted values must never change without a migration.
 
-Konsist cannot check this cheaply, since it would need type resolution across signatures. Review it by hand. If it is broken often, a rule could flag repository interface methods whose types come from a `data.*` entity package.
+The pattern for a new feature is therefore: Room entity + DAO in `data/<feature>/source/local`, plain type and canonical-key enum in `model/`, mapper and `toSeedKey()` in `data/<feature>/ModelMappers.kt`, repository interface and impl in `data/<feature>/`. If only the UI needs a shape, define it in `presentation/` and map in the Action or ViewModel instead. Pick `model/` only when two or more layers need the same type.
 
-**Phase 2 plan (owner fixes; guide, don't do unprompted) — the 5 violations at 2026-10-30:**
-1. **`DayPart` → `model/`** (4 imports): move `data/dayPartMenu/DayPart.kt` to `composeApp/src/commonMain/kotlin/model/DayPart.kt` (package `model`, keep `@Serializable`: it is a navigation argument). Update imports in `DayPartMenuUiState`, `DayPartMenuAction`, `DayPartMenuScreen`, `MainMenuScreen`, `Navigation.kt` (which aliases it `DayPartEnum` to avoid clashing with the `NavDestination.DayPart` class) and `commonTest/.../SetDayPartTest.kt`. `DayPartMenuRepository` and its impl are empty placeholders today. Settled owner intent (2026-10-30): all activities live in one db object, each item carries the day part it belongs to (so a user can move a task from morning to evening), and the UI shows items per active day part. So the data layer names `DayPart` (as a stored attribute and query filter), which is why it lives in `model/`. This decision is final. Use a rename-before-modify commit for the move (mechanical, no content change). Check Kover and tests still compile; `model/` is not in Kover's exclusions so keep it behaviour-free (an enum needs no tests).
-2. **`ExampleAction` imports `data.example.Example`** only to say `Example.CanonicalKey.FIRST`. Hide the key behind the repository: add `observeFirstExample()` (or similar) to `ExampleRepository` and call that, so the Action names no data type. Update the repository tests and `ObserveExample` test accordingly. Behavioural change — its own commit.
-3. After both, `composeApp:check` should be green for these rules. The `model/` rule has no violations by construction and passes vacuously while the package is empty — that is intended; it was proven with a temporary violation (see session notes).
+Konsist cannot check this cheaply, since it would need type resolution across signatures. Review it by hand. If it is broken often, a rule could flag repository interface methods whose types come from a `data.*` package.
+
+**Phase 2 plan (owner fixes; guide, don't do unprompted) — boundary violations, status as of 2026-11-02:**
+1. ✅ **`DayPart` → `model/`** — done (`model/DayPart.kt`, package `model`, `@Serializable` kept: it is a navigation argument). Settled owner intent (2026-10-30): all activities live in one db object, each item carries the day part it belongs to (so a user can move a task from morning to evening), and the UI shows items per active day part. So the data layer names `DayPart` (as a stored attribute and query filter), which is why it lives in `model/`. This decision is final.
+2. ✅ **`ExampleAction` imported `data.example.Example`** only to say `Example.CanonicalKey.FIRST`. Resolved by moving `Example` and `CanonicalKey` to `model/Example.kt` (a pure move plus package/import updates) and taking the storage value out of the enum: `CanonicalKey` is now only `FIRST`/`SECOND`, and `data/example/ModelMappers.kt` holds the exhaustive `CanonicalKey.toSeedKey()` (`"example_one"`, `"example_two"` — unchanged, so no migration), used by `ExampleRepositoryImpl` and `DatabaseSeeder`. `ExampleRepository` keeps its generic `observeCanonicalExample(key)`; deliberately no per-item `observeFirstExample()`-style methods (see "Always-present items" above). The Action now imports `model.Example`, which the rule allows.
+3. `composeApp:check` should be green for the boundary rules. The `model/` rule is now exercised by real files (`DayPart`, `Example`) as well as having been proven with a temporary violation.
 Decision 12 below is superseded by (1).
 
 1. **TOAD everywhere** — no raw MVVM ViewModels
 2. **Offline-first, Flow-based repositories** — `observe*` for reactive reads, `refresh*` for explicit network sync
 3. **`domain/` for pure computation UseCases only** — not every feature needs a UseCase; see UseCase Policy above
-4. **`Example.kt` stays in `data/example/`** — entity domain models live with their data layer feature
+4. **`Example.kt` lives in `model/`** (changed 2026-11-02, supersedes "stays in `data/example/`") — it is the plain type the repository exposes, and the Action needs to name it. The Room entity (`ExampleEntityLocal`) stays in `data/`.
 5. **`seedKey` at DAO level; `canonicalKey` above** — `seedKey` is the field name at the DAO/entity layer; `canonicalKey` is the vocabulary at the repository interface and above
 6. **`initialActions` = one-shot startup actions only** — fed to `dispatchAll()`; long-running observations dispatched separately via `dispatch()` because `collect` never returns
 7. **DAO methods do not return `Result`** — DAOs throw on failure; `runCatching` is applied once at the repository boundary. Aligns with Room's design and avoids catching programmer errors silently at the wrong layer.
 8. **The 4-hour day offset is a domain/business rule** — belongs in `GetAstronomicalContextUseCase`, not in `CalendarRepositoryImpl`. The repository emits raw `Instant`; the UseCase applies the offset.
 9. **Entity IDs are plain `String` throughout the stack** — typed `EntityId` wrapper rejected. UUID uniqueness via `generateEntityId()` (`Uuid.random()`). See also decision #10 for canonical key safety.
-10. **Canonical keys use a per-entity nested enum** — `Example.CanonicalKey` (with `FIRST`, `SECOND`). Type-incompatible with `String` at compile time, preventing accidental passing to entity ID methods. Each entity owns its own `CanonicalKey` enum; they are distinct types.
+10. **Canonical keys use a per-entity nested enum** — `Example.CanonicalKey` (with `FIRST`, `SECOND`). Type-incompatible with `String` at compile time, preventing accidental passing to entity ID methods. Each entity owns its own `CanonicalKey` enum; they are distinct types. The enum lives in `model/` and carries identity only; its storage value is mapped in `data/` by `toSeedKey()` (2026-11-02).
 11. **Presentation layer uses `String?` for entity IDs** — `Example.id: String` flows into `ExampleUiState.id: String?` without wrapping. No re-wrapping at any layer boundary.
-12. **`DayPart` moves to the shared `model/` package** (supersedes the earlier "data-layer filter, not a presentation type" decision, 2026-10-30). It is the UI's own vocabulary (UI state, screens, navigation argument) *and* a stored attribute and filter in the data layer (owner intent: each db item carries its day part so users can move a task between day parts; the repository is an empty placeholder today). Because `data/` may not import `domain/`, so a neutral package is the only place that keeps dependencies one-directional without a duplicate enum and mapper. `@Serializable` retained (navigation argument). Until the move happens (phase 2) the current location is `data/dayPartMenu/`. `CanonicalKey` stays an entity-owned nested enum in `data/` and is hidden behind repository methods.
+12. **`DayPart` moves to the shared `model/` package** (supersedes the earlier "data-layer filter, not a presentation type" decision, 2026-10-30). It is the UI's own vocabulary (UI state, screens, navigation argument) *and* a stored attribute and filter in the data layer (owner intent: each db item carries its day part so users can move a task between day parts; the repository is an empty placeholder today). Because `data/` may not import `domain/`, so a neutral package is the only place that keeps dependencies one-directional without a duplicate enum and mapper. `@Serializable` retained (navigation argument). The move is done. `CanonicalKey` is also in `model/` (nested in `Example`), with storage values mapped in `data/`.
 13. **`greeting` does not live in `DayPartMenuUiState`** — it is a pure function of `DayPart`, derived in the composable. Storing Compose `StringResource` objects in state breaks unit testability.
 14. **Lambda receiver shadowing** — when an action parameter name matches a UiState field name, capture it in a `val` before the `setState` lambda to prevent the receiver from shadowing it.
 
@@ -212,7 +216,7 @@ Decision 12 below is superseded by (1).
 Navigation is app-shell infrastructure (uses `@Serializable` for Compose Navigation routing). Not domain logic, not presentation logic — belongs at app-shell level alongside `di/` and `App.kt`.
 
 **B. `DayPart` is a data-layer entity, not a presentation type.**
-`DayPart` (MORNING / MIDDAY / EVENING) is a filter/discriminator on a shared entity type — analogous to `CanonicalKey` in the Example feature. Lives in `data/dayPartMenu/DayPart.kt`. `@Serializable` retained for navigation argument encoding.
+`DayPart` (MORNING / MIDDAY / EVENING) is a filter/discriminator on a shared entity type — analogous to `CanonicalKey` in the Example feature. Lives in `model/DayPart.kt` (moved from `data/dayPartMenu/`, see decision 12). `@Serializable` retained for navigation argument encoding.
 
 **C. `NavDestination.DayPart` vs `data.dayPartMenu.DayPart` name clash.**
 Both are named `DayPart`. Resolved with a type alias import in `Navigation.kt`:
