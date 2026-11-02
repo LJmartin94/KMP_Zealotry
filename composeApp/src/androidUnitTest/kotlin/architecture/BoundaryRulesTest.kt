@@ -72,7 +72,10 @@ class BoundaryRulesTest {
         imports
             .map { it.name }
             .filter { it == packagePrefix || it.startsWith("$packagePrefix.") }
-            .map { "${displayPath()}: import $it" }
+            .map { "${displayPath()}:${lineOfImport(it)}: import $it" }
+
+    private fun KoFileDeclaration.lineOfImport(importName: String): Int =
+        text.lines().indexOfFirst { it.trim().startsWith("import $importName") } + 1
 
     private companion object {
         const val PRESENTATION_PACKAGE = "presentation"

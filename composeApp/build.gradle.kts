@@ -140,6 +140,16 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     exclude("**/generated/**")
 }
 
+// Without this, a failing test prints only "AssertionError at File.kt:26" and hides the message,
+// which is where the architecture rules list every violation (file, line, offending code).
+tasks.withType<Test>().configureEach {
+    testLogging {
+        events("failed")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        showStackTraces = false
+    }
+}
+
 kover {
     reports {
         filters {

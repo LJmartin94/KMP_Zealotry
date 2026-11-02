@@ -72,7 +72,7 @@ Uncommitted (2026-10-30, phase 1 in progress): Konsist dependency (`libs.version
 
 Verify in phase 1 that every check genuinely fails against the current violations (a rule that passes vacuously on an empty/mis-scoped scope is the main risk). Rules with no current violations (`@Composable` in data, one ViewModel per view) can't be proven by the existing code — prove them with a temporary deliberate violation, reverted afterwards, and tell the owner.
 
-**Technical setup (verified 2026-10-30):** Konsist is JVM-only, so the tests live in `composeApp/src/androidUnitTest/kotlin/architecture/` (run by `testDebugUnitTest`, part of `check`) and scan `commonMain` via `ProductionScope`. Konsist is a test-only dependency (`libs.versions.toml`); Kover needs no change (no production code added).
+**Technical setup (verified 2026-10-30):** Konsist is JVM-only, so the tests live in `composeApp/src/androidUnitTest/kotlin/architecture/` (run by `testDebugUnitTest`, part of `check`) and scan `commonMain` via `ProductionScope`. Konsist is a test-only dependency (`libs.versions.toml`); Kover needs no change (no production code added). `composeApp/build.gradle.kts` sets `testLogging` to `exceptionFormat = FULL` for all `Test` tasks, so each violation (file, line, code) prints in the terminal without opening the HTML report.
 
 | Story | Violations at 2026-10-16 (grep scan) — left in place until phase 2 | Check to implement |
 |---|---|---|
