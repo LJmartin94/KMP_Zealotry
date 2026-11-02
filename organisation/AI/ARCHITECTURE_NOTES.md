@@ -167,6 +167,22 @@ Spirit: the UI must not depend on how data is stored. In TOAD, the ViewModel is 
 
 Plus: **`model/` imports nothing from `data`, `domain`, `presentation`, `toad`, `navigation` or `di`.** It holds plain, behaviour-free types genuinely shared across layers (e.g. `DayPart`). It must not become a dumping ground: if a type has behaviour or belongs to one layer, it does not go there. Because `data/` may not import `domain/`, `model/` is the only legal home for a type both `data/` and `presentation/` need.
 
+**Repository signatures expose only primitives and `model/` types (guideline, not machine-enforced).** Repository interfaces live in `data/` next to their implementations and entities. This is deliberate: the interface is the data layer's public face, and the boundary rules above let wiring files import `data.*Repository`. Layering is not inverted, so there is no `domain`-owned interface.
+
+The cost is that anything in a method signature leaks to every caller. So a repository's parameters and return types must be primitives, standard-library types, or `model/` types. They must never be `data/` entities, DAO types or `CanonicalKey`.
+
+```kotlin
+// Wrong: the UI becomes coupled to the Room entity without ever importing it
+interface ExampleRepository { fun observeExample(key: Example.CanonicalKey): Flow<Example> }
+
+// Right: the entity and its key stay inside data/ (ExampleSummary is illustrative, in model/)
+interface ExampleRepository { fun observeFirstExample(): Flow<ExampleSummary> }
+```
+
+The repository maps entity → `model/` type internally. If only the UI needs the shape, define a small type in `presentation/` instead, and map in the Action or ViewModel. Pick `model/` only when two or more layers need the same type.
+
+Konsist cannot check this cheaply, since it would need type resolution across signatures. Review it by hand. If it is broken often, a rule could flag repository interface methods whose types come from a `data.*` entity package.
+
 **Phase 2 plan (owner fixes; guide, don't do unprompted) — the 5 violations at 2026-10-30:**
 1. **`DayPart` → `model/`** (4 imports): move `data/dayPartMenu/DayPart.kt` to `composeApp/src/commonMain/kotlin/model/DayPart.kt` (package `model`, keep `@Serializable`: it is a navigation argument). Update imports in `DayPartMenuUiState`, `DayPartMenuAction`, `DayPartMenuScreen`, `MainMenuScreen`, `Navigation.kt` (which aliases it `DayPartEnum` to avoid clashing with the `NavDestination.DayPart` class) and `commonTest/.../SetDayPartTest.kt`. `DayPartMenuRepository` and its impl are empty placeholders today. Settled owner intent (2026-10-30): all activities live in one db object, each item carries the day part it belongs to (so a user can move a task from morning to evening), and the UI shows items per active day part. So the data layer names `DayPart` (as a stored attribute and query filter), which is why it lives in `model/`. This decision is final. Use a rename-before-modify commit for the move (mechanical, no content change). Check Kover and tests still compile; `model/` is not in Kover's exclusions so keep it behaviour-free (an enum needs no tests).
 2. **`ExampleAction` imports `data.example.Example`** only to say `Example.CanonicalKey.FIRST`. Hide the key behind the repository: add `observeFirstExample()` (or similar) to `ExampleRepository` and call that, so the Action names no data type. Update the repository tests and `ObserveExample` test accordingly. Behavioural change — its own commit.
