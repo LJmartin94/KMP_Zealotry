@@ -43,7 +43,6 @@ fun DayOfWeek.toResourceString(): String =
         DayOfWeek.FRIDAY -> stringResource(Res.string.friday)
         DayOfWeek.SATURDAY -> stringResource(Res.string.saturday)
         DayOfWeek.SUNDAY -> stringResource(Res.string.sunday)
-        else -> "Error"
     }
 
 @Composable
