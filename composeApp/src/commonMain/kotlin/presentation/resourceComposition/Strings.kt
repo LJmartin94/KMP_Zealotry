@@ -8,6 +8,7 @@ import kotlinx.datetime.DayOfWeek
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
+import presentation.example.ExampleError
 import util.localisation.getLocale
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
@@ -27,6 +28,7 @@ import zealotry.composeapp.generated.resources.summer
 import zealotry.composeapp.generated.resources.summer_start
 import zealotry.composeapp.generated.resources.sunday
 import zealotry.composeapp.generated.resources.thursday
+import zealotry.composeapp.generated.resources.toggle_error
 import zealotry.composeapp.generated.resources.tuesday
 import zealotry.composeapp.generated.resources.wednesday
 import zealotry.composeapp.generated.resources.winter
@@ -76,3 +78,10 @@ fun Int.toOrdinalNumberString(locale: String = Locale.current.language): String 
     val ordinalSignifier = stringArrayResource(Res.array.ordinal)[pluralForm.ordinal]
     return stringResource(Res.string.ordinal_number, this, ordinalSignifier)
 }
+
+@Composable
+fun ExampleError.toResourceString(): String =
+    when (this) {
+        ExampleError.NotYetLoaded -> stringResource(Res.string.toggle_error)
+        is ExampleError.Dynamic -> message
+    }

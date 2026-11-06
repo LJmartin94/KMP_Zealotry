@@ -12,9 +12,14 @@ data class ExampleUiState(
     val id: String? = null,
     val toggle: Boolean = false,
     val isLoading: Boolean = false,
-    val error: String? = null,
+    val error: ExampleError? = null,
 ) : ViewState
 
 sealed interface ExampleEvent : ViewEvent {
     data object NavigateBack : ExampleEvent
+}
+
+sealed interface ExampleError {
+    data object NotYetLoaded : ExampleError
+    data class Dynamic(val message: String) : ExampleError
 }
