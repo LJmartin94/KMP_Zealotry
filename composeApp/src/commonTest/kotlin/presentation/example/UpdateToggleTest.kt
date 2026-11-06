@@ -58,7 +58,7 @@ class UpdateToggleTest {
 
             UpdateToggle(newVal = false).execute(deps, scope)
 
-            assertEquals("network error", scope.currentState.error)
+            assertEquals(ExampleError.Dynamic("network error"), scope.currentState.error)
             assertEquals(false, scope.currentState.isLoading)
         }
 }
