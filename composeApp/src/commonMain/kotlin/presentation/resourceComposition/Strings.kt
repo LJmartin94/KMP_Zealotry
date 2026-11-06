@@ -8,7 +8,6 @@ import kotlinx.datetime.DayOfWeek
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
-import presentation.example.ExampleError
 import util.localisation.getLocale
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.autumn
@@ -28,11 +27,18 @@ import zealotry.composeapp.generated.resources.summer
 import zealotry.composeapp.generated.resources.summer_start
 import zealotry.composeapp.generated.resources.sunday
 import zealotry.composeapp.generated.resources.thursday
-import zealotry.composeapp.generated.resources.toggle_error
 import zealotry.composeapp.generated.resources.tuesday
 import zealotry.composeapp.generated.resources.wednesday
 import zealotry.composeapp.generated.resources.winter
 import zealotry.composeapp.generated.resources.winter_start
+
+// This file is for resource-string mappings of types that are genuinely shared across multiple,
+// unrelated features/screens -- e.g. DayOfWeek/Season/FestiveDay live in domain/model and are
+// referenced from several screens, so their presentation-layer translation belongs in one place.
+// A mapping for a type owned by a single feature (e.g. a feature's own error/state sealed type)
+// should NOT be added here -- it should live alongside that feature instead (e.g. next to the
+// type's own definition), so this file doesn't grow into a many-to-one dependency on every
+// feature package and features stay self-contained.
 
 @Composable
 @OptIn(ExperimentalResourceApi::class)
@@ -78,10 +84,3 @@ fun Int.toOrdinalNumberString(locale: String = Locale.current.language): String 
     val ordinalSignifier = stringArrayResource(Res.array.ordinal)[pluralForm.ordinal]
     return stringResource(Res.string.ordinal_number, this, ordinalSignifier)
 }
-
-@Composable
-fun ExampleError.toResourceString(): String =
-    when (this) {
-        ExampleError.NotYetLoaded -> stringResource(Res.string.toggle_error)
-        is ExampleError.Dynamic -> message
-    }
