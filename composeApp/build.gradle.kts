@@ -53,9 +53,6 @@ kotlin {
             implementation(libs.sqlite.bundled)
             implementation(libs.kotlin.coroutines)
 
-            // material 3 from tutorial
-            implementation(compose.material3)
-
             // tutorial navigation -replacing voyager:
             implementation(libs.kotlinx.serializationJson)
         }
