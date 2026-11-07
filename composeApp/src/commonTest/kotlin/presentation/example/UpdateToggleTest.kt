@@ -48,17 +48,19 @@ class UpdateToggleTest {
         }
 
     @Test
-    fun `when id is set and update fails error state is set`() =
+    fun `when id is set and update fails sends ShowTransientError event`() =
         runTest {
             val repo = mock<ExampleRepository>()
             everySuspend { repo.updateToggle(any(), any()) } returns
                 Result.failure(RuntimeException("network error"))
             val deps = ExampleActionDependencies(exampleRepository = repo)
-            val scope = makeScope(ExampleUiState(id = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"))
+            val events = Channel<ExampleEvent>(Channel.UNLIMITED)
+            val scope = ActionScope(MutableStateFlow(ExampleUiState(id = "6ba7b810-9dad-11d1-80b4-00c04fd430c8")), events)
 
             UpdateToggle(newVal = false).execute(deps, scope)
 
-            assertEquals(ExampleError.Dynamic("network error"), scope.currentState.error)
+            assertEquals(ExampleEvent.ShowTransientError("network error"), events.tryReceive().getOrNull())
+            assertNull(scope.currentState.error)
             assertEquals(false, scope.currentState.isLoading)
         }
 }

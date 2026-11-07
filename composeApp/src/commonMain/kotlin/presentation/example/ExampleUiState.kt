@@ -21,6 +21,12 @@ data class ExampleUiState(
 
 sealed interface ExampleEvent : ViewEvent {
     data object NavigateBack : ExampleEvent
+
+    // Errors can either be transient (e.g. underlying database failed to update,
+    // and user needs to be notified about the "lack of change") or change the UI until further notice
+    // (data failed to load, or exception terminates the Flow etc.)
+    // Transient errors should be Events, enduring errors should be their own part of the ViewState
+    data class ShowTransientError(val message: String) : ExampleEvent
 }
 
 /**
@@ -38,12 +44,12 @@ sealed interface ExampleEvent : ViewEvent {
  */
 sealed interface ExampleError {
     data object NotYetLoaded : ExampleError
-    data class Dynamic(val message: String) : ExampleError
+    data class TerminatedWithFailure(val message: String) : ExampleError
 }
 
 @Composable
 fun ExampleError.toResourceString(): String =
     when (this) {
         ExampleError.NotYetLoaded -> stringResource(Res.string.toggle_error)
-        is ExampleError.Dynamic -> message
+        is ExampleError.TerminatedWithFailure -> message
     }

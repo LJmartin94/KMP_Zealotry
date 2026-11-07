@@ -18,7 +18,7 @@ data object ObserveExample : ExampleAction() {
         scope.setState { copy(isLoading = true) }
         dependencies.exampleRepository
             .observeCanonicalExample(Example.CanonicalKey.FIRST)
-            .catch { e -> scope.setState { copy(isLoading = false, error = ExampleError.Dynamic(e.message.orEmpty())) } }
+            .catch { e -> scope.setState { copy(isLoading = false, error = ExampleError.TerminatedWithFailure(e.message.orEmpty())) } }
             .collect { example ->
                 scope.setState { copy(id = example.id, toggle = example.toggle, isLoading = false) }
             }
@@ -44,7 +44,7 @@ data class UpdateToggle(
                 // Flow will emit the updated value automatically via observeCanonicalExample
             },
             onFailure = { result ->
-                scope.setState { copy(error = ExampleError.Dynamic(result.message.orEmpty())) }
+                scope.sendEvent(ExampleEvent.ShowTransientError(result.message.orEmpty()))
             },
         )
     }
