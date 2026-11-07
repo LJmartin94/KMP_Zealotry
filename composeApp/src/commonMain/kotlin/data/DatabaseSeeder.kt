@@ -28,12 +28,18 @@ object DatabaseSeeder {
         listOf(
             SeedEntry {
                 db.exampleDao().insertIfAbsent(
-                    ExampleEntityLocal(seedKey = Example.CanonicalKey.FIRST.toSeedKey(), toggle = true),
+                    ExampleEntityLocal(
+                        seedKey = Example.CanonicalKey.FIRST.toSeedKey(),
+                        toggle = true,
+                    ),
                 )
             },
             SeedEntry {
                 db.exampleDao().insertIfAbsent(
-                    ExampleEntityLocal(seedKey = Example.CanonicalKey.SECOND.toSeedKey(), toggle = false),
+                    ExampleEntityLocal(
+                        seedKey = Example.CanonicalKey.SECOND.toSeedKey(),
+                        toggle = false,
+                    ),
                 )
             },
         )

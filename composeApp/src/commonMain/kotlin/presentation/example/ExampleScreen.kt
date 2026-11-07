@@ -21,10 +21,9 @@ fun ExampleScreen() {
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                // ShowTransientError is a plain String already (see ExampleError's KDoc for why),
-                // so no Composable resource resolution is needed here unlike persisted ExampleError.
-                is ExampleEvent.ShowTransientError -> Logger.e(TAG) { "Update failed: ${event.message}" }
-                ExampleEvent.NavigateBack -> Unit // Not wired up yet; no navigation host for this screen.
+                is ExampleEvent.ShowTransientError ->
+                    Logger.e(TAG) { "Update failed: ${event.message}" }
+                ExampleEvent.NavigateBack -> Unit // Not wired up yet
             }
         }
     }

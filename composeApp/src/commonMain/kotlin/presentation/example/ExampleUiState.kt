@@ -26,7 +26,9 @@ sealed interface ExampleEvent : ViewEvent {
     // and user needs to be notified about the "lack of change") or change the UI until further notice
     // (data failed to load, or exception terminates the Flow etc.)
     // Transient errors should be Events, enduring errors should be their own part of the ViewState
-    data class ShowTransientError(val message: String) : ExampleEvent
+    data class ShowTransientError(
+        val message: String,
+    ) : ExampleEvent
 }
 
 /**
@@ -44,7 +46,10 @@ sealed interface ExampleEvent : ViewEvent {
  */
 sealed interface ExampleError {
     data object NotYetLoaded : ExampleError
-    data class TerminatedWithFailure(val message: String) : ExampleError
+
+    data class TerminatedWithFailure(
+        val message: String,
+    ) : ExampleError
 }
 
 @Composable

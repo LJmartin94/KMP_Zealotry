@@ -55,11 +55,18 @@ class UpdateToggleTest {
                 Result.failure(RuntimeException("network error"))
             val deps = ExampleActionDependencies(exampleRepository = repo)
             val events = Channel<ExampleEvent>(Channel.UNLIMITED)
-            val scope = ActionScope(MutableStateFlow(ExampleUiState(id = "6ba7b810-9dad-11d1-80b4-00c04fd430c8")), events)
+            val scope =
+                ActionScope(
+                    MutableStateFlow(ExampleUiState(id = "6ba7b810-9dad-11d1-80b4-00c04fd430c8")),
+                    events,
+                )
 
             UpdateToggle(newVal = false).execute(deps, scope)
 
-            assertEquals(ExampleEvent.ShowTransientError("network error"), events.tryReceive().getOrNull())
+            assertEquals(
+                ExampleEvent.ShowTransientError("network error"),
+                events.tryReceive().getOrNull(),
+            )
             assertNull(scope.currentState.error)
             assertEquals(false, scope.currentState.isLoading)
         }

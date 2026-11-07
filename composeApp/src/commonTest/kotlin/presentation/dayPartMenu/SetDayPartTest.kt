@@ -1,11 +1,11 @@
 package presentation.dayPartMenu
 
-import model.DayPart
 import data.dayPartMenu.DayPartMenuRepository
 import dev.mokkery.mock
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
+import model.DayPart
 import toad.ActionScope
 import kotlin.test.Test
 import kotlin.test.assertEquals
