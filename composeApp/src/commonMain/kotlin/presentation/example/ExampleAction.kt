@@ -4,8 +4,11 @@ import kotlinx.coroutines.flow.catch
 import model.Example
 import toad.ActionScope
 import toad.ViewAction
+import util.Logger
 
 // Relies on ExampleUiState, ExampleActionDependencies
+
+private const val TAG = "ExampleAction"
 
 abstract class ExampleAction : ViewAction<ExampleActionDependencies, ExampleUiState, ExampleEvent>
 
@@ -48,8 +51,10 @@ data class UpdateToggle(
             block = { dependencies.exampleRepository.updateToggle(id, newVal) },
             onSuccess = {
                 // Flow will emit the updated value automatically via observeCanonicalExample
+                // No special client-side onSuccess logic required.
             },
             onFailure = { result ->
+                Logger.e(TAG, result) { "UpdateToggle failed" }
                 scope.sendEvent(ExampleEvent.ShowTransientError(result.message.orEmpty()))
             },
         )

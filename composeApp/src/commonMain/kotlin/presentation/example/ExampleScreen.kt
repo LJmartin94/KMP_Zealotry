@@ -5,7 +5,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
+import presentation.reusableUi.LocalSnackbarHostState
 import toad.getViewModel
 import util.Logger
 
@@ -17,12 +20,17 @@ private const val TAG = "ExampleScreen"
 fun ExampleScreen() {
     val viewModel = getViewModel<ExampleViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackbarHostState = LocalSnackbarHostState.current
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                is ExampleEvent.ShowTransientError ->
-                    Logger.e(TAG) { "Update failed: ${event.message}" }
+                is ExampleEvent.ShowTransientError -> {
+                    // launch in separate coroutine so showSnackbar() doesn't block the loop from collecting other events
+                    // dev-side logging handled in onFailure
+                    coroutineScope.launch { snackbarHostState.showSnackbar(event.message) }
+                }
                 ExampleEvent.NavigateBack -> Unit // Not wired up yet
             }
         }
