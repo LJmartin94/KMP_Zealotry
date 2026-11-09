@@ -9,6 +9,4 @@ import toad.getViewModel
 @Composable
 fun TemporaryKonsistViolationButtonTurnedScreen() {
     val fromNonScreen: ExampleViewModel = getViewModel()
-    val builtByHand = ExampleViewModel(TODO())
-    val fromAndroidx: ExampleViewModel = viewModel { TODO() }
 }
