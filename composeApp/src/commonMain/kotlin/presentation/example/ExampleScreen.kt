@@ -31,8 +31,8 @@ fun ExampleScreen() {
         viewModel.events.collect { event ->
             when (event) {
                 is ExampleEvent.ShowTransientError -> {
-                    // launch in separate coroutine so showSnackbar() doesn't block the loop from collecting other events
-                    // dev-side logging handled in onFailure
+                    // launch in separate coroutine so showSnackbar() doesn't block the loop from
+                    // collecting other events; dev-side logging handled in onFailure
                     coroutineScope.launch { snackbarHostState.showSnackbar(event.message) }
                 }
                 ExampleEvent.NavigateBack -> Unit // Not wired up yet

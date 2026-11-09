@@ -23,8 +23,8 @@ sealed interface ExampleEvent : ViewEvent {
     data object NavigateBack : ExampleEvent
 
     // Errors can either be transient (e.g. underlying database failed to update,
-    // and user needs to be notified about the "lack of change") or change the UI until further notice
-    // (data failed to load, or exception terminates the Flow etc.)
+    // and user needs to be notified about the "lack of change") or change the UI until further
+    // notice (data failed to load, or exception terminates the Flow etc.)
     // Transient errors should be Events, enduring errors should be their own part of the ViewState
     data class ShowTransientError(
         val message: String,
@@ -39,7 +39,8 @@ sealed interface ExampleEvent : ViewEvent {
  *   `stringResource()` requires `@Composable` - not the case for [toad.ViewAction]s.
  *
  * - Resolving via `getString()`, the suspending non-Composable option: breaks TOAD's core
- *   "Actions are testable in isolation" guarantee (see [toad.ViewAction]'s KDoc) without additional plugins.
+ *   "Actions are testable in isolation" guarantee (see [toad.ViewAction]'s KDoc)
+ *   without additional plugins.
  *
  * Keeping resolution in the Composable layer avoids both problems and matches the existing
  * precedent in presentation/resourceComposition/Strings.kt.
