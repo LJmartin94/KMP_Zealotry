@@ -2,6 +2,11 @@
 // Delete in phase 2.
 package presentation.example
 
+import androidx.compose.runtime.Composable
+import org.jetbrains.compose.resources.stringResource
+import zealotry.composeapp.generated.resources.Res
+import zealotry.composeapp.generated.resources.generic_hello
+
 // Allowed: a developer-facing message that wraps over more lines than the old 2-line look-back.
 fun temporaryWrappedMessage(): Nothing =
     error(
@@ -10,8 +15,9 @@ fun temporaryWrappedMessage(): Nothing =
             "and must still be allowed",
     )
 
+@Composable
 fun temporaryLeak(flag: Boolean) {
     require(flag) { "Allowed: developer-facing" }
     // Violation: the call above is already closed, so this literal must be flagged.
-    println("Hello")
+    println(stringResource(Res.string.generic_hello))
 }
