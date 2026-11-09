@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.LocalSnackbarHostState
 import toad.getViewModel
 import util.Logger
@@ -59,9 +60,9 @@ fun StatelessExampleScreen(
         Text(
             text =
                 if (state.toggle) {
-                    Res.string.generic_on.toString()
+                    stringResource(Res.string.generic_on)
                 } else {
-                    Res.string.generic_off.toString()
+                    stringResource(Res.string.generic_off)
                 },
         )
     }

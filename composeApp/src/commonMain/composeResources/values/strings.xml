@@ -64,9 +64,9 @@
 
     <!-- Pseudo-debug strings: only used in snippets not in production, but theoretically User-facing.
         These do not need to be translated -->
-    <string name="toggle_error">"Cannot update toggle: example not yet loaded."</string>
-    <string name="generic_on">"On"</string>
-    <string name="generic_off">"Off"</string>
-    <string name="generic_hello">"Hello"</string>
-    <string name="generic_error">"Error"</string>
+    <string name="toggle_error">Cannot update toggle: example not yet loaded.</string>
+    <string name="generic_on">On</string>
+    <string name="generic_off">Off</string>
+    <string name="generic_hello">Hello</string>
+    <string name="generic_error">Error</string>
 </resources>
