@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import toad.getViewModel
 
 @Composable
-fun TemporaryKonsistViolationButton() {
+fun TemporaryKonsistViolationButtonTurnedScreen() {
     val fromNonScreen: ExampleViewModel = getViewModel()
     val builtByHand = ExampleViewModel(TODO())
     val fromAndroidx: ExampleViewModel = viewModel { TODO() }
