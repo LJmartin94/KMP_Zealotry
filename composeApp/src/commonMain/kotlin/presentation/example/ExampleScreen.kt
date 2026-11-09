@@ -11,6 +11,9 @@ import kotlinx.coroutines.launch
 import presentation.reusableUi.LocalSnackbarHostState
 import toad.getViewModel
 import util.Logger
+import zealotry.composeapp.generated.resources.Res
+import zealotry.composeapp.generated.resources.generic_off
+import zealotry.composeapp.generated.resources.generic_on
 
 // Relies on ExampleUiState, ExampleAction, ExampleViewModel
 
@@ -53,6 +56,13 @@ fun StatelessExampleScreen(
             onAction(UpdateToggle(!state.toggle))
         },
     ) {
-        Text(text = if (state.toggle) "on" else "off")
+        Text(
+            text =
+                if (state.toggle) {
+                    Res.string.generic_on.toString()
+                } else {
+                    Res.string.generic_off.toString()
+                },
+        )
     }
 }
