@@ -6,7 +6,7 @@ import toad.ActionScope
 import toad.ViewAction
 import util.Logger
 
-// Relies on ExampleUiState, ExampleActionDependencies
+// Relies on ExampleActionDependencies, ExampleUiState
 
 private const val TAG = "ExampleAction"
 

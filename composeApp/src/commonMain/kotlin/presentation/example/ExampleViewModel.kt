@@ -3,7 +3,7 @@ package presentation.example
 import data.example.ExampleRepository
 import toad.ToadViewModel
 
-// Relies on ExampleUiState, ExampleActionDependencies, ExampleAction
+// Relies on ExampleActionDependencies, ExampleUiState, ExampleAction
 
 class ExampleViewModel(
     private val repository: ExampleRepository,
