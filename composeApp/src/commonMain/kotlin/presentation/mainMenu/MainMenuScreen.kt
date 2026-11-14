@@ -62,7 +62,8 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var titleModifier = Modifier.padding(20.dp)
-        if (rememberWindowSize() >= WindowSize.MEDIUM) titleModifier = titleModifier.weight(EMPTY_SPACE)
+        if (rememberWindowSize() >= WindowSize.MEDIUM) titleModifier =
+            titleModifier.weight(EMPTY_SPACE)
         MainMenuTitle(
             uiState = uiState,
             modifier = titleModifier,
