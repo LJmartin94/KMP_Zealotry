@@ -24,6 +24,8 @@ import presentation.reusableUi.ImageButton
 import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
+import presentation.style.WindowSize
+import presentation.style.rememberWindowSize
 import toad.getViewModel
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
@@ -59,9 +61,11 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        var titleModifier = Modifier.padding(20.dp)
+        if (rememberWindowSize() >= WindowSize.MEDIUM) titleModifier = titleModifier.weight(EMPTY_SPACE)
         MainMenuTitle(
             uiState = uiState,
-            modifier = Modifier.padding(20.dp).weight(EMPTY_SPACE),
+            modifier = titleModifier,
         )
         MainMenuSub(
             title = Res.string.daily_rituals,
