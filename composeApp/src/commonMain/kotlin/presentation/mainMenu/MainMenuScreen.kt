@@ -21,12 +21,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
 import presentation.reusableUi.ImageButton
-import presentation.reusableUi.weightOrContent
 import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
-import presentation.style.WindowSize
-import presentation.style.rememberWindowSize
 import toad.getViewModel
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
