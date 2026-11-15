@@ -21,6 +21,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.resourceComposition.toDrawableResource
 import presentation.reusableUi.ImageButton
+import presentation.reusableUi.weightOrContent
 import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
@@ -61,12 +62,9 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        var titleModifier = Modifier.padding(20.dp)
-        if (rememberWindowSize() >= WindowSize.MEDIUM) titleModifier =
-            titleModifier.weight(EMPTY_SPACE)
         MainMenuTitle(
             uiState = uiState,
-            modifier = titleModifier,
+            modifier = Modifier.padding(20.dp).weight(EMPTY_SPACE),
         )
         MainMenuSub(
             title = Res.string.daily_rituals,
