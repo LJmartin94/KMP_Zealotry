@@ -1,7 +1,10 @@
 package presentation.style
 
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+
+val PaddingCompositionLocal = staticCompositionLocalOf { mediumPadding }
 
 class Padding(
     val min: Dp = 1.dp,
@@ -11,6 +14,12 @@ class Padding(
     val dbl: Dp,
     val quad: Dp,
 )
+
+fun WindowSize.padding(): Padding = when (this){
+    WindowSize.COMPACT -> compactPadding
+    WindowSize.MEDIUM -> mediumPadding
+    WindowSize.EXPANDED -> expandedPadding
+}
 
 val compactPadding =
     Padding(
@@ -41,3 +50,56 @@ val expandedPadding =
         dbl = 36.dp,
         quad = 72.dp,
     )
+
+
+
+
+//enum class Padding {
+//    MIN,
+//    QUART,
+//    HALF,
+//    STANDARD,
+//    DBL,
+//    QUAD,
+//}
+//
+//fun WindowSize.dp(padding: Padding): Dp{
+//    return when(this){
+//        WindowSize.COMPACT -> compactPadding(padding)
+//        WindowSize.MEDIUM -> mediumPadding(padding)
+//        WindowSize.EXPANDED -> expandedPadding(padding)
+//    }
+//}
+//
+//fun compactPadding(padding: Padding): Dp {
+//    return when (padding) {
+//        Padding.MIN -> 1.dp
+//        Padding.QUART -> 1.5f.dp
+//        Padding.HALF -> 3.dp
+//        Padding.STANDARD -> 6.dp
+//        Padding.DBL -> 12.dp
+//        Padding.QUAD -> 24.dp
+//    }
+//}
+//
+//fun mediumPadding(padding: Padding): Dp {
+//    return when (padding) {
+//        Padding.MIN -> 1.dp
+//        Padding.QUART -> 3.dp
+//        Padding.HALF -> 6.dp
+//        Padding.STANDARD -> 12.dp
+//        Padding.DBL -> 24.dp
+//        Padding.QUAD -> 48.dp
+//    }
+//}
+//
+//fun expandedPadding(padding: Padding): Dp {
+//    return when (padding) {
+//        Padding.MIN -> 1.dp
+//        Padding.QUART -> 4.5f.dp
+//        Padding.HALF -> 9.dp
+//        Padding.STANDARD -> 18.dp
+//        Padding.DBL -> 36.dp
+//        Padding.QUAD -> 72.dp
+//    }
+//}
