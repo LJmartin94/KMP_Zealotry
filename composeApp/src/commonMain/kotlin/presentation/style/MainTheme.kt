@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 
 val ColourCompositionLocal =
@@ -17,14 +18,23 @@ fun MainTheme(content: @Composable () -> Unit) {
     val colours = MainColours()
     val typography = MainTypography()
     val shapes = Shapes()
+    val dpConf = rememberWindowSize().dpConf()
 
     MaterialTheme(
         colors = colours,
         typography = typography,
         shapes = shapes,
     ) {
-        CompositionLocalProvider(ColourCompositionLocal provides colours) {
+        CompositionLocalProvider(
+            ColourCompositionLocal provides colours,
+            DpCompositionLocal provides dpConf,
+            ) {
             content()
         }
     }
+}
+
+object Theme {
+    val dp: DpConf
+        @Composable @ReadOnlyComposable get() = DpCompositionLocal.current
 }

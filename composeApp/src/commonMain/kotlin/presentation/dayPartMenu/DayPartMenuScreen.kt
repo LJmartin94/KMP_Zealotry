@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DayPart
 import navigation.NavDestination
@@ -30,6 +29,7 @@ import presentation.dayPartMenu.checklistButtons.ChecklistButton
 import presentation.dayPartMenu.morningButtons.MorningButtons
 import presentation.example.ExampleScreen
 import presentation.reusableUi.Chiaroscuro
+import presentation.style.Theme
 import toad.getViewModel
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.back
@@ -85,7 +85,7 @@ fun DayPartMenuScreen(
 
             Text(
                 text = greeting,
-                modifier = Modifier.weight(1f).padding(20.dp),
+                modifier = Modifier.weight(1f).padding(Theme.dp.dbl),
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
             )
@@ -98,7 +98,7 @@ fun DayPartMenuScreen(
         Column(
             modifier = Modifier.verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(Theme.dp.half),
         ) {
             visibleButtons.forEach { button -> ChecklistButton(button) }
         }
