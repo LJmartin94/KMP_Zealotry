@@ -4,9 +4,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-val PaddingCompositionLocal = staticCompositionLocalOf { mediumPadding }
+val PaddingCompositionLocal = staticCompositionLocalOf { mediumDp }
 
-class Padding(
+class DpConf(
     val min: Dp = 1.dp,
     val quart: Dp,
     val half: Dp,
@@ -15,14 +15,14 @@ class Padding(
     val quad: Dp,
 )
 
-fun WindowSize.padding(): Padding = when (this){
-    WindowSize.COMPACT -> compactPadding
-    WindowSize.MEDIUM -> mediumPadding
-    WindowSize.EXPANDED -> expandedPadding
+fun WindowSize.padding(): DpConf = when (this){
+    WindowSize.COMPACT -> compactDp
+    WindowSize.MEDIUM -> mediumDp
+    WindowSize.EXPANDED -> expandedDp
 }
 
-val compactPadding =
-    Padding(
+val compactDp =
+    DpConf(
         min = 1.dp,
         quart = 1.5f.dp,
         half = 3.dp,
@@ -31,8 +31,8 @@ val compactPadding =
         quad = 24.dp,
     )
 
-val mediumPadding =
-    Padding(
+val mediumDp =
+    DpConf(
         min = 1.dp,
         quart = 3.dp,
         half = 6.dp,
@@ -41,8 +41,8 @@ val mediumPadding =
         quad = 48.dp,
     )
 
-val expandedPadding =
-    Padding(
+val expandedDp =
+    DpConf(
         min = 1.dp,
         quart = 4.5f.dp,
         half = 9.dp,
