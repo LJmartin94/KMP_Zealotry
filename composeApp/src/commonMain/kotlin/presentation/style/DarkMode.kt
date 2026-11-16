@@ -8,7 +8,7 @@ import presentation.reusableUi.greyScale
 
 val DarkThemeCompositionLocal =
     compositionLocalOf<Boolean> {
-        error("Theme not set")
+        false
     }
 
 @Composable
