@@ -23,7 +23,8 @@ fun App() {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val windowSize = rememberWindowSize()
-    LaunchedEffect(windowSize) { //runs after successful composition and on key change
+    LaunchedEffect(windowSize) {
+        // runs after successful composition and on key change
         Logger.i(tag = "Main Menu") { "WindowSize is $windowSize" }
     }
 

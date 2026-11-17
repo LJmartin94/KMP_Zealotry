@@ -12,7 +12,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun rememberWindowSize(): WindowSize {
     val windowInfo: WindowInfo = LocalWindowInfo.current
-    val windowSize by remember(windowInfo) { // Keeps one derived state object per window
+    val windowSize by remember(windowInfo) {
+        // Keeps one derived state object per window
 
         // Recalculates if windowInfo changes state, but only notifies readers if outcome changes
         derivedStateOf { windowInfo.containerDpSize.toWindowSize() }

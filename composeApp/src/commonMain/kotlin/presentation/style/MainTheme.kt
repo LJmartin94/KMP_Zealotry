@@ -28,7 +28,7 @@ fun MainTheme(content: @Composable () -> Unit) {
         CompositionLocalProvider(
             ColourCompositionLocal provides colours,
             DpCompositionLocal provides dpConf,
-            ) {
+        ) {
             content()
         }
     }
@@ -36,5 +36,6 @@ fun MainTheme(content: @Composable () -> Unit) {
 
 object Theme {
     val dp: DpConf
-        @Composable @ReadOnlyComposable get() = DpCompositionLocal.current
+        @Composable @ReadOnlyComposable
+        get() = DpCompositionLocal.current
 }

@@ -17,11 +17,12 @@ class DpConf(
     val quad: Dp,
 )
 
-fun WindowSize.dpConf(): DpConf = when (this){
-    WindowSize.COMPACT -> compactDp
-    WindowSize.MEDIUM -> mediumDp
-    WindowSize.EXPANDED -> expandedDp
-}
+fun WindowSize.dpConf(): DpConf =
+    when (this) {
+        WindowSize.COMPACT -> compactDp
+        WindowSize.MEDIUM -> mediumDp
+        WindowSize.EXPANDED -> expandedDp
+    }
 
 val compactDp =
     DpConf(
