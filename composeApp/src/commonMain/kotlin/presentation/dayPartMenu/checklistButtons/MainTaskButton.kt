@@ -16,10 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.reusableUi.Chiaroscuro
 import presentation.style.ColourCompositionLocal
+import presentation.style.Theme
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -27,7 +28,7 @@ fun MainTaskButton(
     chiaro: Chiaroscuro,
     text: String,
     time: String,
-    buttonHeight: Int = 50,
+    buttonHeight: Dp? = null,
     buttonModifier: Modifier =
         Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
@@ -38,15 +39,17 @@ fun MainTaskButton(
         buttonModifier
             .clickable(
                 onClick = onClick,
-            ).padding(8.dp)
-            .defaultMinSize(minHeight = buttonHeight.dp)
+            ).padding(Theme.dp.half)
+            .defaultMinSize(minHeight = buttonHeight ?: Theme.dp.quad)
             .minimumInteractiveComponentSize(),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = verticalAlign,
 ) {
     Image(
         modifier =
-            Modifier.defaultMinSize(minHeight = buttonHeight.dp).minimumInteractiveComponentSize(),
+            Modifier
+                .defaultMinSize(minHeight = buttonHeight ?: Theme.dp.quad)
+                .minimumInteractiveComponentSize(),
         painter = chiaro.getPainter(),
         contentScale = ContentScale.FillHeight,
         contentDescription = null,

@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -24,6 +23,7 @@ import presentation.reusableUi.ImageButton
 import presentation.style.COMPONENT_EQUAL_WEIGHT
 import presentation.style.EMPTY_SPACE
 import presentation.style.FILLER_SPACE
+import presentation.style.Theme
 import toad.getViewModel
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.daily_rituals
@@ -61,7 +61,7 @@ fun MainMenuScreen(onNavigate: (NavDestination) -> Unit) {
     ) {
         MainMenuTitle(
             uiState = uiState,
-            modifier = Modifier.padding(20.dp).weight(EMPTY_SPACE),
+            modifier = Modifier.padding(Theme.dp.dbl).weight(EMPTY_SPACE),
         )
         MainMenuSub(
             title = Res.string.daily_rituals,

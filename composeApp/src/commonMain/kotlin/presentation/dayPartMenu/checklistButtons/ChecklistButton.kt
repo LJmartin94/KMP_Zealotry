@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import presentation.dayPartMenu.morningButtons.MorningButtons
 import presentation.dayPartMenu.morningButtons.toBundle
+import presentation.style.Theme
 
 @Composable
 fun ChecklistButton(button: MorningButtons) =
@@ -17,7 +17,7 @@ fun ChecklistButton(button: MorningButtons) =
         val subtasks = SubTaskList(button.toBundle().chiaro)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(Theme.dp.quart),
         ) {
             MainTaskButton(button.toBundle())
             subtasks.forEach { task -> task.invoke() }

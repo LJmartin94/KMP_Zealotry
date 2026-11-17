@@ -13,6 +13,7 @@ import presentation.resourceComposition.toOrdinalNumberString
 import presentation.resourceComposition.toResourceString
 import presentation.reusableUi.OutlinedText
 import presentation.style.MainTypography
+import presentation.style.Theme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.day_of_season
 
@@ -32,7 +33,7 @@ fun MainMenuTitle(
     return Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(Theme.dp.half),
     ) {
         OutlinedText(
             text = dayXOfSeasonY,
