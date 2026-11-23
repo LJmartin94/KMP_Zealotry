@@ -17,6 +17,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.contentColorFor
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -27,7 +28,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
+import presentation.style.Theme
 
 @Composable
 fun CustomExtendedFAB(
@@ -46,8 +47,8 @@ fun CustomExtendedFAB(
     CustomFAB(
         modifier =
             modifier.sizeIn(
-                minWidth = ExtendedFabSize,
-                minHeight = ExtendedFabSize,
+                minWidth = Theme.dp.quad,
+                minHeight = Theme.dp.quad,
             ),
         onClick = onClick,
         interactionSource = interactionSource,
@@ -57,18 +58,18 @@ fun CustomExtendedFAB(
         elevation = elevation,
         contentAlignment = contentAlignment,
     ) {
-        val startPadding = if (icon == null) ExtendedFabTextPadding else ExtendedFabIconPadding
+        val startPadding = if (icon == null) Theme.dp.dbl else Theme.dp.standard
         Row(
             modifier =
                 Modifier.padding(
                     start = startPadding,
-                    end = ExtendedFabTextPadding,
+                    end = Theme.dp.dbl,
                 ),
             verticalAlignment = verticalAlignment,
         ) {
             if (icon != null) {
                 icon()
-                Spacer(Modifier.width(ExtendedFabIconPadding))
+                Spacer(Modifier.width(Theme.dp.standard))
             }
             text()
         }
@@ -102,15 +103,11 @@ fun CustomFAB(
                 Box(
                     modifier =
                         Modifier
-                            .defaultMinSize(minWidth = FabSize, minHeight = FabSize),
+                            .defaultMinSize(minWidth = Theme.dp.quad, minHeight = Theme.dp.quad)
+                            .minimumInteractiveComponentSize(),
                     contentAlignment = contentAlignment,
                 ) { content() }
             }
         }
     }
 }
-
-private val FabSize = 56.dp
-private val ExtendedFabSize = 48.dp
-private val ExtendedFabIconPadding = 12.dp
-private val ExtendedFabTextPadding = 20.dp
