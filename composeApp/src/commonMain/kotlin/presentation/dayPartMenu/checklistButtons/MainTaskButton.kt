@@ -19,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.reusableUi.Chiaroscuro
-import presentation.style.ColourCompositionLocal
 import presentation.style.Theme
 
 @OptIn(ExperimentalResourceApi::class)
@@ -30,7 +29,7 @@ fun MainTaskButton(
     time: String,
     buttonHeight: Dp? = null,
     buttonModifier: Modifier =
-        Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
+        Modifier.background(Theme.colour.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     textAlign: TextAlign = TextAlign.Center,
     onClick: () -> Unit,
@@ -76,7 +75,7 @@ data class IconTextTimeBundle(
 fun MainTaskButton(
     bundle: IconTextTimeBundle,
     buttonModifier: Modifier =
-        Modifier.background(ColourCompositionLocal.current.primaryVariant).fillMaxWidth(1f),
+        Modifier.background(Theme.colour.primaryVariant).fillMaxWidth(1f),
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     textAlign: TextAlign = TextAlign.Center,
 ) {

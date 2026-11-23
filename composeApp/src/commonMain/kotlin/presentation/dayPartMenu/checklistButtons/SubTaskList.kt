@@ -10,7 +10,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import presentation.reusableUi.Chiaroscuro
 import presentation.reusableUi.CustomExtendedFAB
-import presentation.style.ColourCompositionLocal
+import presentation.style.Theme
 import zealotry.composeapp.generated.resources.Res
 import zealotry.composeapp.generated.resources.done
 import zealotry.composeapp.generated.resources.ic_baseline_fast_forward_24
@@ -63,7 +63,7 @@ fun SubTaskList(
                         contentDescription = null,
                     )
                 },
-                backgroundColor = ColourCompositionLocal.current.background,
+                backgroundColor = Theme.colour.background,
                 contentAlignment = Alignment.CenterStart,
             )
         }

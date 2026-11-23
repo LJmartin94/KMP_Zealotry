@@ -18,7 +18,6 @@ import presentation.reusableUi.AdaptiveColumn
 import presentation.reusableUi.AdaptiveScope
 import presentation.style.COMPONENT_BODY_WEIGHT
 import presentation.style.COMPONENT_TITLE_WEIGHT
-import presentation.style.ColourCompositionLocal
 import presentation.style.Theme
 
 @OptIn(ExperimentalResourceApi::class)
@@ -42,10 +41,10 @@ fun MainMenuSub(
                 Modifier
                     .fillMaxSize()
                     .weight(COMPONENT_TITLE_WEIGHT)
-                    .background(ColourCompositionLocal.current.primaryVariant.copy(alpha = 0.8f)),
+                    .background(Theme.colour.primaryVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = stringResource(title), color = ColourCompositionLocal.current.onPrimary)
+            Text(text = stringResource(title), color = Theme.colour.onPrimary)
         }
 
         // Container
@@ -54,7 +53,7 @@ fun MainMenuSub(
                 Modifier
                     .fillMaxSize()
                     .weight(COMPONENT_BODY_WEIGHT)
-                    .background(ColourCompositionLocal.current.background.copy(alpha = 0.8f))
+                    .background(Theme.colour.background.copy(alpha = 0.8f))
                     .padding(Theme.dp.dbl),
             verticalArrangement = Arrangement.spacedBy(Theme.dp.half),
         ) {

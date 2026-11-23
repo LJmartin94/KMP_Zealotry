@@ -3,15 +3,10 @@ package presentation.style
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.compositionLocalOf
-
-val ColourCompositionLocal =
-    compositionLocalOf<Colors> {
-        error("No Colour provided")
-    }
 
 @Composable
 fun MainTheme(content: @Composable () -> Unit) {
@@ -26,7 +21,6 @@ fun MainTheme(content: @Composable () -> Unit) {
         shapes = shapes,
     ) {
         CompositionLocalProvider(
-            ColourCompositionLocal provides colours,
             DpCompositionLocal provides dpConf,
         ) {
             content()
@@ -35,6 +29,14 @@ fun MainTheme(content: @Composable () -> Unit) {
 }
 
 object Theme {
+    val colour: Colors
+        @Composable @ReadOnlyComposable
+        get() = MaterialTheme.colors
+
+    val typo: Typography
+        @Composable @ReadOnlyComposable
+        get() = MaterialTheme.typography
+
     val dp: DpConf
         @Composable @ReadOnlyComposable
         get() = DpCompositionLocal.current
